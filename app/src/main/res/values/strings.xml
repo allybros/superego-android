@@ -1,0 +1,11 @@
+<resources>
+    <string name="todo">TODO</string>
+    <string name="title_activity_profile_page">ProfilePage</string>
+    <string name="title_activity_register_page">RegisterPage</string>
+    <string name="loginFailed">Giriş Yapılamadı. Tekrar deneyiniz.</string>
+    <string name="loginSuccess">Giriş Başarılı :)</string>
+    <string name="usernameEmpty">Kullanıcı adı alanı boş olamaz.</string>
+    <string name="passwordEmpty">Parola alanı boş olamaz</string>
+    <string name="usernameOrEmail">Kullanıcı Adı veya E-mail</string>
+    <string name="password">Parola</string>
+</resources>

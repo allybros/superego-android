@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="Blue">#C3020E77</color>
+    <color name="OpacityYellow">#4afcdb73</color>
+    <color name="loginScreenBottomComponentColor">#908b658b</color>
+    <color name="bottomComponentColor">#b70216c7</color>
+    <color name="Black">#000000</color>
+    <color name="White">#ffffff</color>
+    <color name="loginScreenButtonColor">#b0ff3b0a</color>
+    <color name="editText">#6a1b9a</color>
+    <color name="trans">#00000000</color>
+</resources>
