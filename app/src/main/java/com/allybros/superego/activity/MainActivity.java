@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btRegister;
     private EditText etMail;
     private EditText etPassword;
+    private Button gecisbt;
 
     public static final int LOGIN_FAILED=0;
     public static final int LOGIN_SUCCESS=10;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         btRegister=(Button) findViewById(R.id.btRegister);
         etMail=(EditText )findViewById(R.id.etMail);
         etPassword=(EditText )findViewById(R.id.etPassword);
+        gecisbt=(Button)findViewById(R.id.gecisbt);
 
 
         final Toast[] toast = new Toast[1];
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                     case LOGIN_SUCCESS:
                         toast[0] = Toast.makeText(context, loginSuccess, Toast.LENGTH_SHORT);
                         toast[0].show();
-                        Intent intent1=new Intent(MainActivity.this, ProfileActivity.class);
+                        Intent intent1=new Intent(MainActivity.this, UserPageActivity.class);
                         startActivity(intent1);
                         finish();
                         break;
@@ -73,7 +75,14 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-
+        gecisbt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this, UserPageActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
 
         LocalBroadcastManager.getInstance(this).registerReceiver(statusReceiver, new IntentFilter("status"));

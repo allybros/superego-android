@@ -8,7 +8,7 @@
         android:roundIcon="@drawable/ab_logo"
         android:supportsRtl="true"
         android:networkSecurityConfig="@xml/network_security_config"
-        android:theme="@style/Theme.AppCompat.NoActionBar">
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
         <uses-library android:name="org.apache.http.legacy" android:required="false" />
 
@@ -24,13 +24,13 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity
-            android:name="com.allybros.superego.activity.ProfileActivity"
+            android:name="com.allybros.superego.activity.UserPageActivity"
             android:label="@string/title_activity_profile_page"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <activity android:name="com.allybros.superego.activity.RegisterActivity"
             android:label="@string/title_activity_register_page"
-            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
