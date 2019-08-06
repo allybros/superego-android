@@ -2,61 +2,93 @@ package com.allybros.superego.api;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.widget.Toast;
 
-import com.allybros.superego.util.JSONParser;
+import com.allybros.superego.R;
+import com.allybros.superego.util.UserTraits;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
-
-
-public class LoginTask extends AsyncTask<String, String, String> {
+import java.util.Map;
+public class LoginTask {
 
     private Context currentContext;
-    private int status = 0;
-    private String uid,password;
-    private JSONParser jsonParser = new JSONParser();
-
+    private String uid, password;
     private static String loginProcessUrl = "https://api.allybros.com/superego/login.php";
+    private JSONObject postParams;
 
-    public LoginTask(Context currentContext, String uid, String password) {
-        this.currentContext = currentContext;
+
+    public LoginTask(String uid, String password, Context currentContext) {
         this.uid = uid;
         this.password = password;
+        this.currentContext = currentContext;
     }
 
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
+    public void loginRequest() throws JSONException {
+        postParams=new JSONObject();
+        this.postParams.put("login-submit", "login-submit");
+        this.postParams.put("uid", this.uid);
+        this.postParams.put("password", this.password);
+
+
+        JsonObjectRequest jsonobj=new JsonObjectRequest(Request.Method.POST, loginProcessUrl, postParams, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                JSONObject obj = new JSONObject((Map) response);
+                ArrayList<UserTraits> userTraits =new ArrayList<UserTraits>();
+                Intent intent=new Intent();
+                try {
+                    JSONArray userTraitsArray=new JSONArray(obj.getJSONArray("scores"));
+                    for (int i = 0; i <userTraitsArray.length() ; i++) {
+                        JSONObject traitObject = userTraitsArray.getJSONObject(i);
+                        UserTraits tmpUserTrait=new UserTraits(traitObject.getInt("traştNo"),traitObject.getInt("value"));
+                        userTraits.add(tmpUserTrait);
+                    }
+                    Bundle userTraitsArrayBundle = new Bundle();
+                    userTraitsArrayBundle.putSerializable("userTraitsArray", (Serializable) userTraitsArray);
+                    
+                    intent.putExtra("userTraitsArray",userTraitsArrayBundle);
+                    intent.putExtra("user_id",obj.getInt("user_id"));
+                    intent.putExtra("user_type",obj.getInt("user_type"));
+                    intent.putExtra("username", obj.getString("username"));
+                    intent.putExtra("user_bio",obj.getString("user_bio"));
+                    intent.putExtra("email",obj.getString("email"));
+                    intent.putExtra("status",obj.getInt("status"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                intent.setAction("loginTaskResult");
+                LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent);
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(currentContext,currentContext.getString(R.string.communicationError),Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
-    protected String doInBackground(String... args) {
-        List<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("login-submit", "login-submit"));
-        params.add(new BasicNameValuePair("uid", this.uid));
-        params.add(new BasicNameValuePair("password", this.password));
-
-        JSONObject json = jsonParser.makeHttpRequest(loginProcessUrl,"POST", params);
-        try {
-            status = json.getInt("status");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public Context getCurrentContext() {
+        return currentContext;
     }
 
-    @Override
-    protected void onPostExecute(String s) {
-        super.onPostExecute(s);
-            Intent intent=new Intent();
-            intent.putExtra("status",status);
-            intent.setAction("status");
-        LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent);
+    public String getUid() {
+        return uid;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }
+

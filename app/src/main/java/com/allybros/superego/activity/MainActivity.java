@@ -14,6 +14,8 @@ import android.widget.Toast;
 import com.allybros.superego.R;
 import com.allybros.superego.api.LoginTask;
 
+import org.json.JSONException;
+
 
 public class MainActivity extends AppCompatActivity {
     private Button btLogin;
@@ -59,6 +61,12 @@ public class MainActivity extends AppCompatActivity {
                         toast[0] = Toast.makeText(context, loginSuccess, Toast.LENGTH_SHORT);
                         toast[0].show();
                         Intent intent1=new Intent(MainActivity.this, UserPageActivity.class);
+                        intent1.putExtra("user_id",intent.getIntExtra("user_id",0));
+                        intent1.putExtra("user_type", intent.getIntExtra("user_type",0));
+                        intent1.putExtra("username", intent.getStringExtra("username"));
+                        intent1.putExtra("user_bio",intent.getStringExtra("user_bio"));
+                        intent1.putExtra("email",intent.getStringExtra("email"));
+                        intent1.putExtra("userTraitsArray",intent.getBundleExtra("userTraitsArray"));
                         startActivity(intent1);
                         finish();
                         break;
@@ -75,22 +83,29 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        gecisbt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this, UserPageActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+//        gecisbt.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent=new Intent(MainActivity.this, UserPageActivity.class);
+//                startActivity(intent);
+//                finish();
+//            }
+//        });
 
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(statusReceiver, new IntentFilter("status"));
+        LocalBroadcastManager.getInstance(this).registerReceiver(statusReceiver, new IntentFilter("loginTaskResult"));
 
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new LoginTask(MainActivity.this,etMail.getText().toString(),etPassword.getText().toString()).execute();
+                LoginTask tmpLoginTask =new LoginTask(etMail.getText().toString(),etPassword.getText().toString(),MainActivity.this);
+
+                try {
+                    tmpLoginTask.loginRequest();
+                } catch (JSONException e) {
+                    Toast.makeText(MainActivity.this,MainActivity.this.getString(R.string.communicationError),Toast.LENGTH_SHORT).show();
+                }
+//                LOGİNTASKCAGIRL
             }
         });
 
