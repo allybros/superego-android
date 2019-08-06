@@ -9,5 +9,4 @@
     <string name="usernameOrEmail">Kullanıcı Adı veya E-mail</string>
     <string name="password">Parola</string>
     <string name="profil">Profil</string>
-    <string name="communicationError">Bağlantı hatası</string>
 </resources>
