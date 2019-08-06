@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import com.allybros.superego.util.JSONParser;
 
@@ -23,7 +24,7 @@ public class LoginTask extends AsyncTask<String, String, String> {
     private String uid,password;
     private JSONParser jsonParser = new JSONParser();
 
-    private static String loginProcessUrl = "https://api.allybros.com/superego/login.php";
+    private static String loginProcessUrl = "http://192.168.1.106:80/api.allybros.com/superego/login.php";
 
     public LoginTask(Context currentContext, String uid, String password) {
         this.currentContext = currentContext;
@@ -45,6 +46,7 @@ public class LoginTask extends AsyncTask<String, String, String> {
         JSONObject json = jsonParser.makeHttpRequest(loginProcessUrl,"POST", params);
         try {
             status = json.getInt("status");
+            Log.d("respo",json.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
