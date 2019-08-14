@@ -3,12 +3,10 @@ package com.allybros.superego.api;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 import com.allybros.superego.R;
-import com.allybros.superego.activity.MainActivity;
-import com.allybros.superego.activity.ProfilFragment;
+import com.allybros.superego.activity.SplashActivity;
 import com.allybros.superego.activity.UserPageActivity;
 import com.allybros.superego.util.Trait;
 import com.allybros.superego.util.User;
@@ -19,7 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import org.json.JSONArray;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -56,7 +54,7 @@ public class LoadProfileTask{
                         case SYSFAIL:
 
                             Toast.makeText(currentContext, currentContext.getString(R.string.please_login_again), Toast.LENGTH_SHORT).show();
-                            intent=new Intent(currentContext, MainActivity.class);
+                            intent=new Intent(currentContext, SplashActivity.class);
                             currentContext.startActivity(intent);
                             break;
 
@@ -79,7 +77,6 @@ public class LoadProfileTask{
                                 traits.add(new Trait(traitNo,value));
                             }
 
-                            Log.d("BASARIIII","BASARRR");
                             User.setUserType(user_type);
                             User.setUsername(username);
                             User.setUserBio(user_bio);
@@ -88,15 +85,11 @@ public class LoadProfileTask{
                             intent=new Intent(currentContext, UserPageActivity.class);
                             intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
                             currentContext.startActivity(intent);
-
-
                             break;
                         case SESSION_EXPIRED:
                             SharedPreferences pref = currentContext.getSharedPreferences(USER_INFORMATION_PREF, currentContext.MODE_PRIVATE);
                             String uid= pref.getString("uid", "");
                             String password=pref.getString("password","");
-                            Log.d("RespoUID",uid);
-                            Log.d("RespoPassword",password);
                             LoginTask.loginTask(currentContext,uid,password);
                             break;
                     }

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:background="@drawable/login_background_15"
-    tools:context="com.allybros.superego.activity.MainActivity"
+    tools:context="com.allybros.superego.activity.SplashActivity"
     tools:layout_editor_absoluteY="25dp">
     <TextView
         android:id="@+id/textView"
