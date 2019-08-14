@@ -1,64 +1,119 @@
 package com.allybros.superego.api;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.support.v4.content.LocalBroadcastManager;
+import android.content.SharedPreferences;
 import android.util.Log;
+import android.widget.Toast;
+import com.allybros.superego.R;
+import com.allybros.superego.activity.MainActivity;
+import com.allybros.superego.activity.UserPageActivity;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
-import com.allybros.superego.util.JSONParser;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+
+public class LoginTask extends Activity {
+    final private static String LOGIN_URL ="http://192.168.0.41/api.allybros.com/superego/login.php";
+
+    public static final int LOGIN_FAILED=0;
+    public static final int LOGIN_SUCCESS=10;
+    public static final int USERNAME_EMPTY=20;
+    public static final int PASSWORD_EMPTY=26;
+
+    public static void loginTask(final Context currentContext, final String uid, final String password) {
+
+        final String loginFailed= (String) currentContext.getString(R.string.loginFailed);
+        final String loginSuccess= (String) currentContext.getString(R.string.loginSuccess);
+        final String usernameEmpty= (String) currentContext.getString(R.string.usernameEmpty);
+        final String passwordEmpty= (String) currentContext.getString(R.string.passwordEmpty);
+        final String USER_INFORMATION_PREF="USER_INFORMATION_PREF";
+        final Intent mainActivityIntent=new Intent(currentContext,MainActivity.class);
+
+        RequestQueue queue = Volley.newRequestQueue(currentContext);
+
+        StringRequest jsonRequest=new StringRequest(Request.Method.POST, LOGIN_URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("Response_Login",response);
+
+                String session_token;
+                int status;
+
+                try {
+                    JSONObject jsonObj=new JSONObject(response);
+                    status = jsonObj.getInt("status");
+                    session_token=jsonObj.getString("session_token");
+                    Log.d("LoginTask-status", String.valueOf(status));
+                    Log.d("LoginTask-session_token", session_token);
+
+                    switch (status){
+                        case LOGIN_FAILED:
+                            Toast.makeText(currentContext, loginFailed, Toast.LENGTH_SHORT).show();
+                            currentContext.startActivity(mainActivityIntent);
+                            break;
+
+                        case LOGIN_SUCCESS:
+
+                            SharedPreferences pref = currentContext.getSharedPreferences(USER_INFORMATION_PREF, Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = pref.edit();
+
+                            editor.putString("uid",uid);
+                            editor.putString("password",password);
+                            editor.putString("session_token", session_token);
+                            editor.commit();
+
+                            Intent intent=new Intent(currentContext, UserPageActivity.class);
+                            currentContext.startActivity(intent);
+                            break;
+
+                        case USERNAME_EMPTY:
+
+                            Toast.makeText(currentContext, usernameEmpty, Toast.LENGTH_SHORT).show();
+                            currentContext.startActivity(mainActivityIntent);
+                            break;
+
+                        case PASSWORD_EMPTY:
+
+                            Toast.makeText(currentContext, passwordEmpty, Toast.LENGTH_SHORT).show();
+                            currentContext.startActivity(mainActivityIntent);
+                            break;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
 
-public class LoginTask extends AsyncTask<String, String, String> {
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(currentContext,currentContext.getString(R.string.connection_error), Toast.LENGTH_SHORT);
 
-    private Context currentContext;
-    private int status = 0;
-    private String uid,password;
-    private JSONParser jsonParser = new JSONParser();
+            }
+        }) {
+            @Override
+            protected Map<String,String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("login-submit", "True");
+                params.put("uid", uid);
+                params.put("password", password);
+                return params;
+            }
+        };
 
-    private static String loginProcessUrl = "http://192.168.1.106:80/api.allybros.com/superego/login.php";
 
-    public LoginTask(Context currentContext, String uid, String password) {
-        this.currentContext = currentContext;
-        this.uid = uid;
-        this.password = password;
-    }
+        queue.add(jsonRequest);
 
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-    }
-
-    protected String doInBackground(String... args) {
-        List<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("login-submit", "login-submit"));
-        params.add(new BasicNameValuePair("uid", this.uid));
-        params.add(new BasicNameValuePair("password", this.password));
-
-        JSONObject json = jsonParser.makeHttpRequest(loginProcessUrl,"POST", params);
-        try {
-            status = json.getInt("status");
-            Log.d("respo",json.toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    @Override
-    protected void onPostExecute(String s) {
-        super.onPostExecute(s);
-            Intent intent=new Intent();
-            intent.putExtra("status",status);
-            intent.setAction("status");
-        LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent);
     }
 }

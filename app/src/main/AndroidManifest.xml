@@ -4,6 +4,7 @@
 
     <application
         android:allowBackup="true"
+        android:noHistory="true"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@drawable/ab_logo"
         android:supportsRtl="true"
@@ -31,6 +32,8 @@
         <activity android:name="com.allybros.superego.activity.RegisterActivity"
             android:label="@string/title_activity_register_page"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+
     </application>
+
     <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

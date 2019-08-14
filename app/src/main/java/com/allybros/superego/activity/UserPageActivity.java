@@ -31,5 +31,4 @@ public class UserPageActivity extends AppCompatActivity {
         simpleViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
     }
-
 }
