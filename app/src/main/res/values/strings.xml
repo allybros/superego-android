@@ -3,10 +3,13 @@
     <string name="title_activity_profile_page">ProfilePage</string>
     <string name="title_activity_register_page">RegisterPage</string>
     <string name="loginFailed">Giriş Yapılamadı. Tekrar deneyiniz.</string>
-    <string name="loginSuccess">Giriş Başarılı :)</string>
+    <string name="loginSuccess">session_tokenBaşarılı :)</string>
     <string name="usernameEmpty">Kullanıcı adı alanı boş olamaz.</string>
     <string name="passwordEmpty">Parola alanı boş olamaz</string>
     <string name="usernameOrEmail">Kullanıcı Adı veya E-mail</string>
     <string name="password">Parola</string>
     <string name="profil">Profil</string>
+    <string name="connection_error">Bağlantı Hatası, Lütfen tekrar deneyiniz.</string>
+    <string name="must_not_be_here">Burada olmaman gerekiyor :(</string>
+    <string name="please_login_again">Tekrar giriş yapınız.</string>
 </resources>
