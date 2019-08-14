@@ -7,7 +7,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 import com.allybros.superego.R;
-import com.allybros.superego.activity.MainActivity;
+import com.allybros.superego.activity.SplashActivity;
 import com.allybros.superego.activity.UserPageActivity;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -38,7 +38,7 @@ public class LoginTask extends Activity {
         final String usernameEmpty= (String) currentContext.getString(R.string.usernameEmpty);
         final String passwordEmpty= (String) currentContext.getString(R.string.passwordEmpty);
         final String USER_INFORMATION_PREF="USER_INFORMATION_PREF";
-        final Intent mainActivityIntent=new Intent(currentContext,MainActivity.class);
+        final Intent mainActivityIntent=new Intent(currentContext, SplashActivity.class);
 
         RequestQueue queue = Volley.newRequestQueue(currentContext);
 
@@ -73,7 +73,8 @@ public class LoginTask extends Activity {
                             editor.putString("session_token", session_token);
                             editor.commit();
 
-                            Intent intent=new Intent(currentContext, UserPageActivity.class);
+                            Intent intent=new Intent(currentContext, SplashActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             currentContext.startActivity(intent);
                             break;
 

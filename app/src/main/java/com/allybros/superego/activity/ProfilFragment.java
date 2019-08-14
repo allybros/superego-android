@@ -26,7 +26,7 @@ public class ProfilFragment extends Fragment {
     private String username,userBio,email;
     private int userType;
     private ArrayList<Trait> scores;
-
+    private String session_token,uid,password;
 
     public ProfilFragment() {
 // Required empty public constructor
@@ -48,23 +48,22 @@ public class ProfilFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
 
-//        SharedPreferences pref = getContext().getSharedPreferences(USER_INFORMATION_PREF, getContext().MODE_PRIVATE);
-//
-//        String session_token = pref.getString("session_token", "");
-//        String uid=pref.getString("uid","");
-//        String password=pref.getString("password","");
+        SharedPreferences pref = getContext().getSharedPreferences(USER_INFORMATION_PREF, getContext().MODE_PRIVATE);
 
-//        if(session_token.equals("")) {
-//            LoginTask.loginTask(getContext(),uid,password);
-//        }
-//        session_token=pref.getString("session_token","");
+        session_token = pref.getString("session_token", "");
+        uid=pref.getString("uid","");
+        password=pref.getString("password","");
+
+        if(session_token.equals("")) {
+            LoginTask.loginTask(getContext(),uid,password);
+        }
+        session_token=pref.getString("session_token","");
 
         tvUserInfoProfilPage =(TextView) getView().findViewById(R.id.tvUserInfoProfilPage);
         tvUsernameProfilPage =(TextView) getView().findViewById(R.id.tvUsernameProfilPage);
         progressBarProfilPage = (BootstrapProgressBar) getView().findViewById(R.id.progressBarProfilPage);
         tvUserInfoProfilPage.setText(User.getUserBio());
         tvUsernameProfilPage.setText(User.getUsername());
-
         progressBarProfilPage.setProgress(10);
     }
 }
