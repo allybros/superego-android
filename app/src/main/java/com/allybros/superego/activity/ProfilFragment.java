@@ -59,11 +59,13 @@ public class ProfilFragment extends Fragment {
         }
         session_token=pref.getString("session_token","");
 
+
         tvUserInfoProfilPage =(TextView) getView().findViewById(R.id.tvUserInfoProfilPage);
         tvUsernameProfilPage =(TextView) getView().findViewById(R.id.tvUsernameProfilPage);
         progressBarProfilPage = (BootstrapProgressBar) getView().findViewById(R.id.progressBarProfilPage);
+
         tvUserInfoProfilPage.setText(User.getUserBio());
         tvUsernameProfilPage.setText(User.getUsername());
-        progressBarProfilPage.setProgress(10);
+        progressBarProfilPage.setProgress(User.getRated());
     }
 }

@@ -64,7 +64,7 @@
                 android:layout_margin="5dp"
                 app:animated="true"
                 app:bootstrapBrand="primary"
-                app:bootstrapProgress="50"
+                app:bootstrapMaxProgress="15"
                 app:striped="true" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
