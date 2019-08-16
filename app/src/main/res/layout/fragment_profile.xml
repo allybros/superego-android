@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -9,12 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="571dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="523dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="170dp"
         android:padding="8dp"
         app:cardCornerRadius="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/card_view1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -23,12 +25,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="8dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_image"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
                 android:src="@drawable/simple_profile_photo"
                 app:civ_border_color="#FF000000"
                 app:civ_border_width="1dp" />
@@ -46,7 +49,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
+                    android:layout_marginEnd="5dp"
                     android:src="@drawable/left_quote_16" />
 
                 <TextView
@@ -57,16 +60,73 @@
                     android:textColor="#000" />
             </LinearLayout>
 
-            <com.beardedhen.androidbootstrap.BootstrapProgressBar
-                android:id="@+id/progressBarProfilPage"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="10dp"
-                android:layout_margin="5dp"
-                app:animated="true"
-                app:bootstrapBrand="primary"
-                app:bootstrapMaxProgress="15"
-                app:striped="true" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.beardedhen.androidbootstrap.BootstrapLabel
+                    android:id="@+id/tvRatedProfilPage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    app:bootstrapBrand="success"
+                    app:bootstrapHeading="h6" />
+
+                <com.beardedhen.androidbootstrap.BootstrapProgressBar
+                    android:id="@+id/progressBarProfilPage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="10dp"
+                    android:layout_margin="5dp"
+                    app:animated="true"
+                    app:bootstrapBrand="primary"
+                    app:bootstrapMaxProgress="15"
+                    app:striped="true" />
+
+
+            </LinearLayout>
+
         </LinearLayout>
     </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="335dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="334dp"
+        android:padding="8dp"
+        app:cardCornerRadius="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card_view">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+
+                <ImageView
+                    android:id="@+id/deneme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/bootstrap_gray_lighter"
+                    android:src="@drawable/link_32"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
 
 </android.support.constraint.ConstraintLayout>
