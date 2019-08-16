@@ -1,13 +1,16 @@
 package com.allybros.superego.activity;
 
+import android.content.ClipData;
+
+import android.content.ClipboardManager;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.allybros.superego.R;
 import com.allybros.superego.api.LoadProfileTask;
@@ -20,13 +23,15 @@ import java.util.ArrayList;
 
 public class ProfilFragment extends Fragment {
 
-    TextView tvUsernameProfilPage,tvUserInfoProfilPage;
+    TextView tvUsernameProfilPage,tvRatedProfilPage,tvUserInfoProfilPage;
     BootstrapProgressBar progressBarProfilPage;
+    ImageView deneme;
     public static final String USER_INFORMATION_PREF="USER_INFORMATION_PREF";
     private String username,userBio,email;
     private int userType;
     private ArrayList<Trait> scores;
     private String session_token,uid,password;
+    private int rateLimit=15;   //This variable define from progressBarProfilPage that is in fragment_profile
 
     public ProfilFragment() {
 // Required empty public constructor
@@ -60,12 +65,28 @@ public class ProfilFragment extends Fragment {
         session_token=pref.getString("session_token","");
 
 
+        deneme=(ImageView)getView().findViewById(R.id.deneme);
         tvUserInfoProfilPage =(TextView) getView().findViewById(R.id.tvUserInfoProfilPage);
         tvUsernameProfilPage =(TextView) getView().findViewById(R.id.tvUsernameProfilPage);
         progressBarProfilPage = (BootstrapProgressBar) getView().findViewById(R.id.progressBarProfilPage);
+        tvRatedProfilPage=(TextView) getView().findViewById(R.id.tvRatedProfilPage);
 
         tvUserInfoProfilPage.setText(User.getUserBio());
         tvUsernameProfilPage.setText(User.getUsername());
-        progressBarProfilPage.setProgress(User.getRated());
+        if(User.getRated()>=rateLimit){
+            progressBarProfilPage.setProgress(rateLimit);
+        }else{
+            progressBarProfilPage.setProgress(User.getRated());
+        }
+        tvRatedProfilPage.setText(String.valueOf(User.getRated()+" değerlendirme"));
+
+        deneme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClipboardManager clipboard = (ClipboardManager) getContext().getSystemService(getContext().CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("label","Your Text");
+                clipboard.setPrimaryClip(clip);
+            }
+        });
     }
 }

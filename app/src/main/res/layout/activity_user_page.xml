@@ -6,15 +6,17 @@
     android:layout_height="match_parent"
     tools:context="com.allybros.superego.activity.UserPageActivity"
     android:orientation="vertical">
+
     <android.support.design.widget.TabLayout
         android:id="@+id/simpleTabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabTextColor="#FFFFFF" />
+        app:tabTextColor="@color/OpacityYellow"
+        android:background="@color/bootstrap_gray"/>
+
     <android.support.v4.view.ViewPager
         android:id="@+id/simpleViewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
 </LinearLayout>

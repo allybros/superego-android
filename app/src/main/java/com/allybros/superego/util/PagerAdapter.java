@@ -5,29 +5,36 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.allybros.superego.activity.ProfilFragment;
+import com.allybros.superego.activity.ResultsFragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PagerAdapter extends FragmentStatePagerAdapter {
-    int mNumOfTabs;
+    private final List<Fragment> mFragmentList = new ArrayList<>();
+    private final List<String> mFragmentTitleList = new ArrayList<>();
 
-    public PagerAdapter(FragmentManager fm, int NumOfTabs) {
-        super(fm);
-        this.mNumOfTabs = NumOfTabs;
+    public PagerAdapter(FragmentManager manager) {
+        super(manager);
     }
 
     @Override
     public Fragment getItem(int position) {
-
-        switch (position) {
-            case 0:
-                ProfilFragment tab1 = new ProfilFragment();
-                return tab1;
-            default:
-                return null;
-        }
+        return mFragmentList.get(position);
     }
 
     @Override
     public int getCount() {
-        return mNumOfTabs;
+        return mFragmentList.size();
+    }
+
+    public void addFrag(Fragment fragment, String title) {
+        mFragmentList.add(fragment);
+        mFragmentTitleList.add(title);
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return mFragmentTitleList.get(position);
     }
 }
