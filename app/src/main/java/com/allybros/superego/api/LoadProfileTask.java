@@ -64,6 +64,7 @@ public class LoadProfileTask{
                             String username=jsonObject.getString("username");
                             String user_bio=jsonObject.getString("user_bio");
                             String email=jsonObject.getString("email");
+                            int rated=jsonObject.getInt("rated");
                             ArrayList<Trait> traits=new ArrayList<>();
 
                             for (int i = 0; i < jsonObject.getJSONArray("scores").length(); i++) {
@@ -76,7 +77,9 @@ public class LoadProfileTask{
 
                                 traits.add(new Trait(traitNo,value));
                             }
+//{"status":10,"user_type":1,"username":"umutcanalacam","user_bio":"No one but me can save myself but it is too late!","email":"umutcanalacam@gmail.com","rated":31,"scores":[{"traitNo":0,"value":3.31},{"traitNo":11,"value":2},{"traitNo":10,"value":1.9},{"traitNo":13,"value":1.88},{"traitNo":1,"value":-1.72},{"traitNo":8,"value":1.01}]}
 
+                            User.setRated(rated);
                             User.setUserType(user_type);
                             User.setUsername(username);
                             User.setUserBio(user_bio);
