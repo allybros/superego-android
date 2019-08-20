@@ -1,8 +1,5 @@
-package com.allybros.superego.activity;
+package com.allybros.superego.fragments;
 
-import android.content.ClipData;
-
-import android.content.ClipboardManager;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,10 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.allybros.superego.R;
-import com.allybros.superego.api.LoadProfileTask;
 import com.allybros.superego.api.LoginTask;
-import com.allybros.superego.util.Trait;
-import com.allybros.superego.util.User;
+import com.allybros.superego.unit.Trait;
+import com.allybros.superego.unit.User;
 import com.beardedhen.androidbootstrap.BootstrapProgressBar;
 
 import java.util.ArrayList;
@@ -31,7 +27,7 @@ public class ProfilFragment extends Fragment {
     private int userType;
     private ArrayList<Trait> scores;
     private String session_token,uid,password;
-    private int rateLimit=15;   //This variable define from progressBarProfilPage that is in fragment_profile
+    private int rateLimit=15;   //This variable defined from progressBarProfilPage that is in fragment_profile
 
     public ProfilFragment() {
 // Required empty public constructor
@@ -48,6 +44,7 @@ public class ProfilFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -59,7 +56,8 @@ public class ProfilFragment extends Fragment {
         uid=pref.getString("uid","");
         password=pref.getString("password","");
 
-        if(session_token.equals("")) {
+
+        if(session_token.isEmpty()) {
             LoginTask.loginTask(getContext(),uid,password);
         }
         session_token=pref.getString("session_token","");
@@ -80,13 +78,5 @@ public class ProfilFragment extends Fragment {
         }
         tvRatedProfilPage.setText(String.valueOf(User.getRated()+" değerlendirme"));
 
-        deneme.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ClipboardManager clipboard = (ClipboardManager) getContext().getSystemService(getContext().CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("label","Your Text");
-                clipboard.setPrimaryClip(clip);
-            }
-        });
     }
 }

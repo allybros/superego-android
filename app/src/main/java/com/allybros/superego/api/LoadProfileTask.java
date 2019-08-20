@@ -8,8 +8,8 @@ import android.widget.Toast;
 import com.allybros.superego.R;
 import com.allybros.superego.activity.SplashActivity;
 import com.allybros.superego.activity.UserPageActivity;
-import com.allybros.superego.util.Trait;
-import com.allybros.superego.util.User;
+import com.allybros.superego.unit.Trait;
+import com.allybros.superego.unit.User;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -27,7 +27,7 @@ import java.util.Map;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
-
+//TODO:api paketindeki sınıfların metotları arasında bir iletişim yapılmalı.
 public class LoadProfileTask{
 
     public static final int SYSFAIL=0;
@@ -36,7 +36,7 @@ public class LoadProfileTask{
     public static final String USER_INFORMATION_PREF="USER_INFORMATION_PREF";
 
 
-    final private static String LOAD_PROFILE_URL ="http://192.168.0.41/api.allybros.com/superego/load-profile.php";
+    final private static String LOAD_PROFILE_URL ="https://api.allybros.com/superego/load-profile.php";
 
     public static void loadProfileTask(final Context currentContext, final String session_token){
 
@@ -67,17 +67,19 @@ public class LoadProfileTask{
                             int rated=jsonObject.getInt("rated");
                             ArrayList<Trait> traits=new ArrayList<>();
 
-                            for (int i = 0; i < jsonObject.getJSONArray("scores").length(); i++) {
-                                JSONObject iter= (JSONObject) jsonObject.getJSONArray("scores").get(i);
-                                int traitNo;
-                                float value;
+                            if(!jsonObject.isNull("scores")){
+                                for (int i = 0; i < jsonObject.getJSONArray("scores").length(); i++) {
+                                    JSONObject iter= (JSONObject) jsonObject.getJSONArray("scores").get(i);
+                                    int traitNo;
+                                    float value;
 
-                                traitNo=iter.getInt("traitNo");
-                                value=iter.getInt("value");
+                                    traitNo=iter.getInt("traitNo");
+                                    value=iter.getInt("value");
 
-                                traits.add(new Trait(traitNo,value));
+                                    traits.add(new Trait(traitNo,value));
+                                }
                             }
-//{"status":10,"user_type":1,"username":"umutcanalacam","user_bio":"No one but me can save myself but it is too late!","email":"umutcanalacam@gmail.com","rated":31,"scores":[{"traitNo":0,"value":3.31},{"traitNo":11,"value":2},{"traitNo":10,"value":1.9},{"traitNo":13,"value":1.88},{"traitNo":1,"value":-1.72},{"traitNo":8,"value":1.01}]}
+
 
                             User.setRated(rated);
                             User.setUserType(user_type);

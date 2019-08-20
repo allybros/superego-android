@@ -12,4 +12,5 @@
     <color name="loginScreenButtonColor">#b0ff3b0a</color>
     <color name="editText">#6a1b9a</color>
     <color name="trans">#00000000</color>
+    <color name="bgBottomNavigation">#1C2331</color>
 </resources>
