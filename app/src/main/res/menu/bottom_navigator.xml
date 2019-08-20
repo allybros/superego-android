@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/outline_group_white_48dp"
+        android:title="@string/profile" />
+    <item
+        android:id="@+id/navigation_results"
+        android:icon="@drawable/outline_format_align_justify_white_48dp"
+        android:title="@string/results" />
+</menu>

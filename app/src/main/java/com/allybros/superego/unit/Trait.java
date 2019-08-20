@@ -1,4 +1,4 @@
-package com.allybros.superego.util;
+package com.allybros.superego.unit;
 
 public class Trait {
     private int traitNo;

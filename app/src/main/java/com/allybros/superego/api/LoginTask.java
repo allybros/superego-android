@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 import com.allybros.superego.R;
+import com.allybros.superego.activity.LoginActivity;
 import com.allybros.superego.activity.SplashActivity;
 import com.allybros.superego.activity.UserPageActivity;
 import com.android.volley.AuthFailureError;
@@ -23,8 +24,9 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+//TODO:api paketindeki sınıfların metotları arasında bir iletişim yapılmalı.
 public class LoginTask extends Activity {
-    final private static String LOGIN_URL ="http://192.168.0.41/api.allybros.com/superego/login.php";
+    final private static String LOGIN_URL ="https://api.allybros.com/superego/login.php";
 
     public static final int LOGIN_FAILED=0;
     public static final int LOGIN_SUCCESS=10;
@@ -38,7 +40,8 @@ public class LoginTask extends Activity {
         final String usernameEmpty= (String) currentContext.getString(R.string.usernameEmpty);
         final String passwordEmpty= (String) currentContext.getString(R.string.passwordEmpty);
         final String USER_INFORMATION_PREF="USER_INFORMATION_PREF";
-        final Intent mainActivityIntent=new Intent(currentContext, SplashActivity.class);
+        final Intent mainActivityIntent=new Intent(currentContext, LoginActivity.class);
+            mainActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         RequestQueue queue = Volley.newRequestQueue(currentContext);
 
@@ -53,10 +56,7 @@ public class LoginTask extends Activity {
                 try {
                     JSONObject jsonObj=new JSONObject(response);
                     status = jsonObj.getInt("status");
-                    session_token=jsonObj.getString("session_token");
                     Log.d("LoginTask-status", String.valueOf(status));
-                    Log.d("LoginTask-session_token", session_token);
-
                     switch (status){
                         case LOGIN_FAILED:
                             Toast.makeText(currentContext, loginFailed, Toast.LENGTH_SHORT).show();
@@ -68,6 +68,7 @@ public class LoginTask extends Activity {
                             SharedPreferences pref = currentContext.getSharedPreferences(USER_INFORMATION_PREF, Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = pref.edit();
 
+                            session_token=jsonObj.getString("session_token");
                             editor.putString("uid",uid);
                             editor.putString("password",password);
                             editor.putString("session_token", session_token);

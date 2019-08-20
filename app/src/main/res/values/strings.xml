@@ -1,4 +1,5 @@
 <resources>
+    <string name="app_name">super-ego</string>
     <string name="todo">TODO</string>
     <string name="title_activity_profile_page">ProfilePage</string>
     <string name="title_activity_register_page">RegisterPage</string>
@@ -8,10 +9,12 @@
     <string name="passwordEmpty">Parola alanı boş olamaz</string>
     <string name="usernameOrEmail">Kullanıcı Adı veya E-mail</string>
     <string name="password">Parola</string>
-    <string name="profil">Profil</string>
+    <string name="profile">Profil</string>
     <string name="connection_error">Bağlantı Hatası, Lütfen tekrar deneyiniz.</string>
     <string name="must_not_be_here">Burada olmaman gerekiyor :(</string>
     <string name="please_login_again">Tekrar giriş yapınız.</string>
+    <string name="results">Sonuçlar</string>
+    <string name="logout">Oturumu Kapat</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

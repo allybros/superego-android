@@ -4,9 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.allybros.superego.activity.ProfilFragment;
-import com.allybros.superego.activity.ResultsFragment;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,4 +34,5 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
     public CharSequence getPageTitle(int position) {
         return mFragmentTitleList.get(position);
     }
+
 }

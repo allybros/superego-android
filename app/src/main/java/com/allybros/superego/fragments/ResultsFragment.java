@@ -1,25 +1,13 @@
-package com.allybros.superego.activity;
+package com.allybros.superego.fragments;
 
-import android.content.ClipData;
-
-import android.content.ClipboardManager;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-import com.allybros.superego.R;
-import com.allybros.superego.api.LoadProfileTask;
-import com.allybros.superego.api.LoginTask;
-import com.allybros.superego.util.Trait;
-import com.allybros.superego.util.User;
-import com.beardedhen.androidbootstrap.BootstrapProgressBar;
 
-import java.util.ArrayList;
+import com.allybros.superego.R;
 
 public class ResultsFragment extends Fragment {
 
