@@ -41,7 +41,7 @@ public class LoginTask extends Activity {
         final String passwordEmpty= (String) currentContext.getString(R.string.passwordEmpty);
         final String USER_INFORMATION_PREF="USER_INFORMATION_PREF";
         final Intent mainActivityIntent=new Intent(currentContext, LoginActivity.class);
-            mainActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mainActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         RequestQueue queue = Volley.newRequestQueue(currentContext);
 
@@ -60,7 +60,6 @@ public class LoginTask extends Activity {
                     switch (status){
                         case LOGIN_FAILED:
                             Toast.makeText(currentContext, loginFailed, Toast.LENGTH_SHORT).show();
-                            currentContext.startActivity(mainActivityIntent);
                             break;
 
                         case LOGIN_SUCCESS:
@@ -80,15 +79,11 @@ public class LoginTask extends Activity {
                             break;
 
                         case USERNAME_EMPTY:
-
                             Toast.makeText(currentContext, usernameEmpty, Toast.LENGTH_SHORT).show();
-                            currentContext.startActivity(mainActivityIntent);
                             break;
 
                         case PASSWORD_EMPTY:
-
                             Toast.makeText(currentContext, passwordEmpty, Toast.LENGTH_SHORT).show();
-                            currentContext.startActivity(mainActivityIntent);
                             break;
                     }
                 } catch (JSONException e) {

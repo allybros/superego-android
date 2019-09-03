@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimary">#1C2331</color>
     <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#FFFFFF</color>
     <color name="Blue">#C3020E77</color>
     <color name="OpacityYellow">#4afcdb73</color>
     <color name="loginScreenBottomComponentColor">#908b658b</color>
