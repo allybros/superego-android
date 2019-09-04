@@ -24,7 +24,6 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-//TODO:api paketindeki sınıfların metotları arasında bir iletişim yapılmalı.
 public class LoginTask extends Activity {
     final private static String LOGIN_URL ="https://api.allybros.com/superego/login.php";
 
