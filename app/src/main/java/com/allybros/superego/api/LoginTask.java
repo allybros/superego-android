@@ -10,6 +10,7 @@ import com.allybros.superego.R;
 import com.allybros.superego.activity.LoginActivity;
 import com.allybros.superego.activity.SplashActivity;
 import com.allybros.superego.activity.UserPageActivity;
+import com.allybros.superego.unit.ErrorCodes;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -25,20 +26,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LoginTask extends Activity {
-    final private static String LOGIN_URL ="https://api.allybros.com/superego/login.php";
-
-    public static final int LOGIN_FAILED=0;
-    public static final int LOGIN_SUCCESS=10;
-    public static final int USERNAME_EMPTY=20;
-    public static final int PASSWORD_EMPTY=26;
 
     public static void loginTask(final Context currentContext, final String uid, final String password) {
 
+        final String LOGIN_URL ="https://api.allybros.com/superego/login.php";
         final String loginFailed= (String) currentContext.getString(R.string.loginFailed);
         final String loginSuccess= (String) currentContext.getString(R.string.loginSuccess);
         final String usernameEmpty= (String) currentContext.getString(R.string.usernameEmpty);
         final String passwordEmpty= (String) currentContext.getString(R.string.passwordEmpty);
         final String USER_INFORMATION_PREF="USER_INFORMATION_PREF";
+
+
         final Intent mainActivityIntent=new Intent(currentContext, LoginActivity.class);
         mainActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
@@ -47,7 +45,6 @@ public class LoginTask extends Activity {
         StringRequest jsonRequest=new StringRequest(Request.Method.POST, LOGIN_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("Response_Login",response);
 
                 String session_token;
                 int status;
@@ -55,13 +52,12 @@ public class LoginTask extends Activity {
                 try {
                     JSONObject jsonObj=new JSONObject(response);
                     status = jsonObj.getInt("status");
-                    Log.d("LoginTask-status", String.valueOf(status));
                     switch (status){
-                        case LOGIN_FAILED:
+                        case ErrorCodes.SYSFAIL:
                             Toast.makeText(currentContext, loginFailed, Toast.LENGTH_SHORT).show();
                             break;
 
-                        case LOGIN_SUCCESS:
+                        case ErrorCodes.SUCCESS:
 
                             SharedPreferences pref = currentContext.getSharedPreferences(USER_INFORMATION_PREF, Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = pref.edit();
@@ -77,11 +73,11 @@ public class LoginTask extends Activity {
                             currentContext.startActivity(intent);
                             break;
 
-                        case USERNAME_EMPTY:
+                        case ErrorCodes.USERNAME_EMPTY:
                             Toast.makeText(currentContext, usernameEmpty, Toast.LENGTH_SHORT).show();
                             break;
 
-                        case PASSWORD_EMPTY:
+                        case ErrorCodes.PASSWORD_EMPTY:
                             Toast.makeText(currentContext, passwordEmpty, Toast.LENGTH_SHORT).show();
                             break;
                     }
