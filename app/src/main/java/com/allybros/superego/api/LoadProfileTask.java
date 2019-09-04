@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.allybros.superego.R;
 import com.allybros.superego.activity.SplashActivity;
 import com.allybros.superego.activity.UserPageActivity;
+import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.unit.Trait;
 import com.allybros.superego.unit.User;
 import com.android.volley.AuthFailureError;
@@ -27,12 +28,7 @@ import java.util.Map;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
-//TODO:api paketindeki sınıfların metotları arasında bir iletişim yapılmalı.
 public class LoadProfileTask{
-
-    public static final int SYSFAIL=0;
-    public static final int SUCCESS=10;
-    public static final int SESSION_EXPIRED=31;
     public static final String USER_INFORMATION_PREF="USER_INFORMATION_PREF";
 
 
@@ -51,14 +47,14 @@ public class LoadProfileTask{
                     JSONObject jsonObject=new JSONObject(response);
                     int status=jsonObject.getInt("status");
                     switch (status){
-                        case SYSFAIL:
+                        case ErrorCodes.SYSFAIL:
 
                             Toast.makeText(currentContext, currentContext.getString(R.string.please_login_again), Toast.LENGTH_SHORT).show();
                             intent=new Intent(currentContext, SplashActivity.class);
                             currentContext.startActivity(intent);
                             break;
 
-                        case SUCCESS:
+                        case ErrorCodes.SUCCESS:
 
                             int user_type=jsonObject.getInt("user_type");
                             String username=jsonObject.getString("username");
@@ -91,7 +87,7 @@ public class LoadProfileTask{
                             intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
                             currentContext.startActivity(intent);
                             break;
-                        case SESSION_EXPIRED:
+                        case ErrorCodes.SESSION_EXPIRED:
                             SharedPreferences pref = currentContext.getSharedPreferences(USER_INFORMATION_PREF, currentContext.MODE_PRIVATE);
                             String uid= pref.getString("uid", "");
                             String password=pref.getString("password","");
@@ -122,4 +118,7 @@ public class LoadProfileTask{
         queue.add(jsonRequest);
 
     }
+
+
+
 }

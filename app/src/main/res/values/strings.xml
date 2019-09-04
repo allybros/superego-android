@@ -15,6 +15,13 @@
     <string name="please_login_again">Tekrar giriş yapınız.</string>
     <string name="results">Sonuçlar</string>
     <string name="logout">Oturumu Kapat</string>
+    <string name="emailEmpty">Email alanı boş olamaz</string>
+    <string name="usernameNotLegal">Lütfen uygun bir kullanıcı adı alınız</string>
+    <string name="usernameAlreadyExist">Bu kullanıcı adı alınmış :(</string>emailNotLegal
+    <string name="emailAlreadyExist">Bu email ile kayıt olmuşsun :(</string>successRegister
+    <string name="emailNotLegal">Bizi kandırma seni çılgın, hadi e-postanı gir</string>
+    <string name="passwordNotLegal">Bu parolayı beğenmedik. Hadi yenisini gir :)))</string>
+    <string name="successRegister">Kaydın başarılı haydi giriş yapalım :))</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
