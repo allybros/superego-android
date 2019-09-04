@@ -1,14 +1,16 @@
 package com.allybros.superego.activity;
 
-import android.content.DialogInterface;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.allybros.superego.R;
@@ -17,6 +19,7 @@ import com.allybros.superego.fragments.ResultsFragment;
 import com.allybros.superego.util.PagerAdapter;
 
 public class UserPageActivity extends AppCompatActivity {
+    final String USER_INFORMATION_PREF="USER_INFORMATION_PREF";
 
     private ActionBar toolbar;
     ViewPager viewPager;
@@ -84,6 +87,28 @@ public class UserPageActivity extends AppCompatActivity {
         this.finishAffinity();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.action_bar,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_logout:
+
+                SharedPreferences pref = getApplicationContext().getSharedPreferences(USER_INFORMATION_PREF, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = pref.edit();
+                editor.clear();
+                editor.commit();
+                Intent intent=new Intent(getApplicationContext(), LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                getApplicationContext().startActivity(intent);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     private void setupViewPager(ViewPager viewPager) {
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager());
