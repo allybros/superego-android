@@ -33,6 +33,7 @@ public class LoadProfileTask{
 
 
     final private static String LOAD_PROFILE_URL ="https://api.allybros.com/superego/load-profile.php";
+    final private static String ALL_TRAITS_URL="https://api.allybros.com/superego/traits.php";
 
     public static void loadProfileTask(final Context currentContext, final String session_token){
 
@@ -119,6 +120,41 @@ public class LoadProfileTask{
 
     }
 
+    public static ArrayList<Trait> getAllTraits(final Context currentContext){
+        RequestQueue queue = Volley.newRequestQueue(currentContext);
+        final ArrayList<Trait> traits=new ArrayList<>();
 
+        final StringRequest jsonRequest=new StringRequest(Request.Method.GET, ALL_TRAITS_URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("getAllTraits",response.toString());
 
+                try {
+                    JSONObject jsonObject=new JSONObject(response);
+                    for (int i = 0; i < jsonObject.getJSONArray("traits").length(); i++) {
+                        JSONObject iter= (JSONObject) jsonObject.getJSONArray("traits").get(i);
+                        int traitNo;
+                        String positiveName,negativeName,positiveIconURL,negativeIconURL;
+
+                        traitNo=iter.getInt("traitNo");
+                        positiveName=iter.getString("positive");
+                        negativeName=iter.getString("negative");
+                        positiveIconURL=iter.getString("positive_icon_url");
+                        negativeIconURL=iter.getString("negative_icon_url");
+
+                        traits.add(new Trait(traitNo,positiveName,negativeName,positiveIconURL,negativeIconURL));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(currentContext,currentContext.getString(R.string.connection_error), Toast.LENGTH_SHORT);
+            }
+        });
+        queue.add(jsonRequest);
+        return traits;
+    }
 }

@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.allybros.superego.R;
+import com.allybros.superego.api.LogoutTask;
 import com.allybros.superego.fragments.ProfilFragment;
 import com.allybros.superego.fragments.ResultsFragment;
 import com.allybros.superego.util.PagerAdapter;
@@ -97,11 +98,14 @@ public class UserPageActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.action_logout:
-
+                String session_token;
                 SharedPreferences pref = getApplicationContext().getSharedPreferences(USER_INFORMATION_PREF, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = pref.edit();
+                session_token=pref.getString("session_token","");
                 editor.clear();
                 editor.commit();
+                LogoutTask.logoutTask(getApplicationContext(),session_token);
+
                 Intent intent=new Intent(getApplicationContext(), LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 getApplicationContext().startActivity(intent);
@@ -111,9 +115,12 @@ public class UserPageActivity extends AppCompatActivity {
     }
 
     private void setupViewPager(ViewPager viewPager) {
+        ResultsFragment resultsFragment = new ResultsFragment();
+        resultsFragment.setActivity(this);
+
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager());
         adapter.addFrag(new ProfilFragment(), getResources().getString(R.string.profile));
-        adapter.addFrag(new ResultsFragment(), getResources().getString(R.string.results));
+        adapter.addFrag(resultsFragment, getResources().getString(R.string.results));
         viewPager.setAdapter(adapter);
     }
 }

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.allybros.superego.api.LoadProfileTask;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -22,5 +24,18 @@ public class ExampleInstrumentedTest {
         Context appContext = InstrumentationRegistry.getTargetContext();
 
         assertEquals("com.elestirapp1.allybros.elestirapp1", appContext.getPackageName());
+    }
+
+    @Test
+    public void loadProfileTest() {
+        Context appContext = InstrumentationRegistry.getTargetContext();
+        String sessionToken = "9885baf124eb9320c19732ba649d85d8";
+        LoadProfileTask.loadProfileTask(appContext, sessionToken);
+
+    }
+    @Test
+    public void loadTraits(){
+        Context appContext=InstrumentationRegistry.getTargetContext();
+        LoadProfileTask.getAllTraits(appContext);
     }
 }

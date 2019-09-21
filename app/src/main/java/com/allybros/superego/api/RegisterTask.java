@@ -103,9 +103,7 @@ public class RegisterTask {
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             currentContext.startActivity(intent);
                             break;
-
                     }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
