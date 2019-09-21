@@ -15,6 +15,7 @@
     <string name="please_login_again">Tekrar giriş yapınız.</string>
     <string name="results">Sonuçlar</string>
     <string name="logout">Oturumu Kapat</string>
+    <string name="logoutSuccesful">Çıkış Başarılı</string>
     <string name="emailEmpty">Email alanı boş olamaz</string>
     <string name="usernameNotLegal">Lütfen uygun bir kullanıcı adı alınız</string>
     <string name="usernameAlreadyExist">Bu kullanıcı adı alınmış :(</string>emailNotLegal
