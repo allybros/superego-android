@@ -1,5 +1,6 @@
 package com.allybros.superego.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -26,11 +27,19 @@ public class RegisterActivity extends AppCompatActivity {
 
         btSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
-            //TODO://Aggrement value must define by a view component
+            //TODO:Aggrement value must define by a view component
             public void onClick(View v) {
                 RegisterTask.registerTask(getApplicationContext(),etRegisterUsername.getText().toString(),etRegisterMail.getText().toString(),etRegisterPassword.getText().toString(),true);
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

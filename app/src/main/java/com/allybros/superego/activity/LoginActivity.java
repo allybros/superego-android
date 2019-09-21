@@ -26,8 +26,8 @@ public class LoginActivity extends AppCompatActivity {
 
         btLogin=(Button) findViewById(R.id.btLogin);
         btRegister=(Button) findViewById(R.id.btRegister);
-        etMail=(EditText )findViewById(R.id.etMail);
-        etPassword=(EditText )findViewById(R.id.etPassword);
+        etMail=(EditText)findViewById(R.id.etMail);
+        etPassword=(EditText)findViewById(R.id.etPassword);
 
 
         btLogin.setOnClickListener(new View.OnClickListener() {
