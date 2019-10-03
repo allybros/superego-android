@@ -5,5 +5,10 @@
         android:icon="@drawable/outline_exit_to_app_white_36dp"
         android:title="Logout"
         app:showAsAction="always" />
+    <item
+    android:id="@+id/action_settings"
+    android:icon="@drawable/outline_settings_applications_white_36dp"
+    android:title="Settings"
+    app:showAsAction="always" />
 </menu>
 
