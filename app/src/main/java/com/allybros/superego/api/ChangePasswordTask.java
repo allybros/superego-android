@@ -21,7 +21,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-//TODO: Bu işlev tam olarak bitmedi. Geri dönüş karşılaması falan yapılacak. Temel olarak çalışıyor
+//TODO: Bu işlev tam olarak bitmedi. Geri dönüş karşılaması falan yapılacak. Temel olarak çalışıyor.
 public class ChangePasswordTask {
     public static void changePasswordTask (final Context currentContext, final String oldPassword,  final String sessionToken, final String newPassword, final String newPasswordAgain){
         final String loginFailed= (String) currentContext.getString(R.string.loginFailed);
