@@ -9,6 +9,16 @@ public class User {
     private static ArrayList<Trait> scores;
     private static int rated;
 
+    public static String getTestId() {
+        return testId;
+    }
+
+    public static void setTestId(String testId) {
+        User.testId = testId;
+    }
+
+    private static String testId;
+
     public static int getRated() {
         return rated;
     }

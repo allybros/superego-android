@@ -97,7 +97,6 @@ public class LoginTask extends Activity {
             @Override
             protected Map<String,String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("login-submit", "True");
                 params.put("uid", uid);
                 params.put("password", password);
                 return params;
