@@ -60,6 +60,7 @@ public class LoadProfileTask{
                             int user_type=jsonObject.getInt("user_type");
                             String username=jsonObject.getString("username");
                             String user_bio=jsonObject.getString("user_bio");
+                            String test_id=jsonObject.getString("test_id");
                             String email=jsonObject.getString("email");
                             int rated=jsonObject.getInt("rated");
                             ArrayList<Trait> traits=new ArrayList<>();
@@ -83,6 +84,7 @@ public class LoadProfileTask{
                             User.setUsername(username);
                             User.setUserBio(user_bio);
                             User.setEmail(email);
+                            User.setTestId("https://demo.allybros.com/superego/rate.php?test="+test_id);
                             User.setScores(traits);
                             intent=new Intent(currentContext, UserPageActivity.class);
                             intent.setFlags(FLAG_ACTIVITY_NEW_TASK);

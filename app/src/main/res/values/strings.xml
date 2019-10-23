@@ -26,4 +26,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="profile_page_information_text">Arkadaşlarınıza sizin kişilik özelliklerinizi \ndeğerledirmesi için hazırladığınız testi \ngönderin</string>
+    <string name="shareTest">Testini Paylaş!</string>
+    <string name="title_activity_change_password">ChangePasswordActivity</string>
 </resources>

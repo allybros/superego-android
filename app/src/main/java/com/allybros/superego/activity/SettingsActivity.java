@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.allybros.superego.R;
-import com.allybros.superego.dialogs.passwordChangeFragment;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -23,10 +22,9 @@ public class SettingsActivity extends AppCompatActivity {
         btChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                passwordChangeFragment changePassword = new passwordChangeFragment();
-                FragmentManager fm = getSupportFragmentManager();
-
-                changePassword.show(fm, "Custom Dialog Fragment");
+                Intent intent=new Intent(SettingsActivity.this,PasswordChangeActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
