@@ -3,9 +3,9 @@ package com.allybros.superego.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.allybros.superego.R;
 import com.allybros.superego.api.LoadProfileTask;

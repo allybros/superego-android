@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,13 +27,11 @@
             android:orientation="vertical"
             android:padding="8dp">
 
-            <de.hdodenhof.circleimageview.CircleImageView
+            <ImageView
                 android:id="@+id/profile_image"
                 android:layout_width="96dp"
                 android:layout_height="96dp"
-                android:src="@drawable/simple_profile_photo"
-                app:civ_border_color="#FF000000"
-                app:civ_border_width="1dp" />
+                android:src="@drawable/simple_profile_photo"/>
 
             <TextView
                 android:id="@+id/tvUsernameProfilPage"
@@ -87,7 +85,7 @@
             </LinearLayout>
 
         </LinearLayout>
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
     <com.beardedhen.androidbootstrap.AwesomeTextView
         android:id="@+id/tvAppInformationProfilePage"
@@ -171,7 +169,7 @@
             android:src="@drawable/outline_publish_white_36" />
     </LinearLayout>
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/card_view1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -191,19 +189,14 @@
             android:layout_height="wrap_content"
             >
 
-            <SearchView
+            <androidx.appcompat.widget.SearchView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="2dp"/>
-
-
-
-
-
         </LinearLayout>
 
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
