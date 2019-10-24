@@ -1,7 +1,8 @@
 package com.allybros.superego.api;
 
+
+
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -23,7 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 //TODO: Bu işlev tam olarak bitmedi. Geri dönüş karşılaması falan yapılacak. Temel olarak çalışıyor.
 public class ChangePasswordTask {
-    public static void changePasswordTask (final Context currentContext, final String oldPassword,  final String sessionToken, final String newPassword, final String newPasswordAgain){
+    public static void changePasswordTask (final Context currentContext, final String oldPassword, final String sessionToken, final String newPassword, final String newPasswordAgain){
         final String loginFailed= (String) currentContext.getString(R.string.loginFailed);
         final String loginSuccess= (String) currentContext.getString(R.string.loginSuccess);
         final String usernameEmpty= (String) currentContext.getString(R.string.usernameEmpty);

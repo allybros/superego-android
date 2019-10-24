@@ -1,8 +1,11 @@
 package com.allybros.superego.activity;
 
+
+
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.allybros.superego.R;
 

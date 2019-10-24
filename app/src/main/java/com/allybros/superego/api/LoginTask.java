@@ -1,15 +1,15 @@
 package com.allybros.superego.api;
 
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.widget.Toast;
+
 import com.allybros.superego.R;
 import com.allybros.superego.activity.LoginActivity;
 import com.allybros.superego.activity.SplashActivity;
-import com.allybros.superego.activity.UserPageActivity;
 import com.allybros.superego.unit.ErrorCodes;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;

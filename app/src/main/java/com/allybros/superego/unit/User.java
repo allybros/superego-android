@@ -1,5 +1,6 @@
 package com.allybros.superego.unit;
 
+
 import java.util.ArrayList;
 
 public class User {

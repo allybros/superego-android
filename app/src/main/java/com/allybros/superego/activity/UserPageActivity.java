@@ -4,20 +4,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import com.allybros.superego.R;
 import com.allybros.superego.api.LogoutTask;
 import com.allybros.superego.fragments.ProfilFragment;
 import com.allybros.superego.fragments.ResultsFragment;
 import com.allybros.superego.util.PagerAdapter;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class UserPageActivity extends AppCompatActivity {
     final String USER_INFORMATION_PREF="USER_INFORMATION_PREF";
