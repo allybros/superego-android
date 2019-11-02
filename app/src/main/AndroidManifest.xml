@@ -16,11 +16,9 @@
         <activity android:name=".activity.PasswordChangeActivity"></activity>
         <activity android:name=".activity.AddTestActivity" />
         <activity android:name=".activity.SettingsActivity" />
-        <activity android:name=".activity.LoginActivity" />
-
-        <uses-library
-            android:name="org.apache.http.legacy"
-            android:required="false" />
+        <activity android:name=".activity.LoginActivity"
+                  android:theme="@style/Theme.MaterialComponents.NoActionBar">
+        </activity>
 
         <activity
             android:name=".activity.SplashActivity"

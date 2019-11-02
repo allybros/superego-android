@@ -1,49 +1,49 @@
 package com.allybros.superego.activity;
 
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.sip.SipSession;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.R;
-import com.allybros.superego.api.LoadProfileTask;
 import com.allybros.superego.api.LoginTask;
 import com.allybros.superego.unit.ErrorCodes;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class LoginActivity extends AppCompatActivity {
-    private Button btLogin;
-    private Button btRegister;
-    private EditText etMail;
-    private EditText etPassword;
-    public TextInputLayout passwordTextInput;
+    private MaterialButton btLogin;
+    private MaterialButton btRegister;
+    private TextInputEditText etMail;
+    private TextInputEditText etPassword;
+    public TextInputLayout passwordTextInput, usernameTextInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        btLogin=(Button) findViewById(R.id.btLogin);
-        btRegister=(Button) findViewById(R.id.btRegister);
-        etMail=(EditText)findViewById(R.id.etMail);
-        etPassword=(EditText)findViewById(R.id.etPassword);
+        usernameTextInput =(TextInputLayout) findViewById(R.id.username_text_input);
+        btLogin=(MaterialButton) findViewById(R.id.btLogin);
+        btRegister=(MaterialButton) findViewById(R.id.btRegister);
+        etMail=(TextInputEditText)findViewById(R.id.etMail);
+        etPassword=(TextInputEditText)findViewById(R.id.etPassword);
         passwordTextInput=(TextInputLayout)findViewById(R.id.password_text_input);
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("status-share"));
 
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                passwordTextInput.setErrorEnabled(false);
+                usernameTextInput.setErrorEnabled(false);
                 LoginTask.loginTask(getApplicationContext(),etMail.getText().toString(),etPassword.getText().toString());
 
 
@@ -75,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     break;
                 case ErrorCodes.USERNAME_EMPTY:
-                    passwordTextInput.setError(getString(R.string.usernameEmpty));
+                    usernameTextInput.setError(getString(R.string.usernameEmpty));
 
                     break;
 
