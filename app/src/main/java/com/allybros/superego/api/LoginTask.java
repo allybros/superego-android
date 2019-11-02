@@ -6,9 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -24,7 +21,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -64,9 +60,7 @@ public class LoginTask extends Activity {
                     status = jsonObj.getInt("status");
                     switch (status){
                         case ErrorCodes.SYSFAIL:
-                            Toast.makeText(currentContext, loginFailed, Toast.LENGTH_SHORT).show();
-
-                            Log.d("sender", "Broadcasting message");
+                            Log.d("sender", "Status Message");
                             Intent intent1 = new Intent("status-share");
                             intent1.putExtra("status", ErrorCodes.SYSFAIL);
                             LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent1);
@@ -90,16 +84,14 @@ public class LoginTask extends Activity {
                             break;
 
                         case ErrorCodes.USERNAME_EMPTY:
-                            Toast.makeText(currentContext, usernameEmpty, Toast.LENGTH_SHORT).show();
-                            Log.d("sender", "Broadcasting message");
+                            Log.d("sender", "Status Message");
                             Intent intent2 = new Intent("status-share");
                             intent2.putExtra("status", ErrorCodes.USERNAME_EMPTY);
                             LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent2);
                             break;
 
                         case ErrorCodes.PASSWORD_EMPTY:
-                            Toast.makeText(currentContext, passwordEmpty, Toast.LENGTH_SHORT).show();
-                            Log.d("sender", "Broadcasting message");
+                            Log.d("sender", "Status Message");
                             Intent intent3 = new Intent("status-share");
                             intent3.putExtra("status", ErrorCodes.PASSWORD_EMPTY);
                             LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent3);

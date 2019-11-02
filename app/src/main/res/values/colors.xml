@@ -8,6 +8,9 @@
     <color name="loginScreenBottomComponentColor">#908b658b</color>
     <color name="bottomComponentColor">#b70216c7</color>
     <color name="Black">#000000</color>
+    <color name="EditTextColor1">#DD540492</color>
+    <color name="EditTextColor2">#C38420CF</color>
+    <color name="ButtonColorSignUp">#41DBA2FF</color>
     <color name="White">#ffffff</color>
     <color name="loginScreenButtonColor">#b0ff3b0a</color>
     <color name="editText">#6a1b9a</color>
@@ -16,6 +19,5 @@
     <color name="buttonNewTestColor">#62009E</color>
     <color name="buttonCopyColor">#00398F</color>
     <color name="buttonPublishColor">#00A525</color>
-
-
+    <color name="buttonLoginScreen">#9933CC</color>
 </resources>
