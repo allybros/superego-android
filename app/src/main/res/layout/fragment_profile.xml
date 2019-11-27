@@ -80,10 +80,7 @@
                     app:bootstrapBrand="primary"
                     app:bootstrapMaxProgress="15"
                     app:striped="true" />
-
-
             </LinearLayout>
-
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -94,109 +91,59 @@
         android:layout_margin="5dp"
         android:layout_marginTop="1dp"
         android:background="@drawable/textview_bg"
-        android:padding="15dp"
         android:elevation="15dp"
+        android:padding="15dp"
         android:text="man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?"
         app:bootstrapBrand="secondary"
         app:layout_constraintTop_toBottomOf="@+id/card_view"
         tools:layout_editor_absoluteX="5dp" />
 
 
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-
-        android:layout_marginStart="5dp"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/addTest"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="45dp"
-        android:background="@color/buttonNewTestColor"
-        android:elevation="10dp"
-        app:layout_constraintEnd_toStartOf="@+id/linearLayout4"
+        android:layout_marginEnd="8dp"
+        android:gravity="center"
+        app:backgroundTint="@color/buttonNewTestColor"
+        app:icon="@drawable/outline_add_white_36"
+        app:layout_constraintEnd_toStartOf="@+id/copyTestLink"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAppInformationProfilePage">
+        app:layout_constraintTop_toBottomOf="@+id/tvAppInformationProfilePage" />
 
-        <ImageView
-            android:id="@+id/addTest"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/outline_add_white_36" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-
-        android:layout_marginStart="85dp"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/copyTestLink"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="126dp"
-        android:background="@color/buttonCopyColor"
-        android:elevation="10dp"
-        app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
-        app:layout_constraintStart_toEndOf="@+id/linearLayout3"
-        app:layout_constraintTop_toBottomOf="@+id/tvAppInformationProfilePage">
+        android:layout_marginEnd="8dp"
+        android:gravity="center"
+        app:backgroundTint="@color/buttonCopyColor"
+        app:icon="@drawable/outline_link_white_36"
+        app:layout_constraintEnd_toStartOf="@+id/shareTest"
+        app:layout_constraintStart_toEndOf="@+id/addTest"
+        app:layout_constraintTop_toBottomOf="@+id/tvAppInformationProfilePage" />
 
-        <ImageView
-            android:id="@+id/copyTestLink"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:srcCompat="@drawable/outline_link_white_36" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-
-        android:layout_marginStart="97dp"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/shareTest"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="283dp"
-        android:background="@color/buttonPublishColor"
-        android:elevation="10dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center"
+        app:backgroundTint="@color/buttonPublishColor"
+        app:icon="@drawable/outline_publish_white_36"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/linearLayout4"
-        app:layout_constraintTop_toBottomOf="@+id/tvAppInformationProfilePage">
+        app:layout_constraintStart_toEndOf="@+id/copyTestLink"
+        app:layout_constraintTop_toBottomOf="@+id/tvAppInformationProfilePage" />
 
-        <ImageView
-            android:id="@+id/shareTest"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/outline_publish_white_36" />
-    </LinearLayout>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_view1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:elevation="15dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="5dp"
-        android:padding="8dp"
-        app:cardCornerRadius="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            >
-
-            <androidx.appcompat.widget.SearchView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="2dp"/>
-        </LinearLayout>
-
-
-    </androidx.cardview.widget.CardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
