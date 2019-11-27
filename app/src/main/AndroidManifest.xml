@@ -37,7 +37,7 @@
         <activity
             android:name=".activity.UserPageActivity"
             android:label="@string/title_activity_profile_page"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/Theme.MaterialComponents.Light" />
         <activity
             android:name=".activity.RegisterActivity"
             android:label="@string/title_activity_register_page"

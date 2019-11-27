@@ -146,7 +146,6 @@ public class LoadProfileTask{
                         negativeName=iter.getString("negative");
                         positiveIconURL=iter.getString("positive_icon_url");
                         negativeIconURL=iter.getString("negative_icon_url");
-
                         traits.add(new Trait(traitNo,positiveName,negativeName,positiveIconURL,negativeIconURL));
                     }
                 } catch (JSONException e) {

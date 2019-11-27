@@ -57,6 +57,7 @@ public class LoginTask extends Activity {
 
                 try {
                     JSONObject jsonObj=new JSONObject(response);
+                    Log.d("sego-Response",response.toString());
                     status = jsonObj.getInt("status");
                     switch (status){
                         case ErrorCodes.SYSFAIL:

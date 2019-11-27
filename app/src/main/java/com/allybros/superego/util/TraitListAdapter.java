@@ -32,7 +32,7 @@ public class TraitListAdapter extends ArrayAdapter<Trait> {
     public TraitListAdapter(Context context, ArrayList<Trait> traits) {
         super(context, R.layout.trait_list_row,traits);
     }
-
+//TODO:Değişken isimleri düzenlenmeli
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater Inflater=LayoutInflater.from(getContext());
@@ -43,6 +43,7 @@ public class TraitListAdapter extends ArrayAdapter<Trait> {
 
         final ImageView imgHaber=(ImageView) customView.findViewById(R.id.traitImage);
         TextView tvTitle=(TextView) customView.findViewById(R.id.traitName);
+
 
 
         if (tmp.getValue()>=0){

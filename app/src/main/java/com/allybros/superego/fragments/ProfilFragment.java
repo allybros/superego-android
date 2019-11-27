@@ -22,12 +22,15 @@ import com.allybros.superego.api.LoginTask;
 import com.allybros.superego.unit.User;
 import com.beardedhen.androidbootstrap.AwesomeTextView;
 import com.beardedhen.androidbootstrap.BootstrapProgressBar;
+import com.beardedhen.androidbootstrap.api.attributes.BootstrapBrand;
+import com.google.android.material.button.MaterialButton;
 
 public class ProfilFragment extends Fragment {
 
     TextView tvUsernameProfilPage,tvRatedProfilPage,tvUserInfoProfilPage,tvAppInformationProfilePage;
     BootstrapProgressBar progressBarProfilPage;
-    ImageView profileImage,addTest,copyTestLink, shareTest;
+    MaterialButton addTest,copyTestLink, shareTest;
+    ImageView profileImage;
     public static final String USER_INFORMATION_PREF="USER_INFORMATION_PREF";
     private String session_token,uid,password;
     private int rateLimit=15;   //This variable defined from progressBarProfilPage that is in fragment_profile
@@ -68,9 +71,9 @@ public class ProfilFragment extends Fragment {
 
 
         profileImage=(ImageView)getView().findViewById(R.id.profile_image);
-        addTest =(ImageView) getView().findViewById(R.id.addTest);
-        copyTestLink=(ImageView) getView().findViewById(R.id.copyTestLink);
-        shareTest =(ImageView) getView().findViewById(R.id.shareTest);
+        addTest =(MaterialButton) getView().findViewById(R.id.addTest);
+        copyTestLink=(MaterialButton) getView().findViewById(R.id.copyTestLink);
+        shareTest =(MaterialButton) getView().findViewById(R.id.shareTest);
         tvUserInfoProfilPage =(TextView) getView().findViewById(R.id.tvUserInfoProfilPage);
         tvUsernameProfilPage =(TextView) getView().findViewById(R.id.tvUsernameProfilPage);
         progressBarProfilPage = (BootstrapProgressBar) getView().findViewById(R.id.progressBarProfilPage);
