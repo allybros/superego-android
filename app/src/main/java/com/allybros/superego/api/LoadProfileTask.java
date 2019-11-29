@@ -132,7 +132,7 @@ public class LoadProfileTask{
         final StringRequest jsonRequest=new StringRequest(Request.Method.GET, ALL_TRAITS_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("getAllTraits",response.toString());
+                //Log.d("getAllTraits",response.toString());
 
                 try {
                     JSONObject jsonObject=new JSONObject(response);

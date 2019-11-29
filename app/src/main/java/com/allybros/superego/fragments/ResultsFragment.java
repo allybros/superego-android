@@ -12,8 +12,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.allybros.superego.R;
-import com.allybros.superego.api.LoadProfileTask;
-import com.allybros.superego.unit.Trait;
 import com.allybros.superego.unit.User;
 import com.allybros.superego.util.TraitListAdapter;
 
@@ -44,6 +42,7 @@ public class ResultsFragment extends Fragment {
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        //TODO:Sanırım burada Oylama yoksa liste oluşturmayı deniyor bu düzeltilmeli!
         super.onActivityCreated(savedInstanceState);
         listViewTraits =(ListView) getView().findViewById(R.id.listViewTraits);
 

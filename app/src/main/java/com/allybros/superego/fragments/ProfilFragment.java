@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import androidx.fragment.app.Fragment;
 
 import com.allybros.superego.R;
 import com.allybros.superego.activity.AddTestActivity;
+import com.allybros.superego.api.AddTestTask;
 import com.allybros.superego.api.LoginTask;
 import com.allybros.superego.unit.User;
 import com.beardedhen.androidbootstrap.AwesomeTextView;
@@ -95,9 +97,11 @@ public class ProfilFragment extends Fragment {
         addTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getContext(), AddTestActivity.class);
-                startActivity(intent);
-                getActivity().finish();
+
+                final SharedPreferences pref = getContext().getSharedPreferences(USER_INFORMATION_PREF, Context.MODE_PRIVATE);
+                final String session_token=pref.getString("session-token","");
+                Log.d("sessionTokenProfilFragm",session_token);
+                AddTestTask.addTestTask(getContext());
             }
         });
 
