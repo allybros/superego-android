@@ -74,9 +74,13 @@ public class LoginTask extends Activity {
                             SharedPreferences.Editor editor = pref.edit();
 
                             session_token=jsonObj.getString("session_token");
+                            //TODO:Bu session tokenin static olması durumu çözülmeli
+                            SplashActivity.session_token=session_token;
+
                             editor.putString("uid",uid);
                             editor.putString("password",password);
                             editor.putString("session_token", session_token);
+                            Log.d("sessionTokenLogin",session_token);
                             editor.commit();
 
                             Intent intent=new Intent(currentContext, SplashActivity.class);
