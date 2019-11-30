@@ -13,8 +13,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.allybros.superego.R;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 public class AddTestActivity extends AppCompatActivity {
-//TODO:Sayfa yalnızca oluşturuldu. Bir ara yapılır inş
+
     WebView addTestWebview;
     public static String addPageHTML;
     @Override
@@ -25,9 +28,14 @@ public class AddTestActivity extends AppCompatActivity {
         WebSettings webSettings = addTestWebview.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
-        String encodedHtml = Base64.encodeToString(addPageHTML.getBytes(),
-                Base64.NO_PADDING);
-        addTestWebview.loadData(encodedHtml, "text/html", "base64");
+        String url = "https://demo.allybros.com/superego/create.php";
+        String postData = null;
+        try {
+            postData = "session-token=" + URLEncoder.encode(SplashActivity.session_token, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        };
+        addTestWebview.postUrl(url,postData.getBytes());
     }
 
     @Override
