@@ -40,8 +40,6 @@ public class AddTestTask extends Activity {
         StringRequest jsonRequest=new StringRequest(Request.Method.POST, ADD_TEST_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                AddTestActivity.addPageHTML=response;
-                Log.d("site",response.toString());
                 Intent addTestIntent= new Intent(currentContext,AddTestActivity.class);
                 currentContext.startActivity(addTestIntent);
             }

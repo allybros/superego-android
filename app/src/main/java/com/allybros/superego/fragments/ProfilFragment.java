@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -101,7 +102,10 @@ public class ProfilFragment extends Fragment {
                 final SharedPreferences pref = getContext().getSharedPreferences(USER_INFORMATION_PREF, Context.MODE_PRIVATE);
                 final String session_token=pref.getString("session-token","");
                 Log.d("sessionTokenProfilFragm",session_token);
-                AddTestTask.addTestTask(getContext());
+
+
+                Intent addTestIntent= new Intent(getContext(),AddTestActivity.class);
+                startActivity(addTestIntent);
             }
         });
 
@@ -111,6 +115,7 @@ public class ProfilFragment extends Fragment {
                 ClipboardManager clipboard = (ClipboardManager)getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("testUrl", User.getTestId());
                 clipboard.setPrimaryClip(clip);
+                Toast.makeText(getContext(),getString(R.string.link_copied),Toast.LENGTH_SHORT).show();
 
             }
         });
