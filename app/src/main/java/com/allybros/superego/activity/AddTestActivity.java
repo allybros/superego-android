@@ -6,18 +6,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Base64;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.allybros.superego.R;
+import com.r0adkll.slidr.Slidr;
+import com.r0adkll.slidr.model.SlidrInterface;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 public class AddTestActivity extends AppCompatActivity {
 
+    private SlidrInterface slidr;
     WebView addTestWebview;
     public static String addPageHTML;
     @Override
@@ -36,6 +40,9 @@ public class AddTestActivity extends AppCompatActivity {
             e.printStackTrace();
         };
         addTestWebview.postUrl(url,postData.getBytes());
+        slidr= Slidr.attach(this);
+        slidr.unlock();
+
     }
 
     @Override
