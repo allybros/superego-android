@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activity.PasswordChangeActivity"></activity>
         <activity android:name=".activity.AddTestActivity"
-                  android:theme="@style/Theme.MaterialComponents.NoActionBar"/>
+                  android:theme="@style/AppTheme.AddActivityTheme"/>
         <activity android:name=".activity.SettingsActivity" />
         <activity android:name=".activity.LoginActivity"
                   android:theme="@style/Theme.MaterialComponents.NoActionBar">

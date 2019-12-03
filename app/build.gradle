@@ -36,4 +36,5 @@ dependencies {
     implementation 'me.majiajie:pager-bottom-tab-strip:2.3.0'
     implementation 'com.beardedhen:androidbootstrap:2.3.2'
     implementation 'com.github.2coffees1team:GlideToVectorYou:v1.2.0'
+    implementation 'com.r0adkll:slidableactivity:2.1.0'
 }

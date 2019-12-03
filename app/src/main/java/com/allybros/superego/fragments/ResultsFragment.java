@@ -16,7 +16,7 @@ import com.allybros.superego.unit.User;
 import com.allybros.superego.util.TraitListAdapter;
 
 import java.util.ArrayList;
-
+//TODO:Şurada bir kontrol koyulması lazım eğer result yoksa listeyi doldurmaya çalışmasın hata veriyor
 public class ResultsFragment extends Fragment {
     ListView listViewTraits;
     Activity activity;
