@@ -13,17 +13,27 @@
         android:roundIcon="@drawable/ab_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".activity.PasswordChangeActivity"></activity>
+
         <activity android:name=".activity.AddTestActivity"
                   android:theme="@style/AppTheme.AddActivityTheme"/>
+
         <activity android:name=".activity.SettingsActivity" />
+
         <activity android:name=".activity.LoginActivity"
-                  android:theme="@style/Theme.MaterialComponents.NoActionBar">
+                  android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
         <activity
-            android:name=".activity.SplashActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:name=".activity.UserPageActivity"
+            android:label="@string/title_activity_profile_page"/>
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:label="@string/title_activity_register_page" />
+
+        <activity android:name=".activity.SplashActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,17 +42,8 @@
         </activity>
 
         <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
-
-        <activity
-            android:name=".activity.UserPageActivity"
-            android:label="@string/title_activity_profile_page"
-            android:theme="@style/Theme.MaterialComponents.Light" />
-        <activity
-            android:name=".activity.RegisterActivity"
-            android:label="@string/title_activity_register_page"
-            android:theme="@style/Theme.AppCompat.Light" />
+        android:name="preloaded_fonts"
+        android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

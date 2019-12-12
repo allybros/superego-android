@@ -16,16 +16,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.allybros.superego.R;
 import com.allybros.superego.activity.AddTestActivity;
-import com.allybros.superego.api.AddTestTask;
 import com.allybros.superego.api.LoginTask;
 import com.allybros.superego.unit.User;
 import com.beardedhen.androidbootstrap.AwesomeTextView;
 import com.beardedhen.androidbootstrap.BootstrapProgressBar;
-import com.beardedhen.androidbootstrap.api.attributes.BootstrapBrand;
 import com.google.android.material.button.MaterialButton;
 
 public class ProfilFragment extends Fragment {
@@ -82,7 +82,6 @@ public class ProfilFragment extends Fragment {
         progressBarProfilPage = (BootstrapProgressBar) getView().findViewById(R.id.progressBarProfilPage);
         tvRatedProfilPage=(TextView) getView().findViewById(R.id.tvRatedProfilPage);
         tvAppInformationProfilePage=(AwesomeTextView) getView().findViewById(R.id.tvAppInformationProfilePage);
-
 
 
         tvUserInfoProfilPage.setText(User.getUserBio());

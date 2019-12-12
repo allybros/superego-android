@@ -20,4 +20,5 @@
     <color name="buttonCopyColor">#00398F</color>
     <color name="buttonPublishColor">#00A525</color>
     <color name="buttonLoginScreen">#9933CC</color>
+    <color name="logoColor">#1D2331</color>
 </resources>
