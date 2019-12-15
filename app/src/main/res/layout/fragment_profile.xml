@@ -10,10 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:elevation="15dp"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="5dp"
+        android:layout_marginEnd="16dp"
+        android:elevation="15dp"
         android:padding="8dp"
         app:cardCornerRadius="5dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,7 +31,7 @@
                 android:id="@+id/profile_image"
                 android:layout_width="96dp"
                 android:layout_height="96dp"
-                android:src="@drawable/simple_profile_photo"/>
+                android:src="@drawable/simple_profile_photo" />
 
             <TextView
                 android:id="@+id/tvUsernameProfilPage"
@@ -89,61 +89,66 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:layout_marginTop="1dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/textview_bg"
         android:elevation="15dp"
         android:padding="15dp"
         android:text="man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?"
         app:bootstrapBrand="secondary"
-        app:layout_constraintTop_toBottomOf="@+id/card_view"
-        tools:layout_editor_absoluteX="5dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card_view" />
 
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/addTest"
         style="@style/Widget.MaterialComponents.Button"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginStart="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         android:gravity="center"
         app:backgroundTint="@color/buttonNewTestColor"
         app:icon="@drawable/outline_add_white_36"
-        app:layout_constraintEnd_toStartOf="@+id/copyTestLink"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/add_test"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvAppInformationProfilePage" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/copyTestLink"
         style="@style/Widget.MaterialComponents.Button"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginStart="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         android:gravity="center"
+        android:text="@string/link_copied"
         app:backgroundTint="@color/buttonCopyColor"
         app:icon="@drawable/outline_link_white_36"
-        app:layout_constraintEnd_toStartOf="@+id/shareTest"
-        app:layout_constraintStart_toEndOf="@+id/addTest"
-        app:layout_constraintTop_toBottomOf="@+id/tvAppInformationProfilePage" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shareTest" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/shareTest"
         style="@style/Widget.MaterialComponents.Button"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginStart="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         android:gravity="center"
+        android:text="@string/shareTest"
         app:backgroundTint="@color/buttonPublishColor"
         app:icon="@drawable/outline_publish_white_36"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/copyTestLink"
-        app:layout_constraintTop_toBottomOf="@+id/tvAppInformationProfilePage" />
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addTest" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
