@@ -30,5 +30,5 @@
     <string name="shareTest">Testini Paylaş!</string>
     <string name="title_activity_change_password">ChangePasswordActivity</string>
     <string name="link_copied">Test linkiniz kopyalandı :)</string>
-    <string name="addPage">Test Ekle</string>
+    <string name="add_test">Test Ekle</string>
 </resources>

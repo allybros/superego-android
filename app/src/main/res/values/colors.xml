@@ -21,4 +21,5 @@
     <color name="buttonPublishColor">#00A525</color>
     <color name="buttonLoginScreen">#9933CC</color>
     <color name="logoColor">#1D2331</color>
+    <color name="grey">#BBB4B4</color>
 </resources>
