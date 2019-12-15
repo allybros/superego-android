@@ -3,18 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:clickable="false"
     android:layout_height="match_parent"
     android:layout_gravity="center">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/trait_layout"
+        android:clickable="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
+<!--
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardView"
+            android:id="@+id/trait_card_view"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
+            android:layout_margin="10dp"
+            android:elevation="15dp"
+            android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,23 +37,49 @@
                     android:layout_height="wrap_content"
                     android:background="@color/trans"
                     android:gravity="center"
+                    android:paddingTop="10dp"
+                    android:paddingRight="15dp"
                     android:text="TextView"
                     android:textSize="25dp" />
 
             </LinearLayout>
 
 
-        </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>-->
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/trait_card_view"
+            android:layout_width="match_parent"
+            app:backgroundTint="@color/grey"
+            android:layout_height="70dp"
+            android:enabled="false"
+            android:layout_margin="10dp"
+            android:elevation="50dp"
+            android:clickable="false"
+            app:roundedCorners="true"
+            android:textAlignment="viewEnd"
+            android:text="asdfsdfasdfasdfadsf"
+            android:padding="8dp"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+        </com.google.android.material.button.MaterialButton>
 
         <ImageView
             android:id="@+id/traitImage"
             android:layout_width="50dp"
+            android:elevation="50dp"
             android:layout_height="50dp"
-            android:layout_marginStart="25dp"
-            android:translationZ="2dp"
-            android:layout_marginBottom="25dp"
-            app:layout_constraintBottom_toBottomOf="@+id/cardView"
-            app:layout_constraintStart_toStartOf="@+id/cardView"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="35dp"
+            android:translationZ="5dp"
+            app:layout_constraintBottom_toBottomOf="@+id/trait_card_view"
+            app:layout_constraintStart_toStartOf="@+id/trait_card_view"
+            app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
 
         <androidx.constraintlayout.widget.Group
