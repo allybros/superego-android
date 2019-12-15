@@ -22,4 +22,7 @@
     <color name="buttonLoginScreen">#9933CC</color>
     <color name="logoColor">#1D2331</color>
     <color name="grey">#BBB4B4</color>
+    <color name="grey2">#FCFCFC</color>
+    <color name="newBlue">#C30007FF</color>
+
 </resources>
