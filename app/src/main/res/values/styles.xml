@@ -4,6 +4,7 @@
     <style name="AppTheme" parent="Theme.MaterialComponents.Light">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="android:textColorPrimary">@color/White</item>
         <item name="android:statusBarColor">@color/logoColor</item>
     </style>
 
@@ -15,10 +16,9 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:statusBarColor">@color/logoColor</item>
-
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" >
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark" >
     </style>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Dark" />
@@ -28,4 +28,5 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:action">true</item>
     </style>
+
 </resources>

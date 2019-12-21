@@ -26,17 +26,31 @@
             android:gravity="center"
             android:orientation="vertical"
             android:padding="8dp">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/profile_image"
-                android:layout_width="96dp"
-                android:layout_height="96dp"
-                android:src="@drawable/simple_profile_photo" />
+                <com.allybros.superego.util.CircledNetworkImageView
+                    android:id="@+id/profile_image"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"/>
+<!--                <ImageView
+                    android:id="@+id/profile_image"
+                    android:layout_width="96dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_height="96dp"
+                    android:src="@drawable/simple_profile_photo" />-->
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/tvUsernameProfilPage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/comfortaa_light"
                 android:text="/@username" />
 
             <LinearLayout
@@ -53,25 +67,30 @@
                     android:id="@+id/tvUserInfoProfilPage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_light"
+                    android:gravity="center"
                     android:text="man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?"
                     android:textColor="#000" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:gravity="center">
 
-                <com.beardedhen.androidbootstrap.BootstrapLabel
+                <TextView
                     android:id="@+id/tvRatedProfilPage"
                     android:layout_width="wrap_content"
+                    android:textColor="@color/White"
+                    android:background="@drawable/score_bg"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:text="TESTSCORE"
-                    app:bootstrapBrand="success"
-                    app:bootstrapHeading="h6" />
+                    android:elevation="5dp"
+                    android:padding="5dp"
+                    android:fontFamily="@font/comfortaa_light"
+                    android:text="TESTSCORE"/>
 
-                <com.beardedhen.androidbootstrap.BootstrapProgressBar
+                <!--<com.beardedhen.androidbootstrap.BootstrapProgressBar
                     android:id="@+id/progressBarProfilPage"
                     android:layout_width="wrap_content"
                     android:layout_height="10dp"
@@ -79,12 +98,32 @@
                     app:animated="true"
                     app:bootstrapBrand="primary"
                     app:bootstrapMaxProgress="15"
-                    app:striped="true" />
+                    app:striped="true" />-->
+                <com.vlad1m1r.lemniscate.funny.HeartProgressView
+                    android:id="@+id/heart1"
+                    android:visibility="invisible"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:duration="1000"
+                    app:hasHole="false"
+                    app:lineColor="@color/buttonPublishColor"
+                    app:maxLineLength="0.8"
+                    app:minLineLength="0.4"
+                    app:sizeMultiplier="1"
+                    app:strokeWidth="1dp"/>
+                <ProgressBar
+                    android:id="@+id/progressBarProfilPage"
+                    android:layout_width="match_parent"
+                    android:max="15"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
+
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <com.beardedhen.androidbootstrap.AwesomeTextView
+    <TextView
         android:id="@+id/tvAppInformationProfilePage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -92,11 +131,13 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        android:fontFamily="@font/comfortaa_light"
         android:background="@drawable/textview_bg"
         android:elevation="15dp"
         android:padding="15dp"
+        android:gravity="center"
         android:text="man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?"
-        app:bootstrapBrand="secondary"
+        android:textColor="@color/White"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/card_view" />
@@ -110,6 +151,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        android:fontFamily="@font/comfortaa_light"
         android:gravity="center"
         app:backgroundTint="@color/buttonNewTestColor"
         app:icon="@drawable/outline_add_white_36"
@@ -122,12 +164,14 @@
         android:id="@+id/copyTestLink"
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="match_parent"
+        android:fontFamily="@font/comfortaa_light"
+
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:gravity="center"
-        android:text="@string/link_copied"
+        android:text="@string/link_copy"
         app:backgroundTint="@color/buttonCopyColor"
         app:icon="@drawable/outline_link_white_36"
         app:layout_constraintEnd_toEndOf="parent"
@@ -141,6 +185,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:fontFamily="@font/comfortaa_light"
         android:layout_marginEnd="16dp"
         android:gravity="center"
         android:text="@string/shareTest"

@@ -10,6 +10,9 @@ public class User {
     private static ArrayList<Trait> scores;
     private static int rated;
 
+
+    private static String image;
+
     public static String getTestId() {
         return testId;
     }
@@ -68,6 +71,13 @@ public class User {
         User.scores = scores;
     }
 
+    public static String getImage() {
+        return image;
+    }
+
+    public static void setImage(String image) {
+        User.image = image;
+    }
 
     public User(int userType, String username, String userBio, String email, ArrayList<Trait> scores,int rated) {
         this.userType = userType;
