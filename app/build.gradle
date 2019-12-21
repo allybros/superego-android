@@ -37,4 +37,6 @@ dependencies {
     implementation 'com.beardedhen:androidbootstrap:2.3.2'
     implementation 'com.github.2coffees1team:GlideToVectorYou:v1.2.0'
     implementation 'com.r0adkll:slidableactivity:2.1.0'
+    implementation 'com.github.VladimirWrites:Lemniscate:2.0.2'
+
 }

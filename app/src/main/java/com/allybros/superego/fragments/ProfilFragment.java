@@ -1,43 +1,51 @@
 package com.allybros.superego.fragments;
 
 
+import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.R;
 import com.allybros.superego.activity.AddTestActivity;
 import com.allybros.superego.api.LoginTask;
+import com.allybros.superego.api.NameFindTask;
+import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.unit.User;
-import com.beardedhen.androidbootstrap.AwesomeTextView;
-import com.beardedhen.androidbootstrap.BootstrapProgressBar;
+import com.allybros.superego.util.CircledNetworkImageView;
+import com.allybros.superego.util.CustomVolleyRequestQueue;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
 import com.google.android.material.button.MaterialButton;
+import com.vlad1m1r.lemniscate.funny.HeartProgressView;
 
 public class ProfilFragment extends Fragment {
 
     TextView tvUsernameProfilPage,tvRatedProfilPage,tvUserInfoProfilPage,tvAppInformationProfilePage;
-    BootstrapProgressBar progressBarProfilPage;
+    ProgressBar progressBarProfilPage;
     MaterialButton addTest,copyTestLink, shareTest;
-    ImageView profileImage;
+    HeartProgressView heart1;
+    CircledNetworkImageView profileImage;
     public static final String USER_INFORMATION_PREF="USER_INFORMATION_PREF";
     private String session_token,uid,password;
-    private int rateLimit=15;   //This variable defined from progressBarProfilPage that is in fragment_profile
-
+    private ImageLoader mImageLoader;
 
     public ProfilFragment() {
 // Required empty public constructor
@@ -73,21 +81,27 @@ public class ProfilFragment extends Fragment {
         session_token=pref.getString("session_token","");
 
 
-        profileImage=(ImageView)getView().findViewById(R.id.profile_image);
+        profileImage=(CircledNetworkImageView) getView().findViewById(R.id.profile_image);
         addTest =(MaterialButton) getView().findViewById(R.id.addTest);
         copyTestLink=(MaterialButton) getView().findViewById(R.id.copyTestLink);
         shareTest =(MaterialButton) getView().findViewById(R.id.shareTest);
         tvUserInfoProfilPage =(TextView) getView().findViewById(R.id.tvUserInfoProfilPage);
         tvUsernameProfilPage =(TextView) getView().findViewById(R.id.tvUsernameProfilPage);
-        progressBarProfilPage = (BootstrapProgressBar) getView().findViewById(R.id.progressBarProfilPage);
+        progressBarProfilPage = (ProgressBar) getView().findViewById(R.id.progressBarProfilPage);
         tvRatedProfilPage=(TextView) getView().findViewById(R.id.tvRatedProfilPage);
-        tvAppInformationProfilePage=(AwesomeTextView) getView().findViewById(R.id.tvAppInformationProfilePage);
+        tvAppInformationProfilePage=(TextView) getView().findViewById(R.id.tvAppInformationProfilePage);
+        heart1=(HeartProgressView) getView().findViewById(R.id.heart1);
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mMessageReceiver, new IntentFilter("status-profilImageName"));
+
+        int rateLimit=progressBarProfilPage.getMax();
+        NameFindTask.nameFindTask(getContext());
 
 
         tvUserInfoProfilPage.setText(User.getUserBio());
         tvUsernameProfilPage.setText(User.getUsername());
         if(User.getRated()>=rateLimit){
-            progressBarProfilPage.setProgress(rateLimit);
+            progressBarProfilPage.setVisibility(View.GONE);
+            heart1.setVisibility(View.VISIBLE);
         }else{
             progressBarProfilPage.setProgress(User.getRated());
         }
@@ -115,6 +129,8 @@ public class ProfilFragment extends Fragment {
                 ClipData clip = ClipData.newPlainText("testUrl", User.getTestId());
                 clipboard.setPrimaryClip(clip);
                 Toast.makeText(getContext(),getString(R.string.link_copied),Toast.LENGTH_SHORT).show();
+                NameFindTask.nameFindTask(getContext());
+
 
             }
         });
@@ -132,6 +148,24 @@ public class ProfilFragment extends Fragment {
             }
         });
 
+    }
+    // Our handler for received Intents. This will be called whenever an Intent
+// with an action named "custom-event-name" is broadcasted.
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Instantiate the RequestQueue.
+            mImageLoader = CustomVolleyRequestQueue.getInstance(getContext()).getImageLoader();
+            //Image URL - This can point to any image file supported by Android
+            final String url = "https://api.allybros.com/superego/images.php?get="+User.getImage();
+            mImageLoader.get(url, ImageLoader.getImageListener(profileImage,R.drawable.simple_profile_photo, android.R.drawable.ic_dialog_alert));
+            profileImage.setImageUrl(url, mImageLoader);
+        }
+    };
+    @Override
+    public void onDestroy() {
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mMessageReceiver);
+        super.onDestroy();
     }
 
 }

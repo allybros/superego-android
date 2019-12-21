@@ -10,6 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/trait_layout"
         android:clickable="false"
+        android:background="@color/White"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 <!--
@@ -44,29 +45,35 @@
 
             </LinearLayout>
 
-
+Begendiklerim:
+comfortaa_light
+finger_paint
+press_start_2p
+special_elite
+walter_turncoat
         </androidx.cardview.widget.CardView>-->
 
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/trait_card_view"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="match_parent"
-            app:backgroundTint="@color/grey"
             android:layout_height="70dp"
-            android:enabled="false"
             android:layout_margin="10dp"
-            android:elevation="50dp"
             android:clickable="false"
-            app:roundedCorners="true"
-            android:textAlignment="viewEnd"
-            android:text="asdfsdfasdfasdfadsf"
+            android:enabled="false"
+            android:fontFamily="@font/finger_paint"
             android:padding="8dp"
-
+            android:textColor="@color/logoColor"
+            android:textSize="15dp"
+            app:backgroundTint="@color/White"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-        </com.google.android.material.button.MaterialButton>
+            app:layout_constraintTop_toTopOf="parent"
+            app:roundedCorners="true"
+            app:strokeColor="@color/logoColor"></com.google.android.material.button.MaterialButton>
+                <!--android:textAlignment="viewEnd"-->
 
         <ImageView
             android:id="@+id/traitImage"
@@ -74,6 +81,7 @@
             android:elevation="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="15dp"
+            android:background="@color/logoColor"
             android:layout_marginTop="2dp"
             android:layout_marginBottom="35dp"
             android:translationZ="5dp"
