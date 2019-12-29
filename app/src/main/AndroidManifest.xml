@@ -19,9 +19,11 @@
         <activity android:name=".activity.AddTestActivity"
                   android:theme="@style/AppTheme.AddActivityTheme"/>
 
-        <activity android:name=".activity.SettingsActivity" />
+        <activity android:name=".activity.SettingsActivity"
+                  android:windowSoftInputMode="adjustPan"/>
 
         <activity android:name=".activity.LoginActivity"
+                  android:windowSoftInputMode="adjustPan"
                   android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
