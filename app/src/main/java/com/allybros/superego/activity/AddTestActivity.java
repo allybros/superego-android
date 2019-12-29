@@ -23,6 +23,8 @@ import androidx.core.view.OneShotPreDrawListener;
 import com.allybros.superego.R;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrInterface;
+import com.vlad1m1r.lemniscate.BernoullisBowProgressView;
+import com.vlad1m1r.lemniscate.BernoullisProgressView;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -35,7 +37,7 @@ public class AddTestActivity extends AppCompatActivity {
 
     private SlidrInterface slidr;
     WebView addTestWebview;
-    private ProgressBar progressBar;
+    private BernoullisBowProgressView progressBar;
     public static String addPageHTML;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +48,7 @@ public class AddTestActivity extends AppCompatActivity {
         addTestWebview.getSettings().setJavaScriptEnabled(true);
 
 
-        progressBar=(ProgressBar)findViewById(R.id.progress_circular);
+        progressBar=(BernoullisBowProgressView)findViewById(R.id.progress_circular);
         String url = "https://demo.allybros.com/superego/create.php";
 //        Map<String,String> postData = new HashMap<>();
 //        postData.put("session-token",SplashActivity.session_token);
