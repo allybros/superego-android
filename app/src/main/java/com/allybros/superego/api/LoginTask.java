@@ -31,7 +31,7 @@ import java.util.Map;
 public class LoginTask extends Activity {
 
 
-
+//TODO:Bu işlemde parola hatalı uyarısı eksik
 
 
     public static void loginTask(final Context currentContext, final String uid, final String password) {
@@ -62,7 +62,7 @@ public class LoginTask extends Activity {
                     switch (status){
                         case ErrorCodes.SYSFAIL:
                             Log.d("sender", "Status Message");
-                            Intent intent1 = new Intent("status-share");
+                            Intent intent1 = new Intent("login-status-share");
                             intent1.putExtra("status", ErrorCodes.SYSFAIL);
                             LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent1);
 
@@ -74,7 +74,7 @@ public class LoginTask extends Activity {
                             SharedPreferences.Editor editor = pref.edit();
 
                             session_token=jsonObj.getString("session_token");
-                            //TODO:Bu session tokenin static olması durumu çözülmeli
+                            //TODO:Bu session tokenin static olması durumu çözülmeli //yeni komut bunu çözmek yerine bu sisteme geçelim
                             SplashActivity.session_token=session_token;
 
                             editor.putString("uid",uid);
@@ -90,14 +90,14 @@ public class LoginTask extends Activity {
 
                         case ErrorCodes.USERNAME_EMPTY:
                             Log.d("sender", "Status Message");
-                            Intent intent2 = new Intent("status-share");
+                            Intent intent2 = new Intent("login-status-share");
                             intent2.putExtra("status", ErrorCodes.USERNAME_EMPTY);
                             LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent2);
                             break;
 
                         case ErrorCodes.PASSWORD_EMPTY:
                             Log.d("sender", "Status Message");
-                            Intent intent3 = new Intent("status-share");
+                            Intent intent3 = new Intent("login-status-share");
                             intent3.putExtra("status", ErrorCodes.PASSWORD_EMPTY);
                             LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent3);
 

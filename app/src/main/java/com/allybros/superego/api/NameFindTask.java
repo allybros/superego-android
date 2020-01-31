@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class NameFindTask extends Activity {
+    //Bu sistem simdilik kalmalı. daha sonra iyileştirilecek
 
     public static void nameFindTask(final Context currentContext) {
 

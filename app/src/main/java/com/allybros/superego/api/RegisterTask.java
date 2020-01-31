@@ -3,10 +3,14 @@ package com.allybros.superego.api;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
+
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.R;
 import com.allybros.superego.activity.LoginActivity;
+import com.allybros.superego.unit.Api;
 import com.allybros.superego.unit.ErrorCodes;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -43,56 +47,63 @@ public class RegisterTask {
 
 
         RequestQueue queue = Volley.newRequestQueue(currentContext);
+        Log.d("LOGG","LOGG");
 
         final StringRequest jsonRequest=new StringRequest(Request.Method.POST, REGISTER_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
+                Log.d("Response",response.toString());
                 int status;
                 try {
                     JSONObject jsonObj = new JSONObject(response);
                     status = jsonObj.getInt("status");
 
                     switch (status) {
-
-                        case ErrorCodes.USERNAME_EMPTY:
-                            Toast.makeText(currentContext, usernameEmpty, Toast.LENGTH_SHORT).show();
-                            break;
-
-                        case ErrorCodes.EMAIL_EMPTY:
-                            Toast.makeText(currentContext, emailEmpty, Toast.LENGTH_SHORT).show();
-                            break;
-
-                        case ErrorCodes.PASSWORD_EMPTY:
-                            Toast.makeText(currentContext, passwordEmpty, Toast.LENGTH_SHORT).show();
-                            break;
-
                         case ErrorCodes.SYSFAIL:
-                            Toast.makeText(currentContext, loginFailed, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(currentContext, loginFailed, Toast.LENGTH_SHORT).show();
+                            Intent intent1 = new Intent("register-status-share");
+                            intent1.putExtra("status", ErrorCodes.SYSFAIL);
+                            LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent1);
                             break;
 
                         case ErrorCodes.USERNAME_NOT_LEGAL:
-                            Toast.makeText(currentContext, usernameNotLegal, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(currentContext, usernameNotLegal, Toast.LENGTH_SHORT).show();
+                            Intent intent2 = new Intent("register-status-share");
+                            intent2.putExtra("status", ErrorCodes.USERNAME_NOT_LEGAL);
+                            LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent2);
                             break;
 
                         case ErrorCodes.USERNAME_ALREADY_EXIST:
-                            Toast.makeText(currentContext, usernameAlreadyExist, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(currentContext, usernameAlreadyExist, Toast.LENGTH_SHORT).show();
+                            Intent intent3 = new Intent("register-status-share");
+                            intent3.putExtra("status", ErrorCodes.USERNAME_ALREADY_EXIST);
+                            LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent3);
                             break;
 
                         case ErrorCodes.EMAIL_ALREADY_EXIST:
-                            Toast.makeText(currentContext, emailAlreadyExist, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(currentContext, emailAlreadyExist, Toast.LENGTH_SHORT).show();
+                            Intent intent4 = new Intent("register-status-share");
+                            intent4.putExtra("status", ErrorCodes.EMAIL_ALREADY_EXIST);
+                            LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent4);
                             break;
 
                         case ErrorCodes.EMAIL_NOT_LEGAL:
-                            Toast.makeText(currentContext, emailNotLegal, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(currentContext, emailNotLegal, Toast.LENGTH_SHORT).show();
+                            Intent intent5 = new Intent("register-status-share");
+                            intent5.putExtra("status", ErrorCodes.EMAIL_NOT_LEGAL);
+                            LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent5);
                             break;
 
                         case ErrorCodes.PASSWORD_NOT_LEGAL:
-                            Toast.makeText(currentContext, passwordNotLegal, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(currentContext, passwordNotLegal, Toast.LENGTH_SHORT).show();
+                            Intent intent6 = new Intent("register-status-share");
+                            intent6.putExtra("status", ErrorCodes.PASSWORD_NOT_LEGAL);
+                            LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent6);
                             break;
 
                         case ErrorCodes.SUCCESS:
-                            Toast.makeText(currentContext, successRegister, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(currentContext, successRegister, Toast.LENGTH_SHORT).show();
                             Intent intent=new Intent(currentContext, LoginActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             currentContext.startActivity(intent);
@@ -113,12 +124,11 @@ public class RegisterTask {
             @Override
             protected Map<String,String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-
                 params.put("username", username);
                 params.put("email", email);
                 params.put("password", password);
-                params.put("agreement", String.valueOf(agreement));
-
+                params.put("conditions", String.valueOf(agreement));
+                params.put("g-recaptcha-response", Api.getRECAPTCHA_SKIP());
                 return params;
             }
         };

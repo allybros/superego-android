@@ -24,5 +24,6 @@
     <color name="grey">#BBB4B4</color>
     <color name="grey2">#FCFCFC</color>
     <color name="newBlue">#C30007FF</color>
+    <color name="WhiteOpacity">#52FFFFFF</color>
 
 </resources>

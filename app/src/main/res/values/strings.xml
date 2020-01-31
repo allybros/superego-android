@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">insigtof.me</string>
+    <string name="app_name">insightof.me</string>
     <string name="todo">TODO</string>
     <string name="title_activity_profile_page">ProfilePage</string>
     <string name="title_activity_register_page">RegisterPage</string>
@@ -17,7 +17,7 @@
     <string name="logout">Oturumu Kapat</string>
     <string name="logoutSuccesful">Çıkış Başarılı</string>
     <string name="emailEmpty">Email alanı boş olamaz</string>
-    <string name="usernameNotLegal">Lütfen uygun bir kullanıcı adı alınız</string>
+    <string name="usernameNotLegal">Lütfen uygun bir kullanıcı adı seçiniz</string>
     <string name="usernameAlreadyExist">Bu kullanıcı adı alınmış :(</string>emailNotLegal
     <string name="emailAlreadyExist">Bu email ile kayıt olmuşsun :(</string>successRegister
     <string name="emailNotLegal">Bizi kandırma seni çılgın, hadi e-postanı gir</string>
@@ -33,4 +33,9 @@
     <string name="link_copy">TEST ADRESINI KOPYALA</string>
     <string name="add_test">TEST EKLE</string>
     <string name="login">Giriş Yap</string>
+    <string name="pleaseTryAgain">Lütfen tekrar deneyiniz.</string>
+    <string name="register">Bize Katıl</string>
+
+    <string name="aggrementLink"> Kullanım koşulları\'nı okudum ve kabul ediyorum.</string>
+    <string name="username_must_fill">Kullanıcı alanı boş olamaz</string>
 </resources>

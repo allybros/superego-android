@@ -39,4 +39,5 @@ dependencies {
     implementation 'com.r0adkll:slidableactivity:2.1.0'
     implementation 'com.github.VladimirWrites:Lemniscate:2.0.2'
 
+
 }

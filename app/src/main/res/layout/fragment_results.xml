@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.ResultsFragment"
-    android:paddingBottom="20dp">
+    android:paddingBottom="55dp">
 
     <ListView
         android:id="@+id/listViewTraits"
@@ -13,7 +13,7 @@
         android:clickable="false"
         android:divider="@null"
         android:dividerHeight="0dp"
-        android:paddingBottom="35dp">
+        >
 
     </ListView>
 
