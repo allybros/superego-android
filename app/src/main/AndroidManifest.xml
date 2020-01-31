@@ -3,6 +3,7 @@
     package="com.allybros.superego">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -13,28 +14,29 @@
         android:roundIcon="@drawable/ab_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".activity.PasswordChangeActivity"></activity>
-
-        <activity android:name=".activity.AddTestActivity"
-                  android:theme="@style/AppTheme.AddActivityTheme"/>
-
-        <activity android:name=".activity.SettingsActivity"
-                  android:windowSoftInputMode="adjustPan"/>
-
-        <activity android:name=".activity.LoginActivity"
-                  android:windowSoftInputMode="adjustPan"
-                  android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-
+        <activity android:name=".activity.PasswordChangeActivity" />
+        <activity
+            android:name=".activity.AddTestActivity"
+            android:theme="@style/AppTheme.AddActivityTheme" />
+        <activity
+            android:name=".activity.SettingsActivity"
+            android:theme="@style/AppTheme.AddActivityTheme"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.UserPageActivity"
-            android:label="@string/title_activity_profile_page"/>
+            android:label="@string/title_activity_profile_page"
+            android:launchMode="singleTop" />
         <activity
             android:name=".activity.RegisterActivity"
-            android:label="@string/title_activity_register_page" />
-
-        <activity android:name=".activity.SplashActivity"
+            android:label="@string/title_activity_register_page"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".activity.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

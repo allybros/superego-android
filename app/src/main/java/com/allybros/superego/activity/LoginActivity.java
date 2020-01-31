@@ -7,7 +7,6 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -37,7 +36,8 @@ public class LoginActivity extends AppCompatActivity {
         etMail=(TextInputEditText)findViewById(R.id.etMail);
         etPassword=(TextInputEditText)findViewById(R.id.etPassword);
         passwordTextInput=(TextInputLayout)findViewById(R.id.password_text_input);
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("status-share"));
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("login-status-share"));
 
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +61,12 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
     // Our handler for received Intents. This will be called whenever an Intent
 // with an action named "custom-event-name" is broadcasted.
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
@@ -68,20 +74,20 @@ public class LoginActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             int status = intent.getIntExtra("status",0);
             Log.d("receiver", "Got message: " + status);
-
+//TODO:PAROLA HATALI durumu eksik
             switch (status){
+
                 case ErrorCodes.SYSFAIL:
                     passwordTextInput.setError(getString(R.string.loginFailed));
-
+                    usernameTextInput.setError(getString(R.string.loginFailed));
                     break;
+
                 case ErrorCodes.USERNAME_EMPTY:
                     usernameTextInput.setError(getString(R.string.usernameEmpty));
-
                     break;
 
                 case ErrorCodes.PASSWORD_EMPTY:
                     passwordTextInput.setError(getString(R.string.passwordEmpty));
-
                     break;
             }
 

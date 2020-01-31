@@ -2,12 +2,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android" >
     <item
         android:id="@+id/action_logout"
-        android:icon="@drawable/outline_exit_to_app_white_36dp"
+        android:icon="@drawable/outline_exit_to_app_white_24"
         android:title="Logout"
         app:showAsAction="always" />
     <item
     android:id="@+id/action_settings"
-    android:icon="@drawable/outline_settings_applications_white_36dp"
+    android:icon="@drawable/outline_settings_applications_white_24"
     android:title="Settings"
     app:showAsAction="always" />
 </menu>
