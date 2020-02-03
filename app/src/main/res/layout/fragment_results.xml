@@ -10,18 +10,14 @@
     <jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:id="@+id/main_swipe">
 
-    <ListView
-        android:id="@+id/listViewTraits"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clickable="false"
-        android:divider="@null"
-        android:dividerHeight="0dp"
-        >
-
-    </ListView>
+        <ListView
+            android:id="@+id/listViewTraits"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="false"
+            android:divider="@null"
+            android:dividerHeight="0dp"/>
     </jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout>
 </FrameLayout>

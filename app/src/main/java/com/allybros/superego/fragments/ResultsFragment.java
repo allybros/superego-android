@@ -48,9 +48,17 @@ public class ResultsFragment extends Fragment {
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        listViewTraits =(ListView) getView().findViewById(R.id.listViewTraits);
+        mWaveSwipeRefreshLayout = (WaveSwipeRefreshLayout) getView().findViewById(R.id.main_swipe);
+
 
         super.onActivityCreated(savedInstanceState);
-        mWaveSwipeRefreshLayout = (WaveSwipeRefreshLayout) getView().findViewById(R.id.main_swipe);
+        if(!User.getTestId().isEmpty() && User.getRated()>= Api.getRatedLimit()){
+            ListAdapter adapter = new TraitListAdapter(this.activity, User.getScores());
+            listViewTraits.setAdapter(adapter);
+
+        }
+
         mWaveSwipeRefreshLayout.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
             @Override public void onRefresh() {
                 LoadProfileTask.loadProfileTask(getContext(), SplashActivity.session_token);
@@ -64,13 +72,6 @@ public class ResultsFragment extends Fragment {
 
             }
         });
-        if(!User.getTestId().isEmpty() && User.getRated()>= Api.getRatedLimit()){
-            listViewTraits =(ListView) getView().findViewById(R.id.listViewTraits);
-
-
-            ListAdapter adapter = new TraitListAdapter(this.activity, User.getScores());
-            listViewTraits.setAdapter(adapter);
-
-        }//TODO:Boşken nasıl gözükeceği belirlenmeli
+        //TODO:Boşken nasıl gözükeceği belirlenmeli
     }
 }
