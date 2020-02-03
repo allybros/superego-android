@@ -132,4 +132,16 @@
             android:textColor="@color/Black" />
     </com.google.android.material.textfield.TextInputLayout>
 
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btLogout"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_weight="1"
+        android:text="@string/logout"
+        android:textColor="@color/Black"
+        android:textSize="14dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
