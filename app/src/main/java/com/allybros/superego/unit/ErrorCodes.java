@@ -14,6 +14,7 @@ public class ErrorCodes {
     public static final int PASSWORD_MISMATCH=29;
     public static final int UNAUTHORIZED=30;
     public static final int SESSION_EXPIRED=31;
+    public static final int SUSPEND_SESSION=32;
     public static final int USER_NOT_FOUND=40;
     public static final int SYSFAIL=0;
 }

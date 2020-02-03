@@ -121,7 +121,8 @@
                             android:layout_width="135dp"
                             android:layout_height="match_parent"
                             android:layout_margin="5dp"
-                            android:max="15" />
+                            android:max="10" />
+                        <!--if change max value, must change rate_limit value in /unit/api-->
 
                     </LinearLayout>
                 </LinearLayout>

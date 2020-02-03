@@ -87,7 +87,7 @@ public class LoadProfileTask{
                             User.setUsername(username);
                             User.setUserBio(user_bio);
                             User.setEmail(email);
-                            User.setTestId("https://demo.allybros.com/superego/rate.php?test="+test_id);
+                            User.setTestId(test_id);
                             User.setScores(traits);
                             intent=new Intent(currentContext, UserPageActivity.class);
                             intent.setFlags(FLAG_ACTIVITY_NEW_TASK);

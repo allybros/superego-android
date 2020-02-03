@@ -14,6 +14,8 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.allybros.superego.R;
 import com.allybros.superego.api.LoginTask;
 import com.allybros.superego.unit.ErrorCodes;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -44,7 +46,35 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 passwordTextInput.setErrorEnabled(false);
                 usernameTextInput.setErrorEnabled(false);
-                LoginTask.loginTask(getApplicationContext(),etMail.getText().toString(),etPassword.getText().toString());
+
+                if(etMail.getText().toString().isEmpty()){
+                    usernameTextInput.setError(getString(R.string.usernameEmpty));
+                    YoYo.with(Techniques.Wobble)
+                            .duration(700)
+                            .repeat(0)
+                            .playOn(findViewById(R.id.password_text_input));
+                    YoYo.with(Techniques.Wobble)
+                            .duration(700)
+                            .repeat(0)
+                            .playOn(findViewById(R.id.username_text_input));
+
+                }
+                if(etPassword.getText().toString().isEmpty()){
+                    passwordTextInput.setError(getString(R.string.passwordEmpty));
+                    YoYo.with(Techniques.Wobble)
+                            .duration(700)
+                            .repeat(0)
+                            .playOn(findViewById(R.id.password_text_input));
+                    YoYo.with(Techniques.Wobble)
+                            .duration(700)
+                            .repeat(0)
+                            .playOn(findViewById(R.id.username_text_input));
+                }
+                if(!etPassword.getText().toString().isEmpty() && !etMail.getText().toString().isEmpty()){
+                    LoginTask.loginTask(getApplicationContext(),etMail.getText().toString(),etPassword.getText().toString());
+                }
+
+
 
 
             }
@@ -76,19 +106,32 @@ public class LoginActivity extends AppCompatActivity {
             Log.d("receiver", "Got message: " + status);
 //TODO:PAROLA HATALI durumu eksik
             switch (status){
-
                 case ErrorCodes.SYSFAIL:
                     passwordTextInput.setError(getString(R.string.loginFailed));
                     usernameTextInput.setError(getString(R.string.loginFailed));
+                    YoYo.with(Techniques.Wobble)
+                            .duration(700)
+                            .repeat(0)
+                            .playOn(findViewById(R.id.password_text_input));
+                    YoYo.with(Techniques.Wobble)
+                            .duration(700)
+                            .repeat(0)
+                            .playOn(findViewById(R.id.username_text_input));
+                    break;
+                case ErrorCodes.SUSPEND_SESSION:
+                    passwordTextInput.setError(getString(R.string.session_suspend));
+                    usernameTextInput.setError(getString(R.string.session_suspend));
+                    YoYo.with(Techniques.Wobble)
+                            .duration(700)
+                            .repeat(5)
+                            .playOn(findViewById(R.id.password_text_input));
+                    YoYo.with(Techniques.Wobble)
+                            .duration(700)
+                            .repeat(5)
+                            .playOn(findViewById(R.id.username_text_input));
                     break;
 
-                case ErrorCodes.USERNAME_EMPTY:
-                    usernameTextInput.setError(getString(R.string.usernameEmpty));
-                    break;
 
-                case ErrorCodes.PASSWORD_EMPTY:
-                    passwordTextInput.setError(getString(R.string.passwordEmpty));
-                    break;
             }
 
         }

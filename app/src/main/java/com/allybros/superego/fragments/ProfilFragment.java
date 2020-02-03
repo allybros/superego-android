@@ -9,12 +9,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,12 +25,11 @@ import com.allybros.superego.R;
 import com.allybros.superego.activity.AddTestActivity;
 import com.allybros.superego.api.LoginTask;
 import com.allybros.superego.api.NameFindTask;
-import com.allybros.superego.unit.ErrorCodes;
+import com.allybros.superego.unit.Api;
 import com.allybros.superego.unit.User;
 import com.allybros.superego.util.CircledNetworkImageView;
 import com.allybros.superego.util.CustomVolleyRequestQueue;
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
 import com.google.android.material.button.MaterialButton;
 import com.vlad1m1r.lemniscate.funny.HeartProgressView;
 
@@ -93,13 +90,13 @@ public class ProfilFragment extends Fragment {
         heart1=(HeartProgressView) getView().findViewById(R.id.heart1);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(mMessageReceiver, new IntentFilter("status-profilImageName"));
 
-        int rateLimit=progressBarProfilPage.getMax();
+
         NameFindTask.nameFindTask(getContext());
 
 
         tvUserInfoProfilPage.setText(User.getUserBio());
         tvUsernameProfilPage.setText(User.getUsername());
-        if(User.getRated()>=rateLimit){
+        if(User.getRated()>= Api.getRatedLimit()){
             progressBarProfilPage.setVisibility(View.GONE);
             heart1.setVisibility(View.VISIBLE);
         }else{
