@@ -29,11 +29,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LoginTask extends Activity {
-
-
-//TODO:Bu işlemde parola hatalı uyarısı eksik
-
-
     public static void loginTask(final Context currentContext, final String uid, final String password) {
 
         final String LOGIN_URL ="https://api.allybros.com/superego/login.php";
@@ -60,48 +55,38 @@ public class LoginTask extends Activity {
                     Log.d("sego-Response",response.toString());
                     status = jsonObj.getInt("status");
                     switch (status){
+
                         case ErrorCodes.SYSFAIL:
+                            //Password or username wrong
                             Log.d("sender", "Status Message");
                             Intent intent1 = new Intent("login-status-share");
                             intent1.putExtra("status", ErrorCodes.SYSFAIL);
                             LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent1);
-
                             break;
 
                         case ErrorCodes.SUCCESS:
-
                             SharedPreferences pref = currentContext.getSharedPreferences(USER_INFORMATION_PREF, Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = pref.edit();
-
                             session_token=jsonObj.getString("session_token");
                             //TODO:Bu session tokenin static olması durumu çözülmeli //yeni komut bunu çözmek yerine bu sisteme geçelim
                             SplashActivity.session_token=session_token;
-
                             editor.putString("uid",uid);
                             editor.putString("password",password);
                             editor.putString("session_token", session_token);
                             Log.d("sessionTokenLogin",session_token);
                             editor.commit();
-
                             Intent intent=new Intent(currentContext, SplashActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             currentContext.startActivity(intent);
                             break;
-
-                        case ErrorCodes.USERNAME_EMPTY:
+                        case ErrorCodes.SUSPEND_SESSION:
                             Log.d("sender", "Status Message");
                             Intent intent2 = new Intent("login-status-share");
-                            intent2.putExtra("status", ErrorCodes.USERNAME_EMPTY);
+                            intent2.putExtra("status", ErrorCodes.SUSPEND_SESSION);
                             LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent2);
-                            break;
-
-                        case ErrorCodes.PASSWORD_EMPTY:
-                            Log.d("sender", "Status Message");
-                            Intent intent3 = new Intent("login-status-share");
-                            intent3.putExtra("status", ErrorCodes.PASSWORD_EMPTY);
-                            LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent3);
 
                             break;
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

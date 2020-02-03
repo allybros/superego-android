@@ -6,22 +6,17 @@ import java.util.ArrayList;
 public class User {
 
     private static int userType;
-    private static String username,userBio,email;
+    private static String image,testId,username,userBio,email;
     private static ArrayList<Trait> scores;
     private static int rated;
-
-
-    private static String image;
 
     public static String getTestId() {
         return testId;
     }
 
     public static void setTestId(String testId) {
-        User.testId = testId;
+        User.testId = Api.getTestLinkRoot()+testId;
     }
-
-    private static String testId;
 
     public static int getRated() {
         return rated;
