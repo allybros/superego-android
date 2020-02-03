@@ -21,7 +21,8 @@
         <activity
             android:name=".activity.SettingsActivity"
             android:theme="@style/AppTheme.AddActivityTheme"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"
+            android:parentActivityName=".activity.UserPageActivity"/>
         <activity
             android:name=".activity.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar"

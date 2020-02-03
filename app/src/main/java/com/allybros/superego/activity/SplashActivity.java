@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.allybros.superego.R;
 import com.allybros.superego.api.LoadProfileTask;
-import com.allybros.superego.fragments.ResultsFragment;
 import com.allybros.superego.unit.Trait;
 
 import java.util.ArrayList;
@@ -18,7 +17,7 @@ import java.util.ArrayList;
 
 public class SplashActivity extends AppCompatActivity {
     public static final String USER_INFORMATION_PREF="USER_INFORMATION_PREF";
-    //TODO:Bu session tokenin static olması durumu çözülmeli
+    //TODO:Bu session tokenin static olması sağlanmalı Spalsh screende yapılıp program devamında buradan kullanılmalı
 
     public static String session_token;
     private SharedPreferences pref;

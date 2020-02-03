@@ -2,11 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/aciton_back"
-        android:icon="@drawable/outline_arrow_back_white_24"
-        android:title="back"
-        app:showAsAction="always" />
-    <item
         android:id="@+id/aciton_save"
         android:icon="@drawable/baseline_save_white_24"
         android:title="save"

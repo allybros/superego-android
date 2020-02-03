@@ -98,6 +98,7 @@
                             android:layout_margin="5dp"
                             android:elevation="5dp"
                             android:padding="5dp"
+                            android:gravity="right"
                             android:fontFamily="@font/comfortaa_light"
                             android:text="TESTSCORE"/>
 

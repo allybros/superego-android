@@ -1,9 +1,7 @@
 package com.allybros.superego.activity;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,7 +16,6 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.allybros.superego.R;
-import com.allybros.superego.api.LogoutTask;
 import com.allybros.superego.fragments.ProfilFragment;
 import com.allybros.superego.fragments.ResultsFragment;
 import com.allybros.superego.util.PagerAdapter;
@@ -130,19 +127,6 @@ public class UserPageActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.action_logout:
-                String session_token;
-                SharedPreferences pref = getApplicationContext().getSharedPreferences(USER_INFORMATION_PREF, Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = pref.edit();
-                session_token=pref.getString("session_token","");
-                editor.clear();
-                editor.commit();
-                LogoutTask.logoutTask(getApplicationContext(),session_token);
-
-                Intent intent=new Intent(getApplicationContext(), LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                getApplicationContext().startActivity(intent);
-                break;
             case R.id.action_settings:
                 Intent intent1=new Intent(getApplicationContext(), SettingsActivity.class);
                 intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
