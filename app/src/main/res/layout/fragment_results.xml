@@ -3,8 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/result_frame_layout"
     tools:context=".fragments.ResultsFragment"
     android:paddingBottom="55dp">
+
+    <jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:id="@+id/main_swipe">
 
     <ListView
         android:id="@+id/listViewTraits"
@@ -16,5 +23,5 @@
         >
 
     </ListView>
-
+    </jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout>
 </FrameLayout>

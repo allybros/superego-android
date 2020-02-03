@@ -2,7 +2,6 @@ package com.allybros.superego.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +12,20 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.allybros.superego.R;
+import com.allybros.superego.activity.SplashActivity;
+import com.allybros.superego.api.LoadProfileTask;
 import com.allybros.superego.unit.Api;
 import com.allybros.superego.unit.User;
 import com.allybros.superego.util.TraitListAdapter;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+
+import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
 
 public class ResultsFragment extends Fragment {
     ListView listViewTraits;
     Activity activity;
+    WaveSwipeRefreshLayout mWaveSwipeRefreshLayout;
 
     public ResultsFragment() {
 // Required empty public constructor
@@ -44,13 +50,24 @@ public class ResultsFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 
         super.onActivityCreated(savedInstanceState);
+        mWaveSwipeRefreshLayout = (WaveSwipeRefreshLayout) getView().findViewById(R.id.main_swipe);
+        mWaveSwipeRefreshLayout.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
+            @Override public void onRefresh() {
+                LoadProfileTask.loadProfileTask(getContext(), SplashActivity.session_token);
 
-        if(!User.getTestId().isEmpty() ) Log.d("result_info","isEmpty->"+User.getTestId().isEmpty());
-        if((User.getTestId().equals("null"))) Log.d("result_info","null->"+User.getTestId().equals("null"));
-        if(User.getRated()>= Api.getRatedLimit()) Log.d("result_info","Limit"+User.getTestId()+"  " + (User.getRated()>= Api.getRatedLimit()));
+                YoYo.with(Techniques.SlideInDown)
+                        .duration(700)
+                        .repeat(0)
+                        .playOn(getView().findViewById(R.id.listViewTraits));
+                mWaveSwipeRefreshLayout.setRefreshing(false);
 
+
+            }
+        });
         if(!User.getTestId().isEmpty() && User.getRated()>= Api.getRatedLimit()){
             listViewTraits =(ListView) getView().findViewById(R.id.listViewTraits);
+
+
             ListAdapter adapter = new TraitListAdapter(this.activity, User.getScores());
             listViewTraits.setAdapter(adapter);
 
