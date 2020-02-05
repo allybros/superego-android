@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/White"
+    android:background="@color/logoColor"
     android:layout_height="match_parent"
     tools:context=".activity.AddTestActivity">
-    <com.vlad1m1r.lemniscate.BernoullisBowProgressView
+<!--    <com.vlad1m1r.lemniscate.BernoullisBowProgressView
         android:id="@+id/progress_circular"
         android:visibility="visible"
         android:layout_width="wrap_content"
@@ -22,8 +22,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
+        app:layout_constraintTop_toTopOf="parent"/>-->
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></ImageView>
         <WebView
             android:id="@+id/add_test_webview"
             android:layout_width="match_parent"

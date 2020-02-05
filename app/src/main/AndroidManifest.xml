@@ -17,7 +17,8 @@
         <activity android:name=".activity.PasswordChangeActivity" />
         <activity
             android:name=".activity.AddTestActivity"
-            android:theme="@style/AppTheme.AddActivityTheme" />
+            android:theme="@style/AppTheme.AddActivityTheme"
+            android:parentActivityName=".activity.UserPageActivity"/>
         <activity
             android:name=".activity.SettingsActivity"
             android:theme="@style/AppTheme.AddActivityTheme"

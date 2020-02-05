@@ -7,11 +7,10 @@
     tools:context=".fragments.ResultsFragment"
     android:paddingBottom="55dp">
 
-    <jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/main_swipe">
-
+        android:layout_height="match_parent">
         <ListView
             android:id="@+id/listViewTraits"
             android:layout_width="match_parent"
@@ -19,5 +18,8 @@
             android:clickable="false"
             android:divider="@null"
             android:dividerHeight="0dp"/>
-    </jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
 </FrameLayout>

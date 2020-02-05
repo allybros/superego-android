@@ -17,4 +17,10 @@ public class ErrorCodes {
     public static final int SUSPEND_SESSION=32;
     public static final int USER_NOT_FOUND=40;
     public static final int SYSFAIL=0;
+    public static final int CAPTCHA_REQUIRED=72;
+
+
+
+    //Only android-side Error Code
+    public static final int CONNECTION_ERROR=2011;
 }
