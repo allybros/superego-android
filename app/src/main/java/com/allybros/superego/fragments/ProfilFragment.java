@@ -87,7 +87,7 @@ public class ProfilFragment extends Fragment {
         progressBarProfilPage = (ProgressBar) getView().findViewById(R.id.progressBarProfilPage);
         tvRatedProfilPage=(TextView) getView().findViewById(R.id.tvRatedProfilPage);
         tvAppInformationProfilePage=(TextView) getView().findViewById(R.id.tvAppInformationProfilePage);
-        heart1=(HeartProgressView) getView().findViewById(R.id.heart1);
+        /*heart1=(HeartProgressView) getView().findViewById(R.id.heart1);*/
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(mMessageReceiver, new IntentFilter("status-profilImageName"));
 
 
@@ -98,7 +98,9 @@ public class ProfilFragment extends Fragment {
         tvUsernameProfilPage.setText(User.getUsername());
         if(User.getRated()>= Api.getRatedLimit()){
             progressBarProfilPage.setVisibility(View.GONE);
+/*
             heart1.setVisibility(View.VISIBLE);
+*/
         }else{
             progressBarProfilPage.setProgress(User.getRated());
         }

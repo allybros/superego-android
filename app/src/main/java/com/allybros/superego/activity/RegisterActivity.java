@@ -55,6 +55,8 @@ public class RegisterActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(checkBoxAggrement.isChecked()){
                     btSignUp.setEnabled(true);
+                }else{
+                    btSignUp.setEnabled(false);
                 }
             }
         });
@@ -101,8 +103,8 @@ public class RegisterActivity extends AppCompatActivity {
             Log.d("receiver", "Got message: " + status);
             switch (status) {
                 case ErrorCodes.SYSFAIL:
-                    username_text_input_register.setError("Bir şeyler yanlış gitti :( ");
-                    email_text_input_register.setError("Lütfen tekrar deneyin. :)");
+                    username_text_input_register.setError("Bir şeyler yanlış gitti");
+                    email_text_input_register.setError("Lütfen tekrar deneyin.");
                     password_text_input_register.setError("Bir sonrakinde başaracağım söz");
                     break;
 
@@ -111,7 +113,7 @@ public class RegisterActivity extends AppCompatActivity {
                     break;
 
                 case ErrorCodes.USERNAME_ALREADY_EXIST:
-                    username_text_input_register.setError("Kullanıcı adı başkası tarafından alınmış :(");
+                    username_text_input_register.setError("Kullanıcı adı başkası tarafından alınmış");
                     break;
 
                 case ErrorCodes.EMAIL_ALREADY_EXIST:

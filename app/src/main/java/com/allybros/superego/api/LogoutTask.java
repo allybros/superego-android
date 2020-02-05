@@ -3,6 +3,7 @@ package com.allybros.superego.api;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.allybros.superego.R;
@@ -39,7 +40,7 @@ public class LogoutTask {
             @Override
             public void onResponse(String response) {
                 int status;
-
+                Log.d("sego-Response-Logout",response.toString());
                 try {
                     JSONObject jsonObj=new JSONObject(response);
                     status = jsonObj.getInt("status");

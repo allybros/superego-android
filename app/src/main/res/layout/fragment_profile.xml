@@ -102,6 +102,7 @@
                             android:fontFamily="@font/comfortaa_light"
                             android:text="TESTSCORE"/>
 
+<!--
                         <com.vlad1m1r.lemniscate.funny.HeartProgressView
                             android:id="@+id/heart1"
                             android:visibility="invisible"
@@ -114,6 +115,7 @@
                             app:minLineLength="0.4"
                             app:sizeMultiplier="1"
                             app:strokeWidth="1dp"/>
+-->
 
                         <ProgressBar
                             android:id="@+id/progressBarProfilPage"

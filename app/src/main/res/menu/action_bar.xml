@@ -2,7 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android" >
     <item
     android:id="@+id/action_settings"
-    android:icon="@drawable/outline_settings_applications_white_24"
+    android:icon="@drawable/baseline_settings_white_24"
     android:title="Settings"
     app:showAsAction="always" />
 </menu>

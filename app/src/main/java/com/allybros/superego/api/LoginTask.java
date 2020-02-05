@@ -6,13 +6,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.R;
 import com.allybros.superego.activity.LoginActivity;
 import com.allybros.superego.activity.SplashActivity;
+import com.allybros.superego.unit.Api;
 import com.allybros.superego.unit.ErrorCodes;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -55,7 +55,6 @@ public class LoginTask extends Activity {
                     Log.d("sego-Response",response.toString());
                     status = jsonObj.getInt("status");
                     switch (status){
-
                         case ErrorCodes.SYSFAIL:
                             //Password or username wrong
                             Log.d("sender", "Status Message");
@@ -63,7 +62,6 @@ public class LoginTask extends Activity {
                             intent1.putExtra("status", ErrorCodes.SYSFAIL);
                             LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent1);
                             break;
-
                         case ErrorCodes.SUCCESS:
                             SharedPreferences pref = currentContext.getSharedPreferences(USER_INFORMATION_PREF, Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = pref.edit();
@@ -84,7 +82,13 @@ public class LoginTask extends Activity {
                             Intent intent2 = new Intent("login-status-share");
                             intent2.putExtra("status", ErrorCodes.SUSPEND_SESSION);
                             LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent2);
-
+                            break;
+                        case ErrorCodes.CAPTCHA_REQUIRED:
+                            //Password or username wrong
+                            Log.d("sender", "Status Message");
+                            Intent intent3 = new Intent("login-status-share");
+                            intent3.putExtra("status", ErrorCodes.CAPTCHA_REQUIRED);
+                            LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent3);
                             break;
 
                     }
@@ -97,8 +101,9 @@ public class LoginTask extends Activity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(currentContext,currentContext.getString(R.string.connection_error), Toast.LENGTH_SHORT);
-
+                Intent intent = new Intent("login-status-share");
+                intent.putExtra("status", ErrorCodes.CONNECTION_ERROR);
+                LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent);
             }
         }) {
             @Override
@@ -106,6 +111,7 @@ public class LoginTask extends Activity {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("uid", uid);
                 params.put("password", password);
+                params.put("g-recaptcha-response", Api.getRECAPTCHA_SKIP());
                 return params;
             }
         };

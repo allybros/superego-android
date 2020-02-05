@@ -5,50 +5,47 @@ package com.allybros.superego.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.Html;
-import android.util.Base64;
-import android.util.Log;
 import android.view.View;
-import android.webkit.CookieManager;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.ProgressBar;
+import android.widget.ImageView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.OneShotPreDrawListener;
 
 import com.allybros.superego.R;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrInterface;
-import com.vlad1m1r.lemniscate.BernoullisBowProgressView;
-import com.vlad1m1r.lemniscate.BernoullisProgressView;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 
 public class AddTestActivity extends AppCompatActivity {
 
     private SlidrInterface slidr;
     WebView addTestWebview;
-    private BernoullisBowProgressView progressBar;
+//    private BernoullisBowProgressView progressBar;
     public static String addPageHTML;
+    private ActionBar toolbar;
+    private ImageView imageView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         String postData=null;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_test);
         addTestWebview = (WebView) findViewById(R.id.add_test_webview);
+        imageView= (ImageView) findViewById(R.id.logo);
         addTestWebview.getSettings().setJavaScriptEnabled(true);
+        toolbar = getSupportActionBar();
+        toolbar.setTitle("Test Oluştur");
+        YoYo.with(Techniques.Bounce)
+                .duration(1000)
+                .repeat(50)
+                .playOn(findViewById(R.id.logo));
 
-
-        progressBar=(BernoullisBowProgressView)findViewById(R.id.progress_circular);
+//        progressBar=(BernoullisBowProgressView)findViewById(R.id.progress_circular);
         String url = "https://demo.allybros.com/superego/create.php";
 //        Map<String,String> postData = new HashMap<>();
 //        postData.put("session-token",SplashActivity.session_token);
@@ -57,8 +54,6 @@ public class AddTestActivity extends AppCompatActivity {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-
-
         addTestWebview.postUrl(url,postData.getBytes());
 
 
@@ -66,10 +61,11 @@ public class AddTestActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                progressBar.setVisibility(View.INVISIBLE);
+//                progressBar.setVisibility(View.INVISIBLE);
+                imageView.setVisibility(View.INVISIBLE);
                 addTestWebview.setVisibility(View.VISIBLE);
             }
-        }, 1000);
+        }, 2000);
 
 
 
