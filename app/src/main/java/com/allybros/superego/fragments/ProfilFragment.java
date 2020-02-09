@@ -88,7 +88,8 @@ public class ProfilFragment extends Fragment {
         tvRatedProfilPage=(TextView) getView().findViewById(R.id.tvRatedProfilPage);
         tvAppInformationProfilePage=(TextView) getView().findViewById(R.id.tvAppInformationProfilePage);
         /*heart1=(HeartProgressView) getView().findViewById(R.id.heart1);*/
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mMessageReceiver, new IntentFilter("status-profilImageName"));
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(imageReciever, new IntentFilter("status-profilImageName"));
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(refreshReciever, new IntentFilter("profile-refresh-status-share"));
 
 
         NameFindTask.nameFindTask(getContext());
@@ -121,6 +122,11 @@ public class ProfilFragment extends Fragment {
             }
         });
 
+        if(User.getTestId().equals(Api.getTestLinkRoot()+"null")){
+            copyTestLink.setEnabled(false);
+            shareTest.setEnabled(false);
+        }
+
         copyTestLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,7 +156,7 @@ public class ProfilFragment extends Fragment {
     }
     // Our handler for received Intents. This will be called whenever an Intent
 // with an action named "custom-event-name" is broadcasted.
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver imageReciever = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             // Instantiate the RequestQueue.
@@ -161,9 +167,24 @@ public class ProfilFragment extends Fragment {
             profileImage.setImageUrl(url, mImageLoader);
         }
     };
+    private BroadcastReceiver refreshReciever = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(User.getTestId().equals(Api.getTestLinkRoot()+"null")){
+                copyTestLink.setEnabled(false);
+                shareTest.setEnabled(false);
+            }else{
+                copyTestLink.setEnabled(true);
+                shareTest.setEnabled(true);
+            }
+        }
+    };
+
     @Override
     public void onDestroy() {
-        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mMessageReceiver);
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(imageReciever);
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(refreshReciever);
+
         super.onDestroy();
     }
 

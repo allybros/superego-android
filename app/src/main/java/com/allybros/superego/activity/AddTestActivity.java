@@ -5,6 +5,7 @@ package com.allybros.superego.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
@@ -13,6 +14,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.allybros.superego.R;
+import com.allybros.superego.api.ProfileRefreshTask;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.r0adkll.slidr.Slidr;
@@ -26,7 +28,6 @@ public class AddTestActivity extends AppCompatActivity {
     private SlidrInterface slidr;
     WebView addTestWebview;
 //    private BernoullisBowProgressView progressBar;
-    public static String addPageHTML;
     private ActionBar toolbar;
     private ImageView imageView;
 
@@ -67,11 +68,9 @@ public class AddTestActivity extends AppCompatActivity {
             }
         }, 2000);
 
-
-
-
         slidr= Slidr.attach(this);
         slidr.unlock();
+
 
     }
 
@@ -80,5 +79,12 @@ public class AddTestActivity extends AppCompatActivity {
         Intent intent=new Intent(AddTestActivity.this,UserPageActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.d("AddTest","Destroy");
+        ProfileRefreshTask.profileRefreshTask(getApplicationContext(),SplashActivity.session_token);
+        super.onDestroy();
     }
 }
