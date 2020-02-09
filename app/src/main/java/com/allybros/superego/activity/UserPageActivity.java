@@ -42,8 +42,11 @@ public class UserPageActivity extends AppCompatActivity {
         navigationProfile =findViewById(R.id.navigation_profile);
 
         //These lines are for first view
-        navigationProfile.setTextColor(ColorStateList.valueOf(getColor(R.color.grey)));
-        navigationResult.setTextColor(ColorStateList.valueOf(getColor(R.color.White)));
+        navigationProfile.setTextColor(ColorStateList.valueOf(getColor(R.color.White)));
+        navigationResult.setTextColor(ColorStateList.valueOf(getColor(R.color.grey)));
+
+        navigationProfile.setIconTintList(ColorStateList.valueOf(getColor(R.color.White)));
+        navigationResult.setIconTintList(ColorStateList.valueOf(getColor(R.color.grey)));
 
         final BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
 
@@ -57,8 +60,12 @@ public class UserPageActivity extends AppCompatActivity {
                     case R.id.navigation_profile:
                         toolbar.setTitle(R.string.profile);
 
-                        navigationProfile.setTextColor(ColorStateList.valueOf(getColor(R.color.grey)));
-                        navigationResult.setTextColor(ColorStateList.valueOf(getColor(R.color.White)));
+                        navigationProfile.setTextColor(ColorStateList.valueOf(getColor(R.color.White)));
+                        navigationResult.setTextColor(ColorStateList.valueOf(getColor(R.color.grey)));
+
+                        navigationProfile.setIconTintList(ColorStateList.valueOf(getColor(R.color.White)));
+                        navigationResult.setIconTintList(ColorStateList.valueOf(getColor(R.color.grey)));
+
                         viewPager.setCurrentItem(0);
                         fragment = new ProfilFragment();
                         return true;
@@ -67,8 +74,12 @@ public class UserPageActivity extends AppCompatActivity {
                         toolbar.setTitle(R.string.results);
                         fragment = new ResultsFragment();
 
-                        navigationProfile.setTextColor(ColorStateList.valueOf(getColor(R.color.White)));
-                        navigationResult.setTextColor(ColorStateList.valueOf(getColor(R.color.grey)));
+                        navigationProfile.setTextColor(ColorStateList.valueOf(getColor(R.color.grey)));
+                        navigationResult.setTextColor(ColorStateList.valueOf(getColor(R.color.White)));
+
+                        navigationProfile.setIconTintList(ColorStateList.valueOf(getColor(R.color.grey)));
+                        navigationResult.setIconTintList(ColorStateList.valueOf(getColor(R.color.White)));
+
                         return true;
                 }
                 return false;
@@ -97,12 +108,17 @@ public class UserPageActivity extends AppCompatActivity {
                 prevMenuItem = navigation.getMenu().getItem(position);
                 toolbar.setTitle(prevMenuItem.getTitle());
                 if("Profil".equals(prevMenuItem.getTitle())){
-                    navigationProfile.setTextColor(ColorStateList.valueOf(getColor(R.color.grey)));
-                    navigationResult.setTextColor(ColorStateList.valueOf(getColor(R.color.White)));
-                }else{
-
                     navigationProfile.setTextColor(ColorStateList.valueOf(getColor(R.color.White)));
                     navigationResult.setTextColor(ColorStateList.valueOf(getColor(R.color.grey)));
+
+                    navigationProfile.setIconTintList(ColorStateList.valueOf(getColor(R.color.White)));
+                    navigationResult.setIconTintList(ColorStateList.valueOf(getColor(R.color.grey)));
+                }else{
+                    navigationProfile.setTextColor(ColorStateList.valueOf(getColor(R.color.grey)));
+                    navigationResult.setTextColor(ColorStateList.valueOf(getColor(R.color.White)));
+
+                    navigationProfile.setIconTintList(ColorStateList.valueOf(getColor(R.color.grey)));
+                    navigationResult.setIconTintList(ColorStateList.valueOf(getColor(R.color.White)));
                 }
             }
 
