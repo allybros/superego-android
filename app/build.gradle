@@ -43,6 +43,5 @@ dependencies {
     implementation 'com.daimajia.androidanimations:library:2.3@aar'
     implementation 'com.github.recruit-lifestyle:WaveSwipeRefreshLayout:1.6'
     implementation 'com.gelitenight.waveview:waveview:1.0.0'
-    
 
 }

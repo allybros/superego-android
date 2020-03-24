@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android" android:color="#F3E5F5">
+    <item>
+        <selector>
+            <item android:drawable="@drawable/shape_add_test"/>
+            <item android:drawable="@drawable/shape_add_test_1" android:state_pressed="true"/>
+        </selector>
+    </item>
+</ripple>

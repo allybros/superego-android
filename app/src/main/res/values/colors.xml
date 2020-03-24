@@ -16,14 +16,27 @@
     <color name="editText">#6a1b9a</color>
     <color name="trans">#00000000</color>
     <color name="bgBottomNavigation">#1C2331</color>
-    <color name="buttonNewTestColor">#62009E</color>
-    <color name="buttonCopyColor">#00398F</color>
-    <color name="buttonPublishColor">#00A525</color>
+    <color name="buttonPublishColor">#0048AF</color>
+    <color name="buttonCopyColor">#5400BB</color>
+    <color name="buttonNewTestColor">#00B409</color>
     <color name="buttonLoginScreen">#9933CC</color>
     <color name="logoColor">#1D2331</color>
+    <color name="logoFilter">#CE1D2331</color>
     <color name="grey">#BBB4B4</color>
     <color name="grey2">#FCFCFC</color>
     <color name="newBlue">#C30007FF</color>
     <color name="WhiteOpacity">#52FFFFFF</color>
 
+
+    <!--Colors for try-->
+    <color name="blue">#2875FA</color>
+    <color name="purple">#9600FF</color>
+    <color name="blue1">#A2C7FF</color>
+    <color name="blue2">#639FFF</color>
+    <color name="rippleColor">#14FFFFFF</color>
+
+    <color name="green">#00FF04</color>
+    <color name="green1">#06CF09</color>
+    <color name="green2">#A8E7A8</color>
+    <color name="orange">#FF7700</color>
 </resources>

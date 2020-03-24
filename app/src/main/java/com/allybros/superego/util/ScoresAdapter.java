@@ -20,10 +20,10 @@ import com.google.android.material.button.MaterialButton;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class TraitListAdapter extends ArrayAdapter<Trait> {
+public class ScoresAdapter extends ArrayAdapter<Trait> {
 
-    public TraitListAdapter(Context context, ArrayList<Trait> traits) {
-        super(context, R.layout.trait_list_row,traits);
+    public ScoresAdapter(Context context, ArrayList<Trait> traits) {
+        super(context, R.layout.scores_list_row,traits);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class TraitListAdapter extends ArrayAdapter<Trait> {
         Random random = new Random();
 
         LayoutInflater Inflater=LayoutInflater.from(getContext());
-        View customView=Inflater.inflate(R.layout.trait_list_row,parent,false);
+        View customView=Inflater.inflate(R.layout.scores_list_row,parent,false);
         final View fragmentResult = Inflater.inflate(R.layout.fragment_results,parent,false);
         Trait tmp=getItem(position);
 
@@ -44,12 +44,6 @@ public class TraitListAdapter extends ArrayAdapter<Trait> {
             traitCardView.setText(SplashActivity.allTraits.get(tmp.getTraitNo()).getPositiveName());
 
             Uri myUrl = Uri.parse(SplashActivity.allTraits.get(tmp.getTraitNo()).getPositiveIconURL());
-
-            /*
-            Glide.with(customView.getContext()).load(SplashActivity.allTraits.get(tmp.getTraitNo()).getPositiveIconURL())
-                .placeholder(R.drawable.umut_reis)
-                .error(R.drawable.umut_reis)
-                .into(traitImage);*/
             GlideToVectorYou.justLoadImage((Activity) getContext(), myUrl , traitImage);
 
         }else {
@@ -58,16 +52,8 @@ public class TraitListAdapter extends ArrayAdapter<Trait> {
             } catch (Exception e){
                 Log.d("sego-Exeption",e.toString());
             }
-
-       /*     Glide.with(customView.getContext()).load(SplashActivity.allTraits.get(tmp.getTraitNo()).getNegativeIconURL())
-                .placeholder(R.drawable.umut_reis)
-                .error(R.drawable.umut_reis)
-                .into(traitImage);*/
-
         }
-
         int colorImageWindow= Color.argb(255,random.nextInt(256), random.nextInt(256), random.nextInt(256));
         return customView;
-
     }
 }

@@ -20,6 +20,11 @@ public class Trait {
         this.traitNo = traitNo;
         this.value = value;
     }
+    public Trait(int traitNo, String positiveName, String negativeName) {
+        this.traitNo = traitNo;
+        this.negativeName = negativeName;
+        this.positiveName = positiveName;
+    }
     public int getTraitNo() {
         return traitNo;
     }
