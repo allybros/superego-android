@@ -5,16 +5,16 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ScrollView
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/profileSwipeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingBottom="55dp">
+        android:padding="4dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="0dp">
+            android:orientation="vertical">
             <!-- Profile Card View -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_view"
@@ -40,7 +40,7 @@
 
                         <com.allybros.superego.util.CircledNetworkImageView
                             android:id="@+id/profile_image"
-                            android:layout_width="96dp"
+                            android:layout_width="126dp"
                             android:src="@drawable/simple_profile_photo"
                             android:elevation="50dp"
                             android:layout_height="96dp"
@@ -61,6 +61,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/comfortaa_light"
+                        android:textColor="#000"
                         android:text="/@username" />
 
                     <LinearLayout
@@ -68,19 +69,20 @@
                         android:layout_height="wrap_content">
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
                             android:layout_marginEnd="3dp"
-                            android:src="@drawable/left_quote_16" />
+                            android:src="@drawable/baseline_info_black_18" />
 
                         <TextView
                             android:id="@+id/tvUserInfoProfilPage"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/comfortaa_light"
-                            android:gravity="center"
-                            android:text="man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?"
-                            android:textColor="#000" />
+                            android:paddingBottom="4dp"
+                            android:paddingTop="4dp"
+                            android:gravity="left"
+                            android:text="man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -101,21 +103,6 @@
                             android:gravity="right"
                             android:fontFamily="@font/comfortaa_light"
                             android:text="TESTSCORE"/>
-
-<!--
-                        <com.vlad1m1r.lemniscate.funny.HeartProgressView
-                            android:id="@+id/heart1"
-                            android:visibility="invisible"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            app:duration="1000"
-                            app:hasHole="false"
-                            app:lineColor="@color/buttonPublishColor"
-                            app:maxLineLength="0.8"
-                            app:minLineLength="0.4"
-                            app:sizeMultiplier="1"
-                            app:strokeWidth="1dp"/>
--->
 
                         <ProgressBar
                             android:id="@+id/progressBarProfilPage"
@@ -148,52 +135,59 @@
                 android:textColor="@color/White"
                 />
 
-            <!-- Tools -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/addTest"
-                style="@style/Widget.MaterialComponents.Button"
-                android:layout_width="match_parent"
+
+            <LinearLayout
+                android:paddingTop="8dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:fontFamily="@font/comfortaa_light"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
 
-                app:backgroundTint="@color/buttonNewTestColor"
-                app:icon="@drawable/outline_add_white_36"
-                android:text="@string/add_test" />
+                <Button
+                    android:id="@+id/addTest"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/selector_add_test"
+                    android:drawableTop="@drawable/outline_add_white_36"
+                    android:fontFamily="@font/comfortaa_light"
+                    android:padding="15dp"
+                    android:text="@string/add_test"
+                    android:textSize="10dp" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/copyTestLink"
-                style="@style/Widget.MaterialComponents.Button"
-                android:layout_width="match_parent"
-                android:fontFamily="@font/comfortaa_light"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
+                <Button
+                    android:id="@+id/copyTestLink"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:fontFamily="@font/comfortaa_light"
+                    android:text="@string/link_copy"
+                    android:textSize="10dp"
+                    android:background="@drawable/selector_copy_test"
+                    android:padding="15dp"
+                    android:drawableTop="@drawable/outline_link_white_36"/>
+                <Button
+                    android:id="@+id/shareTest"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:fontFamily="@font/comfortaa_light"
+                    android:padding="15dp"
+                    android:text="@string/shareTest"
+                    android:textSize="10dp"
+                    android:background="@drawable/selector_share_test"
+                    android:drawableTop="@drawable/outline_publish_white_36"/>
 
-                android:text="@string/link_copy"
-                app:backgroundTint="@color/buttonCopyColor"
-                app:icon="@drawable/outline_link_white_36"
-                />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/shareTest"
-                style="@style/Widget.MaterialComponents.Button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:fontFamily="@font/comfortaa_light"
-                android:gravity="center"
-                android:text="@string/shareTest"
-                app:backgroundTint="@color/buttonPublishColor"
-                app:icon="@drawable/outline_publish_white_36"
-                />
+            </LinearLayout>
 
 
         </LinearLayout>
 
-    </ScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
 

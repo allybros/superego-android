@@ -1,7 +1,6 @@
 package com.allybros.superego.api;
 
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -65,9 +64,11 @@ public class LoadProfileTask{
                             String user_bio=jsonObject.getString("user_bio");
                             String test_id=jsonObject.getString("test_id");
                             String email=jsonObject.getString("email");
+                            String image=jsonObject.getString("avatar");
                             int rated=jsonObject.getInt("rated");
-                            ArrayList<Trait> traits=new ArrayList<>();
+                            int credit=jsonObject.getInt("credit");
 
+                            ArrayList<Trait> traits=new ArrayList<>();
                             if(!jsonObject.isNull("scores")){
                                 for (int i = 0; i < jsonObject.getJSONArray("scores").length(); i++) {
                                     JSONObject iter= (JSONObject) jsonObject.getJSONArray("scores").get(i);
@@ -80,8 +81,6 @@ public class LoadProfileTask{
                                     traits.add(new Trait(traitNo,value));
                                 }
                             }
-
-
                             User.setRated(rated);
                             User.setUserType(user_type);
                             User.setUsername(username);
@@ -89,6 +88,9 @@ public class LoadProfileTask{
                             User.setEmail(email);
                             User.setTestId(test_id);
                             User.setScores(traits);
+                            User.setCredit(credit);
+                            User.setImage(image);
+
                             intent=new Intent(currentContext, UserPageActivity.class);
                             intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
                             currentContext.startActivity(intent);
@@ -136,6 +138,7 @@ public class LoadProfileTask{
 
                 try {
                     JSONObject jsonObject=new JSONObject(response);
+
                     for (int i = 0; i < jsonObject.getJSONArray("traits").length(); i++) {
                         JSONObject iter= (JSONObject) jsonObject.getJSONArray("traits").get(i);
                         int traitNo;

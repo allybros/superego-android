@@ -83,7 +83,7 @@
                 style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
-                android:backgroundTint="@color/buttonNewTestColor"
+                android:backgroundTint="@color/buttonLoginScreen"
                 android:layout_weight="1"
                 android:textColor="@color/White"
                 android:text="@string/login"

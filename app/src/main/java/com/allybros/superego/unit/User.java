@@ -5,17 +5,25 @@ import java.util.ArrayList;
 
 public class User {
 
-    private static int userType;
+    private static int userType, rated, credit;
     private static String image,testId,username,userBio,email;
     private static ArrayList<Trait> scores;
-    private static int rated;
+    private static ArrayList<Trait> test;
+
+    public static int getCredit() {
+        return credit;
+    }
+
+    public static void setCredit(int credit) {
+        User.credit = credit;
+    }
 
     public static String getTestId() {
         return testId;
     }
 
     public static void setTestId(String testId) {
-        User.testId = Api.getTestLinkRoot()+testId;
+        User.testId = testId;
     }
 
     public static int getRated() {
@@ -68,6 +76,14 @@ public class User {
 
     public static String getImage() {
         return image;
+    }
+
+    public static ArrayList<Trait> getTest() {
+        return test;
+    }
+
+    public static void setTest(ArrayList<Trait> test) {
+        User.test = test;
     }
 
     public static void setImage(String image) {
