@@ -14,8 +14,8 @@
         android:roundIcon="@drawable/ab_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.PasswordChangeActivity" />
 
+        <activity android:name=".activity.PasswordChangeActivity" />
 
         <activity
             android:name=".activity.AddTestActivity"
@@ -34,7 +34,7 @@
         <activity
             android:name=".activity.UserPageActivity"
             android:label="@string/title_activity_profile_page"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"/>
         <activity
             android:name=".activity.RegisterActivity"
             android:label="@string/title_activity_register_page"
