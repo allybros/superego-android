@@ -1,6 +1,5 @@
 package com.allybros.superego.api;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -27,9 +26,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RegisterTask {
-
-
-
     public static void registerTask (final Context currentContext, final String username, final String email, final String password, final boolean agreement){
 
         final String loginFailed= (String) currentContext.getString(R.string.loginFailed);
@@ -132,14 +128,8 @@ public class RegisterTask {
                 return params;
             }
         };
-
-
         queue.add(jsonRequest);
-
     }
-
-
-
 }
 
 

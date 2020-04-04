@@ -1,6 +1,5 @@
 package com.allybros.superego.api;
 
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +9,6 @@ import android.widget.Toast;
 
 import com.allybros.superego.R;
 import com.allybros.superego.activity.LoginActivity;
-import com.allybros.superego.activity.SplashActivity;
 import com.allybros.superego.activity.UserPageActivity;
 import com.allybros.superego.unit.ErrorCodes;
 import com.android.volley.AuthFailureError;
@@ -29,11 +27,7 @@ import java.util.Map;
 
 public class ChangeInfoTask extends Activity {
 
-
-
-
-
-    public static void changeInfoTask(final Context currentContext, final String new_uid,final String new_email,final String new_information, final String session_token) {
+    public static void changeInfoTask(final Context currentContext, final String new_uid, final String new_email, final String new_information, final String session_token) {
 
         final String CHANGE_URL ="https://api.allybros.com/superego/edit-profile.php";
         final String USER_INFORMATION_PREF="USER_INFORMATION_PREF";
@@ -57,17 +51,17 @@ public class ChangeInfoTask extends Activity {
                         case ErrorCodes.SESSION_EXPIRED:
                             Log.d("changeInfoTaskFail",response.toString());
                             Toast.makeText(currentContext,"Lütfen tekrar giriş yapınız",Toast.LENGTH_SHORT).show();
-                            Intent intent=new Intent(currentContext,LoginActivity.class);
+                            Intent intent=new Intent(currentContext, LoginActivity.class);
                             currentContext.startActivity(intent);
                             break;
 
                         case ErrorCodes.USERNAME_NOT_LEGAL:
                             Log.d("changeInfoTaskFail",response.toString());
-                            Toast.makeText(currentContext,R.string.usernameNotLegal,Toast.LENGTH_SHORT).show();
+                            Toast.makeText(currentContext, R.string.usernameNotLegal,Toast.LENGTH_SHORT).show();
                             break;
                         case ErrorCodes.USERNAME_ALREADY_EXIST:
                             Log.d("changeInfoTaskFail",response.toString());
-                            Toast.makeText(currentContext,R.string.usernameAlreadyExist,Toast.LENGTH_SHORT).show();
+                            Toast.makeText(currentContext, R.string.usernameAlreadyExist,Toast.LENGTH_SHORT).show();
                             break;
 
                         case ErrorCodes.EMAIL_NOT_LEGAL:
@@ -81,10 +75,7 @@ public class ChangeInfoTask extends Activity {
                             break;
 
                         case ErrorCodes.SUCCESS:
-                            Log.d("changeInfoTaskSucces",response.toString());
-                            Intent intent1=new Intent(currentContext, SplashActivity.class);
-                            intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            currentContext.startActivity(intent1);
+                            Log.d("changeInfoSucces: ",""+10);
                             break;
 
                         case ErrorCodes.SYSFAIL:

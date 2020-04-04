@@ -46,13 +46,6 @@
                             android:layout_height="96dp"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"/>
-                        <!--                <ImageView
-                                            android:id="@+id/profile_image"
-                                            android:layout_width="96dp"
-                                            android:layout_marginLeft="10dp"
-                                            android:layout_marginRight="10dp"
-                                            android:layout_height="96dp"
-                                            android:src="@drawable/simple_profile_photo" />-->
                     </LinearLayout>
 
 
@@ -116,8 +109,6 @@
                     </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
-
-            <!-- Text Info View -->
             <TextView
                 android:id="@+id/tvAppInformationProfilePage"
                 android:layout_width="match_parent"
@@ -134,55 +125,60 @@
                 android:text="man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?"
                 android:textColor="@color/White"
                 />
-
-
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:paddingTop="8dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="horizontal">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <Button
                     android:id="@+id/addTest"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="16dp"
                     android:background="@drawable/selector_add_test"
                     android:drawableTop="@drawable/outline_add_white_36"
                     android:fontFamily="@font/comfortaa_light"
                     android:padding="15dp"
                     android:text="@string/add_test"
-                    android:textSize="10dp" />
+                    android:textSize="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
                     android:id="@+id/copyTestLink"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="69dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="63dp"
+                    android:background="@drawable/selector_copy_test"
+                    android:drawableTop="@drawable/outline_link_white_36"
                     android:fontFamily="@font/comfortaa_light"
+                    android:padding="15dp"
                     android:text="@string/link_copy"
                     android:textSize="10dp"
-                    android:background="@drawable/selector_copy_test"
-                    android:padding="15dp"
-                    android:drawableTop="@drawable/outline_link_white_36"/>
+                    app:layout_constraintEnd_toStartOf="@+id/shareTest"
+                    app:layout_constraintStart_toEndOf="@+id/addTest"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <Button
                     android:id="@+id/shareTest"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/selector_share_test"
+                    android:drawableTop="@drawable/outline_publish_white_36"
                     android:fontFamily="@font/comfortaa_light"
                     android:padding="15dp"
                     android:text="@string/shareTest"
                     android:textSize="10dp"
-                    android:background="@drawable/selector_share_test"
-                    android:drawableTop="@drawable/outline_publish_white_36"/>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         </LinearLayout>

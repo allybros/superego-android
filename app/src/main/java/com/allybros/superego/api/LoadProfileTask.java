@@ -1,6 +1,5 @@
 package com.allybros.superego.api;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -59,14 +58,14 @@ public class LoadProfileTask{
 
                         case ErrorCodes.SUCCESS:
 
-                            int user_type=jsonObject.getInt("user_type");
-                            String username=jsonObject.getString("username");
-                            String user_bio=jsonObject.getString("user_bio");
-                            String test_id=jsonObject.getString("test_id");
-                            String email=jsonObject.getString("email");
-                            String image=jsonObject.getString("avatar");
-                            int rated=jsonObject.getInt("rated");
-                            int credit=jsonObject.getInt("credit");
+                            int user_type = jsonObject.getInt("user_type");
+                            String username = jsonObject.getString("username");
+                            String user_bio = jsonObject.getString("user_bio");
+                            String test_id = jsonObject.getString("test_id");
+                            String email = jsonObject.getString("email");
+                            String image = jsonObject.getString("avatar");
+                            int rated = jsonObject.getInt("rated");
+                            int credit = jsonObject.getInt("credit");
 
                             ArrayList<Trait> traits=new ArrayList<>();
                             if(!jsonObject.isNull("scores")){
@@ -95,6 +94,7 @@ public class LoadProfileTask{
                             intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
                             currentContext.startActivity(intent);
                             break;
+
                         case ErrorCodes.SESSION_EXPIRED:
                             SharedPreferences pref = currentContext.getSharedPreferences(USER_INFORMATION_PREF, currentContext.MODE_PRIVATE);
                             String uid= pref.getString("uid", "");

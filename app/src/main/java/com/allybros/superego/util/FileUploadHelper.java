@@ -1,50 +1,39 @@
 package com.allybros.superego.util;
 
-import android.app.Application;
-import android.text.TextUtils;
+import android.content.Context;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
-public class FileUploadHelper extends Application {
+public class FileUploadHelper{
 
-    public static final String TAG = FileUploadHelper.class.getSimpleName();
     private RequestQueue mRequestQueue;
-
     private static FileUploadHelper mInstance;
+    private static Context mContext;
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        mInstance = this;
+    private FileUploadHelper(Context context){
+        mContext = context;
+        mRequestQueue = getRequestQueue();
     }
 
-    public static synchronized FileUploadHelper getInstance() {
+    public static synchronized FileUploadHelper getInstance(Context context) {
+        if(mInstance == null){
+            mInstance = new FileUploadHelper(context);
+        }
+
         return mInstance;
     }
 
     public RequestQueue getRequestQueue() {
         if (mRequestQueue == null) {
-            mRequestQueue = Volley.newRequestQueue(getApplicationContext());
+            mRequestQueue = Volley.newRequestQueue(mContext.getApplicationContext());
         }
 
         return mRequestQueue;
     }
 
-    public <T> void addToRequestQueue(Request<T> req, String tag) {
-        req.setTag(TextUtils.isEmpty(tag) ? TAG : tag);
-        getRequestQueue().add(req);
-    }
-
-    public <T> void addToRequestQueue(Request<T> req) {
-        req.setTag(TAG);
-        getRequestQueue().add(req);
-    }
-
-    public void cancelPendingRequests(Object tag) {
-        if (mRequestQueue != null) {
-            mRequestQueue.cancelAll(tag);
-        }
+    public<T> void addToRequestQue(Request<T> request){
+        getRequestQueue().add(request);
     }
 }

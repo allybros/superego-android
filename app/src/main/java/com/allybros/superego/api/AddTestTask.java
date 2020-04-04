@@ -1,6 +1,5 @@
 package com.allybros.superego.api;
 
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -38,7 +37,7 @@ public class AddTestTask extends Activity {
         StringRequest jsonRequest=new StringRequest(Request.Method.POST, ADD_TEST_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Intent addTestIntent= new Intent(currentContext,AddTestActivity.class);
+                Intent addTestIntent= new Intent(currentContext, AddTestActivity.class);
                 currentContext.startActivity(addTestIntent);
             }
         }, new Response.ErrorListener() {

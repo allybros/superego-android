@@ -1,6 +1,5 @@
 package com.allybros.superego.api;
 
-
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
@@ -16,6 +15,7 @@ import com.android.volley.toolbox.Volley;
 
 import java.util.HashMap;
 import java.util.Map;
+
 //TODO: Bu işlev tam olarak bitmedi. Geri dönüş karşılaması falan yapılacak. Temel olarak çalışıyor.
 public class ChangePasswordTask {
     public static void changePasswordTask (final Context currentContext, final String oldPassword, final String sessionToken, final String newPassword, final String newPasswordAgain){
