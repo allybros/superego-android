@@ -18,11 +18,11 @@
     <string name="logoutSuccesful">Çıkış Başarılı</string>
     <string name="emailEmpty">Email alanı boş olamaz</string>
     <string name="usernameNotLegal">Lütfen uygun bir kullanıcı adı seçiniz</string>
-    <string name="usernameAlreadyExist">Bu kullanıcı adı alınmış :(</string>emailNotLegal
-    <string name="emailAlreadyExist">Bu email ile kayıt olmuşsun :(</string>successRegister
-    <string name="emailNotLegal">Bizi kandırma seni çılgın, hadi e-postanı gir</string>
-    <string name="passwordNotLegal">Bu parolayı beğenmedik. Hadi yenisini gir :)))</string>
-    <string name="successRegister">Kaydın başarılı haydi giriş yapalım :))</string>
+    <string name="usernameAlreadyExist">Bu kullanıcı adı alınmış</string>
+    <string name="emailAlreadyExist">Bu email sistemimizde kayıtlıdır.</string>
+    <string name="emailNotLegal">E-mail uygun değildir.</string>
+    <string name="passwordNotLegal">Parola uygun değildir.</string>
+    <string name="successRegister">Kayıt Başarılı</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -43,4 +43,13 @@
     <string name="okey">Tamam</string>
     <string name="checkConnection">Bağlantınızı kontrol ediniz.</string>
     <string name="pleaseComplate">Yeterli değerlendirmeye ulaştığınızda kişilik özellikleriniz burada görüntülenecek.</string>
+    <string name="add_text">Merhaba, Reklam izleyerek ego puanı kazanabilirsin. Ego puanı ile değerlendirme sayını arttırabilirsin.</string>
+    <string name="cancel">Kapat</string>
+    <string name="processComplated">İşlem başarılı</string>
+    <string name="invalid_file_extension">Lütfen uygun bir dosya seçiniz.</string>
+    <string name="invalid_file_type">Lütfen uygun bir dosya seçiniz.</string>
+    <string name="invalid_file_size">Dosya boyutu çok büyük</string>
+    <string name="session_expired">Oturumun süresi dolmuştur. Tekrar giriş yapınız.</string>
+    <string name="error_code">Kod: </string>
+
 </resources>

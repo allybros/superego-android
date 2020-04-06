@@ -5,12 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.allybros.superego.R;
-import com.allybros.superego.activity.LoginActivity;
-import com.allybros.superego.activity.UserPageActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
+import com.allybros.superego.unit.Api;
 import com.allybros.superego.unit.ErrorCodes;
+import com.allybros.superego.unit.User;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -27,63 +27,59 @@ import java.util.Map;
 
 public class ChangeInfoTask extends Activity {
 
-    public static void changeInfoTask(final Context currentContext, final String new_uid, final String new_email, final String new_information, final String session_token) {
-
-        final String CHANGE_URL ="https://api.allybros.com/superego/edit-profile.php";
-        final String USER_INFORMATION_PREF="USER_INFORMATION_PREF";
-
+    public static void changeInfoTask(final Context currentContext, final String new_uid, final String new_email, final String new_information, final String session_token){
+        final Intent intent = new Intent(Api.getActionUpdateInformation());
         RequestQueue queue = Volley.newRequestQueue(currentContext);
-        SharedPreferences pref = currentContext.getSharedPreferences(USER_INFORMATION_PREF, Context.MODE_PRIVATE);
+        SharedPreferences pref = currentContext.getSharedPreferences(Api.getUserInformationPref(), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
 
-        StringRequest jsonRequest=new StringRequest(Request.Method.POST, CHANGE_URL, new Response.Listener<String>() {
+
+        StringRequest jsonRequest=new StringRequest(Request.Method.POST, Api.getUpdateInformation(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
-
-                int status;
-
+                Log.d("sego-Response",response.toString());
                 try {
-                    Log.d("sego-Response",response.toString());
                     JSONObject jsonObj=new JSONObject(response);
-                    status = jsonObj.getInt("status");
+                    int status = jsonObj.getInt("status");
+
                     switch (status){
+
                         case ErrorCodes.SESSION_EXPIRED:
-                            Log.d("changeInfoTaskFail",response.toString());
-                            Toast.makeText(currentContext,"Lütfen tekrar giriş yapınız",Toast.LENGTH_SHORT).show();
-                            Intent intent=new Intent(currentContext, LoginActivity.class);
-                            currentContext.startActivity(intent);
+                            intent.putExtra("status", status);
+                            LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent);
                             break;
 
                         case ErrorCodes.USERNAME_NOT_LEGAL:
-                            Log.d("changeInfoTaskFail",response.toString());
-                            Toast.makeText(currentContext, R.string.usernameNotLegal,Toast.LENGTH_SHORT).show();
+                            intent.putExtra("status", status);
+                            LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent);
                             break;
+
                         case ErrorCodes.USERNAME_ALREADY_EXIST:
-                            Log.d("changeInfoTaskFail",response.toString());
-                            Toast.makeText(currentContext, R.string.usernameAlreadyExist,Toast.LENGTH_SHORT).show();
+                            intent.putExtra("status", status);
+                            LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent);
                             break;
 
                         case ErrorCodes.EMAIL_NOT_LEGAL:
-                            Log.d("changeInfoTaskFail",response.toString());
-                            Toast.makeText(currentContext,R.string.emailNotLegal,Toast.LENGTH_SHORT).show();
+                            intent.putExtra("status", status);
+                            LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent);
                             break;
 
                         case ErrorCodes.EMAIL_ALREADY_EXIST:
-                            Log.d("changeInfoTaskFail",response.toString());
-                            Toast.makeText(currentContext,R.string.emailAlreadyExist,Toast.LENGTH_SHORT).show();
+                            intent.putExtra("status", status);
+                            LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent);
                             break;
 
                         case ErrorCodes.SUCCESS:
-                            Log.d("changeInfoSucces: ",""+10);
+                            updateLocal(new_uid,new_email,new_information);
+                            intent.putExtra("status", status);
+                            LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent);
                             break;
 
                         case ErrorCodes.SYSFAIL:
-                            Log.d("changeInfoTaskFail",response.toString());
-                            Toast.makeText(currentContext, R.string.pleaseTryAgain,Toast.LENGTH_SHORT).show();
-                            Intent intent2=new Intent(currentContext, UserPageActivity.class);
-                            currentContext.startActivity(intent2);
+                            intent.putExtra("status", status);
+                            LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent);
                             break;
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -92,7 +88,8 @@ public class ChangeInfoTask extends Activity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(currentContext,currentContext.getString(R.string.connection_error), Toast.LENGTH_SHORT);
+                intent.putExtra("status", 0);
+                LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent);
             }
         }) {
             @Override
@@ -105,10 +102,15 @@ public class ChangeInfoTask extends Activity {
                 return params;
             }
         };
-
-
         queue.add(jsonRequest);
-
     }
-
+    private static void updateLocal(String new_uid, String new_email, String new_information){
+        User.setUsername(new_uid);
+        User.setUserBio(new_information);
+        User.setEmail(new_email);
+    }
 }
+
+
+
+

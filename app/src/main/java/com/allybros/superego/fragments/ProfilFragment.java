@@ -1,10 +1,14 @@
 package com.allybros.superego.fragments;
 
 
+import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,12 +16,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.allybros.superego.R;
@@ -26,20 +33,26 @@ import com.allybros.superego.activity.SplashActivity;
 import com.allybros.superego.api.LoginTask;
 import com.allybros.superego.api.ProfileRefreshTask;
 import com.allybros.superego.unit.Api;
+import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.unit.User;
 import com.allybros.superego.util.CircledNetworkImageView;
 import com.allybros.superego.util.HelperMethods;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.rewarded.RewardItem;
+import com.google.android.gms.ads.rewarded.RewardedAd;
+import com.google.android.gms.ads.rewarded.RewardedAdCallback;
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 
 public class ProfilFragment extends Fragment {
 
-    private TextView tvUsernameProfilPage,tvRatedProfilPage,tvUserInfoProfilPage,tvAppInformationProfilePage;
-    private ProgressBar progressBarProfilPage;
-    private Button addTest,copyTestLink, shareTest;
+    private TextView tvUsernameProfilPage,tvUserInfoProfilPage,tvAppInformationProfilePage;
+    private Button addTest,copyTestLink, shareTest, btCredit, btScore;
     private CircledNetworkImageView avatar;
     private String session_token,uid,password;
     private SwipeRefreshLayout profileSwipeLayout;
+    private RewardedAd rewardedAd;
     public static final String USER_INFORMATION_PREF="USER_INFORMATION_PREF";
-
+    private RewardedAdLoadCallback adLoadCallback;
     public ProfilFragment() {
         // Required empty public constructor
     }
@@ -63,37 +76,65 @@ public class ProfilFragment extends Fragment {
         chechkLogin();
         initializeViewComponents();
         loadProfile();
-        setButtons();
 
 
+
+        profileSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                ProfileRefreshTask.profileRefreshTask(getContext(), SplashActivity.session_token);
+
+            }
+        });
     }
 
     private void loadProfile(){
         tvUserInfoProfilPage.setText(User.getUserBio());
         tvUsernameProfilPage.setText(User.getUsername());
-
-        if(User.getRated()>= Api.getRatedLimit()){
-            progressBarProfilPage.setVisibility(View.GONE);
-        }else{
-            progressBarProfilPage.setProgress(User.getRated());
+        btCredit.setText(User.getCredit()+" Ego");
+        if(User.getRated()>=5){
+            btCredit.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.selector_credit));
+            btCredit.setEnabled(true);
         }
-        tvRatedProfilPage.setText(String.valueOf(User.getRated()+" değerlendirme"));
+        btScore.setText(String.valueOf(User.getRated()+"/10 değerlendirme"));
         tvAppInformationProfilePage.setText(R.string.profile_page_information_text);
 
         HelperMethods.imageLoadFromUrl(getContext(),Api.getAvatarUrl()+User.getImage(),avatar);
+
+        setButtons();
+        //Add Load
+        rewardedAd = new RewardedAd(getContext(),Api.getAdmobAddInterfaceId());
+        adLoadCallback = new RewardedAdLoadCallback() {
+            @Override
+            public void onRewardedAdLoaded() {
+                // Ad successfully loaded.
+                Log.d("ADD-Test","Ad successfully loaded.");
+            }
+
+            @Override
+            public void onRewardedAdFailedToLoad(int errorCode) {
+                // Ad failed to load.
+                rewardedAd.loadAd(new AdRequest.Builder().build(), adLoadCallback);
+                Log.d("ADD-Test","Ad failed to load.");
+            }
+        };
+        rewardedAd.loadAd(new AdRequest.Builder().build(), adLoadCallback);
     }
+
     private void initializeViewComponents(){
         addTest =(Button) getView().findViewById(R.id.addTest);
         copyTestLink=(Button) getView().findViewById(R.id.copyTestLink);
         shareTest =(Button) getView().findViewById(R.id.shareTest);
         tvUserInfoProfilPage =(TextView) getView().findViewById(R.id.tvUserInfoProfilPage);
         tvUsernameProfilPage =(TextView) getView().findViewById(R.id.tvUsernameProfilPage);
-        progressBarProfilPage = (ProgressBar) getView().findViewById(R.id.progressBarProfilPage);
-        tvRatedProfilPage=(TextView) getView().findViewById(R.id.tvRatedProfilPage);
         tvAppInformationProfilePage=(TextView) getView().findViewById(R.id.tvAppInformationProfilePage);
         avatar= (CircledNetworkImageView) getView().findViewById(R.id.profile_image);
         profileSwipeLayout = (SwipeRefreshLayout) getView().findViewById(R.id.profileSwipeLayout);
+        btCredit = (Button) getView().findViewById(R.id.credit);
+        btScore = (Button) getView().findViewById(R.id.score);
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(refreshReceiver, new IntentFilter("profile-refresh-status-share"));
     }
+
     private void chechkLogin(){
         //TODO: Bu sistem splash screen static değişkenine dönüştürülecek
         SharedPreferences pref = getContext().getSharedPreferences(USER_INFORMATION_PREF, getContext().MODE_PRIVATE);
@@ -106,13 +147,13 @@ public class ProfilFragment extends Fragment {
         }
         session_token=pref.getString("session_token","");
     }
+
     private void setButtons(){
         addTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final SharedPreferences pref = getContext().getSharedPreferences(USER_INFORMATION_PREF, Context.MODE_PRIVATE);
                 final String session_token=pref.getString("session-token","");
-                Log.d("sessionTokenProfilFragm",session_token);
                 Intent addTestIntent= new Intent(getContext(), AddTestActivity.class);
                 startActivity(addTestIntent);
             }
@@ -140,14 +181,82 @@ public class ProfilFragment extends Fragment {
                 startActivity(Intent.createChooser(sharingIntent, "Share via"));
             }
         });
-
-        profileSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        btCredit.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onRefresh() {
-                ProfileRefreshTask.profileRefreshTask(getContext(), SplashActivity.session_token);
-                profileSwipeLayout.setRefreshing(false);
-                loadProfile();
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("insightof.me");
+                builder.setMessage(getString(R.string.add_text));
+                builder.setPositiveButton( getString(R.string.okey), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        if (rewardedAd.isLoaded()) {
+                            Activity activityContext = getActivity();
+                            RewardedAdCallback adCallback = new RewardedAdCallback() {
+                                @Override
+                                public void onRewardedAdOpened() {
+                                    // Ad opened.
+                                    Log.d("ADD-Test","Ad opened.");
+                                }
+                                @Override
+                                public void onRewardedAdClosed() {
+                                    // Ad closed.
+                                    Log.d("ADD-Test","Ad closed.");
+                                }
+                                @Override
+                                public void onUserEarnedReward(@NonNull RewardItem reward) {
+                                    // User earned reward.
+                                    Log.d("ADD-Test","User earned reward.");
+                                    User.setCredit(User.getCredit()+5);
+                                    Log.d("Reward",""+reward.getAmount());
+                                    loadProfile();
+                                }
+                                @Override
+                                public void onRewardedAdFailedToShow(int errorCode) {
+                                    // Ad failed to display.
+                                    Log.d("ADD-Test","Ad failed to display.");
+                                }
+                            };
+                            rewardedAd.show(activityContext, adCallback);
+                        } else {
+                            Log.d("TAG", "The rewarded ad wasn't loaded yet.");
+                        }
+                    }
+                });
+                builder.show();
             }
         });
+    }
+
+    private BroadcastReceiver refreshReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int status = intent.getIntExtra("status",0);
+            Log.d("receiver", "Got message: " + status);
+            switch (status){
+                case ErrorCodes.SYSFAIL:
+                    profileSwipeLayout.setRefreshing(false); //Last
+                    Toast.makeText(getContext(), getContext().getString(R.string.connection_error), Toast.LENGTH_SHORT).show();
+                    break;
+
+                case ErrorCodes.SUCCESS:
+                    profileSwipeLayout.setRefreshing(false);
+                    loadProfile();
+                    break;
+            }
+        }
+    };
+
+
+    @Override
+    public void onDestroy() {
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(refreshReceiver);
+        super.onDestroy();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(User.getAvatar()!=null) avatar.setImageBitmap(User.getAvatar());
     }
 }

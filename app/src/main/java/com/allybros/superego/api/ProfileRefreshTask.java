@@ -48,15 +48,18 @@ public class ProfileRefreshTask{
                             Intent intent = new Intent("profile-refresh-status-share");
                             intent.putExtra("status", ErrorCodes.SYSFAIL);
                             LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent);
-                            Toast.makeText(currentContext, currentContext.getString(R.string.please_login_again), Toast.LENGTH_SHORT).show();
                             break;
+
                         case ErrorCodes.SUCCESS:
-                            int user_type=jsonObject.getInt("user_type");
-                            String username=jsonObject.getString("username");
-                            String user_bio=jsonObject.getString("user_bio");
-                            String test_id=jsonObject.getString("test_id");
-                            String email=jsonObject.getString("email");
-                            int rated=jsonObject.getInt("rated");
+                            int user_type = jsonObject.getInt("user_type");
+                            String username = jsonObject.getString("username");
+                            String user_bio = jsonObject.getString("user_bio");
+                            String test_id = jsonObject.getString("test_id");
+                            String email = jsonObject.getString("email");
+                            String image = jsonObject.getString("avatar");
+                            int rated = jsonObject.getInt("rated");
+                            int credit = jsonObject.getInt("credit");
+
                             ArrayList<Trait> traits=new ArrayList<>();
                             if(!jsonObject.isNull("scores")){
                                 for (int i = 0; i < jsonObject.getJSONArray("scores").length(); i++) {
@@ -77,6 +80,9 @@ public class ProfileRefreshTask{
                             User.setEmail(email);
                             User.setTestId(test_id);
                             User.setScores(traits);
+                            User.setCredit(credit);
+                            User.setImage(image);
+
                             Intent intent1 = new Intent("profile-refresh-status-share");
                             intent1.putExtra("status", ErrorCodes.SUCCESS);
                             LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent1);
