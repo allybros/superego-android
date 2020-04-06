@@ -104,14 +104,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    // Our handler for received Intents. This will be called whenever an Intent
-    // with an action named "custom-event-name" is broadcasted.
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             int status = intent.getIntExtra("status",0);
             Log.d("receiver", "Got message: " + status);
             switch (status){
+
                 case ErrorCodes.SYSFAIL:
                     passwordTextInput.setError(getString(R.string.loginFailed));
                     usernameTextInput.setError(getString(R.string.loginFailed));
@@ -121,6 +120,7 @@ public class LoginActivity extends AppCompatActivity {
                             .playOn(findViewById(R.id.loginCard));
                     btLogin.setEnabled(true);
                     break;
+
                 case ErrorCodes.CAPTCHA_REQUIRED:
                     passwordTextInput.setError(getString(R.string.loginFailed));
                     usernameTextInput.setError(getString(R.string.loginFailed));
@@ -130,6 +130,7 @@ public class LoginActivity extends AppCompatActivity {
                             .playOn(findViewById(R.id.loginCard));
                     btLogin.setEnabled(true);
                     break;
+
                 case ErrorCodes.SUSPEND_SESSION:
                     passwordTextInput.setError(getString(R.string.session_suspend));
                     usernameTextInput.setError(getString(R.string.session_suspend));
@@ -143,11 +144,11 @@ public class LoginActivity extends AppCompatActivity {
                                     .duration(700)
                                     .repeat(0)
                                     .playOn(findViewById(R.id.loginCard));
-
                         }
                     });
                     builder.show();
                     break;
+
                 case ErrorCodes.CONNECTION_ERROR:
                     passwordTextInput.setError(getString(R.string.checkConnection));
                     usernameTextInput.setError(getString(R.string.checkConnection));

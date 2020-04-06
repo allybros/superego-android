@@ -1,6 +1,8 @@
 package com.allybros.superego.unit;
 
 
+import android.graphics.Bitmap;
+
 import java.util.ArrayList;
 
 public class User {
@@ -9,6 +11,15 @@ public class User {
     private static String image,testId,username,userBio,email;
     private static ArrayList<Trait> scores;
     private static ArrayList<Trait> test;
+    private static Bitmap avatar;
+
+    public static Bitmap getAvatar() {
+        return avatar;
+    }
+
+    public static void setAvatar(Bitmap avatar) {
+        User.avatar = avatar;
+    }
 
     public static int getCredit() {
         return credit;

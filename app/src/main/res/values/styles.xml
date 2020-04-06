@@ -32,10 +32,4 @@
         <item name="android:textColorPrimary">@color/White</item>
     </style>
 
-    <!--TODO:zamanı gelince burasının kaldırılması gerekiyor-->
-    <style name="material" parent="Theme.MaterialComponents.Light">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="android:textColorPrimary">@color/White</item>
-    </style>
-
 </resources>

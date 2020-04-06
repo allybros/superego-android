@@ -11,7 +11,22 @@
     android:layout_height="match_parent"
     tools:context=".activity.SettingsActivity">
 
+    <com.vlad1m1r.lemniscate.funny.HeartProgressView
+        android:id="@+id/hearthAnimation"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_marginTop="64dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lineColor="@color/purple"
+        app:maxLineLength="0.8"
+        app:minLineLength="0.4"
+        app:sizeMultiplier="1"
+        app:strokeWidth="3dp">
 
+    </com.vlad1m1r.lemniscate.funny.HeartProgressView>
     <com.allybros.superego.util.CircledNetworkImageView
         android:id="@+id/imageSettings"
         android:layout_width="96dp"
