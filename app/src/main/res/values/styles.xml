@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="android:statusBarColor">@color/Black</item>
         <item name="android:textColorPrimary">@color/White</item>
+        <item name="android:actionBarSize">52dp</item>
     </style>
 
     <style name="AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
@@ -30,6 +31,9 @@
         <item name="android:statusBarColor">@color/Black</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="android:textColorPrimary">@color/White</item>
+        <item name="android:actionBarSize">52dp</item>
     </style>
+
+
 
 </resources>

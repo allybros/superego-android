@@ -26,12 +26,11 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="profile_page_information_text">Arkadaşlarınıza sizin kişilik özelliklerinizi \ndeğerledirmesi için hazırladığınız testi \ngönderin</string>
-    <string name="shareTest">Sonuçları\nPaylaş</string>
+    <string name="shareTest">Paylaş</string>
     <string name="title_activity_change_password">ChangePasswordActivity</string>
     <string name="link_copied">Test adresiniz kopyalandı</string>
-    <string name="link_copy">Testini\nPaylaş</string>
-    <string name="add_test">Yeni Test\nOluştur</string>
+    <string name="link_copy">Bağlantı</string>
+    <string name="add_test">Yeni Test</string>
     <string name="login">Giriş Yap</string>
     <string name="pleaseTryAgain">Lütfen tekrar deneyiniz.</string>
     <string name="register">Bize Katıl</string>
@@ -51,5 +50,12 @@
     <string name="invalid_file_size">Dosya boyutu çok büyük</string>
     <string name="session_expired">Oturumun süresi dolmuştur. Tekrar giriş yapınız.</string>
     <string name="error_code">Kod: </string>
+    <string name="complated">Tamamlandı</string>
+    <string name="rated">\ Değerlendirildi</string>
+    <string name="credit">\ Ego</string>
+    <string name="login_text0">Karakter Özelliklerini\nÖğren</string>
+    <string name="login_text1">Arkadaşlarına sorarak gerçek kişilik\nözelliklerini öğren</string>
+    <string name="empty_test">Henüz test oluşturmamışsın.\nArkadaşlarının seni değerlendirmesi için önce bir test oluşturmalısın.\nYeterli sayıda değerlendirmeye ulaştığında kişilik özelliklerini görebileceksin</string>
+    <string name="sendTest">Testini hazıladın.\nŞimdi 10 arkadaşına testini gönder\nve\ndeğerlendirmelerine göre kişilik özelliklerini öğren</string>
 
 </resources>
