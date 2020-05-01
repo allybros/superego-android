@@ -1,200 +1,249 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/profileSwipeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="4dp">
-        <LinearLayout
+    android:paddingBottom="55dp"
+    android:background="@color/fragmentBackground"
+    android:fillViewport="true"
+    android:scrollbars="vertical">
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/profileSwipeLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <!-- Profile Card View -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_view"
+            android:layout_height="match_parent"
+            android:padding="4dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:elevation="15dp"
-                android:padding="8dp"
-                app:cardCornerRadius="5dp">
+                android:orientation="vertical">
 
-                <LinearLayout
+                <!-- Profile Card View -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_view"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="8dp">
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-                        <com.allybros.superego.util.CircledNetworkImageView
-                            android:id="@+id/profile_image"
-                            android:layout_width="126dp"
-                            android:src="@drawable/simple_profile_photo"
-                            android:elevation="50dp"
-                            android:layout_height="96dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"/>
-                    </LinearLayout>
-
-
-                    <TextView
-                        android:id="@+id/tvUsernameProfilPage"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/comfortaa_light"
-                        android:textColor="#000"
-                        android:text="/@username" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:layout_marginEnd="3dp"
-                            android:src="@drawable/baseline_info_black_18" />
-
-                        <TextView
-                            android:id="@+id/tvUserInfoProfilPage"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/comfortaa_light"
-                            android:paddingBottom="4dp"
-                            android:paddingTop="4dp"
-                            android:gravity="left"
-                            android:text="man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?" />
-                    </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:elevation="15dp"
+                    android:padding="8dp"
+                    android:paddingBottom="55dp"
+                    app:cardCornerRadius="5dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:padding="3dp">
 
-                        <Button
-                            android:id="@+id/score"
-                            android:layout_width="150dp"
-                            android:layout_height="35dp"
-                            android:text="Score"
-                            android:padding="10dp"
-                            android:textSize="8dp"
-                            android:enabled="false"
-                            android:elevation="50dp"
-                            android:background="@drawable/score_bg"
-                            android:fontFamily="@font/comfortaa_light"
-                            android:drawableLeft="@drawable/baseline_done_white_18"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/credit"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"/>
-
-                        <Button
-                            android:id="@+id/credit"
-                            android:layout_width="150dp"
-                            android:layout_height="35dp"
-                            android:text="Credit"
-                            android:padding="10dp"
-                            android:textSize="10dp"
-                            android:enabled="false"
-                            android:elevation="50dp"
-                            android:background="@drawable/passive_credit_bg"
-                            android:fontFamily="@font/comfortaa_light"
-                            android:drawableLeft="@drawable/baseline_account_balance_wallet_white_18"
-                            app:layout_constraintBottom_toBottomOf="parent"
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/constraintLayout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="12dp"
+                            android:layout_marginEnd="8dp"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/score"
-                            app:layout_constraintTop_toTopOf="parent"/>
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/profile_image">
 
+                            <TextView
+                                android:id="@+id/tvUsernameProfilPage"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="/@username"
+                                android:textColor="#000"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/imageView"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/imageView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="5dp"
+                                android:src="@drawable/baseline_person_black_18"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@+id/tvUsernameProfilPage"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"></ImageView>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                        <TextView
+                            android:id="@+id/tvUserInfoProfilPage"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="12dp"
+                            android:layout_marginEnd="8dp"
+                            android:gravity="center"
+                            android:text="man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?"
+                            android:textSize="11dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/constraintLayout3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="36dp"
+                            android:layout_marginEnd="8dp"
+                            android:orientation="horizontal"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tvUserInfoProfilPage">
+
+                            <Button
+                                android:id="@+id/score"
+                                android:layout_width="120dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/score_bg"
+                                android:drawableLeft="@drawable/baseline_done_white_18"
+                                android:enabled="false"
+                                android:padding="10dp"
+                                android:text="Score"
+                                android:textSize="10dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@+id/credit"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <Button
+                                android:id="@+id/credit"
+                                android:layout_width="120dp"
+                                android:layout_height="35dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:background="@drawable/passive_credit_bg"
+                                android:drawableLeft="@drawable/baseline_account_balance_wallet_white_18"
+                                android:enabled="false"
+                                android:padding="10dp"
+                                android:text="Credit"
+                                android:textSize="10dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/score"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <com.allybros.superego.util.CircledNetworkImageView
+                            android:id="@+id/profile_image"
+                            android:layout_width="96dp"
+                            android:layout_height="96dp"
+                            android:layout_marginTop="12dp"
+                            android:src="@drawable/simple_profile_photo"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-            <TextView
-                android:id="@+id/tvAppInformationProfilePage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
 
-                android:fontFamily="@font/comfortaa_light"
-                android:background="@drawable/textview_bg"
-                android:elevation="15dp"
-                android:padding="15dp"
-                android:gravity="center"
-                android:text="man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?"
-                android:textColor="@color/White" />
+                </androidx.cardview.widget.CardView>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:paddingTop="8dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <Button
-                    android:id="@+id/addTest"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/selector_add_test"
-                    android:drawableTop="@drawable/outline_add_white_36"
-                    android:fontFamily="@font/comfortaa_light"
-                    android:padding="15dp"
-                    android:text="@string/add_test"
-                    android:textSize="10dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <Button
-                    android:id="@+id/copyTestLink"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="69dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="63dp"
-                    android:background="@drawable/selector_copy_test"
-                    android:drawableTop="@drawable/outline_link_white_36"
-                    android:fontFamily="@font/comfortaa_light"
-                    android:padding="15dp"
-                    android:text="@string/link_copy"
-                    android:textSize="10dp"
-                    app:layout_constraintEnd_toStartOf="@+id/shareTest"
-                    app:layout_constraintStart_toEndOf="@+id/addTest"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <Button
-                    android:id="@+id/shareTest"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@drawable/selector_share_test"
-                    android:drawableTop="@drawable/outline_publish_white_36"
-                    android:fontFamily="@font/comfortaa_light"
-                    android:padding="15dp"
-                    android:text="@string/shareTest"
-                    android:textSize="10dp"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:paddingTop="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/card_view">
 
+                    <Button
+                        android:id="@+id/addTest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/selector_add_test"
+                        android:drawableTop="@drawable/outline_add_white_36"
+                        android:padding="15dp"
+                        android:text="@string/add_test"
+                        android:textSize="10dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
+                        android:id="@+id/copyTestLink"
+                        android:layout_width="103dp"
+                        android:layout_height="76dp"
+                        android:layout_marginStart="69dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="63dp"
+                        android:background="@drawable/selector_copy_test"
+                        android:drawableTop="@drawable/outline_link_white_36"
+                        android:padding="15dp"
+                        android:text="@string/link_copy"
+                        android:textSize="10dp"
+                        app:layout_constraintEnd_toStartOf="@+id/shareTest"
+                        app:layout_constraintStart_toEndOf="@+id/addTest"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
+                        android:id="@+id/shareTest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/selector_share_test"
+                        android:drawableTop="@drawable/outline_publish_white_36"
+                        android:padding="15dp"
+                        android:text="@string/shareTest"
+                        android:textSize="10dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/tvAppInformationProfilePage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:clickable="true"
+                    android:enabled="true"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:background="@drawable/selector_profile_textview"
+                    android:elevation="15dp"
+                    android:gravity="center"
+                    android:padding="15dp"
+                    android:text="man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?"
+                    android:textColor="@color/White"
+                    android:textSize="11dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
+
+                <com.google.android.gms.ads.AdView
+                    android:id="@+id/bannerAdd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="12dp"
+                    app:adSize="BANNER"
+                    app:adUnitId="ca-app-pub-3940256099942544/6300978111"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvAppInformationProfilePage"></com.google.android.gms.ads.AdView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </LinearLayout>
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</ScrollView>

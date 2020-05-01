@@ -37,7 +37,14 @@ import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.unit.User;
 import com.allybros.superego.util.CircledNetworkImageView;
 import com.allybros.superego.util.HelperMethods;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.ads.rewarded.RewardItem;
 import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdCallback;
@@ -51,6 +58,8 @@ public class ProfilFragment extends Fragment {
     private String session_token,uid,password;
     private SwipeRefreshLayout profileSwipeLayout;
     private RewardedAd rewardedAd;
+    private AdView mAdView;
+
     public static final String USER_INFORMATION_PREF="USER_INFORMATION_PREF";
     private RewardedAdLoadCallback adLoadCallback;
     public ProfilFragment() {
@@ -91,17 +100,38 @@ public class ProfilFragment extends Fragment {
     private void loadProfile(){
         tvUserInfoProfilPage.setText(User.getUserBio());
         tvUsernameProfilPage.setText(User.getUsername());
-        btCredit.setText(User.getCredit()+" Ego");
+        btCredit.setText(User.getCredit()+getString(R.string.credit));
         if(User.getRated()>=5){
             btCredit.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.selector_credit));
             btCredit.setEnabled(true);
+            YoYo.with(Techniques.Bounce)
+                    .duration(1000)
+                    .repeat(5)
+                    .playOn(getView().findViewById(R.id.credit));
+            if(User.getRated()>=10){
+                btScore.setText(String.valueOf(getString(R.string.complated)));
+            }
         }
-        btScore.setText(String.valueOf(User.getRated()+"/10 değerlendirme"));
-        tvAppInformationProfilePage.setText(R.string.profile_page_information_text);
-
+        btScore.setText(String.valueOf(User.getRated()+getString(R.string.rated)));
+        Log.d("Test--> ",""+User.getTestId());
+        if(User.getTestId().equals("null")){
+            tvAppInformationProfilePage.setText(R.string.empty_test);
+        }else{
+            tvAppInformationProfilePage.setText(R.string.sendTest);
+        }
         HelperMethods.imageLoadFromUrl(getContext(),Api.getAvatarUrl()+User.getImage(),avatar);
 
         setButtons();
+        //BannerAdd Load
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
+        MobileAds.initialize(getActivity(), new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+
+            }
+        });
         //Add Load
         rewardedAd = new RewardedAd(getContext(),Api.getAdmobAddInterfaceId());
         adLoadCallback = new RewardedAdLoadCallback() {
@@ -132,6 +162,7 @@ public class ProfilFragment extends Fragment {
         profileSwipeLayout = (SwipeRefreshLayout) getView().findViewById(R.id.profileSwipeLayout);
         btCredit = (Button) getView().findViewById(R.id.credit);
         btScore = (Button) getView().findViewById(R.id.score);
+        mAdView = getView().findViewById(R.id.bannerAdd);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(refreshReceiver, new IntentFilter("profile-refresh-status-share"));
     }
 
@@ -152,8 +183,6 @@ public class ProfilFragment extends Fragment {
         addTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final SharedPreferences pref = getContext().getSharedPreferences(USER_INFORMATION_PREF, Context.MODE_PRIVATE);
-                final String session_token=pref.getString("session-token","");
                 Intent addTestIntent= new Intent(getContext(), AddTestActivity.class);
                 startActivity(addTestIntent);
             }
@@ -226,6 +255,65 @@ public class ProfilFragment extends Fragment {
                 builder.show();
             }
         });
+        mAdView.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                // Code to be executed when an ad finishes loading.
+                Log.d("BANNER","Code to be executed when an ad finishes loading");
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                // Code to be executed when an ad request fails.
+                Log.d("BANNER","Code to be executed when an ad request fails.");
+            }
+
+            @Override
+            public void onAdOpened() {
+                // Code to be executed when an ad opens an overlay that
+                // covers the screen.
+                Log.d("BANNER","Code to be executed when an ad opens an overlay that");
+            }
+
+            @Override
+            public void onAdClicked() {
+                // Code to be executed when the user clicks on an ad.
+                Log.d("BANNER","Code to be executed when the user clicks on an ad.");
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+                // Code to be executed when the user has left the app.
+                Log.d("BANNER","Code to be executed when the user has left the app.");
+            }
+
+            @Override
+            public void onAdClosed() {
+                // Code to be executed when the user is about to return
+                // to the app after tapping on an ad.
+                Log.d("BANNER","Code to be executed when the user is about to return");
+            }
+        });
+
+            tvAppInformationProfilePage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Log.d("Click","Clika");
+                    if(User.getTestId().equals("null")){
+                        Intent addTestIntent= new Intent(getContext(), AddTestActivity.class);
+                        startActivity(addTestIntent);
+                    }else{
+                        Log.d("Click","Cliks");
+                        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                        sharingIntent.setType("text/plain");
+                        String shareBody = "Beni nasıl görüyorsun? -->"+User.getTestId();
+                        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, R.string.shareTest);
+                        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                        startActivity(Intent.createChooser(sharingIntent, "Share via"));
+                    }
+                }
+            });
     }
 
     private BroadcastReceiver refreshReceiver = new BroadcastReceiver() {

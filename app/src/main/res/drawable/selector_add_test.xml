@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ripple xmlns:android="http://schemas.android.com/apk/res/android" android:color="#F3E5F5">
+<ripple xmlns:android="http://schemas.android.com/apk/res/android" android:color="#FCE4EC">
     <item>
         <selector>
             <item android:drawable="@drawable/shape_add_test"/>

@@ -20,6 +20,8 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.allybros.superego.R;
 import com.allybros.superego.api.RegisterTask;
 import com.allybros.superego.unit.ErrorCodes;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -54,9 +56,9 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(checkBoxAggrement.isChecked()){
-                    btSignUp.setEnabled(true);
+                    btSignUp.setBackgroundTintList(getApplicationContext().getColorStateList(R.color.buttonLoginScreen));
                 }else{
-                    btSignUp.setEnabled(false);
+                    btSignUp.setBackgroundTintList(getApplicationContext().getColorStateList(R.color.grey));
                 }
             }
         });
@@ -67,12 +69,24 @@ public class RegisterActivity extends AppCompatActivity {
                 username_text_input_register.setErrorEnabled(false);
                 email_text_input_register.setErrorEnabled(false);
                 password_text_input_register.setErrorEnabled(false);
-                if(!etRegisterUsername.getText().toString().equals("") && !etRegisterMail.getText().toString().equals("") && !etRegisterPassword.getText().toString().equals("")) {
-                    Log.d("Register request send","Register request send");
-                    RegisterTask.registerTask(getApplicationContext(), etRegisterUsername.getText().toString(), etRegisterMail.getText().toString(), etRegisterPassword.getText().toString(), true);
-                } else{
+                if(checkBoxAggrement.isChecked()){
+                    if(!etRegisterUsername.getText().toString().equals("") && !etRegisterMail.getText().toString().equals("") && !etRegisterPassword.getText().toString().equals("")) {
+                        Log.d("Register request send","Register request send");
+                        RegisterTask.registerTask(getApplicationContext(), etRegisterUsername.getText().toString(), etRegisterMail.getText().toString(), etRegisterPassword.getText().toString(), true);
+                    } else{
+                        if(etRegisterUsername.getText().toString().equals("")) {
+                            username_text_input_register.setError("Kullanıcı adı doldurulmalıdır");
+                        }
+                        if(etRegisterPassword.getText().toString().equals("")) {
+                            password_text_input_register.setError("Parola alanı doldurulmalıdır");
+                        }
+                        if(etRegisterMail.getText().toString().equals("")) {
+                            email_text_input_register.setError("E posta alanı doldurulmalıdır");
+                        }
+                    }
+                }else{
                     if(etRegisterUsername.getText().toString().equals("")) {
-                    username_text_input_register.setError("Kullanıcı adı doldurulmalıdır");
+                        username_text_input_register.setError("Kullanıcı adı doldurulmalıdır");
                     }
                     if(etRegisterPassword.getText().toString().equals("")) {
                         password_text_input_register.setError("Parola alanı doldurulmalıdır");
@@ -80,6 +94,10 @@ public class RegisterActivity extends AppCompatActivity {
                     if(etRegisterMail.getText().toString().equals("")) {
                         email_text_input_register.setError("E posta alanı doldurulmalıdır");
                     }
+                    YoYo.with(Techniques.Shake)
+                            .duration(700)
+                            .repeat(0)
+                            .playOn(findViewById(R.id.layoutAggrement));
                 }
             }
         });

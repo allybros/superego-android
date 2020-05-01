@@ -15,7 +15,7 @@
         android:id="@+id/hearthAnimation"
         android:layout_width="96dp"
         android:layout_height="96dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="36dp"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,50 +24,49 @@
         app:maxLineLength="0.8"
         app:minLineLength="0.4"
         app:sizeMultiplier="1"
-        app:strokeWidth="3dp">
+        app:strokeWidth="3dp"></com.vlad1m1r.lemniscate.funny.HeartProgressView>
 
-    </com.vlad1m1r.lemniscate.funny.HeartProgressView>
     <com.allybros.superego.util.CircledNetworkImageView
         android:id="@+id/imageSettings"
         android:layout_width="96dp"
         android:layout_height="96dp"
-        android:layout_marginTop="64dp"
-        android:elevation="50dp"
+        android:layout_marginTop="36dp"
+        android:elevation="5dp"
         android:src="@drawable/simple_profile_photo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </com.allybros.superego.util.CircledNetworkImageView>
+        app:layout_constraintTop_toTopOf="parent"></com.allybros.superego.util.CircledNetworkImageView>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btChangePhoto"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
-        android:textColor="@color/Black"
-        android:text="Fotoğrafı Değiştir"
-        android:textSize="10dp"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/cinzel_bold"
-        android:layout_marginTop="16dp"
+        android:visibility="visible"
+        android:translationZ="100dp"
+        android:layout_marginTop="60dp"
+        android:fontFamily="@font/comfortaa_light"
+        android:text="Değiştir"
+        android:textColor="@color/Black"
+        android:textSize="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageSettings"></com.google.android.material.button.MaterialButton>
+        app:layout_constraintTop_toTopOf="parent"></com.google.android.material.button.MaterialButton>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/etUsername_text_input"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="20dp"
         android:fontFamily="@font/comfortaa_light"
         android:hint="Kullanıcı Adı"
+        app:boxBackgroundColor="@color/trans"
         app:boxStrokeColor="@color/Black"
         app:endIconMode="clear_text"
         app:errorEnabled="true"
-        app:hintTextColor="@color/grey"
+        app:hintTextColor="@color/Black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btChangePhoto">
@@ -75,7 +74,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etUsername"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:fontFamily="@font/comfortaa_light"
             android:inputType="text"
             android:textColor="@color/Black" />
@@ -83,18 +82,18 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/etEmail_text_input"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="20dp"
         android:fontFamily="@font/comfortaa_light"
         android:hint="E-mail"
         app:boxStrokeColor="@color/Black"
+        app:boxBackgroundColor="@color/trans"
         app:endIconMode="clear_text"
         app:errorEnabled="true"
-        app:hintTextColor="@color/grey"
+        app:hintTextColor="@color/Black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etUsername_text_input">
@@ -110,18 +109,18 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/etInformation_text_input"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="20dp"
         android:fontFamily="@font/comfortaa_light"
         android:hint="Kişisel Bilgiler"
+        app:boxBackgroundColor="@color/trans"
         app:boxStrokeColor="@color/Black"
         app:endIconMode="clear_text"
         app:errorEnabled="true"
-        app:hintTextColor="@color/grey"
+        app:hintTextColor="@color/Black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etEmail_text_input">
@@ -131,7 +130,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/comfortaa_light"
-            android:inputType="text"
+            android:gravity="top|left"
+            android:inputType="textMultiLine"
+            android:lines="4"
+            android:overScrollMode="always"
+            android:scrollbarStyle="insideInset"
+            android:scrollbars="vertical"
+            android:scrollHorizontally="false"
             android:textColor="@color/Black" />
     </com.google.android.material.textfield.TextInputLayout>
 
