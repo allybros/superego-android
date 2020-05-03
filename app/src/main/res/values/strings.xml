@@ -61,4 +61,8 @@
     <string name="earned_reward">Ödülünüz hesabınıza aktarılmıştır.</string>
     <string name="reward_earned_sysfail">Teknik bir hata nedeniyle bu işlemi tamamlayamadık.</string>
     <string name="reward_earned_session_expired">Oturumunuzun süresi bitmiştir.\nLütfen tekrar giriş yapıp\ntekrar deneyiniz.</string>
+    <string name="sysfail_login_social_media">Teknik bir hatadan dolayı giriş yapılamadı.</string>
+    <string name="google_email_empty">Google\' a kayıtlı email bulunmamaktadır</string>
+    <string name="google_email_not_legal">Google mailiniz uygun değildir</string>
+    <string name="google_username_not_legal">Googlee kullanıcı adınız uygun değildir.</string>
 </resources>

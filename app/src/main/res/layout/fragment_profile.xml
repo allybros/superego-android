@@ -125,7 +125,7 @@
                                 android:layout_marginBottom="8dp"
                                 android:background="@drawable/passive_credit_bg"
                                 android:drawableLeft="@drawable/baseline_account_balance_wallet_white_18"
-                                android:enabled="true"
+                                android:enabled="false"
                                 android:padding="10dp"
                                 android:text="Credit"
                                 android:textSize="10dp"

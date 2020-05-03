@@ -10,15 +10,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.allybros.superego.R;
 import com.allybros.superego.api.LoadProfileTask;
+import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.Trait;
 
 import java.util.ArrayList;
 
 
 public class SplashActivity extends AppCompatActivity {
-    public static final String USER_INFORMATION_PREF="USER_INFORMATION_PREF";
-    //TODO:Bu session tokenin static olması sağlanmalı Spalsh screende yapılıp program devamında buradan kullanılmalı
-
     public static String session_token;
     private SharedPreferences pref;
     public static ArrayList<Trait> allTraits;
@@ -27,14 +25,15 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        pref= getSharedPreferences(USER_INFORMATION_PREF,MODE_PRIVATE);
+
+        pref= getSharedPreferences(ConstantValues.getUserInformationPref(),MODE_PRIVATE);
         session_token=pref.getString("session_token","");
         Log.d("sessionTokenSplash",session_token);
 
         allTraits= LoadProfileTask.getAllTraits(getApplicationContext());
 
         if(!session_token.isEmpty()){
-            LoadProfileTask.loadProfileTask(getBaseContext(),session_token);
+            LoadProfileTask.loadProfileTask(getApplicationContext(),session_token);
         }else{
             Intent intent=new Intent(this,LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

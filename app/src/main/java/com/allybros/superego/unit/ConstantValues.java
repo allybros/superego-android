@@ -16,22 +16,43 @@ public class ConstantValues {
     private static final String API_ROOT =  "https://api.allybros.com/superego/";//TODO: Yukarıda bulunan api roota geçilecek
     private static final String AVATAR_URL = API_ROOT + "images.php?get=";
     private static final String TEST_LINK_ROOT = "https://demo.allybros.com/superego/rate.php?test=";   //TODO: Test links must be like AVATAR_URL variable
-    private static final String UPDATE_INFORMATION ="https://api.allybros.com/superego/edit-profile.php";
-    private static final String EARN_REWARD = "https://api.allybros.com/superego/reward.php";
 
+    //API LINKS
+    private static final String UPDATE_INFORMATION ="https://api.allybros.com/superego/edit-profile.php";
+    private static final String URL_EARN_REWARD = "https://api.allybros.com/superego/reward.php";
+    private static final String URL_SOCIAL_ACCOUNTS_LOGIN ="https://api.allybros.com/superego/oauth-client.php";
+    private static final String LOGIN_URL ="https://api.allybros.com/superego/login.php";
 
 
     //Broadcast-Reciever actions
     private static final String ACTION_UPDATE_INFORMATION ="update-info-status-share";
     private static final String ACTION_UPDATE_IMAGE="update-image-status-share";
     private static final String ACTION_EARNED_REWARD="earned-reward-status-share";
+    private static final String ACTION_LOGIN = "login-status-share";
+    private static final String ACTION_GOOGLE_LOGIN = "google-login-status-share";
+
+    public static String getActionLogin() {
+        return ACTION_LOGIN;
+    }
+
+    public static String getLoginUrl() {
+        return LOGIN_URL;
+    }
+
+    public static String getActionGoogleLogin() {
+        return ACTION_GOOGLE_LOGIN;
+    }
 
     public static String getActionEarnedReward() {
         return ACTION_EARNED_REWARD;
     }
 
-    public static String getEarnReward() {
-        return EARN_REWARD;
+    public static String getUrlSocialAccountsLogin() {
+        return URL_SOCIAL_ACCOUNTS_LOGIN;
+    }
+
+    public static String getUrlEarnReward() {
+        return URL_EARN_REWARD;
     }
 
     public static String getActionUpdateImage() {

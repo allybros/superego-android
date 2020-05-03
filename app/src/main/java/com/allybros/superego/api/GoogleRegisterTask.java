@@ -1,6 +1,6 @@
 package com.allybros.superego.api;
 
-import android.app.Activity;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -24,23 +24,19 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LoginTask extends Activity {
-    public static void loginTask(final Context context, final String uid, final String password) {
+public class GoogleRegisterTask {
+    public static void loginTask(final Context context, final String access_token) {
 
-        final Intent intent = new Intent(ConstantValues.getActionLogin());
+        final Intent intent = new Intent(ConstantValues.getActionGoogleLogin());
 
         RequestQueue queue = Volley.newRequestQueue(context);
-
-        StringRequest jsonRequest=new StringRequest(Request.Method.POST, ConstantValues.getLoginUrl(), new Response.Listener<String>() {
+        StringRequest jsonRequest=new StringRequest(Request.Method.POST, ConstantValues.getUrlSocialAccountsLogin(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
-                int status;
-
                 try {
                     JSONObject jsonObj=new JSONObject(response);
-                    Log.d("sego-Response",response.toString());
-                    status = jsonObj.getInt("status");
+                    Log.d("sego-Response-Go",response.toString());
+                    int status = jsonObj.getInt("status");
 
                     switch (status){
 
@@ -48,11 +44,11 @@ public class LoginTask extends Activity {
                             String session_token = jsonObj.getString("session_token");
                             SharedPreferences pref = context.getSharedPreferences(ConstantValues.getUserInformationPref(), Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = pref.edit();
-                            editor.putString("uid",uid);
-                            editor.putString("password",password);
                             editor.putString("session_token", session_token);
-                            Log.d("sessionTokenLogin",session_token);
                             editor.commit();
+
+                            Log.d("sessionTokenLogin",session_token);
+
                             intent.putExtra("status", status);
                             LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                             break;
@@ -62,12 +58,18 @@ public class LoginTask extends Activity {
                             LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                             break;
 
+
+
                     }
+
+
+
+
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -79,9 +81,8 @@ public class LoginTask extends Activity {
             @Override
             protected Map<String,String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("uid", uid);
-                params.put("password", password);
-                params.put("g-recaptcha-response", ConstantValues.getRECAPTCHA_SKIP());
+                params.put("authenticator", "google");
+                params.put("access_token", access_token);
                 return params;
             }
         };

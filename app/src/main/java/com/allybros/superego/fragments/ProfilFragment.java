@@ -22,6 +22,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -38,6 +39,8 @@ import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.unit.User;
 import com.allybros.superego.util.CircledNetworkImageView;
 import com.allybros.superego.util.HelperMethods;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -100,7 +103,7 @@ public class ProfilFragment extends Fragment {
         tvUserInfoProfilPage.setText(User.getUserBio());
         tvUsernameProfilPage.setText(User.getUsername());
         btCredit.setText(User.getCredit()+getString(R.string.credit));
-   /*     if(User.getRated()>=5){
+        if(User.getRated()>=5){
             btCredit.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.selector_credit));
             btCredit.setEnabled(true);
             YoYo.with(Techniques.Bounce)
@@ -110,7 +113,7 @@ public class ProfilFragment extends Fragment {
             if(User.getRated()>=10){
                 btScore.setText(String.valueOf(getString(R.string.complated)));
             }
-        }*/
+        }
         btScore.setText(String.valueOf(User.getRated()+getString(R.string.rated)));
         Log.d("Test--> ",""+User.getTestId());
         if(User.getTestId().equals("null")){
