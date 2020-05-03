@@ -15,7 +15,8 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.R;
 import com.allybros.superego.api.LoginTask;
-import com.allybros.superego.api.google;
+import com.allybros.superego.api.GoogleRegisterTask;
+import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -53,7 +54,8 @@ public class LoginActivity extends AppCompatActivity {
         etPassword=(TextInputEditText)findViewById(R.id.etPassword);
         passwordTextInput=(TextInputLayout)findViewById(R.id.password_text_input);
         loginCard= (MaterialCardView) findViewById(R.id.loginCard);
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("login-status-share"));
+        LocalBroadcastManager.getInstance(this).registerReceiver(loginReceiver, new IntentFilter(ConstantValues.getActionLogin()));
+        LocalBroadcastManager.getInstance(this).registerReceiver(loginGoogleReceiver, new IntentFilter(ConstantValues.getActionGoogleLogin()));
 
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,6 +108,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+
+        //Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.GOOGLE_CLIENT_ID))
                 .requestEmail()
@@ -123,6 +127,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -140,7 +145,7 @@ public class LoginActivity extends AppCompatActivity {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             // Signed in successfully, show authenticated UI.
             Log.w("GoogleSignInSuccess", account.getDisplayName()+account.getEmail()+account.getPhotoUrl()+account.getIdToken());
-            google.loginTask(getApplicationContext(),"google",account.getIdToken());
+            GoogleRegisterTask.loginTask(getApplicationContext(),account.getIdToken());
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
@@ -153,7 +158,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver loginReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             int status = intent.getIntExtra("status",0);
@@ -198,6 +203,12 @@ public class LoginActivity extends AppCompatActivity {
                     builder.show();
                     break;
 
+                case ErrorCodes.SUCCESS:
+                    Intent intent1=new Intent(getApplicationContext(), SplashActivity.class);
+                    intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    break;
+
                 case ErrorCodes.CONNECTION_ERROR:
                     passwordTextInput.setError(getString(R.string.checkConnection));
                     usernameTextInput.setError(getString(R.string.checkConnection));
@@ -221,10 +232,79 @@ public class LoginActivity extends AppCompatActivity {
 
         }
     };
+    private BroadcastReceiver loginGoogleReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int status = intent.getIntExtra("status",0);
+            Log.d("receiver", "Got message: " + status);
+            switch (status){
+
+                case ErrorCodes.SYSFAIL:
+                    AlertDialog.Builder builder2 = new AlertDialog.Builder(LoginActivity.this);
+                    builder2.setTitle("insightof.me");
+                    builder2.setMessage(R.string.sysfail_login_social_media);
+                    builder2.setPositiveButton( getString(R.string.okey), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {}
+                    });
+                    builder2.show();
+                    break;
+
+                case ErrorCodes.EMAIL_EMPTY:
+                    AlertDialog.Builder builder3 = new AlertDialog.Builder(LoginActivity.this);
+                    builder3.setTitle("insightof.me");
+                    builder3.setMessage(R.string.google_email_empty);
+                    builder3.setPositiveButton( getString(R.string.okey), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {}
+                    });
+                    builder3.show();
+                    break;
+                case ErrorCodes.EMAIL_NOT_LEGAL:
+                    AlertDialog.Builder builder4 = new AlertDialog.Builder(LoginActivity.this);
+                    builder4.setTitle("insightof.me");
+                    builder4.setMessage(R.string.google_email_not_legal);
+                    builder4.setPositiveButton( getString(R.string.okey), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {}
+                    });
+                    builder4.show();
+                    break;
+                case ErrorCodes.USERNAME_NOT_LEGAL:
+                    AlertDialog.Builder builder5 = new AlertDialog.Builder(LoginActivity.this);
+                    builder5.setTitle("insightof.me");
+                    builder5.setMessage(R.string.google_username_not_legal);
+                    builder5.setPositiveButton( getString(R.string.okey), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {}
+                    });
+                    builder5.show();
+                    break;
+
+                case ErrorCodes.SUCCESS:
+                    Intent intent1=new Intent(getApplicationContext(), SplashActivity.class);
+                    intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent1);
+                    break;
+
+                case ErrorCodes.CONNECTION_ERROR:
+                    passwordTextInput.setError(getString(R.string.checkConnection));
+                    usernameTextInput.setError(getString(R.string.checkConnection));
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(LoginActivity.this);
+                    builder1.setTitle("insightof.me");
+                    builder1.setMessage(getString(R.string.checkConnection));
+                    builder1.setPositiveButton( getString(R.string.okey), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {}
+                    });
+                    builder1.show();
+                    break;
+
+            }
+
+        }
+    };
 
     @Override
     protected void onDestroy() {
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(loginReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(loginGoogleReceiver);
         super.onDestroy();
     }
 

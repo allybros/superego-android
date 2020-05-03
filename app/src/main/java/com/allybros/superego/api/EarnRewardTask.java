@@ -33,7 +33,7 @@ public class EarnRewardTask {
 
         RequestQueue queue = Volley.newRequestQueue(context);
 
-        final StringRequest jsonRequest=new StringRequest(Request.Method.POST, ConstantValues.getEarnReward(), new Response.Listener<String>() {
+        final StringRequest jsonRequest=new StringRequest(Request.Method.POST, ConstantValues.getUrlEarnReward(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
