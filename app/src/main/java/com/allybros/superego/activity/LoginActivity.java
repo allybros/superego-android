@@ -14,12 +14,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.R;
+import com.allybros.superego.api.SocialMediaSignInTask;
 import com.allybros.superego.api.LoginTask;
-import com.allybros.superego.api.GoogleRegisterTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -32,6 +39,8 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.Arrays;
+
 public class LoginActivity extends AppCompatActivity {
     private MaterialButton btLogin;
     private MaterialButton btRegister;
@@ -40,7 +49,9 @@ public class LoginActivity extends AppCompatActivity {
     public TextInputLayout passwordTextInput, usernameTextInput;
     private MaterialCardView loginCard;
     private SignInButton signInGoogle;
+    private LoginButton signInFacebook;
     static GoogleSignInClient mGoogleSignInClient;
+    CallbackManager callbackManager;
     private static final int RC_SIGN_IN = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +61,15 @@ public class LoginActivity extends AppCompatActivity {
         usernameTextInput =(TextInputLayout) findViewById(R.id.username_text_input);
         btLogin=(MaterialButton) findViewById(R.id.btLogin);
         signInGoogle = (SignInButton) findViewById(R.id.sign_in_google);
+        signInFacebook = (LoginButton) findViewById(R.id.sign_in_facebook);
+
         btRegister=(MaterialButton) findViewById(R.id.btRegister);
         etMail=(TextInputEditText)findViewById(R.id.etMail);
         etPassword=(TextInputEditText)findViewById(R.id.etPassword);
         passwordTextInput=(TextInputLayout)findViewById(R.id.password_text_input);
         loginCard= (MaterialCardView) findViewById(R.id.loginCard);
         LocalBroadcastManager.getInstance(this).registerReceiver(loginReceiver, new IntentFilter(ConstantValues.getActionLogin()));
-        LocalBroadcastManager.getInstance(this).registerReceiver(loginGoogleReceiver, new IntentFilter(ConstantValues.getActionGoogleLogin()));
+        LocalBroadcastManager.getInstance(this).registerReceiver(loginSocialMediaReceiver, new IntentFilter(ConstantValues.getActionSocialMediaLogin()));
 
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,13 +139,39 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        //Facebook
+        callbackManager = CallbackManager.Factory.create();
+        signInFacebook.setPermissions(Arrays.asList("email","public_profile"));
 
+        callbackManager = CallbackManager.Factory.create();
+
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        // App code
+                        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+                        Log.d("Facebook","B"+accessToken.getToken());
+                        SocialMediaSignInTask.loginTask(getApplicationContext(),accessToken.getToken(),"facebook");
+
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        // App code
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                        // App code
+                    }
+                });
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        callbackManager.onActivityResult(requestCode,resultCode,data);
         // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             // The Task returned from this call is always completed, no need to attach
@@ -141,12 +180,15 @@ public class LoginActivity extends AppCompatActivity {
             handleSignInResult(task);
         }
     }
+
+
+
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             // Signed in successfully, show authenticated UI.
             Log.w("GoogleSignInSuccess", account.getDisplayName()+account.getEmail()+account.getPhotoUrl()+account.getIdToken());
-            GoogleRegisterTask.loginTask(getApplicationContext(),account.getIdToken());
+            SocialMediaSignInTask.loginTask(getApplicationContext(),account.getIdToken(),"google");
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
@@ -233,7 +275,7 @@ public class LoginActivity extends AppCompatActivity {
 
         }
     };
-    private BroadcastReceiver loginGoogleReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver loginSocialMediaReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             int status = intent.getIntExtra("status",0);
@@ -253,7 +295,7 @@ public class LoginActivity extends AppCompatActivity {
                 case ErrorCodes.EMAIL_EMPTY:
                     AlertDialog.Builder builder3 = new AlertDialog.Builder(LoginActivity.this);
                     builder3.setTitle("insightof.me");
-                    builder3.setMessage(R.string.google_email_empty);
+                    builder3.setMessage(R.string.social_media_email_empty);
                     builder3.setPositiveButton( getString(R.string.okey), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {}
                     });
@@ -262,7 +304,7 @@ public class LoginActivity extends AppCompatActivity {
                 case ErrorCodes.EMAIL_NOT_LEGAL:
                     AlertDialog.Builder builder4 = new AlertDialog.Builder(LoginActivity.this);
                     builder4.setTitle("insightof.me");
-                    builder4.setMessage(R.string.google_email_not_legal);
+                    builder4.setMessage(R.string.social_media_email_not_legal);
                     builder4.setPositiveButton( getString(R.string.okey), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {}
                     });
@@ -271,7 +313,7 @@ public class LoginActivity extends AppCompatActivity {
                 case ErrorCodes.USERNAME_NOT_LEGAL:
                     AlertDialog.Builder builder5 = new AlertDialog.Builder(LoginActivity.this);
                     builder5.setTitle("insightof.me");
-                    builder5.setMessage(R.string.google_username_not_legal);
+                    builder5.setMessage(R.string.social_media_username_not_legal);
                     builder5.setPositiveButton( getString(R.string.okey), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {}
                     });
@@ -305,7 +347,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onDestroy() {
 
         LocalBroadcastManager.getInstance(this).unregisterReceiver(loginReceiver);
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(loginGoogleReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(loginSocialMediaReceiver);
         super.onDestroy();
     }
 
