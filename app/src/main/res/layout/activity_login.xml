@@ -122,6 +122,15 @@
 
         </com.google.android.material.card.MaterialCardView>
 
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/sign_in_google"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@+id/loginCard"
+            tools:ignore="MissingConstraints" />
+
+
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btRegister"

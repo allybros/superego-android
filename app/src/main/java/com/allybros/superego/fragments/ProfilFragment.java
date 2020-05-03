@@ -22,23 +22,22 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.allybros.superego.R;
 import com.allybros.superego.activity.AddTestActivity;
+import com.allybros.superego.activity.LoginActivity;
 import com.allybros.superego.activity.SplashActivity;
+import com.allybros.superego.api.EarnRewardTask;
 import com.allybros.superego.api.LoginTask;
 import com.allybros.superego.api.ProfileRefreshTask;
-import com.allybros.superego.unit.Api;
+import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.unit.User;
 import com.allybros.superego.util.CircledNetworkImageView;
 import com.allybros.superego.util.HelperMethods;
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -101,7 +100,7 @@ public class ProfilFragment extends Fragment {
         tvUserInfoProfilPage.setText(User.getUserBio());
         tvUsernameProfilPage.setText(User.getUsername());
         btCredit.setText(User.getCredit()+getString(R.string.credit));
-        if(User.getRated()>=5){
+   /*     if(User.getRated()>=5){
             btCredit.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.selector_credit));
             btCredit.setEnabled(true);
             YoYo.with(Techniques.Bounce)
@@ -111,7 +110,7 @@ public class ProfilFragment extends Fragment {
             if(User.getRated()>=10){
                 btScore.setText(String.valueOf(getString(R.string.complated)));
             }
-        }
+        }*/
         btScore.setText(String.valueOf(User.getRated()+getString(R.string.rated)));
         Log.d("Test--> ",""+User.getTestId());
         if(User.getTestId().equals("null")){
@@ -119,7 +118,7 @@ public class ProfilFragment extends Fragment {
         }else{
             tvAppInformationProfilePage.setText(R.string.sendTest);
         }
-        HelperMethods.imageLoadFromUrl(getContext(),Api.getAvatarUrl()+User.getImage(),avatar);
+        HelperMethods.imageLoadFromUrl(getContext(), ConstantValues.getAvatarUrl()+User.getImage(),avatar);
 
         setButtons();
         //BannerAdd Load
@@ -133,7 +132,7 @@ public class ProfilFragment extends Fragment {
             }
         });
         //Add Load
-        rewardedAd = new RewardedAd(getContext(),Api.getAdmobAddInterfaceId());
+        rewardedAd = new RewardedAd(getContext(), ConstantValues.getAdmobAddInterfaceId());
         adLoadCallback = new RewardedAdLoadCallback() {
             @Override
             public void onRewardedAdLoaded() {
@@ -164,6 +163,9 @@ public class ProfilFragment extends Fragment {
         btScore = (Button) getView().findViewById(R.id.score);
         mAdView = getView().findViewById(R.id.bannerAdd);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(refreshReceiver, new IntentFilter("profile-refresh-status-share"));
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(rewardReceiver, new IntentFilter(ConstantValues.getActionEarnedReward()));
+
+
     }
 
     private void chechkLogin(){
@@ -236,9 +238,8 @@ public class ProfilFragment extends Fragment {
                                 public void onUserEarnedReward(@NonNull RewardItem reward) {
                                     // User earned reward.
                                     Log.d("ADD-Test","User earned reward.");
-                                    User.setCredit(User.getCredit()+5);
+                                    EarnRewardTask.EarnRewardTask(getContext(),SplashActivity.session_token);
                                     Log.d("Reward",""+reward.getAmount());
-                                    loadProfile();
                                 }
                                 @Override
                                 public void onRewardedAdFailedToShow(int errorCode) {
@@ -334,11 +335,63 @@ public class ProfilFragment extends Fragment {
             }
         }
     };
+    private BroadcastReceiver rewardReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int status = intent.getIntExtra("status",0);
+            Log.d("receiver", "Got message: " + status);
+            switch (status){
+
+                case ErrorCodes.SYSFAIL:
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setTitle("insightof.me");
+                    builder.setMessage(R.string.reward_earned_sysfail);
+                    builder.setPositiveButton( getString(R.string.okey), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+
+                            Intent intent = new Intent(getContext(), LoginActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+
+                        }
+                    });
+                    builder.show();
+                    break;
+
+
+                case ErrorCodes.SUCCESS:
+
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(getContext());
+                    builder1.setTitle("insightof.me");
+                    builder1.setMessage(R.string.earned_reward);
+                    builder1.setPositiveButton( getString(R.string.okey), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            ProfileRefreshTask.profileRefreshTask(getContext(), SplashActivity.session_token);
+                        }
+                    });
+                    builder1.show();
+
+                    break;
+
+                case ErrorCodes.SESSION_EXPIRED:
+                    AlertDialog.Builder builder2 = new AlertDialog.Builder(getContext());
+                    builder2.setTitle("insightof.me");
+                    builder2.setMessage(R.string.reward_earned_session_expired);
+                    builder2.setPositiveButton( getString(R.string.okey), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {}
+                    });
+                    builder2.show();
+                    break;
+            }
+        }
+    };
 
 
     @Override
     public void onDestroy() {
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(refreshReceiver);
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(rewardReceiver);
         super.onDestroy();
     }
 

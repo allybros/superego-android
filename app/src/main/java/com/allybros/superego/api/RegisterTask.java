@@ -9,7 +9,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.R;
 import com.allybros.superego.activity.LoginActivity;
-import com.allybros.superego.unit.Api;
+import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -124,7 +124,7 @@ public class RegisterTask {
                 params.put("email", email);
                 params.put("password", password);
                 params.put("conditions", String.valueOf(agreement));
-                params.put("g-recaptcha-response", Api.getRECAPTCHA_SKIP());
+                params.put("g-recaptcha-response", ConstantValues.getRECAPTCHA_SKIP());
                 return params;
             }
         };

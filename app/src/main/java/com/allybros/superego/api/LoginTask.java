@@ -11,7 +11,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.allybros.superego.R;
 import com.allybros.superego.activity.LoginActivity;
 import com.allybros.superego.activity.SplashActivity;
-import com.allybros.superego.unit.Api;
+import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -110,7 +110,7 @@ public class LoginTask extends Activity {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("uid", uid);
                 params.put("password", password);
-                params.put("g-recaptcha-response", Api.getRECAPTCHA_SKIP());
+                params.put("g-recaptcha-response", ConstantValues.getRECAPTCHA_SKIP());
                 return params;
             }
         };

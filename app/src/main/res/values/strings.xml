@@ -57,5 +57,8 @@
     <string name="login_text1">Arkadaşlarına sorarak gerçek kişilik\nözelliklerini öğren</string>
     <string name="empty_test">Henüz test oluşturmamışsın.\nArkadaşlarının seni değerlendirmesi için önce bir test oluşturmalısın.\nYeterli sayıda değerlendirmeye ulaştığında kişilik özelliklerini görebileceksin</string>
     <string name="sendTest">Testini hazıladın.\nŞimdi 10 arkadaşına testini gönder\nve\ndeğerlendirmelerine göre kişilik özelliklerini öğren</string>
-
+    <string name="GOOGLE_CLIENT_ID">878431533810-k60n0juqnidet1p2pvi2rv6itltmoej4.apps.googleusercontent.com</string>
+    <string name="earned_reward">Ödülünüz hesabınıza aktarılmıştır.</string>
+    <string name="reward_earned_sysfail">Teknik bir hata nedeniyle bu işlemi tamamlayamadık.</string>
+    <string name="reward_earned_session_expired">Oturumunuzun süresi bitmiştir.\nLütfen tekrar giriş yapıp\ntekrar deneyiniz.</string>
 </resources>
