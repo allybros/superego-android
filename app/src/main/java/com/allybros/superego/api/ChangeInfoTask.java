@@ -8,7 +8,7 @@ import android.util.Log;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.allybros.superego.unit.Api;
+import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.unit.User;
 import com.android.volley.AuthFailureError;
@@ -28,13 +28,13 @@ import java.util.Map;
 public class ChangeInfoTask extends Activity {
 
     public static void changeInfoTask(final Context currentContext, final String new_uid, final String new_email, final String new_information, final String session_token){
-        final Intent intent = new Intent(Api.getActionUpdateInformation());
+        final Intent intent = new Intent(ConstantValues.getActionUpdateInformation());
         RequestQueue queue = Volley.newRequestQueue(currentContext);
-        SharedPreferences pref = currentContext.getSharedPreferences(Api.getUserInformationPref(), Context.MODE_PRIVATE);
+        SharedPreferences pref = currentContext.getSharedPreferences(ConstantValues.getUserInformationPref(), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
 
 
-        StringRequest jsonRequest=new StringRequest(Request.Method.POST, Api.getUpdateInformation(), new Response.Listener<String>() {
+        StringRequest jsonRequest=new StringRequest(Request.Method.POST, ConstantValues.getUpdateInformation(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("sego-Response",response.toString());

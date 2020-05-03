@@ -24,7 +24,7 @@ import com.allybros.superego.R;
 import com.allybros.superego.api.ChangeInfoTask;
 import com.allybros.superego.api.ImageChangeTask;
 import com.allybros.superego.api.LogoutTask;
-import com.allybros.superego.unit.Api;
+import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.unit.User;
 import com.allybros.superego.util.CircledNetworkImageView;
@@ -73,8 +73,8 @@ public class SettingsActivity extends AppCompatActivity {
         etInformation_text_input=(TextInputLayout) findViewById(R.id.etInformation_text_input);
         settingsImage = (CircledNetworkImageView) findViewById(R.id.imageSettings);
         heartAnimation = (HeartProgressView) findViewById(R.id.hearthAnimation);
-        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(updateInformationReceiver, new IntentFilter(Api.getActionUpdateInformation()));
-        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(updateImageReceiver, new IntentFilter(Api.getActionUpdateImage()));
+        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(updateInformationReceiver, new IntentFilter(ConstantValues.getActionUpdateInformation()));
+        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(updateImageReceiver, new IntentFilter(ConstantValues.getActionUpdateImage()));
 
         email.setText(User.getEmail());
         username.setText(User.getUsername());
@@ -85,10 +85,10 @@ public class SettingsActivity extends AppCompatActivity {
             settingsImage.setImageBitmap(User.getAvatar());
         }else{
             Log.d("OnCreate-2","Run");
-            HelperMethods.imageLoadFromUrl(getApplicationContext(), Api.getAvatarUrl()+User.getImage(),settingsImage);
+            HelperMethods.imageLoadFromUrl(getApplicationContext(), ConstantValues.getAvatarUrl()+User.getImage(),settingsImage);
         }
 
-        String URL= Api.getAvatarUrl()+User.getImage();
+        String URL= ConstantValues.getAvatarUrl()+User.getImage();
         ImageLoader mImageLoader;
         mImageLoader = CustomVolleyRequestQueue.getInstance(getApplicationContext()).getImageLoader();
         mImageLoader.get(URL, ImageLoader.getImageListener(settingsImage, R.drawable.simple_profile_photo, android.R.drawable.ic_dialog_alert));
@@ -353,7 +353,7 @@ public class SettingsActivity extends AppCompatActivity {
         if(User.getAvatar()!=null){
             settingsImage.setImageBitmap(User.getAvatar());
         }else{
-            HelperMethods.imageLoadFromUrl(getApplicationContext(), Api.getAvatarUrl()+User.getImage(),settingsImage);
+            HelperMethods.imageLoadFromUrl(getApplicationContext(), ConstantValues.getAvatarUrl()+User.getImage(),settingsImage);
         }
         Log.d("SettingsResume","RUN");
 
