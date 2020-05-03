@@ -38,6 +38,6 @@ public class ErrorCodes {
     public static final int SYSFAIL=0;
 
     //Only android-side Error Code
-    public static final int CONNECTION_ERROR=2011;
+    public static final int CONNECTION_ERROR=2016;
 }
 
