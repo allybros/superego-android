@@ -29,7 +29,7 @@ public class ConstantValues {
     private static final String ACTION_UPDATE_IMAGE="update-image-status-share";
     private static final String ACTION_EARNED_REWARD="earned-reward-status-share";
     private static final String ACTION_LOGIN = "login-status-share";
-    private static final String ACTION_GOOGLE_LOGIN = "google-login-status-share";
+    private static final String ACTION_SOCIAL_MEDIA_LOGIN = "social-media-login-status-share";
 
     public static String getActionLogin() {
         return ACTION_LOGIN;
@@ -39,8 +39,8 @@ public class ConstantValues {
         return LOGIN_URL;
     }
 
-    public static String getActionGoogleLogin() {
-        return ACTION_GOOGLE_LOGIN;
+    public static String getActionSocialMediaLogin() {
+        return ACTION_SOCIAL_MEDIA_LOGIN;
     }
 
     public static String getActionEarnedReward() {

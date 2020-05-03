@@ -24,18 +24,18 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GoogleRegisterTask {
-    public static void loginTask(final Context context, final String access_token) {
+public class SocialMediaSignInTask {
+    public static void loginTask(final Context context, final String access_token,final String authenticator) {
 
-        final Intent intent = new Intent(ConstantValues.getActionGoogleLogin());
+        final Intent intent = new Intent(ConstantValues.getActionSocialMediaLogin());
 
         RequestQueue queue = Volley.newRequestQueue(context);
         StringRequest jsonRequest=new StringRequest(Request.Method.POST, ConstantValues.getUrlSocialAccountsLogin(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
-                    JSONObject jsonObj=new JSONObject(response);
                     Log.d("sego-Response-Go",response.toString());
+                    JSONObject jsonObj=new JSONObject(response);
                     int status = jsonObj.getInt("status");
 
                     switch (status){
@@ -57,16 +57,7 @@ public class GoogleRegisterTask {
                             intent.putExtra("status", status);
                             LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                             break;
-
-
-
                     }
-
-
-
-
-
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -81,7 +72,7 @@ public class GoogleRegisterTask {
             @Override
             protected Map<String,String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("authenticator", "google");
+                params.put("authenticator", authenticator);
                 params.put("access_token", access_token);
                 return params;
             }
