@@ -40,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     public TextInputLayout passwordTextInput, usernameTextInput;
     private MaterialCardView loginCard;
     private SignInButton signInGoogle;
+    static GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
                 .requestIdToken(getString(R.string.GOOGLE_CLIENT_ID))
                 .requestEmail()
                 .build();
-        final GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         signInGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
