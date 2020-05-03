@@ -23,7 +23,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.allybros.superego.R;
 import com.allybros.superego.activity.SplashActivity;
 import com.allybros.superego.api.LoadProfileTask;
-import com.allybros.superego.unit.Api;
+import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.User;
 import com.allybros.superego.util.ScoresAdapter;
 import com.daimajia.androidanimations.library.Techniques;
@@ -67,7 +67,7 @@ public class ResultsFragment extends Fragment {
 
         super.onActivityCreated(savedInstanceState);
 
-        if(!User.getTestId().isEmpty() && User.getRated()>= Api.getRatedLimit()){
+        if(!User.getTestId().isEmpty() && User.getRated()>= ConstantValues.getRatedLimit()){
             constraintLayoutResult.setVisibility(View.GONE);
             listViewTraits.setVisibility(View.VISIBLE);
             ListAdapter adapter = new ScoresAdapter(this.activity, User.getScores());
@@ -97,7 +97,7 @@ public class ResultsFragment extends Fragment {
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(!User.getTestId().isEmpty() && User.getRated()>= Api.getRatedLimit()){
+            if(!User.getTestId().isEmpty() && User.getRated()>= ConstantValues.getRatedLimit()){
                 constraintLayoutResult.setVisibility(View.GONE);
                 listViewTraits.setVisibility(View.VISIBLE);
                 ListAdapter adapter = new ScoresAdapter(getActivity(), User.getScores());

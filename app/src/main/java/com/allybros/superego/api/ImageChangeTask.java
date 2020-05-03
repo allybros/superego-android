@@ -8,7 +8,7 @@ import android.util.Log;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.activity.SplashActivity;
-import com.allybros.superego.unit.Api;
+import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.util.FileUploadHelper;
 import com.android.volley.AuthFailureError;
@@ -28,7 +28,7 @@ public class ImageChangeTask {
     private static String URL="https://api.allybros.com/superego/upload.php";
 
     public static void imageChangeTask(final String image, final Context context){
-        final Intent intent = new Intent(Api.getActionUpdateImage());
+        final Intent intent = new Intent(ConstantValues.getActionUpdateImage());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
