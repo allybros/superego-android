@@ -116,7 +116,7 @@ public class SettingsActivity extends AppCompatActivity {
                 editor.commit();
                 LogoutTask.logoutTask(getApplicationContext(),session_token);
 
-                
+
                 LoginActivity.mGoogleSignInClient.signOut();
 
                 Intent intent=new Intent(getApplicationContext(), LoginActivity.class);
