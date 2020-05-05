@@ -25,11 +25,11 @@ import java.util.Map;
 
 public class ImageChangeTask {
 
-    private static String URL="https://api.allybros.com/superego/upload.php";
-
     public static void imageChangeTask(final String image, final Context context){
+
         final Intent intent = new Intent(ConstantValues.getActionUpdateImage());
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, ConstantValues.getUploadImage(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("sego-FileUpload",response.toString());

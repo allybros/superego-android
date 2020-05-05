@@ -22,6 +22,10 @@ public class ConstantValues {
     private static final String URL_EARN_REWARD = "https://api.allybros.com/superego/reward.php";
     private static final String URL_SOCIAL_ACCOUNTS_LOGIN ="https://api.allybros.com/superego/oauth-client.php";
     private static final String LOGIN_URL ="https://api.allybros.com/superego/login.php";
+    private static final String ADD_TEST_URL ="https://demo.allybros.com/superego/create.php";
+    private static final String UPLOAD_IMAGE="https://api.allybros.com/superego/upload.php";
+
+
 
 
     //Broadcast-Reciever actions
@@ -30,6 +34,20 @@ public class ConstantValues {
     private static final String ACTION_EARNED_REWARD="earned-reward-status-share";
     private static final String ACTION_LOGIN = "login-status-share";
     private static final String ACTION_SOCIAL_MEDIA_LOGIN = "social-media-login-status-share";
+    private static final String ACTION_REFRESH_PROFILE = "profile-refresh-status-share";
+
+
+    public static String getAddTestUrl() {
+        return ADD_TEST_URL;
+    }
+
+    public static String getUploadImage() {
+        return UPLOAD_IMAGE;
+    }
+
+    public static String getActionRefreshProfile() {
+        return ACTION_REFRESH_PROFILE;
+    }
 
     public static String getActionLogin() {
         return ACTION_LOGIN;

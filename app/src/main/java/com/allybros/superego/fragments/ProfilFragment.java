@@ -32,8 +32,8 @@ import com.allybros.superego.activity.AddTestActivity;
 import com.allybros.superego.activity.LoginActivity;
 import com.allybros.superego.activity.SplashActivity;
 import com.allybros.superego.api.EarnRewardTask;
+import com.allybros.superego.api.LoadProfileTask;
 import com.allybros.superego.api.LoginTask;
-import com.allybros.superego.api.ProfileRefreshTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.unit.User;
@@ -93,7 +93,7 @@ public class ProfilFragment extends Fragment {
         profileSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                ProfileRefreshTask.profileRefreshTask(getContext(), SplashActivity.session_token);
+                LoadProfileTask.loadProfileTask(getContext(),SplashActivity.session_token,ConstantValues.getActionRefreshProfile());
 
             }
         });
@@ -370,7 +370,7 @@ public class ProfilFragment extends Fragment {
                     builder1.setMessage(R.string.earned_reward);
                     builder1.setPositiveButton( getString(R.string.okey), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            ProfileRefreshTask.profileRefreshTask(getContext(), SplashActivity.session_token);
+                            LoadProfileTask.loadProfileTask(getContext(),SplashActivity.session_token,null);
                         }
                     });
                     builder1.show();

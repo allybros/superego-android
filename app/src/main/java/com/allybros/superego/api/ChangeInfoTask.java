@@ -3,7 +3,6 @@ package com.allybros.superego.api;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -27,12 +26,9 @@ import java.util.Map;
 
 public class ChangeInfoTask extends Activity {
 
-    public static void changeInfoTask(final Context currentContext, final String new_uid, final String new_email, final String new_information, final String session_token){
+    public static void changeInfoTask(final Context context, final String new_uid, final String new_email, final String new_information, final String session_token){
         final Intent intent = new Intent(ConstantValues.getActionUpdateInformation());
-        RequestQueue queue = Volley.newRequestQueue(currentContext);
-        SharedPreferences pref = currentContext.getSharedPreferences(ConstantValues.getUserInformationPref(), Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
-
+        RequestQueue queue = Volley.newRequestQueue(context);
 
         StringRequest jsonRequest=new StringRequest(Request.Method.POST, ConstantValues.getUpdateInformation(), new Response.Listener<String>() {
             @Override
@@ -44,42 +40,16 @@ public class ChangeInfoTask extends Activity {
 
                     switch (status){
 
-                        case ErrorCodes.SESSION_EXPIRED:
-                            intent.putExtra("status", status);
-                            LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent);
-                            break;
-
-                        case ErrorCodes.USERNAME_NOT_LEGAL:
-                            intent.putExtra("status", status);
-                            LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent);
-                            break;
-
-                        case ErrorCodes.USERNAME_ALREADY_EXIST:
-                            intent.putExtra("status", status);
-                            LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent);
-                            break;
-
-                        case ErrorCodes.EMAIL_NOT_LEGAL:
-                            intent.putExtra("status", status);
-                            LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent);
-                            break;
-
-                        case ErrorCodes.EMAIL_ALREADY_EXIST:
-                            intent.putExtra("status", status);
-                            LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent);
-                            break;
-
                         case ErrorCodes.SUCCESS:
                             updateLocal(new_uid,new_email,new_information);
                             intent.putExtra("status", status);
-                            LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent);
+                            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                             break;
 
-                        case ErrorCodes.SYSFAIL:
+                        default:
                             intent.putExtra("status", status);
-                            LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent);
+                            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                             break;
-
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -88,8 +58,8 @@ public class ChangeInfoTask extends Activity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                intent.putExtra("status", 0);
-                LocalBroadcastManager.getInstance(currentContext).sendBroadcast(intent);
+                intent.putExtra("status", ErrorCodes.CONNECTION_ERROR);
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
             }
         }) {
             @Override
