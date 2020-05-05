@@ -10,6 +10,7 @@ import com.allybros.superego.R;
 import com.allybros.superego.activity.SplashActivity;
 import com.allybros.superego.activity.UserPageActivity;
 import com.allybros.superego.unit.ErrorCodes;
+import com.allybros.superego.unit.Score;
 import com.allybros.superego.unit.Trait;
 import com.allybros.superego.unit.User;
 import com.android.volley.AuthFailureError;
@@ -57,7 +58,6 @@ public class LoadProfileTask{
                             break;
 
                         case ErrorCodes.SUCCESS:
-
                             int user_type = jsonObject.getInt("user_type");
                             String username = jsonObject.getString("username");
                             String user_bio = jsonObject.getString("user_bio");
@@ -67,26 +67,24 @@ public class LoadProfileTask{
                             int rated = jsonObject.getInt("rated");
                             int credit = jsonObject.getInt("credit");
 
-                            ArrayList<Trait> traits=new ArrayList<>();
+                            //Build scores list
+                            ArrayList<Score> scoresList = new ArrayList<>();
                             if(!jsonObject.isNull("scores")){
                                 for (int i = 0; i < jsonObject.getJSONArray("scores").length(); i++) {
-                                    JSONObject iter= (JSONObject) jsonObject.getJSONArray("scores").get(i);
-                                    int traitNo;
-                                    float value;
-
-                                    traitNo=iter.getInt("traitNo");
-                                    value=iter.getInt("value");
-
-                                    traits.add(new Trait(traitNo,value));
+                                    JSONObject scoresObject = (JSONObject) jsonObject.getJSONArray("scores").get(i);
+                                    int traitNo =  scoresObject.getInt("traitNo");
+                                    float value = scoresObject.getInt("value");;
+                                    scoresList.add(new Score(traitNo,value));
                                 }
                             }
+                            //TODO: Fix user class data fields
                             User.setRated(rated);
                             User.setUserType(user_type);
                             User.setUsername(username);
                             User.setUserBio(user_bio);
                             User.setEmail(email);
                             User.setTestId(test_id);
-                            User.setScores(traits);
+                            User.setScores(scoresList);
                             User.setCredit(credit);
                             User.setImage(image);
 
@@ -110,7 +108,7 @@ public class LoadProfileTask{
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(currentContext,currentContext.getString(R.string.connection_error), Toast.LENGTH_SHORT);
+                Toast.makeText(currentContext,currentContext.getString(R.string.connection_error), Toast.LENGTH_SHORT).show();
 
             }
         }) {
@@ -131,34 +129,34 @@ public class LoadProfileTask{
         RequestQueue queue = Volley.newRequestQueue(currentContext);
         final ArrayList<Trait> traits=new ArrayList<>();
 
-        final StringRequest jsonRequest=new StringRequest(Request.Method.GET, ALL_TRAITS_URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-//                Log.d("getAllTraits",response.toString());
+        final StringRequest jsonRequest = new StringRequest(Request.Method.GET, ALL_TRAITS_URL, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Log.d("getAllTraits",response.toString());
 
-                try {
-                    JSONObject jsonObject=new JSONObject(response);
+                    try {
+                        JSONObject jsonObject=new JSONObject(response);
 
-                    for (int i = 0; i < jsonObject.getJSONArray("traits").length(); i++) {
-                        JSONObject iter= (JSONObject) jsonObject.getJSONArray("traits").get(i);
-                        int traitNo;
-                        String positiveName,negativeName,positiveIconURL,negativeIconURL;
+                        for (int i = 0; i < jsonObject.getJSONArray("traits").length(); i++) {
+                            JSONObject iter= (JSONObject) jsonObject.getJSONArray("traits").get(i);
+                            int traitNo;
+                            String positiveName,negativeName,positiveIcon,negativeIcon;
 
-                        traitNo=iter.getInt("traitNo");
-                        positiveName=iter.getString("positive");
-                        negativeName=iter.getString("negative");
-                        positiveIconURL=iter.getString("positive_icon_url");
-                        negativeIconURL=iter.getString("negative_icon_url");
-                        traits.add(new Trait(traitNo,positiveName,negativeName,positiveIconURL,negativeIconURL));
+                            traitNo=iter.getInt("traitNo");
+                            positiveName=iter.getString("positive");
+                            negativeName=iter.getString("negative");
+                            positiveIcon=iter.getString("positive_icon");
+                            negativeIcon=iter.getString("negative_icon");
+                            traits.add(new Trait(traitNo,positiveName,negativeName,positiveIcon,negativeIcon));
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
-            }
             }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(currentContext,currentContext.getString(R.string.connection_error), Toast.LENGTH_SHORT);
+                Toast.makeText(currentContext,currentContext.getString(R.string.connection_error), Toast.LENGTH_SHORT).show();
             }
         });
         queue.add(jsonRequest);

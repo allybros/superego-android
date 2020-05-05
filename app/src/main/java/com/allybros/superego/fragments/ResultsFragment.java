@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -24,6 +26,8 @@ import com.allybros.superego.R;
 import com.allybros.superego.activity.SplashActivity;
 import com.allybros.superego.api.LoadProfileTask;
 import com.allybros.superego.unit.ConstantValues;
+import com.allybros.superego.unit.Score;
+import com.allybros.superego.unit.Trait;
 import com.allybros.superego.unit.User;
 import com.allybros.superego.util.ScoresAdapter;
 import com.daimajia.androidanimations.library.Techniques;
@@ -67,13 +71,24 @@ public class ResultsFragment extends Fragment {
 
         super.onActivityCreated(savedInstanceState);
 
-        if(!User.getTestId().isEmpty() && User.getRated()>= ConstantValues.getRatedLimit()){
+        if(User.getScores().size() > 0){
+            //User have results
             constraintLayoutResult.setVisibility(View.GONE);
             listViewTraits.setVisibility(View.VISIBLE);
+            swipeLayout.setVisibility(View.VISIBLE);
+
+            StringBuilder traitsBuilder = new StringBuilder();
+            for (Score s : User.getScores()) {
+                traitsBuilder.append(s.getTraitName()).append("\n");
+            }
+            Log.d("Traits", traitsBuilder.toString());
             ListAdapter adapter = new ScoresAdapter(this.activity, User.getScores());
             listViewTraits.setAdapter(adapter);
+
         }else{
+            //User dont have any results
             constraintLayoutResult.setVisibility(View.VISIBLE);
+            swipeLayout.setVisibility(View.GONE);
             listViewTraits.setVisibility(View.GONE);
             tvRatedResultPage.setText("Değerlendirme: "+User.getRated());
 

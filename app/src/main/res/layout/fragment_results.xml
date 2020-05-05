@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/result_frame_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/result_frame_layout"
-    android:background="@color/logoColor"
-    tools:context=".fragments.ResultsFragment"
-    android:paddingBottom="55dp">
+    android:paddingTop="16dp"
+    android:paddingBottom="55dp"
+    tools:context=".fragments.ResultsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayoutResult"
         android:layout_width="match_parent"
-        android:paddingRight="10dp"
+        android:layout_height="match_parent"
         android:paddingLeft="10dp"
-        android:layout_height="match_parent">
+        android:paddingRight="10dp">
 
         <ImageView
             android:id="@+id/imageLogo"
@@ -81,30 +81,23 @@
         </androidx.cardview.widget.CardView>
 
 
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeLayout"
         android:layout_width="match_parent"
-        android:visibility="gone"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
         <ListView
             android:id="@+id/listViewTraits"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clickable="false"
             android:divider="@null"
-            android:dividerHeight="0dp">
-        </ListView>
+            android:dividerHeight="0dp"></ListView>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-
-
-
-
 
 
 </FrameLayout>

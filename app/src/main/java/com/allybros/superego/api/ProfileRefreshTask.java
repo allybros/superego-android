@@ -9,6 +9,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.R;
 import com.allybros.superego.unit.ErrorCodes;
+import com.allybros.superego.unit.Score;
 import com.allybros.superego.unit.Trait;
 import com.allybros.superego.unit.User;
 import com.android.volley.AuthFailureError;
@@ -60,26 +61,24 @@ public class ProfileRefreshTask{
                             int rated = jsonObject.getInt("rated");
                             int credit = jsonObject.getInt("credit");
 
-                            ArrayList<Trait> traits=new ArrayList<>();
+                            //Build scores list
+                            ArrayList<Score> scoresList = new ArrayList<>();
                             if(!jsonObject.isNull("scores")){
                                 for (int i = 0; i < jsonObject.getJSONArray("scores").length(); i++) {
-                                    JSONObject iter= (JSONObject) jsonObject.getJSONArray("scores").get(i);
-                                    int traitNo;
-                                    float value;
-
-                                    traitNo=iter.getInt("traitNo");
-                                    value=iter.getInt("value");
-
-                                    traits.add(new Trait(traitNo,value));
+                                    JSONObject scoresObject = (JSONObject) jsonObject.getJSONArray("scores").get(i);
+                                    int traitNo =  scoresObject.getInt("traitNo");
+                                    float value = scoresObject.getInt("value");;
+                                    scoresList.add(new Score(traitNo,value));
                                 }
                             }
+                            //TODO: Fix User fields
                             User.setRated(rated);
                             User.setUserType(user_type);
                             User.setUsername(username);
                             User.setUserBio(user_bio);
                             User.setEmail(email);
                             User.setTestId(test_id);
-                            User.setScores(traits);
+                            User.setScores(scoresList);
                             User.setCredit(credit);
                             User.setImage(image);
 
