@@ -33,7 +33,7 @@ public class SplashActivity extends AppCompatActivity {
         allTraits= LoadProfileTask.getAllTraits(getApplicationContext());
 
         if(!session_token.isEmpty()){
-            LoadProfileTask.loadProfileTask(getApplicationContext(),session_token);
+            LoadProfileTask.loadProfileTask(getApplicationContext(),session_token,"load");
         }else{
             Intent intent=new Intent(this,LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

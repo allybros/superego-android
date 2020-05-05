@@ -249,7 +249,7 @@ public class LoginActivity extends AppCompatActivity {
                 case ErrorCodes.SUCCESS:
                     Intent intent1=new Intent(getApplicationContext(), SplashActivity.class);
                     intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
+                    startActivity(intent1);
                     break;
 
                 case ErrorCodes.CONNECTION_ERROR:
@@ -337,15 +337,12 @@ public class LoginActivity extends AppCompatActivity {
                     });
                     builder1.show();
                     break;
-
             }
-
         }
     };
 
     @Override
     protected void onDestroy() {
-
         LocalBroadcastManager.getInstance(this).unregisterReceiver(loginReceiver);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(loginSocialMediaReceiver);
         super.onDestroy();
