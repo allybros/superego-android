@@ -83,8 +83,7 @@ public class ResultsFragment extends Fragment {
             @Override
             public void onRefresh() {
 
-                LoadProfileTask.loadProfileTask(getContext(), SplashActivity.session_token);
-
+                LoadProfileTask.loadProfileTask(getContext(), SplashActivity.session_token,ConstantValues.getActionRefreshProfile());
                 YoYo.with(Techniques.SlideInDown)
                         .duration(700)
                         .repeat(0)

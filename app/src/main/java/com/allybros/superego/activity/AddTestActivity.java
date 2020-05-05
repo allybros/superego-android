@@ -14,7 +14,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.allybros.superego.R;
-import com.allybros.superego.api.ProfileRefreshTask;
+import com.allybros.superego.api.LoadProfileTask;
+import com.allybros.superego.unit.ConstantValues;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.r0adkll.slidr.Slidr;
@@ -27,7 +28,6 @@ public class AddTestActivity extends AppCompatActivity {
 
     private SlidrInterface slidr;
     WebView addTestWebview;
-//    private BernoullisBowProgressView progressBar;
     private ActionBar toolbar;
     private ImageView imageView;
 
@@ -41,15 +41,14 @@ public class AddTestActivity extends AppCompatActivity {
         addTestWebview.getSettings().setJavaScriptEnabled(true);
         toolbar = getSupportActionBar();
         toolbar.setTitle("Test Oluştur");
+
         YoYo.with(Techniques.Bounce)
                 .duration(1000)
                 .repeat(50)
                 .playOn(findViewById(R.id.logo));
 
-//        progressBar=(BernoullisBowProgressView)findViewById(R.id.progress_circular);
         String url = "https://demo.allybros.com/superego/create.php";
-//        Map<String,String> postData = new HashMap<>();
-//        postData.put("session-token",SplashActivity.session_token);
+
         try {
             postData = "session-token=" + URLEncoder.encode(SplashActivity.session_token, "UTF-8");
         } catch (UnsupportedEncodingException e) {
@@ -62,7 +61,6 @@ public class AddTestActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-//                progressBar.setVisibility(View.INVISIBLE);
                 imageView.setVisibility(View.INVISIBLE);
                 addTestWebview.setVisibility(View.VISIBLE);
             }
@@ -84,7 +82,7 @@ public class AddTestActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         Log.d("AddTest","Destroy");
-        ProfileRefreshTask.profileRefreshTask(getApplicationContext(),SplashActivity.session_token);
+        LoadProfileTask.loadProfileTask(getApplicationContext(),SplashActivity.session_token, ConstantValues.getActionRefreshProfile());
         super.onDestroy();
     }
 }

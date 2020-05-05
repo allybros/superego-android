@@ -6,9 +6,12 @@ import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import com.allybros.superego.R;
 import com.allybros.superego.activity.SplashActivity;
 import com.allybros.superego.activity.UserPageActivity;
+import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.unit.Trait;
 import com.allybros.superego.unit.User;
@@ -35,25 +38,39 @@ public class LoadProfileTask{
 
     final private static String LOAD_PROFILE_URL ="https://api.allybros.com/superego/load-profile.php";
     final private static String ALL_TRAITS_URL="https://api.allybros.com/superego/traits.php";
+    static Intent intent;
 
-    public static void loadProfileTask(final Context currentContext, final String session_token){
+    public static void loadProfileTask(final Context context, final String session_token , final String action){
 
-        RequestQueue queue = Volley.newRequestQueue(currentContext);
+        /*
+         *       If call for loadProfile process define action parameter "load" else call ConstantValues.getActionRefreshProfile()
+         *
+         *
+         *
+         * */
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+        if(action.equals(ConstantValues.getActionRefreshProfile())) intent=new Intent(ConstantValues.getActionRefreshProfile());
 
         final StringRequest jsonRequest=new StringRequest(Request.Method.POST, LOAD_PROFILE_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("Response_Load_Profile",response.toString());
-                Intent intent;
                 try {
                     JSONObject jsonObject=new JSONObject(response);
                     int status=jsonObject.getInt("status");
                     switch (status){
-                        case ErrorCodes.SYSFAIL:
 
-                            Toast.makeText(currentContext, currentContext.getString(R.string.please_login_again), Toast.LENGTH_SHORT).show();
-                            intent=new Intent(currentContext, SplashActivity.class);
-                            currentContext.startActivity(intent);
+                        case ErrorCodes.SYSFAIL:
+                            if(action.equals(ConstantValues.getActionRefreshProfile())){
+                                intent.putExtra("status", ErrorCodes.SUCCESS);
+                                LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                            }else {
+                                Toast.makeText(context, context.getString(R.string.please_login_again), Toast.LENGTH_SHORT).show();
+                                intent=new Intent(context, SplashActivity.class);
+                                context.startActivity(intent);
+                            }
+
                             break;
 
                         case ErrorCodes.SUCCESS:
@@ -89,17 +106,21 @@ public class LoadProfileTask{
                             User.setScores(traits);
                             User.setCredit(credit);
                             User.setImage(image);
-
-                            intent=new Intent(currentContext, UserPageActivity.class);
-                            intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
-                            currentContext.startActivity(intent);
-                            break;
+                            if(action.equals(ConstantValues.getActionRefreshProfile())){
+                                intent.putExtra("status", ErrorCodes.SUCCESS);
+                                LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                            }else{
+                                intent=new Intent(context, UserPageActivity.class);
+                                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+                                context.startActivity(intent);
+                            }
+                        break;
 
                         case ErrorCodes.SESSION_EXPIRED:
-                            SharedPreferences pref = currentContext.getSharedPreferences(USER_INFORMATION_PREF, currentContext.MODE_PRIVATE);
+                            SharedPreferences pref = context.getSharedPreferences(USER_INFORMATION_PREF, context.MODE_PRIVATE);
                             String uid= pref.getString("uid", "");
                             String password=pref.getString("password","");
-                            LoginTask.loginTask(currentContext,uid,password);
+                            LoginTask.loginTask(context,uid,password);
                             break;
                     }
                         
@@ -110,7 +131,7 @@ public class LoadProfileTask{
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(currentContext,currentContext.getString(R.string.connection_error), Toast.LENGTH_SHORT);
+                Toast.makeText(context,context.getString(R.string.connection_error), Toast.LENGTH_SHORT);
 
             }
         }) {
