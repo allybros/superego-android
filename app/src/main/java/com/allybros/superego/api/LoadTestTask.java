@@ -59,8 +59,8 @@ public class LoadTestTask{
                                     traitNo=iter.getInt("traitNo");
                                     positive=iter.getString("positive");
                                     negative=iter.getString("negative");
-
-                                    test.add(new Trait(traitNo,positive,negative));
+                                    //TODO: ????
+                                    //test.add(new Trait(traitNo,positive,negative));
                                 }
                             }
                             User.setTest(test);
