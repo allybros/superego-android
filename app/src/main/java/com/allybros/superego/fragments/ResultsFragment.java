@@ -90,7 +90,7 @@ public class ResultsFragment extends Fragment {
             constraintLayoutResult.setVisibility(View.VISIBLE);
             swipeLayout.setVisibility(View.GONE);
             listViewTraits.setVisibility(View.GONE);
-            tvRatedResultPage.setText("Değerlendirme: "+User.getRated());
+            tvRatedResultPage.setText("Değerlendirme: "+ User.getRated());
 
         }
 
