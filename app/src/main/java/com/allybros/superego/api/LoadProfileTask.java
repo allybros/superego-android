@@ -14,7 +14,6 @@ import com.allybros.superego.activity.UserPageActivity;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.unit.Score;
-import com.allybros.superego.unit.Trait;
 import com.allybros.superego.unit.User;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -34,11 +33,7 @@ import java.util.Map;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 public class LoadProfileTask{
-    public static final String USER_INFORMATION_PREF="USER_INFORMATION_PREF";
 
-
-    final private static String LOAD_PROFILE_URL ="https://api.allybros.com/superego/load-profile.php";
-    final private static String ALL_TRAITS_URL="https://api.allybros.com/superego/traits.php";
     static Intent intent;
 
     public static void loadProfileTask(final Context context, final String session_token , final String action){
@@ -53,7 +48,7 @@ public class LoadProfileTask{
         RequestQueue queue = Volley.newRequestQueue(context);
         if(action.equals(ConstantValues.getActionRefreshProfile())) intent=new Intent(ConstantValues.getActionRefreshProfile());
 
-        final StringRequest jsonRequest=new StringRequest(Request.Method.POST, LOAD_PROFILE_URL, new Response.Listener<String>() {
+        final StringRequest jsonRequest=new StringRequest(Request.Method.POST, ConstantValues.getLoadProfile(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("Response_Load_Profile",response.toString());
@@ -93,17 +88,20 @@ public class LoadProfileTask{
                                     scoresList.add(new Score(traitNo,value));
                                 }
                             }
-                            //TODO: Fix user class data fields
                             SplashActivity.setCurrentUser(new User(user_type,rated,credit,image,test_id,username,user_bio,email,scoresList));
 
-                            intent=new Intent(context, UserPageActivity.class);
-                            intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
-                            context.startActivity(intent);
+                            if(action.equals(ConstantValues.getActionRefreshProfile())){
+                                intent.putExtra("status", ErrorCodes.SUCCESS);
+                                LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                            }else{
+                                intent=new Intent(context, UserPageActivity.class);
+                                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+                                context.startActivity(intent);
+                            }
                             break;
 
-
                         case ErrorCodes.SESSION_EXPIRED:
-                            SharedPreferences pref = context.getSharedPreferences(USER_INFORMATION_PREF, context.MODE_PRIVATE);
+                            SharedPreferences pref = context.getSharedPreferences(ConstantValues.getUserInformationPref(), context.MODE_PRIVATE);
                             String uid= pref.getString("uid", "");
                             String password=pref.getString("password","");
                             LoginTask.loginTask(context,uid,password);
@@ -132,43 +130,5 @@ public class LoadProfileTask{
 
         queue.add(jsonRequest);
 
-    }
-
-    public static ArrayList<Trait> getAllTraits(final Context currentContext){
-        RequestQueue queue = Volley.newRequestQueue(currentContext);
-        final ArrayList<Trait> traits=new ArrayList<>();
-
-        final StringRequest jsonRequest = new StringRequest(Request.Method.GET, ALL_TRAITS_URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d("getAllTraits",response.toString());
-
-                try {
-                    JSONObject jsonObject=new JSONObject(response);
-
-                    for (int i = 0; i < jsonObject.getJSONArray("traits").length(); i++) {
-                        JSONObject iter= (JSONObject) jsonObject.getJSONArray("traits").get(i);
-                        int traitNo;
-                        String positiveName,negativeName,positiveIcon,negativeIcon;
-
-                        traitNo=iter.getInt("traitNo");
-                        positiveName=iter.getString("positive");
-                        negativeName=iter.getString("negative");
-                        positiveIcon=iter.getString("positive_icon");
-                        negativeIcon=iter.getString("negative_icon");
-                        traits.add(new Trait(traitNo,positiveName,negativeName,positiveIcon,negativeIcon));
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(currentContext,currentContext.getString(R.string.connection_error), Toast.LENGTH_SHORT).show();
-            }
-        });
-        queue.add(jsonRequest);
-        return traits;
     }
 }

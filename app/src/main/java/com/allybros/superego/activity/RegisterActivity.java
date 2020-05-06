@@ -19,6 +19,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.R;
 import com.allybros.superego.api.RegisterTask;
+import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -50,7 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
         password_text_input_register=(TextInputLayout) findViewById(R.id.password_text_input);
         checkBoxAggrement=(CheckBox) findViewById(R.id.checkboxAggrement);
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("register-status-share"));
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter(ConstantValues.getActionRegister()));
 
         checkBoxAggrement.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -112,8 +113,6 @@ public class RegisterActivity extends AppCompatActivity {
         finish();
     }
 
-    // Our handler for received Intents. This will be called whenever an Intent
-// with an action named "custom-event-name" is broadcasted.
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
