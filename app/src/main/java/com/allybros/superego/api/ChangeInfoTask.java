@@ -7,9 +7,9 @@ import android.util.Log;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.allybros.superego.activity.SplashActivity;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
-import com.allybros.superego.unit.User;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -75,9 +75,9 @@ public class ChangeInfoTask extends Activity {
         queue.add(jsonRequest);
     }
     private static void updateLocal(String new_uid, String new_email, String new_information){
-        User.setUsername(new_uid);
-        User.setUserBio(new_information);
-        User.setEmail(new_email);
+        SplashActivity.getCurrentUser().setUsername(new_uid);
+        SplashActivity.getCurrentUser().setUserBio(new_information);
+        SplashActivity.getCurrentUser().setEmail(new_email);
     }
 }
 

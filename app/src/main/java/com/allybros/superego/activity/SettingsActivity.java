@@ -26,7 +26,6 @@ import com.allybros.superego.api.ImageChangeTask;
 import com.allybros.superego.api.LogoutTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
-import com.allybros.superego.unit.User;
 import com.allybros.superego.util.CircledNetworkImageView;
 import com.allybros.superego.util.CustomVolleyRequestQueue;
 import com.allybros.superego.util.HelperMethods;
@@ -76,19 +75,19 @@ public class SettingsActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(updateInformationReceiver, new IntentFilter(ConstantValues.getActionUpdateInformation()));
         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(updateImageReceiver, new IntentFilter(ConstantValues.getActionUpdateImage()));
 
-        email.setText(User.getEmail());
-        username.setText(User.getUsername());
-        information.setText(User.getUserBio());
+        email.setText(SplashActivity.getCurrentUser().getEmail());
+        username.setText(SplashActivity.getCurrentUser().getUsername());
+        information.setText(SplashActivity.getCurrentUser().getUserBio());
 
-        if(User.getAvatar()!=null){
+        if(SplashActivity.getCurrentUser().getAvatar()!=null){
             Log.d("OnCreate-1","Run");
-            settingsImage.setImageBitmap(User.getAvatar());
+            settingsImage.setImageBitmap(SplashActivity.getCurrentUser().getAvatar());
         }else{
             Log.d("OnCreate-2","Run");
-            HelperMethods.imageLoadFromUrl(getApplicationContext(), ConstantValues.getAvatarUrl()+User.getImage(),settingsImage);
+            HelperMethods.imageLoadFromUrl(getApplicationContext(), ConstantValues.getAvatarUrl()+SplashActivity.getCurrentUser().getImage(),settingsImage);
         }
 
-        String URL= ConstantValues.getAvatarUrl()+User.getImage();
+        String URL= ConstantValues.getAvatarUrl()+SplashActivity.getCurrentUser().getImage();
         ImageLoader mImageLoader;
         mImageLoader = CustomVolleyRequestQueue.getInstance(getApplicationContext()).getImageLoader();
         mImageLoader.get(URL, ImageLoader.getImageListener(settingsImage, R.drawable.simple_profile_photo, android.R.drawable.ic_dialog_alert));
@@ -166,11 +165,11 @@ public class SettingsActivity extends AppCompatActivity {
             newImagePath = data.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),newImagePath);
-                User.setAvatar(bitmap);
-                settingsImage.setImageBitmap(User.getAvatar());
+                SplashActivity.getCurrentUser().setAvatar(bitmap);
+                settingsImage.setImageBitmap(SplashActivity.getCurrentUser().getAvatar());
                 settingsImage.setVisibility(View.INVISIBLE);
                 heartAnimation.setVisibility(View.VISIBLE);
-                ImageChangeTask.imageChangeTask(imageToString(User.getAvatar()),getApplicationContext());
+                ImageChangeTask.imageChangeTask(imageToString(SplashActivity.getCurrentUser().getAvatar()),getApplicationContext());
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -353,10 +352,10 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        if(User.getAvatar()!=null){
-            settingsImage.setImageBitmap(User.getAvatar());
+        if(SplashActivity.getCurrentUser().getAvatar()!=null){
+            settingsImage.setImageBitmap(SplashActivity.getCurrentUser().getAvatar());
         }else{
-            HelperMethods.imageLoadFromUrl(getApplicationContext(), ConstantValues.getAvatarUrl()+User.getImage(),settingsImage);
+            HelperMethods.imageLoadFromUrl(getApplicationContext(), ConstantValues.getAvatarUrl()+SplashActivity.getCurrentUser().getImage(),settingsImage);
         }
         Log.d("SettingsResume","RUN");
 

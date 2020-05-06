@@ -94,15 +94,7 @@ public class LoadProfileTask{
                                 }
                             }
                             //TODO: Fix user class data fields
-                            User.setRated(rated);
-                            User.setUserType(user_type);
-                            User.setUsername(username);
-                            User.setUserBio(user_bio);
-                            User.setEmail(email);
-                            User.setTestId(test_id);
-                            User.setScores(scoresList);
-                            User.setCredit(credit);
-                            User.setImage(image);
+                            SplashActivity.setCurrentUser(new User(user_type,rated,credit,image,test_id,username,user_bio,email,scoresList));
 
                             intent=new Intent(context, UserPageActivity.class);
                             intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
@@ -146,10 +138,10 @@ public class LoadProfileTask{
         RequestQueue queue = Volley.newRequestQueue(currentContext);
         final ArrayList<Trait> traits=new ArrayList<>();
 
-        final StringRequest jsonRequest=new StringRequest(Request.Method.GET, ALL_TRAITS_URL, new Response.Listener<String>() {
+        final StringRequest jsonRequest = new StringRequest(Request.Method.GET, ALL_TRAITS_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-//                Log.d("getAllTraits",response.toString());
+                Log.d("getAllTraits",response.toString());
 
                 try {
                     JSONObject jsonObject=new JSONObject(response);
@@ -157,23 +149,23 @@ public class LoadProfileTask{
                     for (int i = 0; i < jsonObject.getJSONArray("traits").length(); i++) {
                         JSONObject iter= (JSONObject) jsonObject.getJSONArray("traits").get(i);
                         int traitNo;
-                        String positiveName,negativeName,positiveIconURL,negativeIconURL;
+                        String positiveName,negativeName,positiveIcon,negativeIcon;
 
                         traitNo=iter.getInt("traitNo");
                         positiveName=iter.getString("positive");
                         negativeName=iter.getString("negative");
-                        positiveIconURL=iter.getString("positive_icon_url");
-                        negativeIconURL=iter.getString("negative_icon_url");
-                        traits.add(new Trait(traitNo,positiveName,negativeName,positiveIconURL,negativeIconURL));
+                        positiveIcon=iter.getString("positive_icon");
+                        negativeIcon=iter.getString("negative_icon");
+                        traits.add(new Trait(traitNo,positiveName,negativeName,positiveIcon,negativeIcon));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
-            }, new Response.ErrorListener() {
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(currentContext,currentContext.getString(R.string.connection_error), Toast.LENGTH_SHORT);
+                Toast.makeText(currentContext,currentContext.getString(R.string.connection_error), Toast.LENGTH_SHORT).show();
             }
         });
         queue.add(jsonRequest);

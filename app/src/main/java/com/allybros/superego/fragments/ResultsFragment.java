@@ -26,7 +26,6 @@ import com.allybros.superego.activity.SplashActivity;
 import com.allybros.superego.api.LoadProfileTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.Score;
-import com.allybros.superego.unit.User;
 import com.allybros.superego.util.ScoresAdapter;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -65,22 +64,22 @@ public class ResultsFragment extends Fragment {
         tvRatedResultPage= (TextView) getView().findViewById(R.id.tvRatedResultPage);
         imageLogo= (ImageView) getView().findViewById(R.id.imageLogo);
 
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mMessageReceiver, new IntentFilter("load-test-status-share"));
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(refreshReceiver, new IntentFilter(ConstantValues.getActionRefreshProfile()));
 
         super.onActivityCreated(savedInstanceState);
 
-        if(User.getScores().size() > 0){
+        if(SplashActivity.getCurrentUser().getScores().size() > 0){
             //User have results
             constraintLayoutResult.setVisibility(View.GONE);
             listViewTraits.setVisibility(View.VISIBLE);
             swipeLayout.setVisibility(View.VISIBLE);
 
             StringBuilder traitsBuilder = new StringBuilder();
-            for (Score s : User.getScores()) {
+            for (Score s : SplashActivity.getCurrentUser().getScores()) {
                 traitsBuilder.append(s.getTraitName()).append("\n");
             }
             Log.d("Traits", traitsBuilder.toString());
-            ListAdapter adapter = new ScoresAdapter(this.activity, User.getScores());
+            ListAdapter adapter = new ScoresAdapter(this.activity, SplashActivity.getCurrentUser().getScores());
             listViewTraits.setAdapter(adapter);
 
         }else{
@@ -88,7 +87,7 @@ public class ResultsFragment extends Fragment {
             constraintLayoutResult.setVisibility(View.VISIBLE);
             swipeLayout.setVisibility(View.GONE);
             listViewTraits.setVisibility(View.GONE);
-            tvRatedResultPage.setText("Değerlendirme: "+ User.getRated());
+            tvRatedResultPage.setText("Değerlendirme: "+ SplashActivity.getCurrentUser().getRated());
 
         }
 
@@ -96,7 +95,7 @@ public class ResultsFragment extends Fragment {
             @Override
             public void onRefresh() {
 
-                LoadProfileTask.loadProfileTask(getContext(), SplashActivity.session_token,ConstantValues.getActionRefreshProfile());
+                LoadProfileTask.loadProfileTask(getContext(), SplashActivity.session_token, ConstantValues.getActionRefreshProfile());
                 YoYo.with(Techniques.SlideInDown)
                         .duration(700)
                         .repeat(0)
@@ -106,18 +105,18 @@ public class ResultsFragment extends Fragment {
         });
 
     }
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver refreshReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(!User.getTestId().isEmpty() && User.getRated()>= ConstantValues.getRatedLimit()){
+            if(!SplashActivity.getCurrentUser().getTestId().isEmpty() && SplashActivity.getCurrentUser().getRated()>= ConstantValues.getRatedLimit()){
                 constraintLayoutResult.setVisibility(View.GONE);
                 listViewTraits.setVisibility(View.VISIBLE);
-                ListAdapter adapter = new ScoresAdapter(getActivity(), User.getScores());
+                ListAdapter adapter = new ScoresAdapter(getActivity(), SplashActivity.getCurrentUser().getScores());
                 listViewTraits.setAdapter(adapter);
             }else{
                 constraintLayoutResult.setVisibility(View.VISIBLE);
                 listViewTraits.setVisibility(View.GONE);
-                tvRatedResultPage.setText("Değerlendirme: "+User.getRated());
+                tvRatedResultPage.setText("Değerlendirme: "+SplashActivity.getCurrentUser().getRated());
 
             }
         }
