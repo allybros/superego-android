@@ -92,7 +92,7 @@ public class ProfilFragment extends Fragment {
         profileSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                LoadProfileTask.loadProfileTask(getContext(),SplashActivity.session_token,ConstantValues.getActionRefreshProfile());
+                LoadProfileTask.loadProfileTask(getContext(),SplashActivity.session_token, ConstantValues.getActionRefreshProfile());
 
             }
         });
@@ -332,6 +332,7 @@ public class ProfilFragment extends Fragment {
 
                 case ErrorCodes.SUCCESS:
                     profileSwipeLayout.setRefreshing(false);
+                    Log.d("Refresh Procceas","Refresaf");
                     loadProfile();
                     break;
             }
@@ -369,7 +370,7 @@ public class ProfilFragment extends Fragment {
                     builder1.setMessage(R.string.earned_reward);
                     builder1.setPositiveButton( getString(R.string.okey), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            LoadProfileTask.loadProfileTask(getContext(),SplashActivity.session_token,null);
+                            LoadProfileTask.loadProfileTask(getContext(),SplashActivity.session_token,"load");
                         }
                     });
                     builder1.show();
