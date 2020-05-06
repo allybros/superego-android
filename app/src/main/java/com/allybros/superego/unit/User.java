@@ -9,7 +9,7 @@ public class User {
 
     private static int userType, rated, credit;
     private static String image,testId,username,userBio,email;
-    private static ArrayList<Trait> scores;
+    private static ArrayList<Score> scores;
     private static ArrayList<Trait> test;
     private static Bitmap avatar;
 
@@ -77,11 +77,11 @@ public class User {
         User.email = email;
     }
 
-    public static ArrayList<Trait> getScores() {
+    public static ArrayList<Score> getScores() {
         return scores;
     }
 
-    public static void setScores(ArrayList<Trait> scores) {
+    public static void setScores(ArrayList<Score> scores) {
         User.scores = scores;
     }
 
@@ -101,7 +101,7 @@ public class User {
         User.image = image;
     }
 
-    public User(int userType, String username, String userBio, String email, ArrayList<Trait> scores,int rated) {
+    public User(int userType, String username, String userBio, String email, ArrayList<Score> scores, int rated) {
         this.userType = userType;
         this.username = username;
         this.userBio = userBio;

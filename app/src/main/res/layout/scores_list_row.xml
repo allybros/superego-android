@@ -3,120 +3,69 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:clickable="false"
     android:layout_height="match_parent"
-    android:layout_gravity="center">
+    android:layout_gravity="center"
+    android:clipToPadding="false">
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/trait_layout"
-        android:clickable="false"
-        android:background="@color/White"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-<!--
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        >
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/trait_card_view"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/traitBoxCard"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_margin="10dp"
-            android:elevation="15dp"
-            android:padding="8dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/card_shape"
+            android:elevation="8dp"
+            android:clipToPadding="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/traitNameView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right">
+                android:layout_marginTop="21dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="20dp"
+                android:text="Positive"
+                android:textColor="@color/Black"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <TextView
-                    android:id="@+id/traitName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/trans"
-                    android:gravity="center"
-                    android:paddingTop="10dp"
-                    android:paddingRight="15dp"
-                    android:text="TextView"
-                    android:textSize="25dp" />
-
-            </LinearLayout>
-
-Begendiklerim:
-comfortaa_light
-finger_paint
-press_start_2p
-special_elite
-walter_turncoat
-        </androidx.cardview.widget.CardView>-->
-
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/trait_card_view"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_margin="10dp"
-            android:clickable="false"
-            android:enabled="false"
-            android:fontFamily="@font/finger_paint"
+        <FrameLayout
+            android:id="@+id/imageViewContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/EditTextColor2"
+            android:elevation="8dp"
+            android:clipToPadding="false"
             android:padding="8dp"
-            android:textColor="@color/logoColor"
-            android:textSize="15dp"
-            app:backgroundTint="@color/White"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:translationZ="@dimen/bootstrap_h1_hori_padding"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:roundedCorners="true"
-            app:strokeColor="@color/logoColor"></com.google.android.material.button.MaterialButton>
-                <!--android:textAlignment="viewEnd"-->
+            app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/traitImage"
-            android:layout_width="50dp"
-            android:elevation="4dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="15dp"
-            android:background="@color/logoColor"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="35dp"
-            android:padding="8dp"
-            android:translationZ="5dp"
-            app:layout_constraintBottom_toBottomOf="@+id/trait_card_view"
-            app:layout_constraintStart_toStartOf="@+id/trait_card_view"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
-
-        <androidx.constraintlayout.widget.Group
-            android:id="@+id/group"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_begin="20dp" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="20dp" />
-
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/barrier"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:barrierDirection="top" />
+            <ImageView
+                android:id="@+id/traitEmojiView"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:srcCompat="@drawable/simple_profile_photo" />
+        </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </LinearLayout>
