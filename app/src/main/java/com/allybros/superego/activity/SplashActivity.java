@@ -31,7 +31,7 @@ public class SplashActivity extends AppCompatActivity {
         Log.d("sessionTokenSplash",session_token);
 
         allTraits= LoadProfileTask.getAllTraits(getApplicationContext());
-
+        Trait.setAllTraits(allTraits);
         if(!session_token.isEmpty()){
             LoadProfileTask.loadProfileTask(getApplicationContext(),session_token,"load");
         }else{
