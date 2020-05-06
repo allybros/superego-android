@@ -13,21 +13,23 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="16dp"
-        >
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="0dp"
+        android:clipToPadding="false"
+        android:paddingLeft="16dp"
+        android:paddingBottom="8dp"
+        android:paddingRight="16dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/traitBoxCard"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginStart="20dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="4dp"
             android:background="@drawable/card_shape"
-            android:elevation="8dp"
             android:clipToPadding="false"
+            android:elevation="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -37,9 +39,9 @@
                 android:id="@+id/traitNameView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="21dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="16dp"
                 android:text="Positive"
                 android:textColor="@color/Black"
                 android:textSize="24sp"
@@ -52,18 +54,19 @@
             android:id="@+id/imageViewContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/EditTextColor2"
-            android:elevation="8dp"
+            android:background="@drawable/shape_trait_icon"
             android:clipToPadding="false"
-            android:padding="8dp"
-            android:translationZ="@dimen/bootstrap_h1_hori_padding"
+            android:elevation="12dp"
+            android:outlineProvider="bounds"
+            android:padding="10dp"
+            android:layout_marginStart="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/traitEmojiView"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 app:srcCompat="@drawable/simple_profile_photo" />
         </FrameLayout>
 
