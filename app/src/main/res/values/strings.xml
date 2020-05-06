@@ -44,7 +44,7 @@
     <string name="close">Kapat</string>
     <string name="okey">Tamam</string>
     <string name="checkConnection">Bağlantınızı kontrol ediniz.</string>
-    <string name="pleaseComplate">Yeterli değerlendirmeye ulaştığınızda kişilik özellikleriniz burada görüntülenecek.</string>
+    <string name="infoNotRated">Henüz ilk sonucu görüntülemek için yeterli değerlendirmeye sahip değilsin.\nYeterli değerlendirme sayısına ulaştığında kişilik özelliklerini görebileceksin.</string>
     <string name="add_text">Merhaba, Reklam izleyerek ego puanı kazanabilirsin. Ego puanı ile değerlendirme sayını arttırabilirsin.</string>
     <string name="cancel">Kapat</string>
     <string name="processComplated">İşlem başarılı</string>
@@ -68,4 +68,5 @@
     <string name="social_media_email_empty">Kayıtlı email bulunmamaktadır</string>
     <string name="social_media_email_not_legal">Mailiniz uygun değildir</string>
     <string name="social_media_username_not_legal">Kullanıcı adınız uygun değildir.</string>
+    <string name="remaining_credits">Kalan Değerlendirme: %1$s</string>
 </resources>
