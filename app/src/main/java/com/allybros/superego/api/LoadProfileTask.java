@@ -13,6 +13,7 @@ import com.allybros.superego.activity.SplashActivity;
 import com.allybros.superego.activity.UserPageActivity;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
+import com.allybros.superego.unit.Score;
 import com.allybros.superego.unit.Trait;
 import com.allybros.superego.unit.User;
 import com.android.volley.AuthFailureError;
@@ -72,9 +73,7 @@ public class LoadProfileTask{
                             }
 
                             break;
-
                         case ErrorCodes.SUCCESS:
-
                             int user_type = jsonObject.getInt("user_type");
                             String username = jsonObject.getString("username");
                             String user_bio = jsonObject.getString("user_bio");
@@ -84,37 +83,32 @@ public class LoadProfileTask{
                             int rated = jsonObject.getInt("rated");
                             int credit = jsonObject.getInt("credit");
 
-                            ArrayList<Trait> traits=new ArrayList<>();
+                            //Build scores list
+                            ArrayList<Score> scoresList = new ArrayList<>();
                             if(!jsonObject.isNull("scores")){
                                 for (int i = 0; i < jsonObject.getJSONArray("scores").length(); i++) {
-                                    JSONObject iter= (JSONObject) jsonObject.getJSONArray("scores").get(i);
-                                    int traitNo;
-                                    float value;
-
-                                    traitNo=iter.getInt("traitNo");
-                                    value=iter.getInt("value");
-
-                                    traits.add(new Trait(traitNo,value));
+                                    JSONObject scoresObject = (JSONObject) jsonObject.getJSONArray("scores").get(i);
+                                    int traitNo =  scoresObject.getInt("traitNo");
+                                    float value = scoresObject.getInt("value");;
+                                    scoresList.add(new Score(traitNo,value));
                                 }
                             }
+                            //TODO: Fix user class data fields
                             User.setRated(rated);
                             User.setUserType(user_type);
                             User.setUsername(username);
                             User.setUserBio(user_bio);
                             User.setEmail(email);
                             User.setTestId(test_id);
-                            User.setScores(traits);
+                            User.setScores(scoresList);
                             User.setCredit(credit);
                             User.setImage(image);
-                            if(action.equals(ConstantValues.getActionRefreshProfile())){
-                                intent.putExtra("status", ErrorCodes.SUCCESS);
-                                LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-                            }else{
-                                intent=new Intent(context, UserPageActivity.class);
-                                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
-                                context.startActivity(intent);
-                            }
-                        break;
+
+                            intent=new Intent(context, UserPageActivity.class);
+                            intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(intent);
+                            break;
+
 
                         case ErrorCodes.SESSION_EXPIRED:
                             SharedPreferences pref = context.getSharedPreferences(USER_INFORMATION_PREF, context.MODE_PRIVATE);
