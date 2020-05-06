@@ -12,12 +12,14 @@ import com.allybros.superego.R;
 import com.allybros.superego.api.LoadProfileTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.Trait;
+import com.allybros.superego.unit.User;
 
 import java.util.ArrayList;
 
 
 public class SplashActivity extends AppCompatActivity {
     public static String session_token;
+    private static User currentUser;
     private SharedPreferences pref;
     public static ArrayList<Trait> allTraits;
 
@@ -42,5 +44,12 @@ public class SplashActivity extends AppCompatActivity {
         }
     }
 
+    public static User getCurrentUser() {
+        return currentUser;
+    }
+
+    public static void setCurrentUser(User currentUser) {
+        SplashActivity.currentUser = currentUser;
+    }
 }
 

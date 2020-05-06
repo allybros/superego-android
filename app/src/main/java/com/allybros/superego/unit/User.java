@@ -7,106 +7,107 @@ import java.util.ArrayList;
 
 public class User {
 
-    private static int userType, rated, credit;
-    private static String image,testId,username,userBio,email;
-    private static ArrayList<Score> scores;
-    private static ArrayList<Trait> test;
-    private static Bitmap avatar;
+    private int userType, rated, credit;
+    private String image,testId,username,userBio,email;
+    private ArrayList<Score> scores;
+    private Bitmap avatar;      //Görsel öğeler için kullanılıyor.
 
-    public static Bitmap getAvatar() {
-        return avatar;
-    }
-
-    public static void setAvatar(Bitmap avatar) {
-        User.avatar = avatar;
-    }
-
-    public static int getCredit() {
-        return credit;
-    }
-
-    public static void setCredit(int credit) {
-        User.credit = credit;
-    }
-
-    public static String getTestId() {
-        return testId;
-    }
-
-    public static void setTestId(String testId) {
-        User.testId = testId;
-    }
-
-    public static int getRated() {
-        return rated;
-    }
-
-    public static void setRated(int rated) {
-        User.rated = rated;
-    }
-
-    public static int getUserType() {
-        return userType;
-    }
-
-    public static void setUserType(int userType) {
-        User.userType = userType;
-    }
-
-    public static String getUsername() {
-        return username;
-    }
-
-    public static void setUsername(String username) {
-        User.username = username;
-    }
-
-    public static String getUserBio() {
-        return userBio;
-    }
-
-    public static void setUserBio(String userBio) {
-        User.userBio = userBio;
-    }
-
-    public static String getEmail() {
-        return email;
-    }
-
-    public static void setEmail(String email) {
-        User.email = email;
-    }
-
-    public static ArrayList<Score> getScores() {
-        return scores;
-    }
-
-    public static void setScores(ArrayList<Score> scores) {
-        User.scores = scores;
-    }
-
-    public static String getImage() {
-        return image;
-    }
-
-    public static ArrayList<Trait> getTest() {
-        return test;
-    }
-
-    public static void setTest(ArrayList<Trait> test) {
-        User.test = test;
-    }
-
-    public static void setImage(String image) {
-        User.image = image;
-    }
-
-    public User(int userType, String username, String userBio, String email, ArrayList<Score> scores, int rated) {
+    public User(int userType, int rated, int credit, String image, String testId, String username, String userBio, String email, ArrayList<Score> scores) {
         this.userType = userType;
+        this.rated = rated;
+        this.credit = credit;
+        this.image = image;
+        this.testId = testId;
         this.username = username;
         this.userBio = userBio;
         this.email = email;
         this.scores = scores;
-        this.rated=rated;
+    }
+
+    public User(String testId, String username, String userBio, Bitmap avatar) {
+        this.testId = testId;
+        this.username = username;
+        this.userBio = userBio;
+        this.avatar = avatar;
+    }
+
+    public int getUserType() {
+        return userType;
+    }
+
+    public int getRated() {
+        return rated;
+    }
+
+    public int getCredit() {
+        return credit;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public String getTestId() {
+        return testId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getUserBio() {
+        return userBio;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public ArrayList<Score> getScores() {
+        return scores;
+    }
+
+    public Bitmap getAvatar() {
+        return avatar;
+    }
+
+    public void setUserType(int userType) {
+        this.userType = userType;
+    }
+
+    public void setRated(int rated) {
+        this.rated = rated;
+    }
+
+    public void setCredit(int credit) {
+        this.credit = credit;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public void setTestId(String testId) {
+        this.testId = testId;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setUserBio(String userBio) {
+        this.userBio = userBio;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setScores(ArrayList<Score> scores) {
+        this.scores = scores;
+    }
+
+    public void setAvatar(Bitmap avatar) {
+        this.avatar = avatar;
     }
 }

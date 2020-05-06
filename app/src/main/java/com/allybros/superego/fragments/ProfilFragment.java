@@ -36,7 +36,6 @@ import com.allybros.superego.api.LoadProfileTask;
 import com.allybros.superego.api.LoginTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
-import com.allybros.superego.unit.User;
 import com.allybros.superego.util.CircledNetworkImageView;
 import com.allybros.superego.util.HelperMethods;
 import com.daimajia.androidanimations.library.Techniques;
@@ -100,28 +99,28 @@ public class ProfilFragment extends Fragment {
     }
 
     private void loadProfile(){
-        tvUserInfoProfilPage.setText(User.getUserBio());
-        tvUsernameProfilPage.setText(User.getUsername());
-        btCredit.setText(User.getCredit()+getString(R.string.credit));
-        if(User.getRated()>=5){
+        tvUserInfoProfilPage.setText(SplashActivity.getCurrentUser().getUserBio());
+        tvUsernameProfilPage.setText(SplashActivity.getCurrentUser().getUsername());
+        btCredit.setText(SplashActivity.getCurrentUser().getCredit()+getString(R.string.credit));
+        if(SplashActivity.getCurrentUser().getRated()>=5){
             btCredit.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.selector_credit));
             btCredit.setEnabled(true);
             YoYo.with(Techniques.Bounce)
                     .duration(1000)
                     .repeat(5)
                     .playOn(getView().findViewById(R.id.credit));
-            if(User.getRated()>=10){
+            if(SplashActivity.getCurrentUser().getRated()>=10){
                 btScore.setText(String.valueOf(getString(R.string.complated)));
             }
         }
-        btScore.setText(String.valueOf(User.getRated()+getString(R.string.rated)));
-        Log.d("Test--> ",""+User.getTestId());
-        if(User.getTestId().equals("null")){
+        btScore.setText(String.valueOf(SplashActivity.getCurrentUser().getRated()+getString(R.string.rated)));
+        Log.d("Test--> ",""+SplashActivity.getCurrentUser().getTestId());
+        if(SplashActivity.getCurrentUser().getTestId().equals("null")){
             tvAppInformationProfilePage.setText(R.string.empty_test);
         }else{
             tvAppInformationProfilePage.setText(R.string.sendTest);
         }
-        HelperMethods.imageLoadFromUrl(getContext(), ConstantValues.getAvatarUrl()+User.getImage(),avatar);
+        HelperMethods.imageLoadFromUrl(getContext(), ConstantValues.getAvatarUrl()+SplashActivity.getCurrentUser().getImage(),avatar);
 
         setButtons();
         //BannerAdd Load
@@ -197,7 +196,7 @@ public class ProfilFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ClipboardManager clipboard = (ClipboardManager)getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("testUrl", User.getTestId());
+                ClipData clip = ClipData.newPlainText("testUrl", SplashActivity.getCurrentUser().getTestId());
                 clipboard.setPrimaryClip(clip);
                 Toast.makeText(getContext(),getString(R.string.link_copied),Toast.LENGTH_SHORT).show();
             }
@@ -209,7 +208,7 @@ public class ProfilFragment extends Fragment {
 
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
-                String shareBody = "Beni nasıl görüyorsun? -->"+User.getTestId();
+                String shareBody = "Beni nasıl görüyorsun? -->"+SplashActivity.getCurrentUser().getTestId();
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, R.string.shareTest);
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
                 startActivity(Intent.createChooser(sharingIntent, "Share via"));
@@ -304,14 +303,14 @@ public class ProfilFragment extends Fragment {
                 public void onClick(View v) {
 
                     Log.d("Click","Clika");
-                    if(User.getTestId().equals("null")){
+                    if(SplashActivity.getCurrentUser().getTestId().equals("null")){
                         Intent addTestIntent= new Intent(getContext(), AddTestActivity.class);
                         startActivity(addTestIntent);
                     }else{
                         Log.d("Click","Cliks");
                         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                         sharingIntent.setType("text/plain");
-                        String shareBody = "Beni nasıl görüyorsun? -->"+User.getTestId();
+                        String shareBody = "Beni nasıl görüyorsun? -->"+SplashActivity.getCurrentUser().getTestId();
                         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, R.string.shareTest);
                         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
                         startActivity(Intent.createChooser(sharingIntent, "Share via"));
@@ -401,6 +400,6 @@ public class ProfilFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(User.getAvatar()!=null) avatar.setImageBitmap(User.getAvatar());
+        if(SplashActivity.getCurrentUser().getAvatar()!=null) avatar.setImageBitmap(SplashActivity.getCurrentUser().getAvatar());
     }
 }
