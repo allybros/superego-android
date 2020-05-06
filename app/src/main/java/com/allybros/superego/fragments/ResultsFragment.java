@@ -1,10 +1,6 @@
 package com.allybros.superego.fragments;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,7 +14,6 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.allybros.superego.R;
@@ -64,7 +59,6 @@ public class ResultsFragment extends Fragment {
         tvRatedResultPage= (TextView) getView().findViewById(R.id.tvRatedResultPage);
         imageLogo= (ImageView) getView().findViewById(R.id.imageLogo);
 
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(refreshReceiver, new IntentFilter(ConstantValues.getActionRefreshProfile()));
 
         super.onActivityCreated(savedInstanceState);
 
@@ -105,22 +99,6 @@ public class ResultsFragment extends Fragment {
         });
 
     }
-    private BroadcastReceiver refreshReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if(!SplashActivity.getCurrentUser().getTestId().isEmpty() && SplashActivity.getCurrentUser().getRated()>= ConstantValues.getRatedLimit()){
-                constraintLayoutResult.setVisibility(View.GONE);
-                listViewTraits.setVisibility(View.VISIBLE);
-                ListAdapter adapter = new ScoresAdapter(getActivity(), SplashActivity.getCurrentUser().getScores());
-                listViewTraits.setAdapter(adapter);
-            }else{
-                constraintLayoutResult.setVisibility(View.VISIBLE);
-                listViewTraits.setVisibility(View.GONE);
-                tvRatedResultPage.setText("Değerlendirme: "+SplashActivity.getCurrentUser().getRated());
-
-            }
-        }
-    };
 
 
 

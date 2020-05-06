@@ -22,8 +22,11 @@ public class ConstantValues {
     private static final String URL_EARN_REWARD = "https://api.allybros.com/superego/reward.php";
     private static final String URL_SOCIAL_ACCOUNTS_LOGIN ="https://api.allybros.com/superego/oauth-client.php";
     private static final String LOGIN_URL ="https://api.allybros.com/superego/login.php";
-    private static final String ADD_TEST_URL ="https://demo.allybros.com/superego/create.php";
-    private static final String UPLOAD_IMAGE="https://api.allybros.com/superego/upload.php";
+    private static final String ADD_TEST_URL = "https://demo.allybros.com/superego/create.php";
+    private static final String UPLOAD_IMAGE = "https://api.allybros.com/superego/upload.php";
+    private static final String ALL_TRAITS = "https://api.allybros.com/superego/traits.php";
+    private static final String LOAD_PROFILE ="https://api.allybros.com/superego/load-profile.php";
+    private static final String REGISTER ="https://api.allybros.com/superego/register.php";
 
 
 
@@ -35,7 +38,19 @@ public class ConstantValues {
     private static final String ACTION_LOGIN = "login-status-share";
     private static final String ACTION_SOCIAL_MEDIA_LOGIN = "social-media-login-status-share";
     private static final String ACTION_REFRESH_PROFILE = "profile-refresh-status-share";
+    private static final String ACTION_REGISTER = "register-status-share";
 
+    public static String getActionRegister() {
+        return ACTION_REGISTER;
+    }
+
+    public static String getAllTraits() {
+        return ALL_TRAITS;
+    }
+
+    public static String getLoadProfile() {
+        return LOAD_PROFILE;
+    }
 
     public static String getAddTestUrl() {
         return ADD_TEST_URL;
@@ -43,6 +58,10 @@ public class ConstantValues {
 
     public static String getUploadImage() {
         return UPLOAD_IMAGE;
+    }
+
+    public static String getREGISTER() {
+        return REGISTER;
     }
 
     public static String getActionRefreshProfile() {
