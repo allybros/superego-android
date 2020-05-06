@@ -16,7 +16,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -27,7 +26,6 @@ import com.allybros.superego.activity.SplashActivity;
 import com.allybros.superego.api.LoadProfileTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.Score;
-import com.allybros.superego.unit.Trait;
 import com.allybros.superego.unit.User;
 import com.allybros.superego.util.ScoresAdapter;
 import com.daimajia.androidanimations.library.Techniques;
