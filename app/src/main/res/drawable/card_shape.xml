@@ -2,7 +2,7 @@
     android:shape="rectangle">
 
     <corners
-        android:radius="2dp" />
+        android:radius="6dp" />
 
     <!--<gradient
         android:angle="45"
@@ -15,7 +15,7 @@
 
     <!--If your shape requires only one solid color-->
     <solid
-        android:color="#E6FFFFFF" />
+        android:color="#FFFFFF" />
 
     <size
         android:width="82dp"
