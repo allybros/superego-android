@@ -20,6 +20,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.allybros.superego.R;
 import com.allybros.superego.activity.SplashActivity;
+import com.allybros.superego.activity.UserPageActivity;
 import com.allybros.superego.api.LoadProfileTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.Score;
@@ -30,10 +31,9 @@ import com.daimajia.androidanimations.library.YoYo;
 
 public class ResultsFragment extends Fragment {
     private ConstraintLayout constraintLayoutResult;
+    private Activity activity; //TODO: Check redundancy
     private TextView tvRemainingRates;
-    private ImageView imageLogo;
     private ListView listViewTraits;
-    private Activity activity;
     private SwipeRefreshLayout swipeLayout;
     private User currentUser;
 
@@ -57,7 +57,7 @@ public class ResultsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //Check state
+        //Check state then inflate required layout
         switch (this.getState()) {
             case PARTIAL:
                 return inflater.inflate(R.layout.fragment_results_partial, container, false);
@@ -79,27 +79,28 @@ public class ResultsFragment extends Fragment {
             @Override
             public void onRefresh() {
                 LoadProfileTask.loadProfileTask(getContext(), SplashActivity.session_token, ConstantValues.getActionRefreshProfile());
-                YoYo.with(Techniques.SlideInDown)
+                YoYo.with(Techniques.FadeIn)
                         .duration(700)
                         .repeat(0)
                         .playOn(swipeLayout);
-                swipeLayout.setRefreshing(false);
-                ResultsFragment newResultsFragment = new ResultsFragment();
-                FragmentManager fragmentManager = getFragmentManager();
-                if (getFragmentManager() != null){
-                    //Replace fragment with new
-                    fragmentManager
-                            .beginTransaction()
-                            .replace(ResultsFragment.super.getId(), newResultsFragment)
-                            .commit();
+                //Update fragments
+                UserPageActivity pageActivity = (UserPageActivity) getActivity();
+                if (pageActivity != null) {
+                    pageActivity.updateFragments(1);
                 }
+                swipeLayout.setRefreshing(false);
             }
         });
 
         //Populate views
         switch (this.getState()) {
             case PARTIAL: //One result
+                //Get views
                 listViewTraits = getView().findViewById(R.id.listViewPartialTraits);
+                tvRemainingRates = getView().findViewById(R.id.tvRemainingRatesPartial);
+                //Populate views
+                int remainingRates = 10 - (currentUser.getRated() + currentUser.getCredit());
+                tvRemainingRates.setText(getString(R.string.remaining_credits, remainingRates));
                 listViewTraits.setAdapter( new ScoresAdapter(this.activity, currentUser.getScores()) );
                 break;
             case COMPLETE: //All results
@@ -107,9 +108,11 @@ public class ResultsFragment extends Fragment {
                 listViewTraits.setAdapter( new ScoresAdapter(this.activity, currentUser.getScores()) );
                 break;
             default: //No results
+                //Get views
                 tvRemainingRates = getView().findViewById(R.id.tvRatedResultPage);
-                int remainingCredits = 5 - SplashActivity.getCurrentUser().getRated();
-                tvRemainingRates.setText( getString(R.string.remaining_credits, remainingCredits) );
+                //Populate views
+                remainingRates = 5 - currentUser.getRated();
+                tvRemainingRates.setText( getString(R.string.remaining_credits, remainingRates) );
                 break;
         }
 
