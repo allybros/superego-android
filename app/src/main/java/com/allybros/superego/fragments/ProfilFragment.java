@@ -92,8 +92,7 @@ public class ProfilFragment extends Fragment {
         profileSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                LoadProfileTask.loadProfileTask(getContext(),SplashActivity.session_token, ConstantValues.getActionRefreshProfile());
-
+                LoadProfileTask.loadProfileTask(getContext(), SplashActivity.session_token, ConstantValues.getActionRefreshProfile());
             }
         });
     }
