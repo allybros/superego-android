@@ -90,7 +90,7 @@ public class UserPageActivity extends AppCompatActivity {
 
 
         viewPager = (ViewPager) findViewById(R.id.simpleViewPager);
-        setupViewPager(viewPager);
+        initViewPager(viewPager);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {}
@@ -152,7 +152,7 @@ public class UserPageActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setupViewPager(ViewPager viewPager) {
+    private void initViewPager(ViewPager viewPager) {
         ResultsFragment resultsFragment = new ResultsFragment();
         resultsFragment.setActivity(this);
 
@@ -160,5 +160,14 @@ public class UserPageActivity extends AppCompatActivity {
         adapter.addFrag(new ProfilFragment(), getResources().getString(R.string.profile));
         adapter.addFrag(resultsFragment, getResources().getString(R.string.results));
         viewPager.setAdapter(adapter);
+    }
+
+    /**
+     * Update fragments with state of currentUser
+     * @param pageIndex Index of the fragment will be shown
+     */
+    public void updateFragments(int pageIndex){
+        initViewPager(this.viewPager);
+        this.viewPager.setCurrentItem(pageIndex);
     }
 }

@@ -19,13 +19,13 @@
             android:id="@+id/constraintLayoutResult"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp">
 
             <ImageView
                 android:id="@+id/imageLogo"
-                android:layout_width="254dp"
-                android:layout_height="93dp"
+                android:layout_width="200dp"
+                android:layout_height="60dp"
                 android:layout_marginTop="68dp"
                 android:src="@drawable/brand_grey"
                 app:layout_constraintEnd_toEndOf="parent"
