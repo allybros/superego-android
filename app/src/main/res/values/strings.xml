@@ -36,15 +36,14 @@
     <string name="add_test">Yeni Test</string>
     <string name="login">Giriş Yap</string>
     <string name="pleaseTryAgain">Lütfen tekrar deneyiniz.</string>
-    <string name="register">Bize Katıl</string>
-
+    <string name="register">Kayıt Ol</string>
     <string name="aggrementLink"> Kullanım koşulları\'nı okudum ve kabul ediyorum.</string>
     <string name="username_must_fill">Kullanıcı alanı boş olamaz</string>
     <string name="session_suspend">Bu üyelik 3 dakika askıya alınmıştır.</string>
     <string name="close">Kapat</string>
     <string name="okey">Tamam</string>
     <string name="checkConnection">Bağlantınızı kontrol ediniz.</string>
-    <string name="infoNotRated">Henüz ilk sonucu görüntülemek için yeterli değerlendirmeye sahip değilsin.\nYeterli değerlendirme sayısına ulaştığında kişilik özelliklerini görebileceksin.</string>
+    <string name="infoNotRated"><b>Henüz ilk sonucu görüntülemek için yeterli değerlendirmeye sahip değilsin.</b>\nYeterli değerlendirme sayısına ulaştığında kişilik özelliklerini görebileceksin.</string>
     <string name="add_text">Merhaba, Reklam izleyerek ego puanı kazanabilirsin. Ego puanı ile değerlendirme sayını arttırabilirsin.</string>
     <string name="cancel">Kapat</string>
     <string name="processComplated">İşlem başarılı</string>
@@ -69,4 +68,8 @@
     <string name="social_media_email_not_legal">Mailiniz uygun değildir</string>
     <string name="social_media_username_not_legal">Kullanıcı adınız uygun değildir.</string>
     <string name="remaining_credits">Kalan Değerlendirme: %1$s</string>
+    <string name="info_partial_rates"><b>Tüm sonuçlarını görmek için yeterli değerlendirme sayısına sahip değilsin.</b>\nArkadaşlarının değerlendirmesini beklemek istemiyorsan reklam izleyerek Ego puanı kazanabilirsin.</string>
+    <string name="info_title_waiting_rates">Değerlendirilmelerin Bekleniyor...</string>
+    <string name="prompt_email">E-Posta</string>
+    <string name="prompt_username">Kullanıcı Adı</string>
 </resources>

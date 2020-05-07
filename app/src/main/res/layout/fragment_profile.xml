@@ -106,7 +106,7 @@
                                 android:id="@+id/score"
                                 android:layout_width="120dp"
                                 android:layout_height="35dp"
-                                android:background="@drawable/score_bg"
+                                android:background="@drawable/shape_rated"
                                 android:drawableLeft="@drawable/baseline_done_white_18"
                                 android:enabled="false"
                                 android:padding="10dp"

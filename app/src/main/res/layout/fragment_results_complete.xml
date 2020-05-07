@@ -21,8 +21,9 @@
             android:clickable="false"
             android:divider="@null"
             android:dividerHeight="0dp"
-            android:paddingTop="16dp"></ListView>
+            android:paddingTop="16dp">
 
+        </ListView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </FrameLayout>
