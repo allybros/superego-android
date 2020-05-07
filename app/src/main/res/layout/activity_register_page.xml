@@ -14,11 +14,11 @@
         android:background="@color/loginScreenBlack">
         <ImageView
             android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
-            android:src="@drawable/logoa"
+            android:src="@drawable/brand_white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -64,7 +64,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:hint="Lütfen kullanıcı adı giriniz"
+                    android:hint="@string/prompt_username"
                     app:errorEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -81,7 +81,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Lütfen e-posta giriniz"
+                    android:hint="@string/prompt_email"
                     app:errorEnabled="false"
                     app:hintTextColor="@color/Black">
 
@@ -120,7 +120,7 @@
                         android:id="@+id/checkboxAggrement"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:buttonTint="@color/Black"></CheckBox>
+                        android:buttonTint="@color/Black" />
 
                     <TextView
                         android:id="@+id/tvAggrementRegister"
@@ -129,7 +129,7 @@
                         android:layout_gravity="center"
                         android:autoLink="web"
                         android:enabled="true"
-                        android:text="@string/aggrementLink"></TextView>
+                        android:text="@string/aggrementLink" />
 
                 </LinearLayout>
 
