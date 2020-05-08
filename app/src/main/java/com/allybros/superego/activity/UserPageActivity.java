@@ -153,12 +153,9 @@ public class UserPageActivity extends AppCompatActivity {
     }
 
     private void initViewPager(ViewPager viewPager) {
-        ResultsFragment resultsFragment = new ResultsFragment();
-        resultsFragment.setActivity(this);
-
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager());
         adapter.addFrag(new ProfilFragment(), getResources().getString(R.string.profile));
-        adapter.addFrag(resultsFragment, getResources().getString(R.string.results));
+        adapter.addFrag(new ResultsFragment(), getResources().getString(R.string.results));
         viewPager.setAdapter(adapter);
     }
 
