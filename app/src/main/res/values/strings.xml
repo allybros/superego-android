@@ -29,11 +29,11 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="shareTest">Paylaş</string>
+    <string name="btn_share_results">Sonuç Paylaş</string>
     <string name="title_activity_change_password">ChangePasswordActivity</string>
     <string name="link_copied">Test adresiniz kopyalandı</string>
-    <string name="link_copy">Bağlantı</string>
-    <string name="add_test">Yeni Test</string>
+    <string name="btn_test_share">Testi Gönder</string>
+    <string name="btn_new_test">Test Oluştur</string>
     <string name="login">Giriş Yap</string>
     <string name="pleaseTryAgain">Lütfen tekrar deneyiniz.</string>
     <string name="register">Kayıt Ol</string>

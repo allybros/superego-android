@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ripple xmlns:android="http://schemas.android.com/apk/res/android" android:color="#E8F5E9">
-
     <item>
         <selector>
-            <item android:drawable="@drawable/shape_share_test"/>
-            <item android:drawable="@drawable/shape_share_test_1" android:state_pressed="true"/>
+            <item android:drawable="@drawable/shape_btn_share_result"/>
+            <item android:drawable="@drawable/shape_btn_share_result" android:state_pressed="true"/>
         </selector>
-
     </item>
-
-
 </ripple>
