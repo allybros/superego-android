@@ -20,9 +20,7 @@
             android:layout_height="match_parent"
             android:clickable="false"
             android:divider="@null"
-            android:dividerHeight="0dp"
-            android:paddingTop="16dp">
-
+            android:dividerHeight="0dp" >
         </ListView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

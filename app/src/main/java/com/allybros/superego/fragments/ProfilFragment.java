@@ -208,7 +208,7 @@ public class ProfilFragment extends Fragment {
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
                 String shareBody = "Beni nasıl görüyorsun? -->"+SplashActivity.getCurrentUser().getTestId();
-                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, R.string.shareTest);
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, R.string.btn_share_results);
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
                 startActivity(Intent.createChooser(sharingIntent, "Share via"));
             }
@@ -310,7 +310,7 @@ public class ProfilFragment extends Fragment {
                         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                         sharingIntent.setType("text/plain");
                         String shareBody = "Beni nasıl görüyorsun? -->"+SplashActivity.getCurrentUser().getTestId();
-                        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, R.string.shareTest);
+                        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, R.string.btn_share_results);
                         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
                         startActivity(Intent.createChooser(sharingIntent, "Share via"));
                     }

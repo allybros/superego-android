@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- TODO: Remove unused colors, duplicates-->
     <color name="colorPrimary">#1C2331</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#FFFFFF</color>
@@ -29,8 +30,22 @@
     <color name="loginScreenBlack">#46000000</color>
     <color name="fragmentBackground">#f9f9f9</color>
 
+    <!-- Material Palette -->
+    <color name="materialDeepPurple">#5759AC</color>
+    <color name="materialLightBlue">#2A71AC</color>
+    <color name="materialLightGreen">#60C072</color>
 
+    <!--Aqua Palette -->
+    <color name="aquaBlue">#1C84E0</color>
+    <color name="aquaGreen">#15BC7F</color>
 
+    <!-- Yosemite -->
+    <color name="yosemiteOrange">#EA8D8D</color>
+    <color name="yosemitePurple">#A890FE</color>
+
+    <!-- Antarctica -->
+    <color name="antarcticaPurple">#D8B5FF</color>
+    <color name="antarcticaGreen">#1EAE98</color>
 
     <!--Colors for try-->
     <color name="blue">#2875FA</color>
