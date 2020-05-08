@@ -1,37 +1,24 @@
 package com.allybros.superego.fragments;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.allybros.superego.R;
 import com.allybros.superego.activity.SplashActivity;
 import com.allybros.superego.activity.UserPageActivity;
-import com.allybros.superego.api.LoadProfileTask;
-import com.allybros.superego.unit.ConstantValues;
-import com.allybros.superego.unit.Score;
 import com.allybros.superego.unit.User;
 import com.allybros.superego.util.ScoresAdapter;
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
 
 public class ResultsFragment extends Fragment {
-    private ConstraintLayout constraintLayoutResult;
-    private Activity activity; //TODO: Check redundancy
     private TextView tvRemainingRates;
     private ListView listViewTraits;
     private SwipeRefreshLayout swipeLayout;
@@ -44,10 +31,6 @@ public class ResultsFragment extends Fragment {
 
     public ResultsFragment() {
         this.currentUser = SplashActivity.getCurrentUser();
-    }
-
-    public void setActivity(Activity activity){
-        this.activity = activity;
     }
 
     @Override
@@ -66,23 +49,17 @@ public class ResultsFragment extends Fragment {
             default:
                 return inflater.inflate(R.layout.fragment_results_none, container, false);
         }
-
     }
 
     @SuppressLint("StringFormatMatches")
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        swipeLayout = getView().findViewById(R.id.swipeLayout);
         //Setup refresher
+        swipeLayout = getView().findViewById(R.id.swipeLayout);
         if (swipeLayout != null)
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                LoadProfileTask.loadProfileTask(getContext(), SplashActivity.session_token, ConstantValues.getActionRefreshProfile());
-                YoYo.with(Techniques.FadeIn)
-                        .duration(700)
-                        .repeat(0)
-                        .playOn(swipeLayout);
                 //Update fragments
                 UserPageActivity pageActivity = (UserPageActivity) getActivity();
                 if (pageActivity != null) {
@@ -92,22 +69,27 @@ public class ResultsFragment extends Fragment {
             }
         });
 
-        //Populate views
+        //Populate views depending on current state
         switch (this.getState()) {
-            case PARTIAL: //One result
+            //One result
+            case PARTIAL:
                 //Get views
                 listViewTraits = getView().findViewById(R.id.listViewPartialTraits);
                 tvRemainingRates = getView().findViewById(R.id.tvRemainingRatesPartial);
                 //Populate views
                 int remainingRates = 10 - (currentUser.getRated() + currentUser.getCredit());
                 tvRemainingRates.setText(getString(R.string.remaining_credits, remainingRates));
-                listViewTraits.setAdapter( new ScoresAdapter(this.activity, currentUser.getScores()) );
+                listViewTraits.setAdapter( new ScoresAdapter(getActivity(), currentUser.getScores()) );
                 break;
-            case COMPLETE: //All results
+
+            //All results
+            case COMPLETE:
                 listViewTraits = getView().findViewById(R.id.listViewTraits);
-                listViewTraits.setAdapter( new ScoresAdapter(this.activity, currentUser.getScores()) );
+                listViewTraits.setAdapter( new ScoresAdapter(getActivity(), currentUser.getScores()) );
                 break;
-            default: //No results
+
+            //No results
+            default:
                 //Get views
                 tvRemainingRates = getView().findViewById(R.id.tvRatedResultPage);
                 //Populate views
@@ -127,6 +109,5 @@ public class ResultsFragment extends Fragment {
         else
             return State.NONE;
     }
-
 
 }
