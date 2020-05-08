@@ -55,7 +55,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/profile_image">
 
                         <TextView
-                            android:id="@+id/tvUsernameProfilPage"
+                            android:id="@+id/tvUsername"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="/@username"
@@ -73,13 +73,13 @@
                             android:layout_marginEnd="5dp"
                             android:src="@drawable/baseline_person_black_18"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/tvUsernameProfilPage"
+                            app:layout_constraintEnd_toStartOf="@+id/tvUsername"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
-                        android:id="@+id/tvUserInfoProfilPage"
+                        android:id="@+id/tvUserbio"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
@@ -99,10 +99,10 @@
                         android:orientation="horizontal"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvUserInfoProfilPage">
+                        app:layout_constraintTop_toBottomOf="@+id/tvUserbio">
 
                         <Button
-                            android:id="@+id/score"
+                            android:id="@+id/badgeRated"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="8dp"
@@ -114,7 +114,7 @@
                             android:textSize="12sp" />
 
                         <Button
-                            android:id="@+id/credit"
+                            android:id="@+id/badgeCredit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/passive_credit_bg"
@@ -150,7 +150,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/card_view">
 
                 <Button
-                    android:id="@+id/addTest"
+                    android:id="@+id/btnAddTest"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
@@ -166,7 +166,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
-                    android:id="@+id/copyTestLink"
+                    android:id="@+id/btnShareTest"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
@@ -176,14 +176,14 @@
                     android:drawableTop="@drawable/outline_link_white_36"
                     android:paddingTop="12dp"
                     android:paddingBottom="12dp"
-                    android:text="@string/btn_test_share"
+                    android:text="@string/btn_share_test"
                     android:textAllCaps="false"
                     app:layout_constraintEnd_toStartOf="@+id/shareTest"
                     app:layout_constraintStart_toEndOf="@+id/addTest"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
-                    android:id="@+id/shareTest"
+                    android:id="@+id/btnShareResult"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/selector_btn_share_result"
@@ -201,11 +201,12 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/tvAppInformationProfilePage"
+                android:id="@+id/tvProfileInfoCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:clickable="true"
+                android:focusable="true"
                 android:enabled="true"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="12dp"
@@ -216,23 +217,25 @@
                 android:text="man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?"
                 android:textColor="@color/White"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
+                 />
 
-            <com.google.android.gms.ads.AdView
-                android:id="@+id/bannerAdd"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="12dp"
+                android:layout_height="50dp"
+                android:background="@drawable/card_shape"
                 android:layout_marginTop="12dp"
-                android:layout_marginEnd="12dp"
-                app:adSize="BANNER"
-                app:adUnitId="ca-app-pub-3940256099942544/6300978111"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvAppInformationProfilePage" />
+                android:layout_marginBottom="12dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp">
+                <com.google.android.gms.ads.AdView
+                    android:id="@+id/bannerAdd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:adSize="BANNER"
+                    app:adUnitId="ca-app-pub-3940256099942544/6300978111"
+                />
+            </FrameLayout>
+
 
         </LinearLayout>
     </ScrollView>
