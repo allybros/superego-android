@@ -2,6 +2,7 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="55dp"
@@ -11,12 +12,12 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/profileSwipeLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent" >
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,7 +25,7 @@
 
             <!-- Profile Card View -->
             <androidx.cardview.widget.CardView
-                android:id="@+id/card_view"
+                android:id="@+id/cardViewProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -44,7 +45,7 @@
                     android:padding="16dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/constraintLayout"
+                        android:id="@+id/usernameRow"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -52,15 +53,15 @@
                         android:layout_marginEnd="8dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/profile_image">
+                        app:layout_constraintTop_toBottomOf="@+id/user_avatar">
 
                         <TextView
                             android:id="@+id/tvUsername"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="/@username"
+                            android:text="username"
                             android:textColor="#000"
-                            android:textSize="18sp"
+                            android:textSize="20sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/imageView"
@@ -84,19 +85,20 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:gravity="center"
-                        android:text="man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?"
+                        android:text="man who chooses to enjoy a pleasure thaasure?"
+                        android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+                        app:layout_constraintTop_toBottomOf="@+id/usernameRow" />
 
                     <LinearLayout
-                        android:id="@+id/constraintLayout3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="36dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginEnd="8dp"
+                        android:id="@+id/badgesRow"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="12dp"
+                        android:gravity="center"
                         android:orientation="horizontal"
+                        android:clipToPadding="false"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tvUserbio">
@@ -104,32 +106,36 @@
                         <Button
                             android:id="@+id/badgeRated"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="36dp"
                             android:layout_marginRight="8dp"
                             android:background="@drawable/shape_rated"
-                            android:drawableStart="@drawable/baseline_done_white_18"
+                            android:elevation="4dp"
                             android:enabled="false"
-                            android:padding="8dp"
+                            android:drawableStart="@drawable/baseline_done_white_18"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
                             android:text="Score"
-                            android:textSize="12sp" />
+                            android:textAllCaps="false"
+                            tools:ignore="HardcodedText,RtlHardcoded" />
 
                         <Button
                             android:id="@+id/badgeCredit"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="36dp"
+                            android:textAllCaps="false"
                             android:background="@drawable/passive_credit_bg"
-                            android:drawableStart="@drawable/baseline_account_balance_wallet_white_18"
+                            android:elevation="4dp"
                             android:enabled="false"
+                            android:drawableStart="@drawable/baseline_account_balance_wallet_white_18"
                             android:padding="8dp"
-                            android:text="Credit"
-                            android:textSize="12sp" />
+                            android:text="Credit" />
 
                     </LinearLayout>
 
                     <com.allybros.superego.util.CircledNetworkImageView
-                        android:id="@+id/profile_image"
-                        android:layout_width="130dp"
-                        android:layout_height="130dp"
+                        android:id="@+id/user_avatar"
+                        android:layout_width="135dp"
+                        android:layout_height="1350dp"
                         android:src="@drawable/simple_profile_photo"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -138,8 +144,9 @@
 
             </androidx.cardview.widget.CardView>
 
+            <!-- ToolBar Buttons -->
             <LinearLayout
-                android:id="@+id/constraintLayout2"
+                android:id="@+id/rowButtons"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -147,7 +154,7 @@
                 android:layout_marginEnd="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/card_view">
+                app:layout_constraintTop_toBottomOf="@+id/cardViewProfile">
 
                 <Button
                     android:id="@+id/btnAddTest"
@@ -200,45 +207,46 @@
 
             </LinearLayout>
 
+            <!-- User Info Card -->
             <TextView
                 android:id="@+id/tvProfileInfoCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:enabled="true"
+                android:layout_marginStart="12dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="12dp"
                 android:background="@drawable/selector_profile_textview"
                 android:elevation="4dp"
                 android:gravity="center"
-                android:padding="15dp"
+                android:padding="12dp"
                 android:text="man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?"
-                android:textColor="@color/White"
-                app:layout_constraintEnd_toEndOf="parent"
-                 />
+                android:textColor="@color/White" />
 
+            <!-- Google Ad -->
             <FrameLayout
+                android:id="@+id/cardAd"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@drawable/card_shape"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="12dp"
                 android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
                 android:layout_marginEnd="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/card_shape"
                 android:elevation="4dp">
+
                 <com.google.android.gms.ads.AdView
                     android:id="@+id/bannerAdd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:adSize="BANNER"
-                    app:adUnitId="ca-app-pub-3940256099942544/6300978111"
-                />
+                    app:adUnitId="ca-app-pub-3940256099942544/6300978111" />
             </FrameLayout>
 
-
         </LinearLayout>
+
     </ScrollView>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
