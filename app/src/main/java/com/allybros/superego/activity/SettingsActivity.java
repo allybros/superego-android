@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -48,8 +49,9 @@ public class SettingsActivity extends AppCompatActivity {
     final String USER_INFORMATION_PREF="USER_INFORMATION_PREF";
     TextInputEditText username,email,information;
     TextInputLayout etUsername_text_input,etEmail_text_input,etInformation_text_input;
-    MaterialButton btChangePhoto, btLogout;   //TODO: Fotoğraf değiştirme işlemi yapılacak.
+    MaterialButton btLogout;   //TODO: Fotoğraf değiştirme işlemi yapılacak.
     private SlidrInterface slidr;
+    Button btChangePhoto;
     CircledNetworkImageView settingsImage;
     HeartProgressView heartAnimation;
     private ActionBar toolbar;
@@ -63,7 +65,7 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         toolbar = getSupportActionBar();
 
-        btChangePhoto=(MaterialButton) findViewById(R.id.btChangePhoto);
+        btChangePhoto=(Button) findViewById(R.id.btChangePhoto);
         btLogout= (MaterialButton) findViewById(R.id.btLogout);
         username=(TextInputEditText) findViewById(R.id.etUsername);
         email=(TextInputEditText) findViewById(R.id.etEmail);
@@ -75,6 +77,9 @@ public class SettingsActivity extends AppCompatActivity {
         heartAnimation = (HeartProgressView) findViewById(R.id.hearthAnimation);
         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(updateInformationReceiver, new IntentFilter(ConstantValues.getActionUpdateInformation()));
         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(updateImageReceiver, new IntentFilter(ConstantValues.getActionUpdateImage()));
+
+        btChangePhoto.bringToFront();
+        btChangePhoto.invalidate();
 
         email.setText(SessionManager.getInstance().getUser().getEmail());
         username.setText(SessionManager.getInstance().getUser().getUsername());

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android" android:color="#BCBDBD">
+    <item>
+        <selector>
+            <item android:drawable="@drawable/shape_setting_imageview_filter"/>
+            <item android:drawable="@drawable/shape_setting_imageview_filter" android:state_pressed="true"/>
+        </selector>
+    </item>
+</ripple>
