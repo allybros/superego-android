@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -51,7 +52,10 @@ public class RegisterActivity extends AppCompatActivity {
         password_text_input_register=(TextInputLayout) findViewById(R.id.password_text_input);
         checkBoxAggrement=(CheckBox) findViewById(R.id.checkboxAggrement);
 
+
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter(ConstantValues.getActionRegister()));
+
+        tvAggrementRegister.setMovementMethod(LinkMovementMethod.getInstance());
 
         checkBoxAggrement.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

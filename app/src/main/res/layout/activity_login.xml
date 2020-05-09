@@ -136,7 +136,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             app:layout_constraintStart_toEndOf="@+id/sign_in_google"
-            app:layout_constraintTop_toBottomOf="@+id/loginCard" />
+            app:layout_constraintTop_toBottomOf="@+id/loginCard"/>
 
 
 

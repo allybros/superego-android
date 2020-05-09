@@ -234,6 +234,7 @@ public class ProfilFragment extends Fragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setTitle("insightof.me");
                 builder.setMessage(getString(R.string.add_text));
+                
                 builder.setPositiveButton( getString(R.string.okey), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         if (rewardedAd.isLoaded()) {
