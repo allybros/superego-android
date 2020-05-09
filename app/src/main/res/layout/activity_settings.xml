@@ -37,21 +37,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"></com.allybros.superego.util.CircledNetworkImageView>
 
-    <com.google.android.material.button.MaterialButton
+    <Button
         android:id="@+id/btChangePhoto"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="visible"
-        android:translationZ="100dp"
-        android:layout_marginTop="60dp"
-        android:fontFamily="@font/comfortaa_light"
         android:text="Değiştir"
-        android:textColor="@color/Black"
+        android:background="@drawable/shape_setting_imageview_filter"
+        android:textColor="@color/White"
         android:textSize="10dp"
+        android:layout_marginTop="36dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></com.google.android.material.button.MaterialButton>
+        app:layout_constraintTop_toTopOf="parent"></Button>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/etUsername_text_input"
