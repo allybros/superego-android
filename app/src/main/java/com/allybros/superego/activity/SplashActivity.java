@@ -3,7 +3,6 @@ package com.allybros.superego.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -14,7 +13,7 @@ import com.allybros.superego.R;
 import com.allybros.superego.api.LoadProfileTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.Trait;
-import com.allybros.superego.unit.User;
+import com.allybros.superego.util.SessionManager;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -29,24 +28,18 @@ import java.util.ArrayList;
 
 
 public class SplashActivity extends AppCompatActivity {
-    public static String session_token;
-    private static User currentUser;
-    private SharedPreferences pref;
-    public static ArrayList<Trait> allTraits;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        pref= getSharedPreferences(ConstantValues.getUserInformationPref(),MODE_PRIVATE);
-        session_token=pref.getString("session_token","");
-        Log.d("sessionTokenSplash",session_token);
+        SplashActivity.getAllTraits(getApplicationContext());
 
-        allTraits= SplashActivity.getAllTraits(getApplicationContext());
-        Trait.setAllTraits(allTraits);
-        if(!session_token.isEmpty()){
-            LoadProfileTask.loadProfileTask(getApplicationContext(),session_token,"load");
+        SessionManager.getInstance().readInfo(getApplicationContext());
+
+        if(!SessionManager.getInstance().getSessionToken().isEmpty()){
+            LoadProfileTask.loadProfileTask(getApplicationContext(), SessionManager.getInstance().getSessionToken(),"load");
         }else{
             Intent intent=new Intent(this,LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -55,15 +48,7 @@ public class SplashActivity extends AppCompatActivity {
         }
     }
 
-    public static User getCurrentUser() {
-        return currentUser;
-    }
-
-    public static void setCurrentUser(User currentUser) {
-        SplashActivity.currentUser = currentUser;
-    }
-
-    public static ArrayList<Trait> getAllTraits(final Context currentContext){
+    public static void getAllTraits(final Context currentContext){
         RequestQueue queue = Volley.newRequestQueue(currentContext);
         final ArrayList<Trait> traits=new ArrayList<>();
 
@@ -98,7 +83,7 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
         queue.add(jsonRequest);
-        return traits;
+        Trait.setAllTraits(traits);
     }
 }
 

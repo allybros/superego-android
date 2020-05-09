@@ -29,6 +29,7 @@ import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.util.CircledNetworkImageView;
 import com.allybros.superego.util.CustomVolleyRequestQueue;
 import com.allybros.superego.util.HelperMethods;
+import com.allybros.superego.util.SessionManager;
 import com.android.volley.toolbox.ImageLoader;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -75,19 +76,19 @@ public class SettingsActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(updateInformationReceiver, new IntentFilter(ConstantValues.getActionUpdateInformation()));
         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(updateImageReceiver, new IntentFilter(ConstantValues.getActionUpdateImage()));
 
-        email.setText(SplashActivity.getCurrentUser().getEmail());
-        username.setText(SplashActivity.getCurrentUser().getUsername());
-        information.setText(SplashActivity.getCurrentUser().getUserBio());
+        email.setText(SessionManager.getInstance().getUser().getEmail());
+        username.setText(SessionManager.getInstance().getUser().getUsername());
+        information.setText(SessionManager.getInstance().getUser().getUserBio());
 
-        if(SplashActivity.getCurrentUser().getAvatar()!=null){
+        if(SessionManager.getInstance().getUser().getAvatar()!=null){
             Log.d("OnCreate-1","Run");
-            settingsImage.setImageBitmap(SplashActivity.getCurrentUser().getAvatar());
+            settingsImage.setImageBitmap(SessionManager.getInstance().getUser().getAvatar());
         }else{
             Log.d("OnCreate-2","Run");
-            HelperMethods.imageLoadFromUrl(getApplicationContext(), ConstantValues.getAvatarUrl()+SplashActivity.getCurrentUser().getImage(),settingsImage);
+            HelperMethods.imageLoadFromUrl(getApplicationContext(), ConstantValues.getAvatarUrl()+SessionManager.getInstance().getUser().getImage(),settingsImage);
         }
 
-        String URL= ConstantValues.getAvatarUrl()+SplashActivity.getCurrentUser().getImage();
+        String URL= ConstantValues.getAvatarUrl()+SessionManager.getInstance().getUser().getImage();
         ImageLoader mImageLoader;
         mImageLoader = CustomVolleyRequestQueue.getInstance(getApplicationContext()).getImageLoader();
         mImageLoader.get(URL, ImageLoader.getImageListener(settingsImage, R.drawable.simple_profile_photo, android.R.drawable.ic_dialog_alert));
@@ -144,7 +145,7 @@ public class SettingsActivity extends AppCompatActivity {
                 if(information.getText().toString().isEmpty()) etInformation_text_input.setError("Lütfen değer giriniz");
 
                 if(!username.getText().toString().isEmpty() && !email.getText().toString().isEmpty() && !information.getText().toString().isEmpty()){
-                    ChangeInfoTask.changeInfoTask(getApplicationContext(),username.getText().toString(),email.getText().toString(),information.getText().toString(),SplashActivity.session_token);
+                    ChangeInfoTask.changeInfoTask(getApplicationContext(),username.getText().toString(),email.getText().toString(),information.getText().toString(), SessionManager.getInstance().getSessionToken());
                 }
               break;
         }
@@ -165,11 +166,11 @@ public class SettingsActivity extends AppCompatActivity {
             newImagePath = data.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),newImagePath);
-                SplashActivity.getCurrentUser().setAvatar(bitmap);
-                settingsImage.setImageBitmap(SplashActivity.getCurrentUser().getAvatar());
+                SessionManager.getInstance().getUser().setAvatar(bitmap);
+                settingsImage.setImageBitmap(SessionManager.getInstance().getUser().getAvatar());
                 settingsImage.setVisibility(View.INVISIBLE);
                 heartAnimation.setVisibility(View.VISIBLE);
-                ImageChangeTask.imageChangeTask(imageToString(SplashActivity.getCurrentUser().getAvatar()),getApplicationContext());
+                ImageChangeTask.imageChangeTask(imageToString(SessionManager.getInstance().getUser().getAvatar()),getApplicationContext());
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -352,10 +353,10 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        if(SplashActivity.getCurrentUser().getAvatar()!=null){
-            settingsImage.setImageBitmap(SplashActivity.getCurrentUser().getAvatar());
+        if(SessionManager.getInstance().getUser().getAvatar()!=null){
+            settingsImage.setImageBitmap(SessionManager.getInstance().getUser().getAvatar());
         }else{
-            HelperMethods.imageLoadFromUrl(getApplicationContext(), ConstantValues.getAvatarUrl()+SplashActivity.getCurrentUser().getImage(),settingsImage);
+            HelperMethods.imageLoadFromUrl(getApplicationContext(), ConstantValues.getAvatarUrl()+SessionManager.getInstance().getUser().getImage(),settingsImage);
         }
         Log.d("SettingsResume","RUN");
 

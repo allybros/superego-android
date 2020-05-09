@@ -8,14 +8,13 @@ public class ConstantValues {
     private static final int RATED_LIMIT = 10;
     private static final String USER_INFORMATION_PREF="USER_INFORMATION_PREF";  //Shared preferences Tag
 
-
-
     //Links
 
     //    private static final String API_ROOT =  "https://api.insightof.me";
     private static final String API_ROOT =  "https://api.allybros.com/superego/";//TODO: Yukarıda bulunan api roota geçilecek
     private static final String AVATAR_URL = API_ROOT + "images.php?get=";
     private static final String TEST_LINK_ROOT = "https://demo.allybros.com/superego/rate.php?test=";   //TODO: Test links must be like AVATAR_URL variable
+
 
     //API LINKS
     private static final String UPDATE_INFORMATION ="https://api.allybros.com/superego/edit-profile.php";
@@ -27,8 +26,6 @@ public class ConstantValues {
     private static final String ALL_TRAITS = "https://api.allybros.com/superego/traits.php";
     private static final String LOAD_PROFILE ="https://api.allybros.com/superego/load-profile.php";
     private static final String REGISTER ="https://api.allybros.com/superego/register.php";
-
-
 
 
     //Broadcast-Reciever actions
