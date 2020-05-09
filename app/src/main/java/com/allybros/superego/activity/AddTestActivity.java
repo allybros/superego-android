@@ -39,6 +39,11 @@ public class AddTestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_test);
         addTestWebview = (WebView) findViewById(R.id.add_test_webview);
         imageView= (ImageView) findViewById(R.id.logo);
+
+        addTestWebview.getSettings().setJavaScriptEnabled(true);
+        addTestWebview.getSettings().setGeolocationEnabled(true);
+        addTestWebview.setSoundEffectsEnabled(true);
+        addTestWebview.getSettings().setAppCacheEnabled(true);
         addTestWebview.getSettings().setJavaScriptEnabled(true);
         toolbar = getSupportActionBar();
         toolbar.setTitle("Test Oluştur");
@@ -48,14 +53,13 @@ public class AddTestActivity extends AppCompatActivity {
                 .repeat(50)
                 .playOn(findViewById(R.id.logo));
 
-        String url = "https://demo.allybros.com/superego/create.php";
 
         try {
             postData = "session-token=" + URLEncoder.encode(SessionManager.getInstance().getSessionToken(), "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        addTestWebview.postUrl(url,postData.getBytes());
+        addTestWebview.postUrl(ConstantValues.getCreateTest(),postData.getBytes());
 
 
         Handler handler = new Handler();
