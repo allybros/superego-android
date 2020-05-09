@@ -271,6 +271,8 @@ public class ProfilFragment extends Fragment {
                 builder.show();
             }
         });
+
+        //TODO :: seperate Ad initialization
         mAdView.setAdListener(new AdListener() {
             @Override
             public void onAdLoaded() {
@@ -351,6 +353,7 @@ public class ProfilFragment extends Fragment {
             }
         }
     };
+
     private BroadcastReceiver rewardReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -416,4 +419,5 @@ public class ProfilFragment extends Fragment {
         super.onResume();
         if(SplashActivity.getCurrentUser().getAvatar()!=null) imageViewAvatar.setImageBitmap(SplashActivity.getCurrentUser().getAvatar());
     }
+
 }
