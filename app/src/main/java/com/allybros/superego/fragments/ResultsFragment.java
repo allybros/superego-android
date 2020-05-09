@@ -13,10 +13,10 @@ import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.allybros.superego.R;
-import com.allybros.superego.activity.SplashActivity;
 import com.allybros.superego.activity.UserPageActivity;
 import com.allybros.superego.unit.User;
 import com.allybros.superego.util.ScoresAdapter;
+import com.allybros.superego.util.SessionManager;
 
 public class ResultsFragment extends Fragment {
     private TextView tvRemainingRates;
@@ -30,7 +30,7 @@ public class ResultsFragment extends Fragment {
     }
 
     public ResultsFragment() {
-        this.currentUser = SplashActivity.getCurrentUser();
+        this.currentUser = SessionManager.getInstance().getUser();
     }
 
     @Override

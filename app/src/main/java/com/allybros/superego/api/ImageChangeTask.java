@@ -7,10 +7,10 @@ import android.util.Log;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.allybros.superego.activity.SplashActivity;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.util.FileUploadHelper;
+import com.allybros.superego.util.SessionManager;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -91,7 +91,7 @@ public class ImageChangeTask {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
-                params.put("session-token", SplashActivity.session_token);
+                params.put("session-token", SessionManager.getInstance().getSessionToken());
                 params.put("new-avatar-base64",image);
                 return params;
             }

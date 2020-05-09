@@ -3,13 +3,13 @@ package com.allybros.superego.api;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
+import com.allybros.superego.util.SessionManager;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -42,12 +42,7 @@ public class SocialMediaSignInTask {
 
                         case ErrorCodes.SUCCESS:
                             String session_token = jsonObj.getString("session_token");
-                            SharedPreferences pref = context.getSharedPreferences(ConstantValues.getUserInformationPref(), Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = pref.edit();
-                            editor.putString("session_token", session_token);
-                            editor.commit();
-
-                            Log.d("sessionTokenLogin",session_token);
+                            SessionManager.getInstance().writeInfoLocalStorage(SessionManager.getInstance().getUserId(), SessionManager.getInstance().getPassword(), session_token, context);
 
                             intent.putExtra("status", status);
                             LocalBroadcastManager.getInstance(context).sendBroadcast(intent);

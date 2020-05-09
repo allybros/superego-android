@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.allybros.superego.R;
 import com.allybros.superego.api.LoadProfileTask;
 import com.allybros.superego.unit.ConstantValues;
+import com.allybros.superego.util.SessionManager;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.r0adkll.slidr.Slidr;
@@ -50,7 +51,7 @@ public class AddTestActivity extends AppCompatActivity {
         String url = "https://demo.allybros.com/superego/create.php";
 
         try {
-            postData = "session-token=" + URLEncoder.encode(SplashActivity.session_token, "UTF-8");
+            postData = "session-token=" + URLEncoder.encode(SessionManager.getInstance().getSessionToken(), "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -82,7 +83,7 @@ public class AddTestActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         Log.d("AddTest","Destroy");
-        LoadProfileTask.loadProfileTask(getApplicationContext(),SplashActivity.session_token, ConstantValues.getActionRefreshProfile());
+        LoadProfileTask.loadProfileTask(getApplicationContext(),SessionManager.getInstance().getSessionToken(), ConstantValues.getActionRefreshProfile());
         super.onDestroy();
     }
 }

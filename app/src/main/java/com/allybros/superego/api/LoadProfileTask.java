@@ -2,7 +2,6 @@ package com.allybros.superego.api;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -15,6 +14,7 @@ import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.unit.Score;
 import com.allybros.superego.unit.User;
+import com.allybros.superego.util.SessionManager;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -88,7 +88,7 @@ public class LoadProfileTask{
                                     scoresList.add(new Score(traitNo,value));
                                 }
                             }
-                            SplashActivity.setCurrentUser(new User(user_type,rated,credit,image,test_id,username,user_bio,email,scoresList));
+                            SessionManager.getInstance().setUser(new User(user_type,rated,credit,image,test_id,username,user_bio,email,scoresList));
 
                             if(action.equals(ConstantValues.getActionRefreshProfile())){
                                 intent.putExtra("status", ErrorCodes.SUCCESS);
@@ -101,10 +101,8 @@ public class LoadProfileTask{
                             break;
 
                         case ErrorCodes.SESSION_EXPIRED:
-                            SharedPreferences pref = context.getSharedPreferences(ConstantValues.getUserInformationPref(), context.MODE_PRIVATE);
-                            String uid= pref.getString("uid", "");
-                            String password=pref.getString("password","");
-                            LoginTask.loginTask(context,uid,password);
+                            SessionManager.getInstance().readInfo(context);
+                            LoginTask.loginTask(context, SessionManager.getInstance().getUserId(), SessionManager.getInstance().getPassword());
                             break;
                     }
                         

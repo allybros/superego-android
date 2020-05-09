@@ -7,8 +7,8 @@ import android.widget.Toast;
 
 import com.allybros.superego.activity.AddTestActivity;
 import com.allybros.superego.activity.LoginActivity;
-import com.allybros.superego.activity.SplashActivity;
 import com.allybros.superego.unit.ConstantValues;
+import com.allybros.superego.util.SessionManager;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -44,7 +44,7 @@ public class AddTestTask extends Activity {
             protected Map<String,String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
 
-                params.put("session-token", SplashActivity.session_token);
+                params.put("session-token", SessionManager.getInstance().getSessionToken());
                 //Log.d("sessionTokenAddTest",SplashActivity.session_token);
                 return params;
             }
