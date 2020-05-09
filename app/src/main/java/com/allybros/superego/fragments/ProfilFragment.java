@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -232,9 +233,8 @@ public class ProfilFragment extends Fragment {
             public void onClick(View v) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle("insightof.me");
-                builder.setMessage(getString(R.string.add_text));
-                
+                builder.setTitle(Html.fromHtml("<font color='#000000'>"+getString(R.string.app_name)+"</font>"));
+                builder.setMessage(Html.fromHtml("<font color='#000000'>"+getString(R.string.add_text)+"</font>"));
                 builder.setPositiveButton( getString(R.string.okey), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         if (rewardedAd.isLoaded()) {

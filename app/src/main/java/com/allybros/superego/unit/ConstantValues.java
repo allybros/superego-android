@@ -26,6 +26,7 @@ public class ConstantValues {
     private static final String ALL_TRAITS = "https://api.allybros.com/superego/traits.php";
     private static final String LOAD_PROFILE ="https://api.allybros.com/superego/load-profile.php";
     private static final String REGISTER ="https://api.allybros.com/superego/register.php";
+    private static final String CREATE_TEST = "https://demo.allybros.com/superego/create.php";
 
 
     //Broadcast-Reciever actions
@@ -36,6 +37,11 @@ public class ConstantValues {
     private static final String ACTION_SOCIAL_MEDIA_LOGIN = "social-media-login-status-share";
     private static final String ACTION_REFRESH_PROFILE = "profile-refresh-status-share";
     private static final String ACTION_REGISTER = "register-status-share";
+
+
+    public static String getCreateTest() {
+        return CREATE_TEST;
+    }
 
     public static String getActionRegister() {
         return ACTION_REGISTER;
