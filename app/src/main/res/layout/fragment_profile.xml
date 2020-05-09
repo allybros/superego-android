@@ -211,7 +211,7 @@
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="12dp"
                 android:background="@drawable/selector_profile_textview"
-                android:elevation="15dp"
+                android:elevation="4dp"
                 android:gravity="center"
                 android:padding="15dp"
                 android:text="man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?"
@@ -226,7 +226,8 @@
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
                 android:layout_marginStart="12dp"
-                android:layout_marginEnd="12dp">
+                android:layout_marginEnd="12dp"
+                android:elevation="4dp">
                 <com.google.android.gms.ads.AdView
                     android:id="@+id/bannerAdd"
                     android:layout_width="match_parent"
