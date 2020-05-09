@@ -3,7 +3,6 @@ package com.allybros.superego.api;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -46,13 +45,7 @@ public class LoginTask extends Activity {
 
                         case ErrorCodes.SUCCESS:
                             String session_token = jsonObj.getString("session_token");
-                            SharedPreferences pref = context.getSharedPreferences(ConstantValues.getUserInformationPref(), Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = pref.edit();
-                            editor.putString("uid",uid);
-                            editor.putString("password",password);
-                            editor.putString("session_token", session_token);
-                            Log.d("sessionTokenLogin",session_token);
-                            editor.commit();
+
                             intent.putExtra("status", status);
                             LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                             break;

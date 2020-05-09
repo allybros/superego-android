@@ -41,14 +41,18 @@ public class RegisterTask {
 
                     switch (status) {
                         case ErrorCodes.SUCCESS:
+
                             Intent intent1=new Intent(context, LoginActivity.class);
                             intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(intent1);
                             break;
+
                         default:
+
                             intent.putExtra("status", status);
                             LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                             break;
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

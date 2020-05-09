@@ -29,7 +29,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.allybros.superego.R;
 import com.allybros.superego.activity.AddTestActivity;
 import com.allybros.superego.activity.LoginActivity;
-import com.allybros.superego.activity.SplashActivity;
 import com.allybros.superego.api.EarnRewardTask;
 import com.allybros.superego.api.LoadProfileTask;
 import com.allybros.superego.api.LoginTask;
@@ -38,6 +37,7 @@ import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.unit.Score;
 import com.allybros.superego.util.CircledNetworkImageView;
 import com.allybros.superego.util.HelperMethods;
+import com.allybros.superego.util.SessionManager;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.ads.AdListener;
@@ -91,34 +91,34 @@ public class ProfilFragment extends Fragment {
         profileSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                LoadProfileTask.loadProfileTask(getContext(), SplashActivity.session_token, ConstantValues.getActionRefreshProfile());
+                LoadProfileTask.loadProfileTask(getContext(), SessionManager.getInstance().getSessionToken(), ConstantValues.getActionRefreshProfile());
             }
         });
     }
 
     private void loadProfile(){
-        tvUserbio.setText(SplashActivity.getCurrentUser().getUserBio());
-        tvUsername.setText(SplashActivity.getCurrentUser().getUsername());
-        btnBadgeCredit.setText(SplashActivity.getCurrentUser().getCredit() + getString(R.string.credit));
-        if(SplashActivity.getCurrentUser().getRated()>=5){
+        tvUserbio.setText(SessionManager.getInstance().getUser().getUserBio());
+        tvUsername.setText(SessionManager.getInstance().getUser().getUsername());
+        btnBadgeCredit.setText(SessionManager.getInstance().getUser().getCredit() + getString(R.string.credit));
+        if(SessionManager.getInstance().getUser().getRated()>=5){
             btnBadgeCredit.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.selector_credit));
             btnBadgeCredit.setEnabled(true);
             YoYo.with(Techniques.Bounce)
                     .duration(1000)
                     .repeat(5)
                     .playOn(getView().findViewById(R.id.badgeCredit));
-            if(SplashActivity.getCurrentUser().getRated()>=10){
+            if(SessionManager.getInstance().getUser().getRated()>=10){
                 btnBadgeRated.setText(String.valueOf(getString(R.string.complated)));
             }
         }
-        btnBadgeRated.setText(String.valueOf(SplashActivity.getCurrentUser().getRated()+getString(R.string.rated)));
-        Log.d("Test--> ",""+SplashActivity.getCurrentUser().getTestId());
-        if(SplashActivity.getCurrentUser().getTestId().equals("null")){
+        btnBadgeRated.setText(String.valueOf(SessionManager.getInstance().getUser().getRated()+getString(R.string.rated)));
+        Log.d("Test--> ",""+SessionManager.getInstance().getUser().getTestId());
+        if(SessionManager.getInstance().getUser().getTestId().equals("null")){
             tvProfileInfoCard.setText(R.string.empty_test);
         }else{
             tvProfileInfoCard.setText(R.string.sendTest);
         }
-        HelperMethods.imageLoadFromUrl(getContext(), ConstantValues.getAvatarUrl()+SplashActivity.getCurrentUser().getImage(), imageViewAvatar);
+        HelperMethods.imageLoadFromUrl(getContext(), ConstantValues.getAvatarUrl()+SessionManager.getInstance().getUser().getImage(), imageViewAvatar);
 
         setButtons();
         //BannerAdd Load
@@ -199,7 +199,7 @@ public class ProfilFragment extends Fragment {
             public void onClick(View v) {
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
-                String testUrl = String.format("https://insightof.me/%s", SplashActivity.getCurrentUser().getTestId());
+                String testUrl = String.format("https://insightof.me/%s", SessionManager.getInstance().getUser().getTestId());
                 String shareBody = getString(R.string.share_test_body, testUrl);
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, R.string.btn_share_test);
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
@@ -212,14 +212,14 @@ public class ProfilFragment extends Fragment {
             public void onClick(View v) {
             Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
             sharingIntent.setType("text/plain");
-            ArrayList<Score> scores = SplashActivity.getCurrentUser().getScores();
+            ArrayList<Score> scores = SessionManager.getInstance().getUser().getScores();
             StringBuilder resultsBuilder = new StringBuilder();
             for (int i = 0; i < scores.size(); i++) {
                 @SuppressLint("DefaultLocale")
                 String scoreLine = String.format("%d) %s\n", i+1, scores.get(i).getTraitName() );
                 resultsBuilder.append(scoreLine);
             }
-            String testUrl = String.format("https://insightof.me/%s", SplashActivity.getCurrentUser().getTestId());
+            String testUrl = String.format("https://insightof.me/%s", SessionManager.getInstance().getUser().getTestId());
             String shareBody = getString(R.string.share_results_body, resultsBuilder.toString(), testUrl);
             sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, R.string.btn_share_results);
             sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
@@ -253,7 +253,7 @@ public class ProfilFragment extends Fragment {
                                 public void onUserEarnedReward(@NonNull RewardItem reward) {
                                     // User earned reward.
                                     Log.d("ADD-Test","User earned reward.");
-                                    EarnRewardTask.EarnRewardTask(getContext(),SplashActivity.session_token);
+                                    EarnRewardTask.EarnRewardTask(getContext(), SessionManager.getInstance().getSessionToken());
                                     Log.d("Reward",""+reward.getAmount());
                                 }
                                 @Override
@@ -316,14 +316,14 @@ public class ProfilFragment extends Fragment {
                 public void onClick(View v) {
 
                     Log.d("Click","Clika");
-                    if(SplashActivity.getCurrentUser().getTestId().equals("null")){
+                    if(SessionManager.getInstance().getUser().getTestId().equals("null")){
                         Intent addTestIntent= new Intent(getContext(), AddTestActivity.class);
                         startActivity(addTestIntent);
                     }else{
                         Log.d("Click","Cliks");
                         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                         sharingIntent.setType("text/plain");
-                        String shareBody = "Beni nasıl görüyorsun? -->"+SplashActivity.getCurrentUser().getTestId();
+                        String shareBody = "Beni nasıl görüyorsun? -->"+SessionManager.getInstance().getUser().getTestId();
                         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, R.string.btn_share_results);
                         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
                         startActivity(Intent.createChooser(sharingIntent, "Share via"));
@@ -383,7 +383,7 @@ public class ProfilFragment extends Fragment {
                     builder1.setMessage(R.string.earned_reward);
                     builder1.setPositiveButton( getString(R.string.okey), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            LoadProfileTask.loadProfileTask(getContext(),SplashActivity.session_token,"load");
+                            LoadProfileTask.loadProfileTask(getContext(), SessionManager.getInstance().getSessionToken(),"load");
                         }
                     });
                     builder1.show();
@@ -414,6 +414,6 @@ public class ProfilFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(SplashActivity.getCurrentUser().getAvatar()!=null) imageViewAvatar.setImageBitmap(SplashActivity.getCurrentUser().getAvatar());
+        if(SessionManager.getInstance().getUser().getAvatar()!=null) imageViewAvatar.setImageBitmap(SessionManager.getInstance().getUser().getAvatar());
     }
 }
