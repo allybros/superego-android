@@ -39,7 +39,7 @@
     <string name="login">Giriş Yap</string>
     <string name="pleaseTryAgain">Lütfen tekrar deneyiniz.</string>
     <string name="register">Kayıt Ol</string>
-    <string name="aggrementLink"> Kullanım koşulları\'nı okudum ve kabul ediyorum.</string>
+    <string name="aggrementLink"><a href="https://insightof.me/conditions">Kullanım koşulları\'nı okudum ve kabul ediyorum.</a></string>
     <string name="username_must_fill">Kullanıcı alanı boş olamaz</string>
     <string name="session_suspend">Bu üyelik 3 dakika askıya alınmıştır.</string>
     <string name="close">Kapat</string>

@@ -14,8 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.R;
-import com.allybros.superego.api.SocialMediaSignInTask;
 import com.allybros.superego.api.LoginTask;
+import com.allybros.superego.api.SocialMediaSignInTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.daimajia.androidanimations.library.Techniques;
@@ -247,6 +247,8 @@ public class LoginActivity extends AppCompatActivity {
                     break;
 
                 case ErrorCodes.SUCCESS:
+
+
                     Intent intent1=new Intent(getApplicationContext(), SplashActivity.class);
                     intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent1);

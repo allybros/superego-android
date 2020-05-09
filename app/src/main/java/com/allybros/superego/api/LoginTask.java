@@ -9,6 +9,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
+import com.allybros.superego.util.SessionManager;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -25,7 +26,6 @@ import java.util.Map;
 
 public class LoginTask extends Activity {
     public static void loginTask(final Context context, final String uid, final String password) {
-
         final Intent intent = new Intent(ConstantValues.getActionLogin());
 
         RequestQueue queue = Volley.newRequestQueue(context);
@@ -45,7 +45,7 @@ public class LoginTask extends Activity {
 
                         case ErrorCodes.SUCCESS:
                             String session_token = jsonObj.getString("session_token");
-
+                            SessionManager.getInstance().writeInfoLocalStorage(uid,password,session_token,context);
                             intent.putExtra("status", status);
                             LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                             break;

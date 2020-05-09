@@ -2,6 +2,7 @@ package com.allybros.superego.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.User;
@@ -12,8 +13,6 @@ import com.allybros.superego.unit.User;
  * @author 0rcun
  */
 
-
-
 public class SessionManager {
 
     private static SessionManager instance;
@@ -22,35 +21,28 @@ public class SessionManager {
 
     private SessionManager(){}
 
-    public static synchronized SessionManager getInstance() {
-        if (instance == null) {
-            instance = new SessionManager();
-        }
-        return instance;
-    }
-
+    /**
+     * Reads userId, password and sessionToken from local storage and update SessionManager
+     * @param context required to use SharedPreferences functions
+     */
     public void readInfo(Context context){
-        /**
-         * Reads userId, password and sessionToken from local storage and update SessionManager
-         * @param context required to use SharedPreferences functions
-         *
-         */
         SharedPreferences pref = context.getSharedPreferences(ConstantValues.getUserInformationPref(), context.MODE_PRIVATE);
 
         SessionManager.getInstance().setSessionToken(pref.getString("session_token", ""));
         SessionManager.getInstance().setUserId(pref.getString("uid",""));
         SessionManager.getInstance().setPassword(pref.getString("password",""));
+        Log.d("SessinRead",SessionManager.getInstance().getSessionToken());
     }
 
+    /**
+     * Writes userId, password and sessionToken to local storage
+     * @param uid           required to verify the user
+     * @param password      required to verify the user
+     * @param session_token required to verify the user
+     * @param context       required to use SharedPreferences functions
+     *
+     */
     public void writeInfoLocalStorage(String uid, String password, String session_token,Context context){
-        /**
-         * Writes userId, password and sessionToken to local storage
-         * @param uid           required to verify the user
-         * @param password      required to verify the user
-         * @param session_token required to verify the user
-         * @param context       required to use SharedPreferences functions
-         *
-         */
         SharedPreferences pref = context.getSharedPreferences(ConstantValues.getUserInformationPref(), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         editor.putString("uid",uid);
@@ -90,4 +82,12 @@ public class SessionManager {
     public void setUserId(String userId) {
         this.userId = userId;
     }
+
+    public static synchronized SessionManager getInstance() {
+        if (instance == null) {
+            instance = new SessionManager();
+        }
+        return instance;
+    }
+
 }

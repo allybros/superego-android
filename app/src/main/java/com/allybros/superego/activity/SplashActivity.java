@@ -37,8 +37,8 @@ public class SplashActivity extends AppCompatActivity {
         SplashActivity.getAllTraits(getApplicationContext());
 
         SessionManager.getInstance().readInfo(getApplicationContext());
-
         if(!SessionManager.getInstance().getSessionToken().isEmpty()){
+
             LoadProfileTask.loadProfileTask(getApplicationContext(), SessionManager.getInstance().getSessionToken(),"load");
         }else{
             Intent intent=new Intent(this,LoginActivity.class);
