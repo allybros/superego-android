@@ -16,7 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.allybros.superego.R;
-import com.allybros.superego.fragments.ProfilFragment;
+import com.allybros.superego.fragments.ProfileFragment;
 import com.allybros.superego.fragments.ResultsFragment;
 import com.allybros.superego.util.PagerAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
@@ -67,7 +67,7 @@ public class UserPageActivity extends AppCompatActivity {
                         navigationResult.setIconTintList(ColorStateList.valueOf(getColor(R.color.grey)));
 
                         viewPager.setCurrentItem(0);
-                        fragment = new ProfilFragment();
+                        fragment = new ProfileFragment();
                         return true;
                     case R.id.navigation_results:
                         viewPager.setCurrentItem(1);
@@ -154,7 +154,7 @@ public class UserPageActivity extends AppCompatActivity {
 
     private void initViewPager(ViewPager viewPager) {
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new ProfilFragment(), getResources().getString(R.string.profile));
+        adapter.addFrag(new ProfileFragment(), getResources().getString(R.string.profile));
         adapter.addFrag(new ResultsFragment(), getResources().getString(R.string.results));
         viewPager.setAdapter(adapter);
     }
