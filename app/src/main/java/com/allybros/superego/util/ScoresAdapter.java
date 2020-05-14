@@ -61,4 +61,9 @@ public class ScoresAdapter extends ArrayAdapter<Score> {
 
         return convertView;
     }
+
+    @Override
+    public boolean isEnabled(int position) {
+        return false;
+    }
 }
