@@ -1,5 +1,6 @@
 package com.allybros.superego.api;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -46,7 +47,8 @@ public class LoadProfileTask{
          * */
 
         RequestQueue queue = Volley.newRequestQueue(context);
-        if(action.equals(ConstantValues.getActionRefreshProfile())) intent=new Intent(ConstantValues.getActionRefreshProfile());
+        if(action.equals(ConstantValues.getActionRefreshProfile())) intent = new Intent(ConstantValues.getActionRefreshProfile());
+        else if (action.equals(ConstantValues.ACTION_REFRESH_RESULTS)) intent = new Intent(ConstantValues.ACTION_REFRESH_RESULTS);
 
         final StringRequest jsonRequest=new StringRequest(Request.Method.POST, ConstantValues.getLoadProfile(), new Response.Listener<String>() {
             @Override
@@ -90,10 +92,12 @@ public class LoadProfileTask{
                             }
                             SessionManager.getInstance().setUser(new User(user_type,rated,credit,image,test_id,username,user_bio,email,scoresList));
 
-                            if(action.equals(ConstantValues.getActionRefreshProfile())){
+                            if(action.equals(ConstantValues.getActionRefreshProfile()) ||
+                                action.equals(ConstantValues.ACTION_REFRESH_RESULTS)){
                                 intent.putExtra("status", ErrorCodes.SUCCESS);
                                 LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-                            }else{
+                            }
+                            else{
                                 intent=new Intent(context, UserPageActivity.class);
                                 intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
                                 context.startActivity(intent);
