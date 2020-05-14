@@ -28,6 +28,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.allybros.superego.R;
 import com.allybros.superego.activity.AddTestActivity;
 import com.allybros.superego.activity.LoginActivity;
+import com.allybros.superego.activity.UserPageActivity;
 import com.allybros.superego.api.EarnRewardTask;
 import com.allybros.superego.api.LoadProfileTask;
 import com.allybros.superego.unit.ConstantValues;
@@ -81,7 +82,8 @@ public class ProfileFragment extends Fragment {
                     case ErrorCodes.SUCCESS:
                         Log.d("Profile refresh","Success");
                         profileSwipeLayout.setRefreshing(false);
-                        initProfileCard();
+                        UserPageActivity userPageActivity = (UserPageActivity) getActivity();
+                        userPageActivity.refreshFragments(0);
                         break;
                 }
             }
@@ -271,7 +273,7 @@ public class ProfileFragment extends Fragment {
         tvProfileInfoCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                shareResults();
+                shareTest();
             }
         });
     }

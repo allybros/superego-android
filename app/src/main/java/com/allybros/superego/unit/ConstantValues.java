@@ -37,6 +37,7 @@ public class ConstantValues {
     private static final String ACTION_SOCIAL_MEDIA_LOGIN = "social-media-login-status-share";
     private static final String ACTION_REFRESH_PROFILE = "profile-refresh-status-share";
     private static final String ACTION_REGISTER = "register-status-share";
+    public static final String ACTION_REFRESH_RESULTS = "refresh-results";
 
 
     public static String getCreateTest() {
