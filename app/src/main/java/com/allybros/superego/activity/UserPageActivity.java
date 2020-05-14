@@ -52,7 +52,7 @@ public class UserPageActivity extends AppCompatActivity {
      * Initializes view pager
      */
     private void initViewPager(){
-        viewPager = findViewById(R.id.simpleViewPager);
+        viewPager = findViewById(R.id.mainViewPager);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {}
