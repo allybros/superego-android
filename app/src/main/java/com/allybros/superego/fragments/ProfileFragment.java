@@ -26,7 +26,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.allybros.superego.R;
-import com.allybros.superego.activity.AddTestActivity;
+import com.allybros.superego.activity.WebViewActivity;
 import com.allybros.superego.activity.LoginActivity;
 import com.allybros.superego.activity.UserPageActivity;
 import com.allybros.superego.api.EarnRewardTask;
@@ -238,7 +238,9 @@ public class ProfileFragment extends Fragment {
         btnNewTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            Intent addTestIntent= new Intent(getContext(), AddTestActivity.class);
+            Intent addTestIntent = new Intent(getContext(), WebViewActivity.class);
+            addTestIntent.putExtra("url", ConstantValues.getCreateTest());
+            addTestIntent.putExtra("title", getString(R.string.title_activity_new_test));
             startActivity(addTestIntent);
             }
         });

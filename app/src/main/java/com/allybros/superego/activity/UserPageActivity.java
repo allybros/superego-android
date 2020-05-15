@@ -3,13 +3,11 @@ package com.allybros.superego.activity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -31,7 +29,6 @@ public class UserPageActivity extends AppCompatActivity {
     private BottomNavigationView navigation;
     private ArrayList<BottomNavigationItemView> navigationItems = new ArrayList<>();
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
