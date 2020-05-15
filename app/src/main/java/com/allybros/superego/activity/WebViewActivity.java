@@ -1,7 +1,5 @@
 package com.allybros.superego.activity;
 
-
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,68 +23,75 @@ import com.r0adkll.slidr.model.SlidrInterface;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
-public class AddTestActivity extends AppCompatActivity {
+public class WebViewActivity extends AppCompatActivity {
 
     private SlidrInterface slidr;
-    WebView addTestWebview;
-    private ActionBar toolbar;
-    private ImageView imageView;
+    private WebView webView;
+    private ImageView imageViewLogo;
+    private String url;
+    private String title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        String postData=null;
-        super.onCreate(savedInstanceState);
+        // Get intent extras, url and title
+        Intent intent = getIntent();
+        url = intent.getStringExtra("url");
+        title = intent.getStringExtra("title");
+        // Init layout
         setContentView(R.layout.activity_add_test);
-        addTestWebview = (WebView) findViewById(R.id.add_test_webview);
-        imageView= (ImageView) findViewById(R.id.logo);
-
-        addTestWebview.getSettings().setJavaScriptEnabled(true);
-        addTestWebview.getSettings().setGeolocationEnabled(true);
-        addTestWebview.setSoundEffectsEnabled(true);
-        addTestWebview.getSettings().setAppCacheEnabled(true);
-        addTestWebview.getSettings().setJavaScriptEnabled(true);
-        toolbar = getSupportActionBar();
-        toolbar.setTitle("Test Oluştur");
-
+        webView = findViewById(R.id.webView);
+        imageViewLogo = findViewById(R.id.imageViewLogo);
+        //Set title
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(title);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+        //Set webview
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setGeolocationEnabled(true);
+        webView.getSettings().setAppCacheEnabled(true);
+        webView.setSoundEffectsEnabled(true);
+        //Loading animation
         YoYo.with(Techniques.Bounce)
                 .duration(1000)
                 .repeat(50)
-                .playOn(findViewById(R.id.logo));
+                .playOn(findViewById(R.id.imageViewLogo));
 
-
+        String postData=null;
         try {
             postData = "session-token=" + URLEncoder.encode(SessionManager.getInstance().getSessionToken(), "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        addTestWebview.postUrl(ConstantValues.getCreateTest(),postData.getBytes());
-
+        //Load content
+        webView.postUrl(url, postData.getBytes());
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                imageView.setVisibility(View.INVISIBLE);
-                addTestWebview.setVisibility(View.VISIBLE);
+                imageViewLogo.setVisibility(View.INVISIBLE);
+                webView.setVisibility(View.VISIBLE);
             }
         }, 2000);
 
         slidr= Slidr.attach(this);
         slidr.unlock();
 
-
+        super.onCreate(savedInstanceState);
     }
 
     @Override
     public void onBackPressed() {
-        Intent intent=new Intent(AddTestActivity.this,UserPageActivity.class);
+        Intent intent=new Intent(WebViewActivity.this,UserPageActivity.class);
         startActivity(intent);
         finish();
     }
 
     @Override
     protected void onDestroy() {
-        Log.d("AddTest","Destroy");
+        Log.d("WebView Activity","Destroyed");
         LoadProfileTask.loadProfileTask(getApplicationContext(),SessionManager.getInstance().getSessionToken(), ConstantValues.getActionRefreshProfile());
         super.onDestroy();
     }
