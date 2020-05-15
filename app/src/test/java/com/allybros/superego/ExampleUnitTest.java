@@ -1,5 +1,4 @@
-package com.allybros.superego.elestirapp1;
-
+package com.allybros.superego;
 
 import org.junit.Test;
 
