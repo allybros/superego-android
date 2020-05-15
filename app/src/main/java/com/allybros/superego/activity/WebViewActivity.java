@@ -1,11 +1,14 @@
 package com.allybros.superego.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.ActionBar;
@@ -22,11 +25,16 @@ import com.r0adkll.slidr.model.SlidrInterface;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Map;
+import java.util.Objects;
+
+import javax.xml.transform.Result;
 
 public class WebViewActivity extends AppCompatActivity {
 
     private SlidrInterface slidr;
     private WebView webView;
+    private WebViewClient webViewClient;
     private ImageView imageViewLogo;
     private String url;
     private String title;
@@ -42,7 +50,7 @@ public class WebViewActivity extends AppCompatActivity {
         webView = findViewById(R.id.webView);
         imageViewLogo = findViewById(R.id.imageViewLogo);
         //Set title
-        ActionBar actionBar = getSupportActionBar();
+        final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle(title);
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -50,8 +58,31 @@ public class WebViewActivity extends AppCompatActivity {
         //Set webview
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setGeolocationEnabled(true);
-        webView.getSettings().setAppCacheEnabled(true);
+        webView.getSettings().setAppCacheEnabled(false);
         webView.setSoundEffectsEnabled(true);
+        //Set webview client
+        webViewClient = new WebViewClient(){
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                Uri responseUri = request.getUrl();
+                String url = request.getUrl().toString();
+                if (Objects.equals(responseUri.getScheme(), "intent")){
+                    // Valid intent scheme
+                    int startIndex = url.lastIndexOf("://");
+                    String actionName = url.substring(startIndex).split("\\?")[0];
+                    String status = responseUri.getQueryParameter("status");
+                    Log.d("WebView Result", actionName + ", "+ status);
+                    // Activity result
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra("status", status);
+                    setResult(RESULT_OK, resultIntent);
+                    finish();
+                }
+                return super.shouldOverrideUrlLoading(view, request);
+            }
+        };
+        webView.setWebViewClient(webViewClient);
+
         //Loading animation
         YoYo.with(Techniques.Bounce)
                 .duration(1000)
@@ -78,7 +109,6 @@ public class WebViewActivity extends AppCompatActivity {
 
         slidr= Slidr.attach(this);
         slidr.unlock();
-
         super.onCreate(savedInstanceState);
     }
 

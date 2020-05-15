@@ -1,4 +1,4 @@
-package com.allybros.superego.elestirapp1;
+package com.allybros.superego;
 
 
 import android.content.Context;
@@ -28,16 +28,4 @@ public class ExampleInstrumentedTest {
         assertEquals("com.elestirapp1.allybros.elestirapp1", appContext.getPackageName());
     }
 
-    @Test
-    public void loadProfileTest() {
-        Context appContext = InstrumentationRegistry.getTargetContext();
-        String sessionToken = "9885baf124eb9320c19732ba649d85d8";
-        LoadProfileTask.loadProfileTask(appContext, sessionToken);
-
-    }
-    @Test
-    public void loadTraits(){
-        Context appContext=InstrumentationRegistry.getTargetContext();
-        LoadProfileTask.getAllTraits(appContext);
-    }
 }

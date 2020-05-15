@@ -4,17 +4,21 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.allybros.superego.R;
 import com.allybros.superego.fragments.ProfileFragment;
 import com.allybros.superego.fragments.ResultsFragment;
+import com.allybros.superego.unit.ConstantValues;
+import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.util.PagerAdapter;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -22,14 +26,16 @@ import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class UserPageActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
     private BottomNavigationView navigation;
     private ArrayList<BottomNavigationItemView> navigationItems = new ArrayList<>();
+    private ProfileFragment profileFragment;
+    private ResultsFragment resultsFragment;
 
-    @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +49,18 @@ public class UserPageActivity extends AppCompatActivity {
         setViewPagerAdapter();
         initBottomNavigation();
         setActivePage(0); //Set active page as "Profile" initially
+    }
+
+    @Override
+    protected void onResume() {
+        //Return from webviews
+        Intent intent = getIntent();
+        if (intent != null) {
+            if (Objects.equals(intent.getAction(), ConstantValues.ACTION_CREATE_TEST)) {
+                Log.d("Create Test Intent", "Success");
+            }
+        }
+        super.onResume();
     }
 
     /**
@@ -68,8 +86,10 @@ public class UserPageActivity extends AppCompatActivity {
      */
     private void setViewPagerAdapter() {
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new ProfileFragment(), getResources().getString(R.string.profile));
-        adapter.addFrag(new ResultsFragment(), getResources().getString(R.string.results));
+        profileFragment = new ProfileFragment();
+        resultsFragment = new ResultsFragment();
+        adapter.addFrag(profileFragment, getResources().getString(R.string.profile));
+        adapter.addFrag(resultsFragment, getResources().getString(R.string.results));
         this.viewPager.setAdapter(adapter);
     }
 

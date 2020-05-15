@@ -65,6 +65,7 @@ public class ProfileFragment extends Fragment {
     private BroadcastReceiver rewardReceiver;
     //Current session
     private SessionManager sessionManager = SessionManager.getInstance();
+    private boolean newTest = false;
 
     public ProfileFragment() {
         // Set Up receivers
