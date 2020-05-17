@@ -45,11 +45,9 @@ import java.io.IOException;
 import static com.allybros.superego.util.HelperMethods.imageToString;
 
 public class SettingsActivity extends AppCompatActivity {
-    //TODO:USER_INFORMATION_PREF variable must move in unit/api
-    final String USER_INFORMATION_PREF="USER_INFORMATION_PREF";
     TextInputEditText username,email,information;
     TextInputLayout etUsername_text_input,etEmail_text_input,etInformation_text_input;
-    MaterialButton btLogout;   //TODO: Fotoğraf değiştirme işlemi yapılacak.
+    MaterialButton btLogout;
     private SlidrInterface slidr;
     Button btChangePhoto;
     CircledNetworkImageView settingsImage;
@@ -114,7 +112,7 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String session_token;
-                SharedPreferences pref = getApplicationContext().getSharedPreferences(USER_INFORMATION_PREF, Context.MODE_PRIVATE);
+                SharedPreferences pref = getApplicationContext().getSharedPreferences(ConstantValues.getUserInformationPref(), Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = pref.edit();
                 session_token=pref.getString("session_token","");
                 editor.clear();
