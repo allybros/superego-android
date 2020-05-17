@@ -199,7 +199,7 @@ public class EditProfileActivity extends AppCompatActivity {
                      new MaterialAlertDialogBuilder(EditProfileActivity.this)
                             .setTitle("insightof.me")
                             .setMessage(getApplicationContext().getString(R.string.session_expired))
-                            .setPositiveButton(getString(R.string.okey), new DialogInterface.OnClickListener() {
+                            .setPositiveButton(getString(R.string.action_ok), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
@@ -215,7 +215,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     new MaterialAlertDialogBuilder(EditProfileActivity.this)
                             .setTitle("insightof.me")
                             .setMessage(getApplicationContext().getString(R.string.usernameNotLegal))
-                            .setPositiveButton(getString(R.string.okey), null)
+                            .setPositiveButton(getString(R.string.action_ok), null)
                             .show();
                     break;
 
@@ -224,7 +224,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     new MaterialAlertDialogBuilder(EditProfileActivity.this)
                             .setTitle("insightof.me")
                             .setMessage(getApplicationContext().getString(R.string.usernameAlreadyExist))
-                            .setPositiveButton(getString(R.string.okey), null)
+                            .setPositiveButton(getString(R.string.action_ok), null)
                             .show();
                     break;
 
@@ -233,7 +233,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     new MaterialAlertDialogBuilder(EditProfileActivity.this)
                             .setTitle("insightof.me")
                             .setMessage(getApplicationContext().getString(R.string.emailNotLegal))
-                            .setPositiveButton(getString(R.string.okey), null)
+                            .setPositiveButton(getString(R.string.action_ok), null)
                             .show();
                     break;
 
@@ -242,7 +242,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     new MaterialAlertDialogBuilder(EditProfileActivity.this)
                             .setTitle("insightof.me")
                             .setMessage(getApplicationContext().getString(R.string.emailAlreadyExist))
-                            .setPositiveButton(getString(R.string.okey), null)
+                            .setPositiveButton(getString(R.string.action_ok), null)
                             .show();
                     break;
 
@@ -251,7 +251,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     new MaterialAlertDialogBuilder(EditProfileActivity.this)
                             .setTitle("insightof.me")
                             .setMessage(getApplicationContext().getString(R.string.processComplated))
-                            .setPositiveButton(getString(R.string.okey), new DialogInterface.OnClickListener() {
+                            .setPositiveButton(getString(R.string.action_ok), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     Log.d("Success","İşlem tamam patron");
@@ -264,7 +264,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     new MaterialAlertDialogBuilder(EditProfileActivity.this)
                             .setTitle("insightof.me")
                             .setMessage(getApplicationContext().getString(R.string.connection_error))
-                            .setPositiveButton(getString(R.string.okey), null)
+                            .setPositiveButton(getString(R.string.action_ok), null)
                             .show();
                     break;
 
@@ -287,7 +287,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     new MaterialAlertDialogBuilder(EditProfileActivity.this)
                             .setTitle("insightof.me")
                             .setMessage(getApplicationContext().getString(R.string.processComplated))
-                            .setPositiveButton(getString(R.string.okey), new DialogInterface.OnClickListener() {
+                            .setPositiveButton(getString(R.string.action_ok), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
 
@@ -300,7 +300,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     new MaterialAlertDialogBuilder(EditProfileActivity.this)
                             .setTitle("insightof.me")
                             .setMessage(getApplicationContext().getString(R.string.connection_error))
-                            .setPositiveButton(getString(R.string.okey), null)
+                            .setPositiveButton(getString(R.string.action_ok), null)
                             .show();
                     break;
 
@@ -309,7 +309,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     new MaterialAlertDialogBuilder(EditProfileActivity.this)
                             .setTitle("insightof.me")
                             .setMessage(getApplicationContext().getString(R.string.invalid_file_extension)+" "+getApplicationContext().getString(R.string.connection_error)+status)
-                            .setPositiveButton(getString(R.string.okey), null)
+                            .setPositiveButton(getString(R.string.action_ok), null)
                             .show();
                     break;
 
@@ -318,7 +318,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     new MaterialAlertDialogBuilder(EditProfileActivity.this)
                             .setTitle("insightof.me")
                             .setMessage(getApplicationContext().getString(R.string.invalid_file_type)+" "+getApplicationContext().getString(R.string.connection_error)+status)
-                            .setPositiveButton(getString(R.string.okey), null)
+                            .setPositiveButton(getString(R.string.action_ok), null)
                             .show();
                     break;
 
@@ -327,7 +327,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     new MaterialAlertDialogBuilder(EditProfileActivity.this)
                             .setTitle("insightof.me")
                             .setMessage(getApplicationContext().getString(R.string.invalid_file_size)+" "+getApplicationContext().getString(R.string.connection_error)+status)
-                            .setPositiveButton(getString(R.string.okey), null)
+                            .setPositiveButton(getString(R.string.action_ok), null)
                             .show();
                     break;
 
@@ -336,7 +336,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     new MaterialAlertDialogBuilder(EditProfileActivity.this)
                             .setTitle("insightof.me")
                             .setMessage(getApplicationContext().getString(R.string.connection_error)+" "+getApplicationContext().getString(R.string.connection_error)+status)
-                            .setPositiveButton(getString(R.string.okey), null)
+                            .setPositiveButton(getString(R.string.action_ok), null)
                             .show();
                     break;
 

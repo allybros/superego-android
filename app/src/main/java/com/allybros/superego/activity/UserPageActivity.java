@@ -154,8 +154,7 @@ public class UserPageActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.action_settings:
                 Intent intent1=new Intent(getApplicationContext(), SettingsActivity.class);
-                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                getApplicationContext().startActivity(intent1);
+                startActivity(intent1);
                 break;
         }
         return super.onOptionsItemSelected(item);

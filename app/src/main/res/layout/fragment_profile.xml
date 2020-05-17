@@ -124,9 +124,10 @@
                             android:textAllCaps="false"
                             android:background="@drawable/passive_credit_bg"
                             android:elevation="4dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
                             android:enabled="false"
                             android:drawableStart="@drawable/baseline_account_balance_wallet_white_18"
-                            android:padding="8dp"
                             android:text="Credit" />
 
                     </LinearLayout>
@@ -162,6 +163,7 @@
                     android:layout_marginEnd="4dp"
                     android:layout_weight="0.33"
                     android:elevation="4dp"
+
                     android:background="@drawable/v_selector_btn_new_test"
                     android:drawableTop="@drawable/outline_add_white_36"
                     android:paddingTop="12dp"
