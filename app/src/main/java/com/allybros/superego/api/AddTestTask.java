@@ -45,7 +45,6 @@ public class AddTestTask extends Activity {
                 Map<String, String> params = new HashMap<String, String>();
 
                 params.put("session-token", SessionManager.getInstance().getSessionToken());
-                //Log.d("sessionTokenAddTest",SplashActivity.session_token);
                 return params;
             }
         };

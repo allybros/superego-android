@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.allybros.superego.R;
 import com.allybros.superego.api.LoadProfileTask;
+import com.allybros.superego.api.SearchTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.Trait;
 import com.allybros.superego.util.SessionManager;
@@ -35,10 +36,10 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         SplashActivity.getAllTraits(getApplicationContext());
+        SearchTask.searchTask(getApplicationContext(),"test");
 
         SessionManager.getInstance().readInfo(getApplicationContext());
         if(!SessionManager.getInstance().getSessionToken().isEmpty()){
-
             LoadProfileTask.loadProfileTask(getApplicationContext(), SessionManager.getInstance().getSessionToken(),"load");
         }else{
             Intent intent=new Intent(this,LoginActivity.class);
