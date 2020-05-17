@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="16dp"
-    android:paddingBottom="55dp"
     android:background="@color/fragmentBackground"
     tools:context=".fragments.ResultsFragment" >
 

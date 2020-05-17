@@ -3,44 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/logoColor"
+    android:background="@color/fragmentBackground"
     android:layout_height="match_parent"
-    tools:context=".activity.AddTestActivity">
-<!--    <com.vlad1m1r.lemniscate.BernoullisBowProgressView
-        android:id="@+id/progress_circular"
-        android:visibility="visible"
-        android:layout_width="wrap_content"
-        app:duration="1430"
-        app:precision="1000"
-        app:hasHole="true"
-        app:lineColor="@color/buttonPublishColor"
-        app:maxLineLength="0.8"
-        app:minLineLength="0.4"
-        app:sizeMultiplier="1"
-        app:strokeWidth="1dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>-->
+    tools:context=".activity.WebViewActivity">
+
     <ImageView
-        android:id="@+id/logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/logo"
+        android:id="@+id/imageViewLogo"
+        android:layout_width="180dp"
+        android:layout_height="60dp"
+        android:src="@drawable/brand_grey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></ImageView>
-        <WebView
-            android:id="@+id/add_test_webview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,7 +5,6 @@
     android:id="@+id/result_frame_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="55dp"
     android:background="@color/fragmentBackground"
     tools:context=".fragments.ResultsFragment" >
 
