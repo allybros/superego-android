@@ -28,6 +28,7 @@ public class ConstantValues {
     private static final String REGISTER ="https://api.allybros.com/superego/register.php";
     private static final String CREATE_TEST = "https://demo.allybros.com/superego/create.php";
     private static final String SEARCH_URL = "https://api.allybros.com/superego/search.php?q=";
+    private static final String PARAM_TEST = "https://api.allybros.com/superego/param_test.php";
 
 
     //Broadcast-Reciever actions
@@ -48,6 +49,10 @@ public class ConstantValues {
 
     public static String getSearchUrl() {
         return SEARCH_URL;
+    }
+
+    public static String getParamTest() {
+        return PARAM_TEST;
     }
 
     public static String getActionRefreshResults() {
