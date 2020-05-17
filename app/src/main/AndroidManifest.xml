@@ -16,15 +16,16 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.SettingsActivity"
+            android:theme="@style/AppTheme.TransparentBackground"
             android:label="@string/activity_label_options"/>
         <activity
             android:name=".activity.WebViewActivity"
             android:parentActivityName=".activity.UserPageActivity"
-            android:theme="@style/AppTheme.AddActivityTheme" />
+            android:theme="@style/AppTheme.TransparentBackground" />
         <activity
             android:name=".activity.EditProfileActivity"
             android:parentActivityName=".activity.UserPageActivity"
-            android:theme="@style/AppTheme.AddActivityTheme"
+            android:theme="@style/AppTheme.TransparentBackground"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.LoginActivity"
