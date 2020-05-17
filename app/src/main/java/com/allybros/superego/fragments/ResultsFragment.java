@@ -1,19 +1,29 @@
 package com.allybros.superego.fragments;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.allybros.superego.R;
 import com.allybros.superego.activity.UserPageActivity;
+import com.allybros.superego.api.LoadProfileTask;
+import com.allybros.superego.unit.ConstantValues;
+import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.unit.User;
 import com.allybros.superego.util.ScoresAdapter;
 import com.allybros.superego.util.SessionManager;
@@ -23,6 +33,7 @@ public class ResultsFragment extends Fragment {
     private ListView listViewTraits;
     private SwipeRefreshLayout swipeLayout;
     private User currentUser;
+    private BroadcastReceiver resultsRefreshReceiver;
 
     //3 states of Result screen represented in an Enum
     private enum State {
@@ -31,6 +42,29 @@ public class ResultsFragment extends Fragment {
 
     public ResultsFragment() {
         this.currentUser = SessionManager.getInstance().getUser();
+        //Set up refresh receiver
+        resultsRefreshReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                int status = intent.getIntExtra("status",0);
+                swipeLayout.setRefreshing(false);
+
+                //Update fragments
+                UserPageActivity pageActivity = (UserPageActivity) getActivity();
+                if (pageActivity != null) pageActivity.refreshFragments(1);
+
+                if (status == ErrorCodes.SUCCESS) {
+                    Log.d("Profile refresh", "Success");
+                    swipeLayout.setRefreshing(false);
+                } else {
+                    swipeLayout.setRefreshing(false); //Last
+                    Toast.makeText(getContext(), getContext().getString(R.string.connection_error), Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+        //TODO: Replace when new API package is developed
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(resultsRefreshReceiver,
+                new IntentFilter(ConstantValues.ACTION_REFRESH_RESULTS));
     }
 
     @Override
@@ -60,12 +94,10 @@ public class ResultsFragment extends Fragment {
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                //Update fragments
-                UserPageActivity pageActivity = (UserPageActivity) getActivity();
-                if (pageActivity != null) {
-                    pageActivity.updateFragments(1);
-                }
-                swipeLayout.setRefreshing(false);
+            //Start load task
+            LoadProfileTask.loadProfileTask(getContext(),
+                SessionManager.getInstance().getSessionToken(),
+                ConstantValues.ACTION_REFRESH_RESULTS);
             }
         });
 
@@ -110,4 +142,9 @@ public class ResultsFragment extends Fragment {
             return State.NONE;
     }
 
+    @Override
+    public void onDestroy() {
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(resultsRefreshReceiver);
+        super.onDestroy();
+    }
 }

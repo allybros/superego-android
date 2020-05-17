@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
-import com.allybros.superego.activity.AddTestActivity;
+import com.allybros.superego.activity.WebViewActivity;
 import com.allybros.superego.activity.LoginActivity;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.util.SessionManager;
@@ -31,7 +31,7 @@ public class AddTestTask extends Activity {
         StringRequest jsonRequest=new StringRequest(Request.Method.POST, ConstantValues.getAddTestUrl(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Intent addTestIntent= new Intent(context, AddTestActivity.class);
+                Intent addTestIntent= new Intent(context, WebViewActivity.class);
                 context.startActivity(addTestIntent);
             }
         }, new Response.ErrorListener() {
