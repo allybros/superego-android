@@ -3,12 +3,12 @@
 
     <item
         android:id="@+id/navigation_profile"
-        android:icon="@drawable/outline_group_white_24dp"
+        android:icon="@drawable/baseline_person_24"
         android:state_checked="true"
         android:title="@string/profile" />
     <item
         android:id="@+id/navigation_results"
-        android:icon="@drawable/outline_format_align_justify_white_24dp"
+        android:icon="@drawable/baseline_view_list_24"
         android:checked="false"
         android:title="@string/results" />
 </menu>

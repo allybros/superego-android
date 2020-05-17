@@ -26,8 +26,9 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.allybros.superego.R;
-import com.allybros.superego.activity.AddTestActivity;
+import com.allybros.superego.activity.WebViewActivity;
 import com.allybros.superego.activity.LoginActivity;
+import com.allybros.superego.activity.UserPageActivity;
 import com.allybros.superego.api.EarnRewardTask;
 import com.allybros.superego.api.LoadProfileTask;
 import com.allybros.superego.unit.ConstantValues;
@@ -64,6 +65,7 @@ public class ProfileFragment extends Fragment {
     private BroadcastReceiver rewardReceiver;
     //Current session
     private SessionManager sessionManager = SessionManager.getInstance();
+    private boolean newTest = false;
 
     public ProfileFragment() {
         // Set Up receivers
@@ -81,7 +83,8 @@ public class ProfileFragment extends Fragment {
                     case ErrorCodes.SUCCESS:
                         Log.d("Profile refresh","Success");
                         profileSwipeLayout.setRefreshing(false);
-                        initProfileCard();
+                        UserPageActivity userPageActivity = (UserPageActivity) getActivity();
+                        userPageActivity.refreshFragments(0);
                         break;
                 }
             }
@@ -236,7 +239,9 @@ public class ProfileFragment extends Fragment {
         btnNewTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            Intent addTestIntent= new Intent(getContext(), AddTestActivity.class);
+            Intent addTestIntent = new Intent(getContext(), WebViewActivity.class);
+            addTestIntent.putExtra("url", ConstantValues.getCreateTest());
+            addTestIntent.putExtra("title", getString(R.string.title_activity_new_test));
             startActivity(addTestIntent);
             }
         });
@@ -271,7 +276,7 @@ public class ProfileFragment extends Fragment {
         tvProfileInfoCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                shareResults();
+                shareTest();
             }
         });
     }
