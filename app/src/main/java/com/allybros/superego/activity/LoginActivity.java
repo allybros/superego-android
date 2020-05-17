@@ -234,7 +234,7 @@ public class LoginActivity extends AppCompatActivity {
                     AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
                     builder.setTitle("insightof.me");
                     builder.setMessage(getString(R.string.session_suspend));
-                    builder.setPositiveButton( getString(R.string.okey), new DialogInterface.OnClickListener() {
+                    builder.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             btLogin.setEnabled(true);
                             YoYo.with(Techniques.FadeInDown)
@@ -260,7 +260,7 @@ public class LoginActivity extends AppCompatActivity {
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(LoginActivity.this);
                     builder1.setTitle("insightof.me");
                     builder1.setMessage(getString(R.string.checkConnection));
-                    builder1.setPositiveButton( getString(R.string.okey), new DialogInterface.OnClickListener() {
+                    builder1.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             btLogin.setEnabled(true);
                             YoYo.with(Techniques.FadeInDown)
@@ -288,7 +288,7 @@ public class LoginActivity extends AppCompatActivity {
                     AlertDialog.Builder builder2 = new AlertDialog.Builder(LoginActivity.this);
                     builder2.setTitle("insightof.me");
                     builder2.setMessage(R.string.sysfail_login_social_media);
-                    builder2.setPositiveButton( getString(R.string.okey), new DialogInterface.OnClickListener() {
+                    builder2.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {}
                     });
                     builder2.show();
@@ -298,7 +298,7 @@ public class LoginActivity extends AppCompatActivity {
                     AlertDialog.Builder builder3 = new AlertDialog.Builder(LoginActivity.this);
                     builder3.setTitle("insightof.me");
                     builder3.setMessage(R.string.social_media_email_empty);
-                    builder3.setPositiveButton( getString(R.string.okey), new DialogInterface.OnClickListener() {
+                    builder3.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {}
                     });
                     builder3.show();
@@ -307,7 +307,7 @@ public class LoginActivity extends AppCompatActivity {
                     AlertDialog.Builder builder4 = new AlertDialog.Builder(LoginActivity.this);
                     builder4.setTitle("insightof.me");
                     builder4.setMessage(R.string.social_media_email_not_legal);
-                    builder4.setPositiveButton( getString(R.string.okey), new DialogInterface.OnClickListener() {
+                    builder4.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {}
                     });
                     builder4.show();
@@ -316,7 +316,7 @@ public class LoginActivity extends AppCompatActivity {
                     AlertDialog.Builder builder5 = new AlertDialog.Builder(LoginActivity.this);
                     builder5.setTitle("insightof.me");
                     builder5.setMessage(R.string.social_media_username_not_legal);
-                    builder5.setPositiveButton( getString(R.string.okey), new DialogInterface.OnClickListener() {
+                    builder5.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {}
                     });
                     builder5.show();
@@ -334,7 +334,7 @@ public class LoginActivity extends AppCompatActivity {
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(LoginActivity.this);
                     builder1.setTitle("insightof.me");
                     builder1.setMessage(getString(R.string.checkConnection));
-                    builder1.setPositiveButton( getString(R.string.okey), new DialogInterface.OnClickListener() {
+                    builder1.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {}
                     });
                     builder1.show();

@@ -7,287 +7,298 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        android:orientation="vertical"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/imageView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:context=".activity.SettingsActivity">
+        app:layout_constraintVertical_bias="0.0"
+        android:background="@color/fragmentBackground">
 
-        <FrameLayout
-            android:id="@+id/cardBtnEditProfile"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipToPadding="false"
-            android:padding="12dp">
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:context=".activity.SettingsActivity">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/selector_card"
-                android:clickable="true"
-                android:elevation="4dp"
-                android:focusable="true"
+                android:clipToPadding="false"
                 android:padding="12dp">
 
-                <TextView
-                    android:id="@+id/tvEditProfile"
-                    android:layout_width="wrap_content"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cardBtnEditProfile"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@string/option_edit_profile"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@+id/ivEditProfile"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:background="@drawable/selector_card"
+                    android:clickable="true"
+                    android:elevation="4dp"
+                    android:focusable="true"
+                    android:padding="12dp">
 
-                <TextView
-                    android:id="@+id/tvEditProfileDesc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@string/option_edit_profile_desc"
-                    android:textColor="@color/grey"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@+id/ivEditProfile"
-                    app:layout_constraintTop_toBottomOf="@+id/tvEditProfile" />
+                    <TextView
+                        android:id="@+id/tvEditProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/option_edit_profile"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/ivEditProfile"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/ivEditProfile"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginTop="4dp"
-                    android:tint="@color/materialPurple"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/v_account_edit" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </FrameLayout>
+                    <TextView
+                        android:id="@+id/tvEditProfileDesc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/option_edit_profile_desc"
+                        android:textColor="@color/grey"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/ivEditProfile"
+                        app:layout_constraintTop_toBottomOf="@+id/tvEditProfile" />
 
-        <FrameLayout
-            android:id="@+id/cardBtnPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
-            android:paddingBottom="12dp">
+                    <ImageView
+                        android:id="@+id/ivEditProfile"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_marginTop="4dp"
+                        android:tint="@color/materialPurple"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/v_account_edit" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </FrameLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/selector_card"
-                android:clickable="true"
-                android:elevation="4dp"
-                android:focusable="true"
-                android:padding="12dp">
+                android:clipToPadding="false"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="12dp">
 
-                <TextView
-                    android:id="@+id/tvPassword"
-                    android:layout_width="wrap_content"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cardBtnPassword"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@string/option_password"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@+id/ivPassword"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:background="@drawable/selector_card"
+                    android:clickable="true"
+                    android:elevation="4dp"
+                    android:focusable="true"
+                    android:padding="12dp">
 
-                <TextView
-                    android:id="@+id/tvPasswordDesc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@string/option_password_desc"
-                    android:textColor="@color/grey"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@+id/ivPassword"
-                    app:layout_constraintTop_toBottomOf="@+id/tvPassword" />
+                    <TextView
+                        android:id="@+id/tvPassword"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/option_password"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/ivPassword"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/ivPassword"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginTop="4dp"
-                    android:tint="@color/materialPurple"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/v_account_key" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </FrameLayout>
+                    <TextView
+                        android:id="@+id/tvPasswordDesc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/option_password_desc"
+                        android:textColor="@color/grey"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/ivPassword"
+                        app:layout_constraintTop_toBottomOf="@+id/tvPassword" />
 
-        <FrameLayout
-            android:id="@+id/cardBtnAbout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
-            android:paddingBottom="12dp">
+                    <ImageView
+                        android:id="@+id/ivPassword"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_marginTop="4dp"
+                        android:tint="@color/materialPurple"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/v_account_key" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </FrameLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/selector_card"
-                android:clickable="true"
-                android:elevation="4dp"
-                android:focusable="true"
-                android:padding="12dp">
+                android:clipToPadding="false"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="12dp">
 
-                <TextView
-                    android:id="@+id/tvAbout"
-                    android:layout_width="wrap_content"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cardBtnAbout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@string/option_about"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@+id/ivAbout"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:background="@drawable/selector_card"
+                    android:clickable="true"
+                    android:elevation="4dp"
+                    android:focusable="true"
+                    android:padding="12dp">
 
-                <TextView
-                    android:id="@+id/tvAboutDesc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@string/option_about_desc"
-                    android:textColor="@color/grey"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@+id/ivAbout"
-                    app:layout_constraintTop_toBottomOf="@+id/tvAbout" />
+                    <TextView
+                        android:id="@+id/tvAbout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/option_about"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/ivAbout"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/ivAbout"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginTop="4dp"
-                    android:minWidth="36dp"
-                    android:minHeight="36dp"
-                    android:tint="@color/materialPurple"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/v_information_variant" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </FrameLayout>
+                    <TextView
+                        android:id="@+id/tvAboutDesc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/option_about_desc"
+                        android:textColor="@color/grey"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/ivAbout"
+                        app:layout_constraintTop_toBottomOf="@+id/tvAbout" />
 
-        <FrameLayout
-            android:id="@+id/cardBtnLicenses"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
-            android:paddingBottom="12dp">
+                    <ImageView
+                        android:id="@+id/ivAbout"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_marginTop="4dp"
+                        android:minWidth="36dp"
+                        android:minHeight="36dp"
+                        android:tint="@color/materialPurple"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/v_information_variant" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </FrameLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/selector_card"
-                android:clickable="true"
-                android:elevation="4dp"
-                android:focusable="true"
-                android:padding="12dp">
+                android:clipToPadding="false"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="12dp">
 
-                <TextView
-                    android:id="@+id/tvLicenses"
-                    android:layout_width="wrap_content"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cardBtnLicenses"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@string/option_licenses"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@+id/ivLicenses"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:background="@drawable/selector_card"
+                    android:clickable="true"
+                    android:elevation="4dp"
+                    android:focusable="true"
+                    android:padding="12dp">
 
-                <TextView
-                    android:id="@+id/tvLicensesDesc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@string/option_licenses_desc"
-                    android:textColor="@color/grey"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@+id/ivLicenses"
-                    app:layout_constraintTop_toBottomOf="@+id/tvLicenses" />
+                    <TextView
+                        android:id="@+id/tvLicenses"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/option_licenses"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/ivLicenses"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/ivLicenses"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:minWidth="36dp"
-                    android:minHeight="36dp"
-                    android:tint="@color/materialPurple"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/v_scale_balance" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </FrameLayout>
+                    <TextView
+                        android:id="@+id/tvLicensesDesc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/option_licenses_desc"
+                        android:textColor="@color/grey"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/ivLicenses"
+                        app:layout_constraintTop_toBottomOf="@+id/tvLicenses" />
 
-        <FrameLayout
-            android:id="@+id/cardBtnSingOut"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
-            android:paddingBottom="12dp">
+                    <ImageView
+                        android:id="@+id/ivLicenses"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:minWidth="36dp"
+                        android:minHeight="36dp"
+                        android:tint="@color/materialPurple"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/v_scale_balance" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </FrameLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/selector_card"
-                android:clickable="true"
-                android:elevation="4dp"
-                android:focusable="true"
-                android:padding="12dp">
+                android:clipToPadding="false"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="12dp">
 
-                <TextView
-                    android:id="@+id/tvSignOut"
-                    android:layout_width="wrap_content"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cardBtnSingOut"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@string/option_sign_out"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@+id/ivSignOut"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:background="@drawable/selector_card"
+                    android:clickable="true"
+                    android:elevation="4dp"
+                    android:focusable="true"
+                    android:padding="12dp">
 
-                <TextView
-                    android:id="@+id/tvSignOutDesc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@string/option_sign_out_desc"
-                    android:textColor="@color/grey"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@+id/ivSignOut"
-                    app:layout_constraintTop_toBottomOf="@+id/tvSignOut" />
+                    <TextView
+                        android:id="@+id/tvSignOut"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/option_sign_out"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/ivSignOut"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/ivSignOut"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:minWidth="36dp"
-                    android:minHeight="36dp"
-                    android:tint="@color/materialPurple"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/v_logout_variant" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </FrameLayout>
+                    <TextView
+                        android:id="@+id/tvSignOutDesc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/option_sign_out_desc"
+                        android:textColor="@color/grey"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/ivSignOut"
+                        app:layout_constraintTop_toBottomOf="@+id/tvSignOut" />
 
-    </LinearLayout>
+                    <ImageView
+                        android:id="@+id/ivSignOut"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:minWidth="36dp"
+                        android:minHeight="36dp"
+                        android:tint="@color/materialPurple"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/v_logout_variant" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </FrameLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
 
     <TextView
         android:id="@+id/textView7"
@@ -295,18 +306,20 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="83dp"
         android:layout_marginEnd="84dp"
-        android:layout_marginBottom="25dp"
+        android:layout_marginBottom="12dp"
         android:text="@string/with_version_from"
+        android:textSize="11sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="160dp"
-        android:layout_height="36dp"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
         android:layout_marginStart="125dp"
         android:layout_marginEnd="126dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintBottom_toTopOf="@+id/textView7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

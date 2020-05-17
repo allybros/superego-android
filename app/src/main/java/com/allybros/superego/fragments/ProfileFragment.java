@@ -97,10 +97,10 @@ public class ProfileFragment extends Fragment {
                 Log.d("receiver", "Got message: " + status);
                 switch (status){
                     case ErrorCodes.SYSFAIL:
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.SegoAlertDialog);
                         builder.setTitle("insightof.me");
                         builder.setMessage(R.string.reward_earned_sysfail);
-                        builder.setPositiveButton( getString(R.string.okey), new DialogInterface.OnClickListener() {
+                        builder.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                             Intent intent = new Intent(getContext(), LoginActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -111,10 +111,10 @@ public class ProfileFragment extends Fragment {
                         break;
 
                     case ErrorCodes.SUCCESS:
-                        AlertDialog.Builder builder1 = new AlertDialog.Builder(getContext());
+                        AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity(), R.style.SegoAlertDialog);
                         builder1.setTitle("insightof.me");
                         builder1.setMessage(R.string.earned_reward);
-                        builder1.setPositiveButton( getString(R.string.okey), new DialogInterface.OnClickListener() {
+                        builder1.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 LoadProfileTask.loadProfileTask(getContext(), sessionManager.getSessionToken(),"load");
                             }
@@ -123,10 +123,10 @@ public class ProfileFragment extends Fragment {
                         break;
 
                     case ErrorCodes.SESSION_EXPIRED:
-                        AlertDialog.Builder builder2 = new AlertDialog.Builder(getContext());
+                        AlertDialog.Builder builder2 = new AlertDialog.Builder(getActivity(), R.style.SegoAlertDialog);
                         builder2.setTitle("insightof.me");
                         builder2.setMessage(R.string.reward_earned_session_expired);
-                        builder2.setPositiveButton( getString(R.string.okey), new DialogInterface.OnClickListener() {
+                        builder2.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {}
                         });
                         builder2.show();
@@ -199,10 +199,10 @@ public class ProfileFragment extends Fragment {
         btnBadgeCredit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle(Html.fromHtml("<font color='#000000'>"+getString(R.string.app_name)+"</font>"));
-                builder.setMessage(Html.fromHtml("<font color='#000000'>"+getString(R.string.add_text)+"</font>"));
-                builder.setPositiveButton(getString(R.string.okey), new DialogInterface.OnClickListener() {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.SegoAlertDialog);
+                builder.setTitle(Html.fromHtml(getString(R.string.app_name)));
+                builder.setMessage(Html.fromHtml(getString(R.string.add_text)));
+                builder.setPositiveButton(getString(R.string.action_ok), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         if (rewardedAd.isLoaded()) {
                             showRewardedAd();
