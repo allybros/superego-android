@@ -4,7 +4,7 @@
     <string name="facebook_app_id">278557299968701</string>
     <string name="fb_login_protocol_scheme">fb278557299968701</string>
 
-    <string name="title_activity_profile_page">ProfilePage</string>
+    <string name="activity_label_profile">ProfilePage</string>
     <string name="title_activity_register_page">RegisterPage</string>
     <string name="title_activity_new_test">Test Oluştur</string>
     <string name="loginFailed">Giriş Yapılamadı. Tekrar deneyiniz.</string>
@@ -75,4 +75,16 @@
     <string name="info_title_waiting_rates">Değerlendirilmelerin Bekleniyor...</string>
     <string name="prompt_email">E-Posta</string>
     <string name="prompt_username">Kullanıcı Adı</string>
+    <string name="with_version_from">v.0.5 (Beta) From Ally Bros Corporation</string>
+    <string name="option_edit_profile">Profili Düzenle</string>
+    <string name="option_edit_profile_desc">Kullanıcı adın, açıklaman gibi bilgileri değiştir.</string>
+    <string name="option_password">Giriş ve Güvenlik</string>
+    <string name="option_password_desc">Parolanı veya giriş yöntemini değiştir.</string>
+    <string name="option_about">Hakkında</string>
+    <string name="option_about_desc">insightof.me hakkında detaylı bilgi al.</string>
+    <string name="option_licenses">Lisans Bilgileri</string>
+    <string name="option_licenses_desc">Yararlandığımız yazılım lisanslarını incele.</string>
+    <string name="option_sign_out">Oturumu Kapat</string>
+    <string name="option_sign_out_desc">Yararlandığımız yazılım lisanslarını incele.</string>
+    <string name="activity_label_options">Seçenekler</string>
 </resources>
