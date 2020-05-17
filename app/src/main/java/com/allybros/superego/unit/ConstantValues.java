@@ -27,6 +27,7 @@ public class ConstantValues {
     private static final String LOAD_PROFILE ="https://api.allybros.com/superego/load-profile.php";
     private static final String REGISTER ="https://api.allybros.com/superego/register.php";
     private static final String CREATE_TEST = "https://demo.allybros.com/superego/create.php";
+    private static final String SEARCH_URL = "https://api.allybros.com/superego/search.php?q=";
 
 
     //Broadcast-Reciever actions
@@ -37,8 +38,25 @@ public class ConstantValues {
     private static final String ACTION_SOCIAL_MEDIA_LOGIN = "social-media-login-status-share";
     private static final String ACTION_REFRESH_PROFILE = "profile-refresh-status-share";
     private static final String ACTION_REGISTER = "register-status-share";
-    public static final String ACTION_REFRESH_RESULTS = "refresh-results";
-    public static final String ACTION_CREATE_TEST = "create_test";
+    private static final String ACTION_REFRESH_RESULTS = "refresh-results";
+    private static final String ACTION_CREATE_TEST = "create_test";
+    private static final String ACTION_SEARCH = "result-query";
+
+    public static String getActionSearch() {
+        return ACTION_SEARCH;
+    }
+
+    public static String getSearchUrl() {
+        return SEARCH_URL;
+    }
+
+    public static String getActionRefreshResults() {
+        return ACTION_REFRESH_RESULTS;
+    }
+
+    public static String getActionCreateTest() {
+        return ACTION_CREATE_TEST;
+    }
 
     public static String getCreateTest() {
         return CREATE_TEST;
