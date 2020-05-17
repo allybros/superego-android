@@ -9,12 +9,16 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.allybros.superego.R;
 import com.allybros.superego.api.LogoutTask;
+import com.google.android.material.snackbar.Snackbar;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrInterface;
 
@@ -57,34 +61,30 @@ public class SettingsActivity extends AppCompatActivity {
         optionSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder =new AlertDialog.Builder(SettingsActivity.this, R.style.SegoAlertDialog);
-                builder.setTitle("Oturumu Sonlandır")
-                    .setMessage("Geçerli oturmunu sonlandırmak istediğine emin misin?")
-                    .setPositiveButton(R.string.action_yes, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            //Sign Out
-                            String session_token;
-                            SharedPreferences pref = getApplicationContext().getSharedPreferences(USER_INFORMATION_PREF, Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = pref.edit();
-                            session_token = pref.getString("session_token","");
-                            editor.clear().apply();
-
-                            LogoutTask.logoutTask(getApplicationContext(), session_token);
-                            if (LoginActivity.mGoogleSignInClient != null)
-                                LoginActivity.mGoogleSignInClient.signOut();
-
-                            Intent intent=new Intent(getApplicationContext(), SplashActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            getApplicationContext().startActivity(intent);
-                            finish();
-                        }
-                    })
-                    .setNegativeButton(R.string.action_no, null)
-                    .setCancelable(true).show();
+                logout();
             }
         });
 
+        optionChangePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "On Progress", 1000).show();
+            }
+        });
+
+        optionAbout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showAboutDialog();
+            }
+        });
+
+        optionLicenses.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showLicensesDialog();
+            }
+        });
     }
 
     @Override
@@ -94,5 +94,56 @@ public class SettingsActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void logout(){
+        AlertDialog.Builder builder =new AlertDialog.Builder(SettingsActivity.this, R.style.SegoAlertDialog);
+        builder.setTitle("Oturumu Sonlandır")
+                .setMessage("Geçerli oturmunu sonlandırmak istediğine emin misin?")
+                .setPositiveButton(R.string.action_yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //Sign Out
+                        String session_token;
+                        SharedPreferences pref = getApplicationContext().getSharedPreferences(USER_INFORMATION_PREF, Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = pref.edit();
+                        session_token = pref.getString("session_token","");
+                        editor.clear().apply();
+
+                        LogoutTask.logoutTask(getApplicationContext(), session_token);
+                        if (LoginActivity.mGoogleSignInClient != null)
+                            LoginActivity.mGoogleSignInClient.signOut();
+
+                        Intent intent=new Intent(getApplicationContext(), SplashActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        getApplicationContext().startActivity(intent);
+                        finish();
+                    }
+                })
+                .setNegativeButton(R.string.action_no, null)
+                .setCancelable(true).show();
+    }
+
+    private void showAboutDialog(){
+        //Inflate dialog layout
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_about, null);
+        TextView tvWebSite = dialogView.findViewById(R.id.tvWebSite);
+        tvWebSite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = "http://" + getString(R.string.web_root);
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        });
+        //Show dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this, R.style.SegoAlertDialog);
+        builder.setView(dialogView).show();
+    }
+
+    private void showLicensesDialog(){
+
     }
 }
