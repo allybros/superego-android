@@ -1,14 +1,19 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="android:statusBarColor">@color/Black</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
         <item name="android:textColorPrimary">@color/White</item>
         <item name="android:actionBarSize">52dp</item>
     </style>
 
+    <style name="SegoAlertDialog" parent="Theme.MaterialComponents.Light.Dialog.Alert">
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:dialogCornerRadius" tools:targetApi="p">8dp</item>
+
+    </style>
     <style name="AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
 
     <style name="PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
