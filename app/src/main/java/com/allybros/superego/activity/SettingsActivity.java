@@ -167,16 +167,17 @@ public class SettingsActivity extends AppCompatActivity {
 
         if(requestCode == IMG_REQUEST && resultCode == RESULT_OK && data != null){
             newImagePath = data.getData();
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),newImagePath);
-                SessionManager.getInstance().getUser().setAvatar(bitmap);
-                settingsImage.setImageBitmap(SessionManager.getInstance().getUser().getAvatar());
-                settingsImage.setVisibility(View.INVISIBLE);
-                heartAnimation.setVisibility(View.VISIBLE);
-                ImageChangeTask.imageChangeTask(imageToString(SessionManager.getInstance().getUser().getAvatar()),getApplicationContext());
+            try{
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),newImagePath);
+                    SessionManager.getInstance().getUser().setAvatar(bitmap);
+                    settingsImage.setImageBitmap(SessionManager.getInstance().getUser().getAvatar());
+                    settingsImage.setVisibility(View.INVISIBLE);
+                    heartAnimation.setVisibility(View.VISIBLE);
 
+                    ImageChangeTask.imageChangeTask(imageToString(SessionManager.getInstance().getUser().getAvatar()),getApplicationContext());
             } catch (IOException e) {
                 e.printStackTrace();
+                Log.d("ImageUpload","IOExeption");
             }
         }
     }
