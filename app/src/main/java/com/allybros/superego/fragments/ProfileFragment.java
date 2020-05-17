@@ -132,7 +132,7 @@ public class ProfileFragment extends Fragment {
             }
         };
 
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(refreshReceiver, new IntentFilter("profile-refresh-status-share"));
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(refreshReceiver, new IntentFilter(ConstantValues.getActionRefreshProfile()));
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(rewardReceiver, new IntentFilter(ConstantValues.getActionEarnedReward()));
     }
 
