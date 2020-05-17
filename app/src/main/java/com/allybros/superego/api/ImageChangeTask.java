@@ -25,7 +25,9 @@ import java.util.Map;
 
 public class ImageChangeTask {
 
-    public static void imageChangeTask(final String image, final Context context){
+    public static void   imageChangeTask(final String image, final Context context){
+        Log.d("Image",image);
+        Log.d("Session",SessionManager.getInstance().getSessionToken());
 
         final Intent intent = new Intent(ConstantValues.getActionUpdateImage());
 
@@ -91,11 +93,15 @@ public class ImageChangeTask {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
+                Log.d("Image",image);
+                Log.d("Session",SessionManager.getInstance().getSessionToken());
+
                 params.put("session-token", SessionManager.getInstance().getSessionToken());
                 params.put("new-avatar-base64",image);
                 return params;
             }
         };
+
         FileUploadHelper.getInstance(context).addToRequestQue(stringRequest);
     }
 }
