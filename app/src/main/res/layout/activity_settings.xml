@@ -1,155 +1,315 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:gravity="center"
-    android:scrollbars="vertical"
-    android:isScrollContainer="true"
-    android:orientation="vertical"
-    android:background="@color/White"
-    android:layout_height="match_parent"
-    tools:context=".activity.SettingsActivity">
+    android:layout_height="match_parent">
 
-    <com.vlad1m1r.lemniscate.funny.HeartProgressView
-        android:id="@+id/hearthAnimation"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
-        android:layout_marginTop="36dp"
-        android:visibility="gone"
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:lineColor="@color/purple"
-        app:maxLineLength="0.8"
-        app:minLineLength="0.4"
-        app:sizeMultiplier="1"
-        app:strokeWidth="3dp"></com.vlad1m1r.lemniscate.funny.HeartProgressView>
+        tools:context=".activity.SettingsActivity">
 
-    <com.allybros.superego.util.CircledNetworkImageView
-        android:id="@+id/imageSettings"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
-        android:layout_marginTop="36dp"
-        android:elevation="5dp"
-        android:src="@drawable/simple_profile_photo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></com.allybros.superego.util.CircledNetworkImageView>
+        <FrameLayout
+            android:id="@+id/cardBtnEditProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:padding="12dp">
 
-    <Button
-        android:id="@+id/btChangePhoto"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_card"
+                android:clickable="true"
+                android:elevation="4dp"
+                android:focusable="true"
+                android:padding="12dp">
+
+                <TextView
+                    android:id="@+id/tvEditProfile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/option_edit_profile"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/ivEditProfile"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvEditProfileDesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/option_edit_profile_desc"
+                    android:textColor="@color/grey"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/ivEditProfile"
+                    app:layout_constraintTop_toBottomOf="@+id/tvEditProfile" />
+
+                <ImageView
+                    android:id="@+id/ivEditProfile"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginTop="4dp"
+                    android:tint="@color/materialPurple"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/v_account_edit" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/cardBtnPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="12dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_card"
+                android:clickable="true"
+                android:elevation="4dp"
+                android:focusable="true"
+                android:padding="12dp">
+
+                <TextView
+                    android:id="@+id/tvPassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/option_password"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/ivPassword"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvPasswordDesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/option_password_desc"
+                    android:textColor="@color/grey"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/ivPassword"
+                    app:layout_constraintTop_toBottomOf="@+id/tvPassword" />
+
+                <ImageView
+                    android:id="@+id/ivPassword"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginTop="4dp"
+                    android:tint="@color/materialPurple"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/v_account_key" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/cardBtnAbout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="12dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_card"
+                android:clickable="true"
+                android:elevation="4dp"
+                android:focusable="true"
+                android:padding="12dp">
+
+                <TextView
+                    android:id="@+id/tvAbout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/option_about"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/ivAbout"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvAboutDesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/option_about_desc"
+                    android:textColor="@color/grey"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/ivAbout"
+                    app:layout_constraintTop_toBottomOf="@+id/tvAbout" />
+
+                <ImageView
+                    android:id="@+id/ivAbout"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginTop="4dp"
+                    android:minWidth="36dp"
+                    android:minHeight="36dp"
+                    android:tint="@color/materialPurple"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/v_information_variant" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/cardBtnLicenses"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="12dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_card"
+                android:clickable="true"
+                android:elevation="4dp"
+                android:focusable="true"
+                android:padding="12dp">
+
+                <TextView
+                    android:id="@+id/tvLicenses"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/option_licenses"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/ivLicenses"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvLicensesDesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/option_licenses_desc"
+                    android:textColor="@color/grey"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/ivLicenses"
+                    app:layout_constraintTop_toBottomOf="@+id/tvLicenses" />
+
+                <ImageView
+                    android:id="@+id/ivLicenses"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:minWidth="36dp"
+                    android:minHeight="36dp"
+                    android:tint="@color/materialPurple"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/v_scale_balance" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/cardBtnSingOut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="12dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_card"
+                android:clickable="true"
+                android:elevation="4dp"
+                android:focusable="true"
+                android:padding="12dp">
+
+                <TextView
+                    android:id="@+id/tvSignOut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/option_sign_out"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/ivSignOut"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvSignOutDesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/option_sign_out_desc"
+                    android:textColor="@color/grey"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/ivSignOut"
+                    app:layout_constraintTop_toBottomOf="@+id/tvSignOut" />
+
+                <ImageView
+                    android:id="@+id/ivSignOut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:minWidth="36dp"
+                    android:minHeight="36dp"
+                    android:tint="@color/materialPurple"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/v_logout_variant" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="visible"
-        android:text="Değiştir"
-        android:background="@drawable/shape_setting_imageview_filter"
-        android:textColor="@color/White"
-        android:translationZ="1000dp"
-        android:textSize="10dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginStart="83dp"
+        android:layout_marginEnd="84dp"
+        android:layout_marginBottom="25dp"
+        android:text="@string/with_version_from"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="160dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="125dp"
+        android:layout_marginEnd="126dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></Button>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/etUsername_text_input"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="20dp"
-        android:fontFamily="@font/comfortaa_light"
-        android:hint="Kullanıcı Adı"
-        app:boxBackgroundColor="@color/trans"
-        app:boxStrokeColor="@color/Black"
-        app:endIconMode="clear_text"
-        app:errorEnabled="true"
-        app:hintTextColor="@color/Black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btChangePhoto">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etUsername"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fontFamily="@font/comfortaa_light"
-            android:inputType="text"
-            android:textColor="@color/Black" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/etEmail_text_input"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="20dp"
-        android:fontFamily="@font/comfortaa_light"
-        android:hint="E-mail"
-        app:boxStrokeColor="@color/Black"
-        app:boxBackgroundColor="@color/trans"
-        app:endIconMode="clear_text"
-        app:errorEnabled="true"
-        app:hintTextColor="@color/Black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etUsername_text_input">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/comfortaa_light"
-            android:inputType="text"
-            android:textColor="@color/Black" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/etInformation_text_input"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="20dp"
-        android:fontFamily="@font/comfortaa_light"
-        android:hint="Kişisel Bilgiler"
-        app:boxBackgroundColor="@color/trans"
-        app:boxStrokeColor="@color/Black"
-        app:endIconMode="clear_text"
-        app:errorEnabled="true"
-        app:hintTextColor="@color/Black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etEmail_text_input">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etInformation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/comfortaa_light"
-            android:gravity="top|left"
-            android:inputType="textMultiLine"
-            android:lines="4"
-            android:overScrollMode="always"
-            android:scrollbarStyle="insideInset"
-            android:scrollbars="vertical"
-            android:scrollHorizontally="false"
-            android:textColor="@color/Black" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btLogout"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:layout_weight="1"
-        android:text="@string/logout"
-        android:textColor="@color/Black"
-        android:textSize="14dp"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:srcCompat="@drawable/brand_grey" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
