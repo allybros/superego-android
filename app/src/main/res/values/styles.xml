@@ -1,14 +1,20 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="android:statusBarColor">@color/Black</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
         <item name="android:textColorPrimary">@color/White</item>
         <item name="android:actionBarSize">52dp</item>
     </style>
 
+    <style name="SegoAlertDialog" parent="Theme.MaterialComponents.Light.Dialog.Alert">
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:dialogCornerRadius" tools:targetApi="p">8dp</item>
+        <item name="dialogPreferredPadding">16dp</item>
+
+    </style>
     <style name="AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
 
     <style name="PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
@@ -16,7 +22,8 @@
     <style name="AppTheme.NoActionBar" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:statusBarColor">@color/Black</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Light" >
@@ -24,12 +31,12 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
 
-    <style name="AppTheme.AddActivityTheme" parent="Theme.MaterialComponents.Light">
+    <style name="AppTheme.TransparentBackground" parent="Theme.MaterialComponents.Light">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:action">true</item>
-        <item name="android:statusBarColor">@color/Black</item>
         <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
         <item name="android:textColorPrimary">@color/White</item>
         <item name="android:actionBarSize">52dp</item>
     </style>
