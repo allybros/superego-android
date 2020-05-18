@@ -29,7 +29,7 @@ public class ConstantValues {
     private static final String CREATE_TEST = "https://demo.allybros.com/superego/create.php";
     private static final String SEARCH_URL = "https://api.allybros.com/superego/search.php?q=";
     private static final String PARAM_TEST = "https://api.allybros.com/superego/param_test.php";
-
+    private static final String PASSWORD_CHANGE = "https://api.allybros.com/superego/reset-password.php";
 
     //Broadcast-Reciever actions
     private static final String ACTION_UPDATE_INFORMATION ="update-info-status-share";
@@ -42,6 +42,9 @@ public class ConstantValues {
     private static final String ACTION_REFRESH_RESULTS = "refresh-results";
     private static final String ACTION_CREATE_TEST = "create_test";
     private static final String ACTION_SEARCH = "result-query";
+    private static final String ACTION_PASSWORD_CHANGE = "password-change-status-share";
+
+
 
     public static String getActionSearch() {
         return ACTION_SEARCH;
@@ -49,6 +52,14 @@ public class ConstantValues {
 
     public static String getSearchUrl() {
         return SEARCH_URL;
+    }
+
+    public static String getActionPasswordChange() {
+        return ACTION_PASSWORD_CHANGE;
+    }
+
+    public static String getPasswordChange() {
+        return PASSWORD_CHANGE;
     }
 
     public static String getParamTest() {
