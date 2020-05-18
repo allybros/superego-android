@@ -16,6 +16,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.allybros.superego.R;
 import com.allybros.superego.fragments.ProfileFragment;
 import com.allybros.superego.fragments.ResultsFragment;
+import com.allybros.superego.fragments.SearchFragment;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.util.PagerAdapter;
 import com.daimajia.androidanimations.library.Techniques;
@@ -33,6 +34,7 @@ public class UserPageActivity extends AppCompatActivity {
     private ArrayList<BottomNavigationItemView> navigationItems = new ArrayList<>();
     private ProfileFragment profileFragment;
     private ResultsFragment resultsFragment;
+    private SearchFragment searchFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,7 @@ public class UserPageActivity extends AppCompatActivity {
         //Add navigation items
         navigationItems.add((BottomNavigationItemView) findViewById(R.id.navigation_profile));
         navigationItems.add((BottomNavigationItemView) findViewById(R.id.navigation_results));
+        navigationItems.add((BottomNavigationItemView) findViewById(R.id.navigation_search));
 
         initViewPager();
         setViewPagerAdapter();
@@ -86,8 +89,10 @@ public class UserPageActivity extends AppCompatActivity {
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager());
         profileFragment = new ProfileFragment();
         resultsFragment = new ResultsFragment();
+        searchFragment = new SearchFragment();
         adapter.addFrag(profileFragment, getResources().getString(R.string.profile));
         adapter.addFrag(resultsFragment, getResources().getString(R.string.results));
+        adapter.addFrag(searchFragment, getResources().getString(R.string.title_search));
         this.viewPager.setAdapter(adapter);
     }
 
