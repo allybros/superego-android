@@ -1,10 +1,5 @@
 package com.allybros.superego.activity;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,14 +12,17 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.allybros.superego.R;
 import com.allybros.superego.api.LogoutTask;
 import com.allybros.superego.util.LicensesAdapter;
-import com.google.android.material.snackbar.Snackbar;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrInterface;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -74,7 +72,10 @@ public class SettingsActivity extends AppCompatActivity {
         optionChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "On Progress", 1000).show();
+//                Snackbar.make(view, "On Progress", 1000).show();
+                Intent intent = new Intent(getApplicationContext(), PasswordResetActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 

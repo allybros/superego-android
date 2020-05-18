@@ -24,20 +24,22 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ChangeInfoTask extends Activity {
+
+public class PasswordChangeTask extends Activity {
+
     /**
-     * User informations change request to API
-     * @param context           required to build request and send Broadcast
-     * @param new_uid           required to change old username
-     * @param new_email         required to change old mail
-     * @param new_information   required to change old information
-     * @param session_token     required to verify the user
+     * Password change request to API
+     * @param context       required to build request and send Broadcast
+     * @param session_token required to verify the user
+     * @param old_password  required to verify the user
+     * @param new_password  required to change old password
+     *
      */
-    public static void changeInfoTask(final Context context, final String new_uid, final String new_email, final String new_information, final String session_token){
-        final Intent intent = new Intent(ConstantValues.getActionUpdateInformation());
+    public static void passwordChangeTask(final Context context, final String session_token, final String old_password, final String new_password){
+        final Intent intent = new Intent(ConstantValues.getPasswordChange());
         RequestQueue queue = Volley.newRequestQueue(context);
 
-        StringRequest jsonRequest=new StringRequest(Request.Method.POST, ConstantValues.getUpdateInformation(), new Response.Listener<String>() {
+        StringRequest jsonRequest=new StringRequest(Request.Method.POST, ConstantValues.getPasswordChange(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("sego-Response",response.toString());
@@ -48,7 +50,7 @@ public class ChangeInfoTask extends Activity {
                     switch (status){
 
                         case ErrorCodes.SUCCESS:
-                            updateLocal(new_uid,new_email,new_information);
+                            updateLocal(new_password, context);
                             intent.putExtra("status", status);
                             LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                             break;
@@ -73,9 +75,9 @@ public class ChangeInfoTask extends Activity {
             protected Map<String,String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("session-token", session_token);
-                params.put("new-username",new_uid);
-                params.put("new-email", new_email);
-                params.put("new-user-bio",new_information );
+                params.put("old-password", old_password);
+                params.put("new-password", new_password);
+                params.put("new-password-again", new_password );
                 return params;
             }
         };
@@ -85,17 +87,12 @@ public class ChangeInfoTask extends Activity {
     /**
      * Change variables in local storage
      *
-     * @param new_uid           required to verify the user
-     * @param new_email         required to verify the user
-     * @param new_information   required to verify the user
+     * @param new_password      required to verify the user
+     * @param context           required to use Session Manager
      */
-    private static void updateLocal(String new_uid, String new_email, String new_information){
-        SessionManager.getInstance().getUser().setUsername(new_uid);
-        SessionManager.getInstance().getUser().setUserBio(new_information);
-        SessionManager.getInstance().getUser().setEmail(new_email);
+    private static void updateLocal(String new_password, Context context){
+        SessionManager.getInstance().writeInfoLocalStorage(SessionManager.getInstance().getUser().getUsername(),
+                                                            new_password,SessionManager.getInstance().getSessionToken(), context);
+        SessionManager.getInstance().readInfo(context);
     }
 }
-
-
-
-
