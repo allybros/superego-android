@@ -4,8 +4,6 @@ package com.allybros.superego.util;
 import android.content.Context;
 import android.graphics.Bitmap;
 
-import androidx.collection.LruCache;
-
 import com.android.volley.Cache;
 import com.android.volley.Network;
 import com.android.volley.RequestQueue;
@@ -26,20 +24,15 @@ public class CustomVolleyRequestQueue {
         mCtx = context;
         mRequestQueue = getRequestQueue();
 
-        mImageLoader = new ImageLoader(mRequestQueue,
+        mImageLoader = new NoCacheImageLoader(mRequestQueue,
                 new ImageLoader.ImageCache() {
-                    private final LruCache<String, Bitmap>
-                            cache = new LruCache<String, Bitmap>(20);
-
                     @Override
                     public Bitmap getBitmap(String url) {
-                        return cache.get(url);
+                        return null;
                     }
 
                     @Override
-                    public void putBitmap(String url, Bitmap bitmap) {
-                        cache.put(url, bitmap);
-                    }
+                    public void putBitmap(String url, Bitmap bitmap) {}
                 });
     }
 
