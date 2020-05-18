@@ -1,375 +1,169 @@
 package com.allybros.superego.activity;
 
-import android.content.BroadcastReceiver;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
-import android.view.Menu;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.allybros.superego.R;
-import com.allybros.superego.api.ChangeInfoTask;
-import com.allybros.superego.api.ImageChangeTask;
 import com.allybros.superego.api.LogoutTask;
-import com.allybros.superego.unit.ConstantValues;
-import com.allybros.superego.unit.ErrorCodes;
-import com.allybros.superego.util.CircledNetworkImageView;
-import com.allybros.superego.util.CustomVolleyRequestQueue;
-import com.allybros.superego.util.HelperMethods;
-import com.allybros.superego.util.SessionManager;
-import com.android.volley.toolbox.ImageLoader;
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
+import com.allybros.superego.util.LicensesAdapter;
+import com.google.android.material.snackbar.Snackbar;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrInterface;
-import com.vlad1m1r.lemniscate.funny.HeartProgressView;
 
-import java.io.IOException;
-
-import static com.allybros.superego.util.HelperMethods.imageToString;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SettingsActivity extends AppCompatActivity {
-    TextInputEditText username,email,information;
-    TextInputLayout etUsername_text_input,etEmail_text_input,etInformation_text_input;
-    MaterialButton btLogout;
+
+    final String USER_INFORMATION_PREF="USER_INFORMATION_PREF";
+    private ConstraintLayout optionEditProfile;
+    private ConstraintLayout optionChangePassword;
+    private ConstraintLayout optionAbout;
+    private ConstraintLayout optionLicenses;
+    private ConstraintLayout optionSignOut;
     private SlidrInterface slidr;
-    Button btChangePhoto;
-    CircledNetworkImageView settingsImage;
-    HeartProgressView heartAnimation;
-    private ActionBar toolbar;
 
-    public static Uri newImagePath=null;
-
-    private final int IMG_REQUEST=1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        toolbar = getSupportActionBar();
-
-        btChangePhoto=(Button) findViewById(R.id.btChangePhoto);
-        btLogout= (MaterialButton) findViewById(R.id.btLogout);
-        username=(TextInputEditText) findViewById(R.id.etUsername);
-        email=(TextInputEditText) findViewById(R.id.etEmail);
-        information=(TextInputEditText) findViewById(R.id.etInformation);
-        etUsername_text_input=(TextInputLayout) findViewById(R.id.etUsername_text_input);
-        etEmail_text_input=(TextInputLayout) findViewById(R.id.etEmail_text_input);
-        etInformation_text_input=(TextInputLayout) findViewById(R.id.etInformation_text_input);
-        settingsImage = (CircledNetworkImageView) findViewById(R.id.imageSettings);
-        heartAnimation = (HeartProgressView) findViewById(R.id.hearthAnimation);
-        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(updateInformationReceiver, new IntentFilter(ConstantValues.getActionUpdateInformation()));
-        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(updateImageReceiver, new IntentFilter(ConstantValues.getActionUpdateImage()));
-
-        btChangePhoto.bringToFront();
-        btChangePhoto.invalidate();
-
-        email.setText(SessionManager.getInstance().getUser().getEmail());
-        username.setText(SessionManager.getInstance().getUser().getUsername());
-        information.setText(SessionManager.getInstance().getUser().getUserBio());
-
-        if(SessionManager.getInstance().getUser().getAvatar()!=null){
-            Log.d("OnCreate-1","Run");
-            settingsImage.setImageBitmap(SessionManager.getInstance().getUser().getAvatar());
-        }else{
-            Log.d("OnCreate-2","Run");
-            HelperMethods.imageLoadFromUrl(getApplicationContext(), ConstantValues.getAvatarUrl()+SessionManager.getInstance().getUser().getImage(),settingsImage);
-        }
-
-        String URL= ConstantValues.getAvatarUrl()+SessionManager.getInstance().getUser().getImage();
-        ImageLoader mImageLoader;
-        mImageLoader = CustomVolleyRequestQueue.getInstance(getApplicationContext()).getImageLoader();
-        mImageLoader.get(URL, ImageLoader.getImageListener(settingsImage, R.drawable.simple_profile_photo, android.R.drawable.ic_dialog_alert));
-        settingsImage.setImageUrl(URL, mImageLoader);
-
-
-        toolbar.setTitle("Settings");
-
-        slidr= Slidr.attach(this);
+        ActionBar appBar = getSupportActionBar();
+        if (appBar != null) appBar.setDisplayHomeAsUpEnabled(true);
+        slidr = Slidr.attach(this);
         slidr.unlock();
-        btChangePhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectImage();
-            }
-        });
-        btLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String session_token;
-                SharedPreferences pref = getApplicationContext().getSharedPreferences(ConstantValues.getUserInformationPref(), Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = pref.edit();
-                session_token=pref.getString("session_token","");
-                editor.clear();
-                editor.commit();
-                LogoutTask.logoutTask(getApplicationContext(),session_token);
-
-
-                LoginActivity.mGoogleSignInClient.signOut();
-
-                Intent intent=new Intent(getApplicationContext(), LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                getApplicationContext().startActivity(intent);
-            }
-        });
-
+        setOptions();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.settings,menu);
-        return super.onCreateOptionsMenu(menu);
+    private void setOptions(){
+        optionEditProfile = findViewById(R.id.cardBtnEditProfile);
+        optionChangePassword = findViewById(R.id.cardBtnPassword);
+        optionAbout = findViewById(R.id.cardBtnAbout);
+        optionLicenses = findViewById(R.id.cardBtnLicenses);
+        optionSignOut = findViewById(R.id.cardBtnSingOut);
+
+        optionEditProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), EditProfileActivity.class);
+                startActivity(i);
+            }
+        });
+
+        optionSignOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logout();
+            }
+        });
+
+        optionChangePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "On Progress", 1000).show();
+            }
+        });
+
+        optionAbout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showAboutDialog();
+            }
+        });
+
+        optionLicenses.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showLicensesDialog();
+            }
+        });
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.aciton_save:
-                etEmail_text_input.setErrorEnabled(false);
-                etInformation_text_input.setErrorEnabled(false);
-                etUsername_text_input.setErrorEnabled(false);
-                if(username.getText().toString().isEmpty()) etUsername_text_input.setError("Lütfen değer giriniz");
-                if(email.getText().toString().isEmpty()) etEmail_text_input.setError("Lütfen değer giriniz");
-                if(information.getText().toString().isEmpty()) etInformation_text_input.setError("Lütfen değer giriniz");
-
-                if(!username.getText().toString().isEmpty() && !email.getText().toString().isEmpty() && !information.getText().toString().isEmpty()){
-                    ChangeInfoTask.changeInfoTask(getApplicationContext(),username.getText().toString(),email.getText().toString(),information.getText().toString(), SessionManager.getInstance().getSessionToken());
-                }
-              break;
+        if (item.getItemId() == android.R.id.home) {
+            this.finish();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
-    private void selectImage(){
-       Intent intent = new Intent();
-       intent.setType("image/*");
-       intent.setAction(Intent.ACTION_GET_CONTENT);
-       startActivityForResult(intent,IMG_REQUEST);
+
+    private void logout(){
+        AlertDialog.Builder builder =new AlertDialog.Builder(SettingsActivity.this, R.style.SegoAlertDialog);
+        builder.setTitle("Oturumu Sonlandır")
+                .setMessage("Geçerli oturmunu sonlandırmak istediğine emin misin?")
+                .setPositiveButton(R.string.action_yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //Sign Out
+                        String session_token;
+                        SharedPreferences pref = getApplicationContext().getSharedPreferences(USER_INFORMATION_PREF, Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = pref.edit();
+                        session_token = pref.getString("session_token","");
+                        editor.clear().apply();
+
+                        LogoutTask.logoutTask(getApplicationContext(), session_token);
+                        if (LoginActivity.mGoogleSignInClient != null)
+                            LoginActivity.mGoogleSignInClient.signOut();
+
+                        Intent intent=new Intent(getApplicationContext(), SplashActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        getApplicationContext().startActivity(intent);
+                        finish();
+                    }
+                })
+                .setNegativeButton(R.string.action_no, null)
+                .setCancelable(true).show();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(requestCode == IMG_REQUEST && resultCode == RESULT_OK && data != null){
-            newImagePath = data.getData();
-            try{
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),newImagePath);
-                    SessionManager.getInstance().getUser().setAvatar(bitmap);
-                    settingsImage.setImageBitmap(SessionManager.getInstance().getUser().getAvatar());
-                    settingsImage.setVisibility(View.INVISIBLE);
-                    heartAnimation.setVisibility(View.VISIBLE);
-
-                    ImageChangeTask.imageChangeTask(imageToString(SessionManager.getInstance().getUser().getAvatar()),getApplicationContext());
-            } catch (IOException e) {
-                e.printStackTrace();
-                Log.d("ImageUpload","IOExeption");
+    private void showAboutDialog(){
+        //Inflate dialog layout
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_about, null);
+        TextView tvWebSite = dialogView.findViewById(R.id.tvWebSite);
+        tvWebSite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = "http://" + getString(R.string.web_root);
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
             }
-        }
+        });
+        //Show dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this, R.style.SegoAlertDialog);
+        builder.setView(dialogView).show();
     }
 
+    private void showLicensesDialog(){
+        //Get licenses
+        String[] licenses = getResources().getStringArray(R.array.licenses);
+        ArrayList<String> licenseList = new ArrayList<>(Arrays.asList(licenses));
+        LicensesAdapter adapter = new LicensesAdapter(getApplicationContext(), licenseList);
 
-    private BroadcastReceiver updateInformationReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
+        //Infalate dialog layout
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_licenses, null);
+        ListView listViewLicenses = dialogView.findViewById(R.id.listviewLicenses);
+        listViewLicenses.setAdapter(adapter);
 
-            int status = intent.getIntExtra("status",0);
-            Log.d("receiver", "Got message: " + status);
-
-            //Check status
-            switch (status){
-
-                case ErrorCodes.SESSION_EXPIRED:
-
-                     new MaterialAlertDialogBuilder(SettingsActivity.this)
-                            .setTitle("insightof.me")
-                            .setMessage(getApplicationContext().getString(R.string.session_expired))
-                            .setPositiveButton(getString(R.string.okey), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                    getApplicationContext().startActivity(intent);
-                                }
-                            })
-                            .show();
-                    break;
-
-                case ErrorCodes.USERNAME_NOT_LEGAL:
-
-                    new MaterialAlertDialogBuilder(SettingsActivity.this)
-                            .setTitle("insightof.me")
-                            .setMessage(getApplicationContext().getString(R.string.usernameNotLegal))
-                            .setPositiveButton(getString(R.string.okey), null)
-                            .show();
-                    break;
-
-                case ErrorCodes.USERNAME_ALREADY_EXIST:
-
-                    new MaterialAlertDialogBuilder(SettingsActivity.this)
-                            .setTitle("insightof.me")
-                            .setMessage(getApplicationContext().getString(R.string.usernameAlreadyExist))
-                            .setPositiveButton(getString(R.string.okey), null)
-                            .show();
-                    break;
-
-                case ErrorCodes.EMAIL_NOT_LEGAL:
-
-                    new MaterialAlertDialogBuilder(SettingsActivity.this)
-                            .setTitle("insightof.me")
-                            .setMessage(getApplicationContext().getString(R.string.emailNotLegal))
-                            .setPositiveButton(getString(R.string.okey), null)
-                            .show();
-                    break;
-
-                case ErrorCodes.EMAIL_ALREADY_EXIST:
-
-                    new MaterialAlertDialogBuilder(SettingsActivity.this)
-                            .setTitle("insightof.me")
-                            .setMessage(getApplicationContext().getString(R.string.emailAlreadyExist))
-                            .setPositiveButton(getString(R.string.okey), null)
-                            .show();
-                    break;
-
-                case ErrorCodes.SUCCESS:
-
-                    new MaterialAlertDialogBuilder(SettingsActivity.this)
-                            .setTitle("insightof.me")
-                            .setMessage(getApplicationContext().getString(R.string.processComplated))
-                            .setPositiveButton(getString(R.string.okey), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Log.d("Success","İşlem tamam patron");
-                                }
-                            }).show();
-                    break;
-
-                case ErrorCodes.SYSFAIL:
-
-                    new MaterialAlertDialogBuilder(SettingsActivity.this)
-                            .setTitle("insightof.me")
-                            .setMessage(getApplicationContext().getString(R.string.connection_error))
-                            .setPositiveButton(getString(R.string.okey), null)
-                            .show();
-                    break;
-
-            }
-        }
-    };
-
-    private BroadcastReceiver updateImageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            int status = intent.getIntExtra("status",0);
-            Log.d("receiver", "Got message: " + status);
-
-            settingsImage.setVisibility(View.VISIBLE);
-            heartAnimation.setVisibility(View.GONE);
-            //Check status
-            switch (status){
-                case ErrorCodes.SUCCESS:
-
-                    new MaterialAlertDialogBuilder(SettingsActivity.this)
-                            .setTitle("insightof.me")
-                            .setMessage(getApplicationContext().getString(R.string.processComplated))
-                            .setPositiveButton(getString(R.string.okey), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                }
-                            }).show();
-                    break;
-
-                case ErrorCodes.SYSFAIL:
-
-                    new MaterialAlertDialogBuilder(SettingsActivity.this)
-                            .setTitle("insightof.me")
-                            .setMessage(getApplicationContext().getString(R.string.connection_error))
-                            .setPositiveButton(getString(R.string.okey), null)
-                            .show();
-                    break;
-
-                case ErrorCodes.INVALID_FILE_EXTENSION:
-
-                    new MaterialAlertDialogBuilder(SettingsActivity.this)
-                            .setTitle("insightof.me")
-                            .setMessage(getApplicationContext().getString(R.string.invalid_file_extension)+" "+getApplicationContext().getString(R.string.connection_error)+status)
-                            .setPositiveButton(getString(R.string.okey), null)
-                            .show();
-                    break;
-
-                case ErrorCodes.INVALID_FILE_TYPE:
-
-                    new MaterialAlertDialogBuilder(SettingsActivity.this)
-                            .setTitle("insightof.me")
-                            .setMessage(getApplicationContext().getString(R.string.invalid_file_type)+" "+getApplicationContext().getString(R.string.connection_error)+status)
-                            .setPositiveButton(getString(R.string.okey), null)
-                            .show();
-                    break;
-
-                case ErrorCodes.INVALID_FILE_SIZE:
-
-                    new MaterialAlertDialogBuilder(SettingsActivity.this)
-                            .setTitle("insightof.me")
-                            .setMessage(getApplicationContext().getString(R.string.invalid_file_size)+" "+getApplicationContext().getString(R.string.connection_error)+status)
-                            .setPositiveButton(getString(R.string.okey), null)
-                            .show();
-                    break;
-
-                case ErrorCodes.FILE_WRITE_ERROR:
-
-                    new MaterialAlertDialogBuilder(SettingsActivity.this)
-                            .setTitle("insightof.me")
-                            .setMessage(getApplicationContext().getString(R.string.connection_error)+" "+getApplicationContext().getString(R.string.connection_error)+status)
-                            .setPositiveButton(getString(R.string.okey), null)
-                            .show();
-                    break;
-
-            }
-        }
-    };
-
-
-    @Override
-    public void onDestroy() {
-        LocalBroadcastManager.getInstance(SettingsActivity.this).unregisterReceiver(updateImageReceiver);
-
-        LocalBroadcastManager.getInstance(SettingsActivity.this).unregisterReceiver(updateInformationReceiver);
-        Log.d("SettingsDestroy","RUN");
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        if(SessionManager.getInstance().getUser().getAvatar()!=null){
-            settingsImage.setImageBitmap(SessionManager.getInstance().getUser().getAvatar());
-        }else{
-            HelperMethods.imageLoadFromUrl(getApplicationContext(), ConstantValues.getAvatarUrl()+SessionManager.getInstance().getUser().getImage(),settingsImage);
-        }
-        Log.d("SettingsResume","RUN");
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d("SettingsPause","RUN");
-
+        //Show dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this, R.style.SegoAlertDialog);
+        builder.setTitle(R.string.option_licenses);
+        builder.setView(dialogView).show();
     }
 }

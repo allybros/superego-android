@@ -14,30 +14,32 @@
         android:roundIcon="@drawable/ab_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity
-            android:name=".activity.WebViewActivity"
-            android:theme="@style/AppTheme.AddActivityTheme"
-            android:parentActivityName=".activity.UserPageActivity"/>
-
         <activity
             android:name=".activity.SettingsActivity"
-            android:theme="@style/AppTheme.AddActivityTheme"
-            android:windowSoftInputMode="adjustPan"
-            android:parentActivityName=".activity.UserPageActivity"/>
+            android:theme="@style/AppTheme.TransparentBackground"
+            android:label="@string/activity_label_options"/>
+        <activity
+            android:name=".activity.WebViewActivity"
+            android:parentActivityName=".activity.UserPageActivity"
+            android:theme="@style/AppTheme.TransparentBackground" />
+        <activity
+            android:name=".activity.EditProfileActivity"
+            android:parentActivityName=".activity.UserPageActivity"
+            android:theme="@style/AppTheme.TransparentBackground"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.UserPageActivity"
-            android:label="@string/title_activity_profile_page"
-            android:launchMode="singleTop"/>
+            android:label="@string/activity_label_profile"
+            android:launchMode="singleTop" />
         <activity
             android:name=".activity.RegisterActivity"
             android:label="@string/title_activity_register_page"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -50,33 +52,30 @@
 
         <meta-data
             android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
-
-
-        <!--Ally bros admob id:ca-app-pub-5360761814312438~5777371170-->
+            android:resource="@array/preloaded_fonts" /> <!-- Ally bros admob id:ca-app-pub-5360761814312438~5777371170 -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713"/>
+            android:value="ca-app-pub-3940256099942544~3347511713" />
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
 
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"/>
-
-        <activity android:name="com.facebook.FacebookActivity"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
-
         <activity
             android:name="com.facebook.CustomTabActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
