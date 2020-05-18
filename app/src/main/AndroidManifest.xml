@@ -16,8 +16,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.SettingsActivity"
-            android:theme="@style/AppTheme.TransparentBackground"
-            android:label="@string/activity_label_options"/>
+            android:label="@string/activity_label_options"
+            android:theme="@style/AppTheme.TransparentBackground" />
         <activity
             android:name=".activity.WebViewActivity"
             android:parentActivityName=".activity.UserPageActivity"
@@ -34,7 +34,8 @@
         <activity
             android:name=".activity.UserPageActivity"
             android:label="@string/activity_label_profile"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustNothing"/>
         <activity
             android:name=".activity.RegisterActivity"
             android:label="@string/title_activity_register_page"
