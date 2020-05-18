@@ -72,7 +72,6 @@ public class SettingsActivity extends AppCompatActivity {
         optionChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "On Progress", 1000).show();
                 Intent intent = new Intent(getApplicationContext(), PasswordResetActivity.class);
                 startActivity(intent);
                 finish();
