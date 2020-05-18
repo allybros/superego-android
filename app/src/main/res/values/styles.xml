@@ -12,6 +12,7 @@
     <style name="SegoAlertDialog" parent="Theme.MaterialComponents.Light.Dialog.Alert">
         <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
         <item name="android:dialogCornerRadius" tools:targetApi="p">8dp</item>
+        <item name="dialogPreferredPadding">16dp</item>
 
     </style>
     <style name="AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
@@ -21,7 +22,8 @@
     <style name="AppTheme.NoActionBar" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:statusBarColor">@color/Black</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Light" >
