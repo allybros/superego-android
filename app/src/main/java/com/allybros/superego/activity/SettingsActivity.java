@@ -14,13 +14,19 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.allybros.superego.R;
 import com.allybros.superego.api.LogoutTask;
+import com.allybros.superego.util.LicensesAdapter;
 import com.google.android.material.snackbar.Snackbar;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrInterface;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -144,6 +150,20 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void showLicensesDialog(){
+        //Get licenses
+        String[] licenses = getResources().getStringArray(R.array.licenses);
+        ArrayList<String> licenseList = new ArrayList<>(Arrays.asList(licenses));
+        LicensesAdapter adapter = new LicensesAdapter(getApplicationContext(), licenseList);
 
+        //Infalate dialog layout
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_licenses, null);
+        ListView listViewLicenses = dialogView.findViewById(R.id.listviewLicenses);
+        listViewLicenses.setAdapter(adapter);
+
+        //Show dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this, R.style.SegoAlertDialog);
+        builder.setTitle(R.string.option_licenses);
+        builder.setView(dialogView).show();
     }
 }
