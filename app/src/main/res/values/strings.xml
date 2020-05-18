@@ -3,8 +3,8 @@
     <string name="todo">TODO</string>
     <string name="facebook_app_id">278557299968701</string>
     <string name="fb_login_protocol_scheme">fb278557299968701</string>
-
-    <string name="title_activity_profile_page">ProfilePage</string>
+    <string name="web_root">insightof.me</string>
+    <string name="activity_label_profile">ProfilePage</string>
     <string name="title_activity_register_page">RegisterPage</string>
     <string name="title_activity_new_test">Test Oluştur</string>
     <string name="loginFailed">Giriş Yapılamadı. Tekrar deneyiniz.</string>
@@ -27,7 +27,10 @@
     <string name="emailNotLegal">E-mail uygun değildir.</string>
     <string name="passwordNotLegal">Parola uygun değildir.</string>
     <string name="successRegister">Kayıt Başarılı</string>
-
+    <string name="action_yes">Evet</string>
+    <string name="action_no">Hayır</string>
+    <string name="action_close">Kapat</string>
+    <string name="action_ok">Tamam</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_change_password">ChangePasswordActivity</string>
@@ -43,8 +46,6 @@
     <string name="aggrementLink"><a href="https://insightof.me/conditions">Kullanım koşulları\'nı okudum ve kabul ediyorum.</a></string>
     <string name="username_must_fill">Kullanıcı alanı boş olamaz</string>
     <string name="session_suspend">Bu üyelik 3 dakika askıya alınmıştır.</string>
-    <string name="close">Kapat</string>
-    <string name="okey">Tamam</string>
     <string name="checkConnection">Bağlantınızı kontrol ediniz.</string>
     <string name="infoNotRated"><b>Henüz ilk sonucu görüntülemek için yeterli değerlendirmeye sahip değilsin.</b>\nYeterli değerlendirme sayısına ulaştığında kişilik özelliklerini görebileceksin.</string>
     <string name="add_text">Merhaba, Reklam izleyerek ego puanı kazanabilirsin. Ego puanı ile değerlendirme sayını arttırabilirsin.</string>
@@ -75,4 +76,28 @@
     <string name="info_title_waiting_rates">Değerlendirilmelerin Bekleniyor...</string>
     <string name="prompt_email">E-Posta</string>
     <string name="prompt_username">Kullanıcı Adı</string>
+    <string name="with_version_from">v.0.5 (Beta) From Ally Bros Corporation</string>
+    <string name="option_edit_profile">Profili Düzenle</string>
+    <string name="option_edit_profile_desc">Kullanıcı adın, açıklaman gibi bilgileri değiştir.</string>
+    <string name="option_password">Giriş ve Güvenlik</string>
+    <string name="option_password_desc">Parolanı veya giriş yöntemini değiştir.</string>
+    <string name="option_about">Hakkında</string>
+    <string name="option_about_desc">insightof.me hakkında detaylı bilgi al.</string>
+    <string name="option_licenses">Lisans Bilgileri</string>
+    <string name="option_licenses_desc">Yararlandığımız yazılım lisanslarını incele.</string>
+    <string name="option_sign_out">Oturumu Kapat</string>
+    <string name="option_sign_out_desc">Geçerli oturumunu sonlandır.</string>
+    <string name="activity_label_options">Seçenekler</string>
+
+    <string name="content_about">
+        insightof.me arkadaşlarınızın kişiliğinizle ilgili değerlendirme yapabileceği
+        bir sosyal platformdur. insightof.me ile oluşturacağınız kendinize özel testiniz
+        sayesinde, arkadaşlarınız sizi farklı kişilik özellikleri üzerinden oylarlar.
+        insightof.me bütün bu değerlendirmelerin ortalama değerlerini hesaplayarak, sizi
+        en çok betimleyen altı özelliğinizi öne çıkarır. Bu özellikler arkadaşlarınızın
+        hakkınızda düşündükleri ve çevreniz tarafından nasıl gözlemlendiğiniz ile
+        ilgili ipuçları sunabilir.\n
+    </string>
+    <string name="content_developers_title">Gelişticiler</string>
+    <string name="content_developers">Orçun Kamiloğlu\nUmut Can Alaçam</string>
 </resources>

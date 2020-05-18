@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- TODO: Remove unused colors, duplicates-->
-    <color name="colorPrimary">#1C2331</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimary">#25324D</color>
+    <color name="colorPrimaryDark">#1C2331</color>
     <color name="colorAccent">#FFFFFF</color>
     <color name="Blue">#C3020E77</color>
     <color name="OpacityYellow">#4afcdb73</color>
@@ -16,14 +16,14 @@
     <color name="loginScreenButtonColor">#b0ff3b0a</color>
     <color name="editText">#6a1b9a</color>
     <color name="trans">#00000000</color>
-    <color name="bgBottomNavigation">#1C2331</color>
+    <color name="bgBottomNavigation">#25324D</color>
     <color name="buttonPublishColor">#0048AF</color>
     <color name="buttonCopyColor">#5400BB</color>
     <color name="buttonNewTestColor">#00B409</color>
     <color name="buttonLoginScreen">#9933CC</color>
     <color name="logoColor">#1D2331</color>
     <color name="logoFilter">#CE1D2331</color>
-    <color name="grey">#BBB4B4</color>
+    <color name="grey">#939393</color>
     <color name="grey2">#FCFCFC</color>
     <color name="newBlue">#C30007FF</color>
     <color name="WhiteOpacity">#52FFFFFF</color>
@@ -31,7 +31,8 @@
     <color name="fragmentBackground">#f9f9f9</color>
 
     <!-- Material Palette -->
-    <color name="materialDeepPurple">#5759AC</color>
+    <color name="materialPurple">#9C27B0</color>
+    <color name="materialDeepPurple">#7557AC</color>
     <color name="materialLightBlue">#2A71AC</color>
     <color name="materialLightGreen">#60C072</color>
 
