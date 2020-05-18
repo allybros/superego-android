@@ -14,10 +14,11 @@
         android:roundIcon="@drawable/ab_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activity.PasswordResetActivity"></activity>
         <activity
             android:name=".activity.SettingsActivity"
-            android:theme="@style/AppTheme.TransparentBackground"
-            android:label="@string/activity_label_options"/>
+            android:label="@string/activity_label_options"
+            android:theme="@style/AppTheme.TransparentBackground" />
         <activity
             android:name=".activity.WebViewActivity"
             android:parentActivityName=".activity.UserPageActivity"
