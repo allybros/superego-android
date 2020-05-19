@@ -30,6 +30,8 @@ public class ConstantValues {
     private static final String SEARCH_URL = "https://api.allybros.com/superego/search.php?q=";
     private static final String PARAM_TEST = "https://api.allybros.com/superego/param_test.php";
     private static final String PASSWORD_CHANGE = "https://api.allybros.com/superego/reset-password.php";
+    public static final String RATE_URL = "https://demo.allybros.com/superego/rate.php?embed=true&test=";
+    //TODO: No need to make private.
 
     //Broadcast-Reciever actions
     private static final String ACTION_UPDATE_INFORMATION ="update-info-status-share";

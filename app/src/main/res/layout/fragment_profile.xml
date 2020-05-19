@@ -132,7 +132,7 @@
 
                     </LinearLayout>
 
-                    <com.allybros.superego.util.CircledNetworkImageView
+                    <com.allybros.superego.ui.CircledNetworkImageView
                         android:id="@+id/user_avatar"
                         android:layout_width="135dp"
                         android:layout_height="1350dp"

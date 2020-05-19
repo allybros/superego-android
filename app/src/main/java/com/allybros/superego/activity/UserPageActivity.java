@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -16,15 +15,15 @@ import androidx.viewpager.widget.ViewPager;
 import com.allybros.superego.R;
 import com.allybros.superego.fragments.ProfileFragment;
 import com.allybros.superego.fragments.ResultsFragment;
-import com.allybros.superego.unit.ConstantValues;
-import com.allybros.superego.util.PagerAdapter;
+import com.allybros.superego.fragments.SearchFragment;
+import com.allybros.superego.ui.PagerAdapter;
+import com.allybros.superego.util.SessionManager;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class UserPageActivity extends AppCompatActivity {
 
@@ -33,6 +32,7 @@ public class UserPageActivity extends AppCompatActivity {
     private ArrayList<BottomNavigationItemView> navigationItems = new ArrayList<>();
     private ProfileFragment profileFragment;
     private ResultsFragment resultsFragment;
+    private SearchFragment searchFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +42,7 @@ public class UserPageActivity extends AppCompatActivity {
         //Add navigation items
         navigationItems.add((BottomNavigationItemView) findViewById(R.id.navigation_profile));
         navigationItems.add((BottomNavigationItemView) findViewById(R.id.navigation_results));
+        navigationItems.add((BottomNavigationItemView) findViewById(R.id.navigation_search));
 
         initViewPager();
         setViewPagerAdapter();
@@ -52,11 +53,9 @@ public class UserPageActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         //Return from webviews
-        Intent intent = getIntent();
-        if (intent != null) {
-            if (Objects.equals(intent.getAction(), ConstantValues.getCreateTest())) {
-                Log.d("Create Test Intent", "Success");
-            }
+        if (SessionManager.getInstance().isModified()) {
+            SessionManager.getInstance().getUser(); // Remove modified flag
+            refreshFragments(0);
         }
         super.onResume();
     }
@@ -77,6 +76,8 @@ public class UserPageActivity extends AppCompatActivity {
             @Override
             public void onPageScrollStateChanged(int position) {}
         });
+        //Prepare all fragments for performance
+        viewPager.setOffscreenPageLimit(navigationItems.size() - 1);
     }
 
     /**
@@ -86,8 +87,10 @@ public class UserPageActivity extends AppCompatActivity {
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager());
         profileFragment = new ProfileFragment();
         resultsFragment = new ResultsFragment();
+        searchFragment = new SearchFragment();
         adapter.addFrag(profileFragment, getResources().getString(R.string.profile));
         adapter.addFrag(resultsFragment, getResources().getString(R.string.results));
+        adapter.addFrag(searchFragment, getResources().getString(R.string.title_search));
         this.viewPager.setAdapter(adapter);
     }
 

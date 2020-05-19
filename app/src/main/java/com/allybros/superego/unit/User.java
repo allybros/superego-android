@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class User {
 
     private int userType, rated, credit;
-    private String image,testId,username,userBio,email;
+    private String image,testId,username,userBio,email, avatarName;
     private ArrayList<Score> scores;
     private Bitmap avatar;      //Görsel öğeler için kullanılıyor.
 
@@ -24,11 +24,11 @@ public class User {
         this.scores = scores;
     }
 
-    public User(String testId, String username, String userBio, Bitmap avatar) {
+    public User(String testId, String username, String userBio, String avatarName) {
         this.testId = testId;
         this.username = username;
         this.userBio = userBio;
-        this.avatar = avatar;
+        this.avatarName = avatarName;
     }
 
     public int getUserType() {
@@ -69,6 +69,10 @@ public class User {
 
     public Bitmap getAvatar() {
         return avatar;
+    }
+
+    public String getAvatarName() {
+        return avatarName;
     }
 
     public void setUserType(int userType) {

@@ -1,4 +1,4 @@
-package com.allybros.superego.util;
+package com.allybros.superego.ui;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

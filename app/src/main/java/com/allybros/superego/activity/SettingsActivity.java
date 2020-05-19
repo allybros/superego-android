@@ -19,7 +19,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.allybros.superego.R;
 import com.allybros.superego.api.LogoutTask;
-import com.allybros.superego.util.LicensesAdapter;
+import com.allybros.superego.ui.LicensesAdapter;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrInterface;
 

@@ -1,4 +1,4 @@
-package com.allybros.superego.util;
+package com.allybros.superego.ui;
 
 import android.app.Activity;
 import android.content.Context;
