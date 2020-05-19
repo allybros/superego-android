@@ -34,7 +34,7 @@ import com.allybros.superego.api.LoadProfileTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.unit.Score;
-import com.allybros.superego.util.CircledNetworkImageView;
+import com.allybros.superego.ui.CircledNetworkImageView;
 import com.allybros.superego.util.HelperMethods;
 import com.allybros.superego.util.SessionManager;
 import com.daimajia.androidanimations.library.Techniques;
