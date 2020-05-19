@@ -4,12 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -18,9 +16,7 @@ import com.allybros.superego.R;
 import com.allybros.superego.fragments.ProfileFragment;
 import com.allybros.superego.fragments.ResultsFragment;
 import com.allybros.superego.fragments.SearchFragment;
-import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.ui.PagerAdapter;
-import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.util.SessionManager;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -28,7 +24,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class UserPageActivity extends AppCompatActivity {
 

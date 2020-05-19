@@ -40,23 +40,62 @@ public class SearchAdapter extends ArrayAdapter<User> {
         TextView tvSearchUsername = convertView.findViewById(R.id.tvSearchUsername);
         TextView tvSearchUserbio = convertView.findViewById(R.id.tvSearchUserBio);
 
+        String bioSum = u.getUserBio();
+        if (u.getUserBio().length() >= 75){
+            bioSum = u.getUserBio().substring(0,75);
+            bioSum += "...";
+        }
+
         tvSearchUsername.setText(u.getUsername());
-        tvSearchUserbio.setText(u.getUserBio());
+        tvSearchUserbio.setText(bioSum);
         HelperMethods.imageLoadFromUrl(getContext(), ConstantValues.getAvatarUrl()+u.getAvatarName(), ivSearchUserAvatar);
+        // Set web activity title
+        String belirtmeHali = ""+turkceBelirtmeHaliBulucu(u.getUsername());
+        final String webActivityTitle = getContext().getString(R.string.title_activity_rate_user, u.getUsername(), belirtmeHali);
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String testUrl = ConstantValues.RATE_URL + u.getTestId();
-                String title = "Değerlendir";
                 Intent i = new Intent(getContext(), WebViewActivity.class);
                 i.putExtra("url", testUrl);
-                i.putExtra("title", title);
+                i.putExtra("title", webActivityTitle);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 getContext().startActivity(i);
             }
         });
 
         return convertView;
+    }
+
+    /**
+     * Builds title for specifically Turkish language structure
+     * İsmin belirtme haline uygun bir başlık oluşturur. (Orçun'u, Umut'u)
+     * Türkçe de pek yakıştı değil mi?
+     */
+    private String turkceBelirtmeHaliBulucu(String isim){
+        char[] unluler = "aeıioöuü".toCharArray();
+
+        for (int i = isim.length()-1; i >= 0; i--) {
+            for (char c : unluler) {
+                if (isim.charAt(i) == c){
+                    switch (c) {
+                        case 'a':
+                        case 'ı':
+                            return "ı";
+                        case 'e':
+                        case 'i':
+                            return "i";
+                        case 'o':
+                        case 'u':
+                            return "u";
+                        case 'ö':
+                        case 'ü':
+                            return "ü";
+                    }
+                }
+            }
+        }
+        return "i";
     }
 }
