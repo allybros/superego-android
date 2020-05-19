@@ -18,6 +18,7 @@ public class SessionManager {
     private static SessionManager instance;
     private User user;                      // User who logged in
     private String sessionToken, password, userId;
+    private boolean modified = false;
 
     private SessionManager(){}
 
@@ -31,7 +32,7 @@ public class SessionManager {
         SessionManager.getInstance().setSessionToken(pref.getString("session_token", ""));
         SessionManager.getInstance().setUserId(pref.getString("uid",""));
         SessionManager.getInstance().setPassword(pref.getString("password",""));
-        Log.d("SessinRead",SessionManager.getInstance().getSessionToken());
+        Log.d("Session Read",SessionManager.getInstance().getSessionToken());
     }
 
     /**
@@ -52,6 +53,7 @@ public class SessionManager {
     }
 
     public User getUser() {
+        this.modified = false;
         return user;
     }
 
@@ -81,6 +83,14 @@ public class SessionManager {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public boolean isModified() {
+        return modified;
+    }
+
+    public void touchSession() {
+        this.modified = true;
     }
 
     public static synchronized SessionManager getInstance() {

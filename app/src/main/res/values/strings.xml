@@ -7,6 +7,7 @@
     <string name="activity_label_profile">ProfilePage</string>
     <string name="title_activity_register_page">RegisterPage</string>
     <string name="title_activity_new_test">Test Oluştur</string>
+    <string name="title_activity_rate_user">%1$s\'%2$s değerlendir</string>
     <string name="loginFailed">Giriş Yapılamadı. Tekrar deneyiniz.</string>
     <string name="loginSuccess">session_tokenBaşarılı :)</string>
     <string name="usernameEmpty">Kullanıcı adı alanı boş olamaz.</string>
@@ -100,4 +101,6 @@
     </string>
     <string name="content_developers_title">Gelişticiler</string>
     <string name="content_developers">Orçun Kamiloğlu\nUmut Can Alaçam</string>
+    <string name="title_search">Arkadaşlarını Bul</string>
+    <string name="hint_username">Kullanıcı adı</string>
 </resources>

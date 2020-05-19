@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.allybros.superego.R;
 import com.allybros.superego.api.LoadProfileTask;
 import com.allybros.superego.unit.ConstantValues;
+import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.util.SessionManager;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -39,12 +40,17 @@ public class WebViewActivity extends AppCompatActivity {
     private String url;
     private String title;
 
+    public static final String WEB_ACTION_CREATE_TEST = "create_test";
+    public static final String WEB_ACTION_RATE = "rate";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Get intent extras, url and title
         Intent intent = getIntent();
         url = intent.getStringExtra("url");
         title = intent.getStringExtra("title");
+        Boolean unlockSlidr = intent.getBooleanExtra("slidr", true);
         // Init layout
         setContentView(R.layout.activity_add_test);
         webView = findViewById(R.id.webView);
@@ -68,14 +74,14 @@ public class WebViewActivity extends AppCompatActivity {
                 String url = request.getUrl().toString();
                 if (Objects.equals(responseUri.getScheme(), "intent")){
                     // Valid intent scheme
-                    int startIndex = url.lastIndexOf("://");
-                    String actionName = url.substring(startIndex).split("\\?")[0];
+                    int startIndex = url.indexOf("://");
+                    String actionName = url.substring(startIndex+3).split("\\?")[0];
                     String status = responseUri.getQueryParameter("status");
                     Log.d("WebView Result", actionName + ", "+ status);
+                    //TODO: Decouple result handling from this class
+                    if (actionName.equals(WEB_ACTION_CREATE_TEST) && Objects.equals(""+status, ""+ErrorCodes.SUCCESS))
+                        SessionManager.getInstance().touchSession(); //User info modified.
                     // Activity result
-                    Intent resultIntent = new Intent();
-                    resultIntent.putExtra("status", status);
-                    setResult(RESULT_OK, resultIntent);
                     finish();
                 }
                 return super.shouldOverrideUrlLoading(view, request);
@@ -107,22 +113,22 @@ public class WebViewActivity extends AppCompatActivity {
             }
         }, 2000);
 
-        slidr= Slidr.attach(this);
-        slidr.unlock();
+        if (unlockSlidr){
+            slidr= Slidr.attach(this);
+            slidr.unlock();
+        }
+
         super.onCreate(savedInstanceState);
     }
 
     @Override
     public void onBackPressed() {
-        Intent intent=new Intent(WebViewActivity.this,UserPageActivity.class);
-        startActivity(intent);
         finish();
     }
 
     @Override
     protected void onDestroy() {
-        Log.d("WebView Activity","Destroyed");
-        LoadProfileTask.loadProfileTask(getApplicationContext(),SessionManager.getInstance().getSessionToken(), ConstantValues.getActionRefreshProfile());
         super.onDestroy();
     }
+
 }

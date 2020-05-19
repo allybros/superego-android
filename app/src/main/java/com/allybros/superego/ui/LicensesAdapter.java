@@ -1,4 +1,4 @@
-package com.allybros.superego.util;
+package com.allybros.superego.ui;
 
 import android.content.Context;
 import android.view.LayoutInflater;

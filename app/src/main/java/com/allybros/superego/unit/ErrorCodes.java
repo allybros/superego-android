@@ -36,7 +36,7 @@ public class ErrorCodes {
 
     //General failure
     public static final int SYSFAIL=0;
-
+    public static final int CANCELLED = -1;
     //Only android-side Error Code
     public static final int CONNECTION_ERROR=2016;
 }
