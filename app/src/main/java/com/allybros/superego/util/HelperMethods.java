@@ -11,6 +11,7 @@ import android.util.Log;
 import androidx.annotation.RequiresApi;
 
 import com.allybros.superego.R;
+import com.allybros.superego.ui.CircledNetworkImageView;
 import com.android.volley.toolbox.ImageLoader;
 
 import java.io.ByteArrayOutputStream;

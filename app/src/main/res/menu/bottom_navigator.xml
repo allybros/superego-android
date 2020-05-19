@@ -11,4 +11,11 @@
         android:icon="@drawable/baseline_view_list_24"
         android:checked="false"
         android:title="@string/results" />
+
+    <item
+        android:id="@+id/navigation_search"
+        android:icon="@drawable/v_magnify"
+        android:iconTint="@color/White"
+        android:checked="false"
+        android:title="@string/title_search" />
 </menu>

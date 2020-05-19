@@ -35,7 +35,8 @@
         <activity
             android:name=".activity.UserPageActivity"
             android:label="@string/activity_label_profile"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustNothing"/>
         <activity
             android:name=".activity.RegisterActivity"
             android:label="@string/title_activity_register_page"
