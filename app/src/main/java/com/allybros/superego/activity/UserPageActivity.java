@@ -18,7 +18,7 @@ import com.allybros.superego.fragments.ProfileFragment;
 import com.allybros.superego.fragments.ResultsFragment;
 import com.allybros.superego.fragments.SearchFragment;
 import com.allybros.superego.unit.ConstantValues;
-import com.allybros.superego.util.PagerAdapter;
+import com.allybros.superego.ui.PagerAdapter;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
@@ -80,6 +80,8 @@ public class UserPageActivity extends AppCompatActivity {
             @Override
             public void onPageScrollStateChanged(int position) {}
         });
+        //Prepare all fragments for performance
+        viewPager.setOffscreenPageLimit(navigationItems.size() - 1);
     }
 
     /**
