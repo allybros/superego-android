@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -19,6 +20,8 @@ import com.allybros.superego.fragments.ResultsFragment;
 import com.allybros.superego.fragments.SearchFragment;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.ui.PagerAdapter;
+import com.allybros.superego.unit.ErrorCodes;
+import com.allybros.superego.util.SessionManager;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
@@ -55,11 +58,9 @@ public class UserPageActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         //Return from webviews
-        Intent intent = getIntent();
-        if (intent != null) {
-            if (Objects.equals(intent.getAction(), ConstantValues.getCreateTest())) {
-                Log.d("Create Test Intent", "Success");
-            }
+        if (SessionManager.getInstance().isModified()) {
+            SessionManager.getInstance().getUser(); // Remove modified flag
+            refreshFragments(0);
         }
         super.onResume();
     }
