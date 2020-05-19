@@ -8,11 +8,13 @@
 
     <TextView
         android:id="@+id/tvSearchUserBio"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="2dp"
         android:text="userbio"
+        android:textColor="@color/grey"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/nivSearchUserAvatar"
         app:layout_constraintTop_toBottomOf="@+id/tvSearchUsername" />
 
@@ -20,18 +22,19 @@
         android:id="@+id/tvSearchUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:text="@string/hint_username"
         android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold"
+        android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/nivSearchUserAvatar"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.allybros.superego.util.CircledNetworkImageView
+    <com.allybros.superego.ui.CircledNetworkImageView
         android:id="@+id/nivSearchUserAvatar"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/ic_launcher" />
+        app:srcCompat="@drawable/img_avatar" />
 </androidx.constraintlayout.widget.ConstraintLayout>

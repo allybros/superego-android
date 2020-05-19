@@ -27,7 +27,7 @@ import com.allybros.superego.api.ImageChangeTask;
 import com.allybros.superego.api.LogoutTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
-import com.allybros.superego.util.CircledNetworkImageView;
+import com.allybros.superego.ui.CircledNetworkImageView;
 import com.allybros.superego.util.CustomVolleyRequestQueue;
 import com.allybros.superego.util.HelperMethods;
 import com.allybros.superego.util.SessionManager;

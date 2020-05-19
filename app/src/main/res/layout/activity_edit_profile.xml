@@ -26,7 +26,7 @@
         app:sizeMultiplier="1"
         app:strokeWidth="3dp"></com.vlad1m1r.lemniscate.funny.HeartProgressView>
 
-    <com.allybros.superego.util.CircledNetworkImageView
+    <com.allybros.superego.ui.CircledNetworkImageView
         android:id="@+id/imageSettings"
         android:layout_width="96dp"
         android:layout_height="96dp"
@@ -35,7 +35,7 @@
         android:src="@drawable/simple_profile_photo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></com.allybros.superego.util.CircledNetworkImageView>
+        app:layout_constraintTop_toTopOf="parent"></com.allybros.superego.ui.CircledNetworkImageView>
 
     <Button
         android:id="@+id/btChangePhoto"

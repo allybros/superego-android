@@ -6,6 +6,7 @@ import android.util.Base64;
 import android.util.Log;
 
 import com.allybros.superego.R;
+import com.allybros.superego.ui.CircledNetworkImageView;
 import com.android.volley.toolbox.ImageLoader;
 
 import java.io.ByteArrayOutputStream;
