@@ -7,6 +7,7 @@ public class ConstantValues {
     public static final String ADMOB_ADD_INTERFACE_ID = "ca-app-pub-3940256099942544/5224354917";//TODO: ally bros-->ca-app-pub-5360761814312438/1782285846
     public static final int RATED_LIMIT = 10;
     public static final String USER_INFORMATION_PREF="USER_INFORMATION_PREF";  //Shared preferences Tag
+    public static final int MAX_FILE_SIZE = 33177600;
 
     //Links
 
