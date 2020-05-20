@@ -21,21 +21,23 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.R;
 import com.allybros.superego.api.ChangeInfoTask;
 import com.allybros.superego.api.ImageChangeTask;
 import com.allybros.superego.api.LogoutTask;
+import com.allybros.superego.ui.CircledNetworkImageView;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
-import com.allybros.superego.ui.CircledNetworkImageView;
-import com.allybros.superego.util.RequestForGetImage;
 import com.allybros.superego.util.HelperMethods;
+import com.allybros.superego.util.RequestForGetImage;
 import com.allybros.superego.util.SessionManager;
 import com.android.volley.toolbox.ImageLoader;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.r0adkll.slidr.Slidr;
@@ -55,7 +57,7 @@ public class EditProfileActivity extends AppCompatActivity {
     CircledNetworkImageView settingsImage;
     HeartProgressView heartAnimation;
     private ActionBar toolbar;
-
+    ConstraintLayout editProfileLayout;
     public static Uri newImagePath=null;
 
     private final int IMG_REQUEST=1;
@@ -66,6 +68,7 @@ public class EditProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_profile);
         toolbar = getSupportActionBar();
 
+        editProfileLayout = (ConstraintLayout) findViewById(R.id.editProfileLayout);
         btChangePhoto=(Button) findViewById(R.id.btChangePhoto);
         btLogout= (MaterialButton) findViewById(R.id.btLogout);
         username=(TextInputEditText) findViewById(R.id.etUsername);
@@ -172,19 +175,23 @@ public class EditProfileActivity extends AppCompatActivity {
             newImagePath = data.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),newImagePath);
-                SessionManager.getInstance().getUser().setAvatar(bitmap);
-                settingsImage.setImageBitmap(SessionManager.getInstance().getUser().getAvatar());
-                settingsImage.setVisibility(View.INVISIBLE);
-                heartAnimation.setVisibility(View.VISIBLE);
-                ImageChangeTask.imageChangeTask(imageToString(SessionManager.getInstance().getUser().getAvatar()),getApplicationContext());
+                int fileSize = bitmap.getByteCount();
+                Log.d("SIZE:  ",""+ bitmap.getByteCount());
+                if(fileSize < ConstantValues.MAX_FILE_SIZE){
+                    SessionManager.getInstance().getUser().setAvatar(bitmap);
+                    settingsImage.setImageBitmap(SessionManager.getInstance().getUser().getAvatar());
+                    settingsImage.setVisibility(View.INVISIBLE);
+                    heartAnimation.setVisibility(View.VISIBLE);
+                    ImageChangeTask.imageChangeTask(imageToString(SessionManager.getInstance().getUser().getAvatar()),getApplicationContext());
+                }else{
+                    Snackbar.make(editProfileLayout,"Seçilen dosya boyutu çok büyük",Snackbar.LENGTH_LONG).show();
+                }
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
-
-
     private BroadcastReceiver updateInformationReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
