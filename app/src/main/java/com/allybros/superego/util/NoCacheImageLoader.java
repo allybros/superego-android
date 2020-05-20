@@ -6,8 +6,12 @@ import android.widget.ImageView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
-
-class NoCacheImageLoader extends ImageLoader {
+/**
+ * Provide to be imageloder that is no cache
+ *
+ * @author 0rcun
+ */
+public class NoCacheImageLoader extends ImageLoader {
     public NoCacheImageLoader(RequestQueue queue, ImageCache imageCache) {
         super(queue, imageCache);
     }
