@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -28,7 +30,7 @@ import com.allybros.superego.api.LogoutTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.ui.CircledNetworkImageView;
-import com.allybros.superego.util.CustomVolleyRequestQueue;
+import com.allybros.superego.util.RequestForGetImage;
 import com.allybros.superego.util.HelperMethods;
 import com.allybros.superego.util.SessionManager;
 import com.android.volley.toolbox.ImageLoader;
@@ -59,6 +61,7 @@ public class EditProfileActivity extends AppCompatActivity {
     public static Uri newImagePath=null;
 
     private final int IMG_REQUEST=1;
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,7 +98,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
         String URL= ConstantValues.getAvatarUrl()+SessionManager.getInstance().getUser().getImage();
         ImageLoader mImageLoader;
-        mImageLoader = CustomVolleyRequestQueue.getInstance(getApplicationContext()).getImageLoader();
+        mImageLoader = RequestForGetImage.getInstance(getApplicationContext()).getImageLoader();
         mImageLoader.get(URL, ImageLoader.getImageListener(settingsImage, R.drawable.simple_profile_photo, android.R.drawable.ic_dialog_alert));
         settingsImage.setImageUrl(URL, mImageLoader);
 
@@ -354,6 +357,7 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onResume() {
         super.onResume();

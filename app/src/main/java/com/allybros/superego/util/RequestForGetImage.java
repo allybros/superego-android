@@ -12,19 +12,28 @@ import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.ImageLoader;
 
-public class CustomVolleyRequestQueue {
+/**
+ * RequestForGetImage class defines the request to get image from url
+ *
+ * @author 0rcun
+ */
 
-    private static CustomVolleyRequestQueue mInstance;
+public class RequestForGetImage {
+
+    private static RequestForGetImage mInstance;
     private static Context mCtx;
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
 
 
-    private CustomVolleyRequestQueue(Context context) {
+    /**
+     * Sets the variables needed
+     */
+    private RequestForGetImage(Context context) {
         mCtx = context;
         mRequestQueue = getRequestQueue();
 
-        mImageLoader = new NoCacheImageLoader(mRequestQueue,
+        mImageLoader = new NoCacheImageLoader(mRequestQueue,    //No cache
                 new ImageLoader.ImageCache() {
                     @Override
                     public Bitmap getBitmap(String url) {
@@ -36,9 +45,9 @@ public class CustomVolleyRequestQueue {
                 });
     }
 
-    public static synchronized CustomVolleyRequestQueue getInstance(Context context) {
+    public static synchronized RequestForGetImage getInstance(Context context) {
         if (mInstance == null) {
-            mInstance = new CustomVolleyRequestQueue(context);
+            mInstance = new RequestForGetImage(context);
         }
         return mInstance;
     }
