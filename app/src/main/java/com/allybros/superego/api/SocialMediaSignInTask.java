@@ -27,10 +27,10 @@ import java.util.Map;
 public class SocialMediaSignInTask {
     public static void loginTask(final Context context, final String access_token,final String authenticator) {
 
-        final Intent intent = new Intent(ConstantValues.getActionSocialMediaLogin());
+        final Intent intent = new Intent(ConstantValues.ACTION_SOCIAL_MEDIA_LOGIN);
 
         RequestQueue queue = Volley.newRequestQueue(context);
-        StringRequest jsonRequest=new StringRequest(Request.Method.POST, ConstantValues.getUrlSocialAccountsLogin(), new Response.Listener<String>() {
+        StringRequest jsonRequest=new StringRequest(Request.Method.POST, ConstantValues.URL_SOCIAL_ACCOUNTS_LOGIN, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {

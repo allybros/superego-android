@@ -36,10 +36,10 @@ public class PasswordChangeTask extends Activity {
      *
      */
     public static void passwordChangeTask(final Context context, final String session_token, final String old_password, final String new_password){
-        final Intent intent = new Intent(ConstantValues.getPasswordChange());
+        final Intent intent = new Intent(ConstantValues.ACTION_PASSWORD_CHANGE);
         RequestQueue queue = Volley.newRequestQueue(context);
 
-        StringRequest jsonRequest=new StringRequest(Request.Method.POST, ConstantValues.getPasswordChange(), new Response.Listener<String>() {
+        StringRequest jsonRequest=new StringRequest(Request.Method.POST, ConstantValues.PASSWORD_CHANGE, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("sego-Response",response.toString());

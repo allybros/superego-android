@@ -26,11 +26,11 @@ import java.util.Map;
 
 public class LoginTask extends Activity {
     public static void loginTask(final Context context, final String uid, final String password) {
-        final Intent intent = new Intent(ConstantValues.getActionLogin());
+        final Intent intent = new Intent(ConstantValues.ACTION_LOGIN);
 
         RequestQueue queue = Volley.newRequestQueue(context);
 
-        StringRequest jsonRequest=new StringRequest(Request.Method.POST, ConstantValues.getLoginUrl(), new Response.Listener<String>() {
+        StringRequest jsonRequest=new StringRequest(Request.Method.POST, ConstantValues.LOGIN_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
@@ -74,7 +74,7 @@ public class LoginTask extends Activity {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("uid", uid);
                 params.put("password", password);
-                params.put("g-recaptcha-response", ConstantValues.getRECAPTCHA_SKIP());
+                params.put("g-recaptcha-response", ConstantValues.RECAPTCHA_SKIP);
                 return params;
             }
         };

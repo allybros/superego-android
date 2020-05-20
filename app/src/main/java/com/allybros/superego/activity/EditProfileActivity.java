@@ -47,11 +47,9 @@ import java.io.IOException;
 import static com.allybros.superego.util.HelperMethods.imageToString;
 
 public class EditProfileActivity extends AppCompatActivity {
-    //TODO:USER_INFORMATION_PREF variable must move in unit/api
-    final String USER_INFORMATION_PREF="USER_INFORMATION_PREF";
     TextInputEditText username,email,information;
     TextInputLayout etUsername_text_input,etEmail_text_input,etInformation_text_input;
-    MaterialButton btLogout;   //TODO: Fotoğraf değiştirme işlemi yapılacak.
+    MaterialButton btLogout;
     private SlidrInterface slidr;
     Button btChangePhoto;
     CircledNetworkImageView settingsImage;
@@ -78,8 +76,8 @@ public class EditProfileActivity extends AppCompatActivity {
         etInformation_text_input=(TextInputLayout) findViewById(R.id.etInformation_text_input);
         settingsImage = (CircledNetworkImageView) findViewById(R.id.imageSettings);
         heartAnimation = (HeartProgressView) findViewById(R.id.hearthAnimation);
-        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(updateInformationReceiver, new IntentFilter(ConstantValues.getActionUpdateInformation()));
-        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(updateImageReceiver, new IntentFilter(ConstantValues.getActionUpdateImage()));
+        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(updateInformationReceiver, new IntentFilter(ConstantValues.ACTION_UPDATE_INFORMATION));
+        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(updateImageReceiver, new IntentFilter(ConstantValues.ACTION_UPDATE_IMAGE));
 
         btChangePhoto.bringToFront();
         btChangePhoto.invalidate();
@@ -93,10 +91,10 @@ public class EditProfileActivity extends AppCompatActivity {
             settingsImage.setImageBitmap(SessionManager.getInstance().getUser().getAvatar());
         }else{
             Log.d("OnCreate-2","Run");
-            HelperMethods.imageLoadFromUrl(getApplicationContext(), ConstantValues.getAvatarUrl()+SessionManager.getInstance().getUser().getImage(),settingsImage);
+            HelperMethods.imageLoadFromUrl(getApplicationContext(), ConstantValues.AVATAR_URL+SessionManager.getInstance().getUser().getImage(),settingsImage);
         }
 
-        String URL= ConstantValues.getAvatarUrl()+SessionManager.getInstance().getUser().getImage();
+        String URL= ConstantValues.AVATAR_URL+SessionManager.getInstance().getUser().getImage();
         ImageLoader mImageLoader;
         mImageLoader = RequestForGetImage.getInstance(getApplicationContext()).getImageLoader();
         mImageLoader.get(URL, ImageLoader.getImageListener(settingsImage, R.drawable.simple_profile_photo, android.R.drawable.ic_dialog_alert));
@@ -117,7 +115,7 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String session_token;
-                SharedPreferences pref = getApplicationContext().getSharedPreferences(USER_INFORMATION_PREF, Context.MODE_PRIVATE);
+                SharedPreferences pref = getApplicationContext().getSharedPreferences(ConstantValues.USER_INFORMATION_PREF, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = pref.edit();
                 session_token=pref.getString("session_token","");
                 editor.clear();
@@ -365,7 +363,7 @@ public class EditProfileActivity extends AppCompatActivity {
         if(SessionManager.getInstance().getUser().getAvatar()!=null){
             settingsImage.setImageBitmap(SessionManager.getInstance().getUser().getAvatar());
         }else{
-            HelperMethods.imageLoadFromUrl(getApplicationContext(), ConstantValues.getAvatarUrl()+SessionManager.getInstance().getUser().getImage(),settingsImage);
+            HelperMethods.imageLoadFromUrl(getApplicationContext(), ConstantValues.AVATAR_URL+SessionManager.getInstance().getUser().getImage(),settingsImage);
         }
         Log.d("SettingsResume","RUN");
 

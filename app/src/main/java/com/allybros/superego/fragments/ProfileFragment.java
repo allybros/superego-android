@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -135,8 +137,8 @@ public class ProfileFragment extends Fragment {
             }
         };
 
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(refreshReceiver, new IntentFilter(ConstantValues.getActionRefreshProfile()));
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(rewardReceiver, new IntentFilter(ConstantValues.getActionEarnedReward()));
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(refreshReceiver, new IntentFilter(ConstantValues.ACTION_REFRESH_PROFILE));
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(rewardReceiver, new IntentFilter(ConstantValues.ACTION_EARNED_REWARD));
     }
 
     @Override
@@ -164,11 +166,12 @@ public class ProfileFragment extends Fragment {
         profileSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-            LoadProfileTask.loadProfileTask(getContext(), sessionManager.getSessionToken(), ConstantValues.getActionRefreshProfile());
+            LoadProfileTask.loadProfileTask(getContext(), sessionManager.getSessionToken(), ConstantValues.ACTION_REFRESH_PROFILE);
             }
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @SuppressLint("DefaultLocale")
     private void initProfileCard(){
         //Set profile card components
@@ -224,7 +227,7 @@ public class ProfileFragment extends Fragment {
         btnBadgeRated.setText(sessionManager.getUser().getRated() + getString(R.string.rated));
         Log.d("Test Id", sessionManager.getUser().getTestId());
 
-        HelperMethods.imageLoadFromUrl(getContext(), ConstantValues.getAvatarUrl()+sessionManager.getUser().getImage(), imageViewAvatar);
+        HelperMethods.imageLoadFromUrl(getContext(), ConstantValues.AVATAR_URL+sessionManager.getUser().getImage(), imageViewAvatar);
     }
 
     /**
@@ -240,7 +243,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
             Intent addTestIntent = new Intent(getContext(), WebViewActivity.class);
-            addTestIntent.putExtra("url", ConstantValues.getCreateTest());
+            addTestIntent.putExtra("url", ConstantValues.CREATE_TEST);
             addTestIntent.putExtra("title", getString(R.string.title_activity_new_test));
             startActivity(addTestIntent);
             }
@@ -341,7 +344,7 @@ public class ProfileFragment extends Fragment {
      * Initializes and loads rewarded video ad.
      */
     private void prepareRewardedAd(){
-        this.rewardedAd = new RewardedAd(getActivity(), ConstantValues.getAdmobAddInterfaceId());
+        this.rewardedAd = new RewardedAd(getActivity(), ConstantValues.ADMOB_ADD_INTERFACE_ID);
         final RewardedAdLoadCallback adLoadCallback = new RewardedAdLoadCallback() {
             @Override
             public void onRewardedAdLoaded() {

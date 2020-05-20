@@ -56,7 +56,7 @@ public class PasswordResetActivity extends AppCompatActivity {
         etoldPassword = (EditText)  findViewById(R.id.etOldPassword);
         etnewPassword = (EditText) findViewById(R.id.etNewPassword);
         etnewPasswordAgain = (EditText) findViewById(R.id.etNewPasswordAgain);
-        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(changePasswordReceiver, new IntentFilter(ConstantValues.getActionPasswordChange()));
+        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(changePasswordReceiver, new IntentFilter(ConstantValues.ACTION_PASSWORD_CHANGE));
 
 
     }
