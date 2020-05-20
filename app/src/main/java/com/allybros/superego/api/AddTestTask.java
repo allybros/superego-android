@@ -28,7 +28,7 @@ public class AddTestTask extends Activity {
 
         RequestQueue queue = Volley.newRequestQueue(context);
 
-        StringRequest jsonRequest=new StringRequest(Request.Method.POST, ConstantValues.getAddTestUrl(), new Response.Listener<String>() {
+        StringRequest jsonRequest=new StringRequest(Request.Method.POST, ConstantValues.ADD_TEST_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Intent addTestIntent= new Intent(context, WebViewActivity.class);

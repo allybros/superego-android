@@ -64,7 +64,7 @@ public class ResultsFragment extends Fragment {
         };
         //TODO: Replace when new API package is developed
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(resultsRefreshReceiver,
-                new IntentFilter(ConstantValues.getActionRefreshResults()));
+                new IntentFilter(ConstantValues.ACTION_REFRESH_RESULTS));
     }
 
     @Override
@@ -97,7 +97,7 @@ public class ResultsFragment extends Fragment {
             //Start load task
             LoadProfileTask.loadProfileTask(getContext(),
                 SessionManager.getInstance().getSessionToken(),
-                ConstantValues.getActionRefreshResults());
+                ConstantValues.ACTION_REFRESH_RESULTS);
             }
         });
 

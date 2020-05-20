@@ -46,10 +46,10 @@ public class LoadProfileTask{
          * */
 
         RequestQueue queue = Volley.newRequestQueue(context);
-        if(action.equals(ConstantValues.getActionRefreshProfile())) intent = new Intent(ConstantValues.getActionRefreshProfile());
-        else if (action.equals(ConstantValues.getActionRefreshResults())) intent = new Intent(ConstantValues.getActionRefreshResults());
+        if(action.equals(ConstantValues.ACTION_REFRESH_PROFILE)) intent = new Intent(ConstantValues.ACTION_REFRESH_PROFILE);
+        else if (action.equals(ConstantValues.ACTION_REFRESH_RESULTS)) intent = new Intent(ConstantValues.ACTION_REFRESH_RESULTS);
 
-        final StringRequest jsonRequest=new StringRequest(Request.Method.POST, ConstantValues.getLoadProfile(), new Response.Listener<String>() {
+        final StringRequest jsonRequest=new StringRequest(Request.Method.POST, ConstantValues.LOAD_PROFILE, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("Response_Load_Profile",response.toString());
@@ -59,7 +59,7 @@ public class LoadProfileTask{
                     switch (status){
 
                         case ErrorCodes.SYSFAIL:
-                            if(action.equals(ConstantValues.getActionRefreshProfile())){
+                            if(action.equals(ConstantValues.ACTION_REFRESH_PROFILE)){
                                 intent.putExtra("status", ErrorCodes.SUCCESS);
                                 LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                             }else {
@@ -91,8 +91,8 @@ public class LoadProfileTask{
                             }
                             SessionManager.getInstance().setUser(new User(user_type,rated,credit,image,test_id,username,user_bio,email,scoresList));
 
-                            if(action.equals(ConstantValues.getActionRefreshProfile()) ||
-                                action.equals(ConstantValues.getActionRefreshResults())){
+                            if(action.equals(ConstantValues.ACTION_REFRESH_PROFILE) ||
+                                action.equals(ConstantValues.ACTION_REFRESH_RESULTS)){
                                 intent.putExtra("status", ErrorCodes.SUCCESS);
                                 LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                             }

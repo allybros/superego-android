@@ -6,21 +6,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.R;
 import com.allybros.superego.api.SearchTask;
@@ -76,7 +73,7 @@ public class SearchFragment extends Fragment {
 
         //TODO: Replace when the API is updated
         LocalBroadcastManager.getInstance(getContext())
-                .registerReceiver(searchResponseReceiver, new IntentFilter(ConstantValues.getActionSearch()));
+                .registerReceiver(searchResponseReceiver, new IntentFilter(ConstantValues.ACTION_SEARCH));
 
     }
 

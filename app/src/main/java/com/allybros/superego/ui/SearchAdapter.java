@@ -2,6 +2,7 @@ package com.allybros.superego.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import com.allybros.superego.R;
 import com.allybros.superego.activity.WebViewActivity;
@@ -25,6 +27,7 @@ public class SearchAdapter extends ArrayAdapter<User> {
         super(context, R.layout.search_user_row, users);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -48,7 +51,7 @@ public class SearchAdapter extends ArrayAdapter<User> {
 
         tvSearchUsername.setText(u.getUsername());
         tvSearchUserbio.setText(bioSum);
-        HelperMethods.imageLoadFromUrl(getContext(), ConstantValues.getAvatarUrl()+u.getAvatarName(), ivSearchUserAvatar);
+        HelperMethods.imageLoadFromUrl(getContext(), ConstantValues.AVATAR_URL+u.getAvatarName(), ivSearchUserAvatar);
         // Set web activity title
         String belirtmeHali = ""+turkceBelirtmeHaliBulucu(u.getUsername());
         final String webActivityTitle = getContext().getString(R.string.title_activity_rate_user, u.getUsername(), belirtmeHali);
