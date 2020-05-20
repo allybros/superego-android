@@ -53,7 +53,7 @@ public class SplashActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(currentContext);
         final ArrayList<Trait> traits=new ArrayList<>();
 
-        final StringRequest jsonRequest = new StringRequest(Request.Method.GET, ConstantValues.getAllTraits(), new Response.Listener<String>() {
+        final StringRequest jsonRequest = new StringRequest(Request.Method.GET, ConstantValues.ALL_TRAITS, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("getAllTraits",response.toString());

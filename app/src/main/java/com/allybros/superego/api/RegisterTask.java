@@ -27,9 +27,9 @@ public class RegisterTask {
     public static void registerTask (final Context context, final String username, final String email, final String password, final boolean agreement){
 
         RequestQueue queue = Volley.newRequestQueue(context);
-        final Intent intent = new Intent(ConstantValues.getActionRegister());
+        final Intent intent = new Intent(ConstantValues.ACTION_REGISTER);
 
-        final StringRequest jsonRequest=new StringRequest(Request.Method.POST, ConstantValues.getREGISTER(), new Response.Listener<String>() {
+        final StringRequest jsonRequest=new StringRequest(Request.Method.POST, ConstantValues.REGISTER, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
@@ -73,7 +73,7 @@ public class RegisterTask {
                 params.put("email", email);
                 params.put("password", password);
                 params.put("conditions", String.valueOf(agreement));
-                params.put("g-recaptcha-response", ConstantValues.getRECAPTCHA_SKIP());
+                params.put("g-recaptcha-response", ConstantValues.RECAPTCHA_SKIP);
                 return params;
             }
         };

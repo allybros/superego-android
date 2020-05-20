@@ -27,7 +27,7 @@ public class SessionManager {
      * @param context required to use SharedPreferences functions
      */
     public void readInfo(Context context){
-        SharedPreferences pref = context.getSharedPreferences(ConstantValues.getUserInformationPref(), context.MODE_PRIVATE);
+        SharedPreferences pref = context.getSharedPreferences(ConstantValues.USER_INFORMATION_PREF, context.MODE_PRIVATE);
 
         SessionManager.getInstance().setSessionToken(pref.getString("session_token", ""));
         SessionManager.getInstance().setUserId(pref.getString("uid",""));
@@ -44,7 +44,7 @@ public class SessionManager {
      *
      */
     public void writeInfoLocalStorage(String uid, String password, String session_token,Context context){
-        SharedPreferences pref = context.getSharedPreferences(ConstantValues.getUserInformationPref(), Context.MODE_PRIVATE);
+        SharedPreferences pref = context.getSharedPreferences(ConstantValues.USER_INFORMATION_PREF, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         editor.putString("uid",uid);
         editor.putString("password",password);

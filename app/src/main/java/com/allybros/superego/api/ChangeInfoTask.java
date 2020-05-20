@@ -34,10 +34,10 @@ public class ChangeInfoTask extends Activity {
      * @param session_token     required to verify the user
      */
     public static void changeInfoTask(final Context context, final String new_uid, final String new_email, final String new_information, final String session_token){
-        final Intent intent = new Intent(ConstantValues.getActionUpdateInformation());
+        final Intent intent = new Intent(ConstantValues.ACTION_UPDATE_INFORMATION);
         RequestQueue queue = Volley.newRequestQueue(context);
 
-        StringRequest jsonRequest=new StringRequest(Request.Method.POST, ConstantValues.getUpdateInformation(), new Response.Listener<String>() {
+        StringRequest jsonRequest=new StringRequest(Request.Method.POST, ConstantValues.UPDATE_INFORMATION, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("sego-Response",response.toString());

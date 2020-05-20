@@ -53,7 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
         checkBoxAggrement=(CheckBox) findViewById(R.id.checkboxAggrement);
 
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter(ConstantValues.getActionRegister()));
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter(ConstantValues.ACTION_REGISTER));
 
         tvAggrementRegister.setMovementMethod(LinkMovementMethod.getInstance());
 

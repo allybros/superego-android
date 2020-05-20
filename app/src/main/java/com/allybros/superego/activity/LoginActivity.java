@@ -68,8 +68,8 @@ public class LoginActivity extends AppCompatActivity {
         etPassword=(TextInputEditText)findViewById(R.id.etPassword);
         passwordTextInput=(TextInputLayout)findViewById(R.id.password_text_input);
         loginCard= (MaterialCardView) findViewById(R.id.loginCard);
-        LocalBroadcastManager.getInstance(this).registerReceiver(loginReceiver, new IntentFilter(ConstantValues.getActionLogin()));
-        LocalBroadcastManager.getInstance(this).registerReceiver(loginSocialMediaReceiver, new IntentFilter(ConstantValues.getActionSocialMediaLogin()));
+        LocalBroadcastManager.getInstance(this).registerReceiver(loginReceiver, new IntentFilter(ConstantValues.ACTION_LOGIN));
+        LocalBroadcastManager.getInstance(this).registerReceiver(loginSocialMediaReceiver, new IntentFilter(ConstantValues.ACTION_SOCIAL_MEDIA_LOGIN));
 
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override

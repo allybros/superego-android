@@ -21,10 +21,10 @@ public class SearchTask {
 
     public static void searchTask(final Context context, final String query) {
         RequestQueue queue = Volley.newRequestQueue(context);
-        final Intent intent = new Intent(ConstantValues.getSearchUrl());
+        final Intent intent = new Intent(ConstantValues.SEARCH_URL);
 
         //Build request url
-        final String requestUrl = ConstantValues.getSearchUrl()+query;
+        final String requestUrl = ConstantValues.SEARCH_URL+query;
         StringRequest jsonRequest=new StringRequest(Request.Method.GET, requestUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -35,7 +35,7 @@ public class SearchTask {
                     JSONArray jsonObject=new JSONArray(response);
                     Log.d("query-Response",response.toString());
                     intent.putExtra("result",response.toString());
-                    intent.setAction(ConstantValues.getActionSearch());
+                    intent.setAction(ConstantValues.ACTION_SEARCH);
                     LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
 
 

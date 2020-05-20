@@ -29,9 +29,9 @@ public class ImageChangeTask {
         Log.d("Image",image);
         Log.d("Session",SessionManager.getInstance().getSessionToken());
 
-        final Intent intent = new Intent(ConstantValues.getActionUpdateImage());
+        final Intent intent = new Intent(ConstantValues.ACTION_UPDATE_IMAGE);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, ConstantValues.getUploadImage(), new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, ConstantValues.UPLOAD_IMAGE, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("sego-FileUpload",response.toString());

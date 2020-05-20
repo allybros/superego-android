@@ -29,11 +29,11 @@ public class EarnRewardTask {
 
     public static void EarnRewardTask(final Context context, final String session_token){
 
-        final Intent intent = new Intent(ConstantValues.getActionEarnedReward());
+        final Intent intent = new Intent(ConstantValues.ACTION_EARNED_REWARD);
 
         RequestQueue queue = Volley.newRequestQueue(context);
 
-        final StringRequest jsonRequest=new StringRequest(Request.Method.POST, ConstantValues.getUrlEarnReward(), new Response.Listener<String>() {
+        final StringRequest jsonRequest=new StringRequest(Request.Method.POST, ConstantValues.URL_EARN_REWARD, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
