@@ -23,10 +23,17 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * @author 0rcun
+ */
 public class EarnRewardTask {
 
-
+    /**
+     * Function sends request to accept reward.
+     *
+     * @param context        required to build request and send Broadcast
+     * @param session_token  required to verify the user
+     */
     public static void EarnRewardTask(final Context context, final String session_token){
 
         final Intent intent = new Intent(ConstantValues.ACTION_EARNED_REWARD);
