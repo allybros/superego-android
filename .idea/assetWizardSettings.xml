@@ -143,8 +143,9 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_fg" />
-                            <entry key="sourceFile" value="$PROJECT_DIR$/../../documents/image/launcher/ic_fg.svg" />
+                            <entry key="opacityPercent" value="44" />
+                            <entry key="outputName" value="ic_facebook" />
+                            <entry key="sourceFile" value="$USER_HOME$/Downloads/facebook.svg" />
                           </map>
                         </option>
                       </PersistentState>
