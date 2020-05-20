@@ -6,20 +6,29 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
-public class FileUploadHelper{
+/**
+ * RequestForUploadImage class defines the request to upload image to url
+ *
+ * @author 0rcun
+ */
+
+public class RequestForUploadImage {
 
     private RequestQueue mRequestQueue;
-    private static FileUploadHelper mInstance;
+    private static RequestForUploadImage mInstance;
     private static Context mContext;
 
-    private FileUploadHelper(Context context){
+    /**
+     * Sets the variables needed
+     */
+    private RequestForUploadImage(Context context){
         mContext = context;
         mRequestQueue = getRequestQueue();
     }
 
-    public static synchronized FileUploadHelper getInstance(Context context) {
+    public static synchronized RequestForUploadImage getInstance(Context context) {
         if(mInstance == null){
-            mInstance = new FileUploadHelper(context);
+            mInstance = new RequestForUploadImage(context);
         }
 
         return mInstance;

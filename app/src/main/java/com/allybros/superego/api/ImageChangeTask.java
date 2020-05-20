@@ -9,7 +9,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
-import com.allybros.superego.util.FileUploadHelper;
+import com.allybros.superego.util.RequestForUploadImage;
 import com.allybros.superego.util.SessionManager;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -102,6 +102,6 @@ public class ImageChangeTask {
             }
         };
 
-        FileUploadHelper.getInstance(context).addToRequestQue(stringRequest);
+        RequestForUploadImage.getInstance(context).addToRequestQue(stringRequest);
     }
 }
