@@ -77,23 +77,20 @@ public class SearchAdapter extends ArrayAdapter<User> {
         char[] unluler = "aeıioöuü".toCharArray();
 
         for (int i = isim.length()-1; i >= 0; i--) {
-            for (char c : unluler) {
-                if (isim.charAt(i) == c){
-                    switch (c) {
-                        case 'a':
-                        case 'ı':
-                            return "ı";
-                        case 'e':
-                        case 'i':
-                            return "i";
-                        case 'o':
-                        case 'u':
-                            return "u";
-                        case 'ö':
-                        case 'ü':
-                            return "ü";
-                    }
-                }
+            char c = isim.charAt(i);
+            switch (c) {
+                case 'a':
+                case 'ı':
+                    return "ı";
+                case 'e':
+                case 'i':
+                    return "i";
+                case 'o':
+                case 'u':
+                    return "u";
+                case 'ö':
+                case 'ü':
+                    return "ü";
             }
         }
         return "i";
