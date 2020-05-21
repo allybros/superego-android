@@ -19,14 +19,14 @@ import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.util.SessionManager;
 
-public class PasswordResetActivity extends AppCompatActivity {
+public class ChangePasswordActivity extends AppCompatActivity {
 
     Button btChangePassword;
     EditText etoldPassword, etnewPassword, etnewPasswordAgain;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_password_reset);
+        setContentView(R.layout.activity_change_password);
         initializeComponents();
 
         btChangePassword.setOnClickListener(new View.OnClickListener() {
