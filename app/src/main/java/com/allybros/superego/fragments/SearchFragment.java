@@ -130,22 +130,22 @@ public class SearchFragment extends Fragment {
         if (parent == null) return;
 
         if (users.size() != 0){
-            //Hide info
+            // Result set is not empty, hide search info
             YoYo.with(Techniques.FadeOut).duration(200).playOn(ivIconSearchInfo);
             YoYo.with(Techniques.FadeOut).duration(200).playOn(tvSearchInfo);
             ivIconSearchInfo.setVisibility(View.INVISIBLE);
             tvSearchInfo.setVisibility(View.INVISIBLE);
-        } else {
-            //Show info
+            // Show results
+            YoYo.with(Techniques.FadeOut).duration(300).playOn(listViewSearchResults);
+            SearchAdapter adapter = new SearchAdapter(parent.getApplicationContext(), users);
+            listViewSearchResults.setAdapter(adapter);
+            YoYo.with(Techniques.FadeIn).duration(300).playOn(listViewSearchResults);
+        } else if (tvSearchInfo.getVisibility() == View.INVISIBLE) {
+            //Show info if not visible
             YoYo.with(Techniques.FadeIn).duration(300).playOn(ivIconSearchInfo);
             YoYo.with(Techniques.FadeIn).duration(300).playOn(tvSearchInfo);
             ivIconSearchInfo.setVisibility(View.VISIBLE);
             tvSearchInfo.setVisibility(View.VISIBLE);
         }
-
-        YoYo.with(Techniques.FadeOut).duration(300).playOn(listViewSearchResults);
-        SearchAdapter adapter = new SearchAdapter(parent.getApplicationContext(), users);
-        listViewSearchResults.setAdapter(adapter);
-        YoYo.with(Techniques.FadeIn).duration(300).playOn(listViewSearchResults);
     }
 }
