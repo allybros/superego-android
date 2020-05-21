@@ -103,4 +103,5 @@
     <string name="content_developers">Orçun Kamiloğlu\nUmut Can Alaçam</string>
     <string name="title_search">Arkadaşlarını Bul</string>
     <string name="hint_username">Kullanıcı adı</string>
+    <string name="search_info">insightof.me\' de kayıtlı arkadaşlarını bulmak için kullanıcı adıyla arama yap.</string>
 </resources>

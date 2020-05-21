@@ -13,7 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -34,14 +36,16 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 /**
- * Search Fragment Cass
+ * Search Fragment Class
  * @author umutalacam
  */
-
 public class SearchFragment extends Fragment {
 
     private EditText etSearchUser;
     private ListView listViewSearchResults;
+    private ImageView ivIconSearchInfo;
+    private TextView tvSearchInfo;
+
     private BroadcastReceiver searchResponseReceiver;
 
     public SearchFragment() {
@@ -54,12 +58,13 @@ public class SearchFragment extends Fragment {
                     JSONArray results = new JSONArray(resultResponse);
                     ArrayList<User> usersFound = new ArrayList<>();
                     for (int i = 0; i < results.length(); i++) {
+                        //Decode search response
                         JSONObject result = results.getJSONObject(i);
                         String username = result.getString("username");
                         String userBio = result.getString("user_bio");
                         String testId = result.getString("test_id");
                         String avatar = result.getString("avatar");
-
+                        //Collect users
                         User u = new User(testId, username, userBio, avatar);
                         usersFound.add(u);
                     }
@@ -94,22 +99,18 @@ public class SearchFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         etSearchUser = getView().findViewById(R.id.etSearchUser);
         listViewSearchResults = getView().findViewById(R.id.listViewSearchResults);
+        ivIconSearchInfo = getView().findViewById(R.id.ivIconSearchInfo);
+        tvSearchInfo = getView().findViewById(R.id.tvSearchInfo);
 
         etSearchUser.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                performSearch(charSequence.toString());
-            }
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { performSearch(charSequence.toString()); }
 
             @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
+            public void afterTextChanged(Editable editable) { }
         });
 
 
@@ -119,12 +120,31 @@ public class SearchFragment extends Fragment {
         SearchTask.searchTask(getContext(), query);
     }
 
+    /**
+     * Populate list view with search results.
+     * @param users List of users that intended to be shown in ListView
+     */
     private void populateResults(ArrayList<User> users){
         //Prevent from null pointers
         Activity parent = getActivity();
         if (parent == null) return;
-        SearchAdapter adapter = new SearchAdapter(parent.getApplicationContext(), users);
+
+        if (users.size() != 0){
+            //Hide info
+            YoYo.with(Techniques.FadeOut).duration(200).playOn(ivIconSearchInfo);
+            YoYo.with(Techniques.FadeOut).duration(200).playOn(tvSearchInfo);
+            ivIconSearchInfo.setVisibility(View.INVISIBLE);
+            tvSearchInfo.setVisibility(View.INVISIBLE);
+        } else {
+            //Show info
+            YoYo.with(Techniques.FadeIn).duration(300).playOn(ivIconSearchInfo);
+            YoYo.with(Techniques.FadeIn).duration(300).playOn(tvSearchInfo);
+            ivIconSearchInfo.setVisibility(View.VISIBLE);
+            tvSearchInfo.setVisibility(View.VISIBLE);
+        }
+
         YoYo.with(Techniques.FadeOut).duration(300).playOn(listViewSearchResults);
+        SearchAdapter adapter = new SearchAdapter(parent.getApplicationContext(), users);
         listViewSearchResults.setAdapter(adapter);
         YoYo.with(Techniques.FadeIn).duration(300).playOn(listViewSearchResults);
     }
