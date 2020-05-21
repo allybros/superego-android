@@ -4,8 +4,11 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -17,6 +20,7 @@ import com.allybros.superego.fragments.ProfileFragment;
 import com.allybros.superego.fragments.ResultsFragment;
 import com.allybros.superego.fragments.SearchFragment;
 import com.allybros.superego.ui.PagerAdapter;
+import com.allybros.superego.util.InputMethodWatcher;
 import com.allybros.superego.util.SessionManager;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -33,6 +37,7 @@ public class UserPageActivity extends AppCompatActivity {
     private ProfileFragment profileFragment;
     private ResultsFragment resultsFragment;
     private SearchFragment searchFragment;
+    private InputMethodWatcher inputMethodWatcher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +49,12 @@ public class UserPageActivity extends AppCompatActivity {
         navigationItems.add((BottomNavigationItemView) findViewById(R.id.navigation_results));
         navigationItems.add((BottomNavigationItemView) findViewById(R.id.navigation_search));
 
+        initInputMethodWatcher();
         initViewPager();
         setViewPagerAdapter();
         initBottomNavigation();
         setActivePage(0); //Set active page as "Profile" initially
+
     }
 
     @Override
@@ -58,6 +65,27 @@ public class UserPageActivity extends AppCompatActivity {
             refreshFragments(0);
         }
         super.onResume();
+    }
+
+    /**
+     * Initializes input method watcher for detecting virtual keyboard.
+     */
+    private void initInputMethodWatcher(){
+        View contentRoot = ((ViewGroup) findViewById(android.R.id.content)).getChildAt(0);
+        inputMethodWatcher = new InputMethodWatcher(contentRoot);
+        inputMethodWatcher.setKeyboardStatusListener(new InputMethodWatcher.KeyboardStatusListener() {
+            @Override
+            public void onShown() {
+                Log.d("Caught keyboard", "Shown");
+                setBottomNavigationVisible(false);
+            }
+
+            @Override
+            public void onHidden() {
+                Log.d("Caught keyboard", "Hidden");
+                setBottomNavigationVisible(true);
+            }
+        });
     }
 
     /**
@@ -116,6 +144,20 @@ public class UserPageActivity extends AppCompatActivity {
     }
 
     /**
+     * Show bottom navigation or not.
+     * @param visible True if navigation bar needs to be visible
+     */
+    private void setBottomNavigationVisible(boolean visible){
+        if (visible) {
+            navigation.setVisibility(View.VISIBLE);
+            YoYo.with(Techniques.FadeInUp).duration(300).playOn(navigation);
+        } else {
+            YoYo.with(Techniques.FadeOutDown).duration(300).playOn(navigation);
+            navigation.setVisibility(View.GONE);
+        }
+    }
+
+    /**
      * Updates navigation bar and action bar with page index
      * @param index Page Index
      */
@@ -139,6 +181,11 @@ public class UserPageActivity extends AppCompatActivity {
         activeNavItem.setIconTintList(ColorStateList.valueOf(getColor(R.color.White)));
         activeNavItem.setChecked(true);
         viewPager.setCurrentItem(index);
+        //Hide soft keyboard if showing.
+        if (inputMethodWatcher.isKeyboardShown()){
+            Log.d("Page changed", "Hide soft keyboard");
+            inputMethodWatcher.hideSoftKeyboard();
+        }
     }
 
     /**
