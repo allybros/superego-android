@@ -146,6 +146,10 @@ public class SearchFragment extends Fragment {
             YoYo.with(Techniques.FadeIn).duration(300).playOn(tvSearchInfo);
             ivIconSearchInfo.setVisibility(View.VISIBLE);
             tvSearchInfo.setVisibility(View.VISIBLE);
+            // Clear results
+            YoYo.with(Techniques.FadeOut).duration(300).playOn(listViewSearchResults);
+            SearchAdapter adapter = new SearchAdapter(parent.getApplicationContext(), users);
+            listViewSearchResults.setAdapter(adapter);
         }
     }
 }
