@@ -14,7 +14,9 @@
         android:roundIcon="@drawable/ab_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.ChangePasswordActivity"></activity>
+        <activity android:name=".activity.ChangePasswordActivity"
+            android:label="@string/activity_change_password"
+            android:theme="@style/AppTheme.TransparentBackground"/>
         <activity
             android:name=".activity.SettingsActivity"
             android:label="@string/activity_label_options"
