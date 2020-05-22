@@ -41,7 +41,7 @@ android {
         implementation 'com.r0adkll:slidableactivity:2.1.0'
         implementation 'com.daimajia.easing:library:2.0@aar'
         implementation 'com.daimajia.androidanimations:library:2.3@aar'
-
+        implementation 'me.zhanghai.android.materialprogressbar:library:1.6.1'
 
     }
 }
