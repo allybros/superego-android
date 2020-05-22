@@ -104,4 +104,8 @@
     <string name="title_search">Arkadaşlarını Bul</string>
     <string name="hint_username">Kullanıcı adı</string>
     <string name="search_info">insightof.me\' de kayıtlı arkadaşlarını bulmak için kullanıcı adıyla arama yap.</string>
+    <string name="activity_change_password">Parola Değiştir</string>
+    <string name="new_password_again">Yeni Parola (Tekrar)</string>
+    <string name="prompt_new_password">Yeni parola</string>
+    <string name="prompt_current_password">Şuanki parolan</string>
 </resources>

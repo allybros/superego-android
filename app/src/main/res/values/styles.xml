@@ -41,6 +41,26 @@
         <item name="android:actionBarSize">52dp</item>
     </style>
 
+    <style name="SegoInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/materialDeepPurple</item>
+        <item name="android:textColor">@color/materialDeepPurple</item>"
+        <item name="hintTextColor">@color/materialDeepPurple</item>
+        <item name="cornerRadius">8dp</item>
+    </style>
 
+    <style name="SegoEditText">
+        <item name="android:textColor">@color/materialDeepPurple</item>
+        <item name="android:padding">0dp</item>
+    </style>
+
+    <style name="SegoBtn" parent="Widget.MaterialComponents.Button">
+        <item name="cornerRadius">8dp</item>
+        <item name="textAllCaps">false</item>
+        <item name="android:padding">10dp</item>
+        <item name="backgroundTint">@color/materialPurple</item>
+        <item name="android:textColor">@color/White</item>
+        <item name="android:textSize">16sp</item>
+
+    </style>
 
 </resources>
