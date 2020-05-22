@@ -7,8 +7,11 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -18,80 +21,102 @@ import com.allybros.superego.api.PasswordChangeTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.util.SessionManager;
+import com.daimajia.androidanimations.library.YoYo;
+import com.google.android.material.snackbar.Snackbar;
+
+import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 
 public class ChangePasswordActivity extends AppCompatActivity {
 
+    ScrollView rootView;
+    MaterialProgressBar progressChangePassword;
     Button btChangePassword;
     EditText etoldPassword, etnewPassword, etnewPasswordAgain;
+    private BroadcastReceiver changePasswordReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
+        rootView = findViewById(R.id.contentRootChangePassword);
+
+        changePasswordReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                int status = intent.getIntExtra("status",0);
+                setProgressVisibility(false);
+                //Check status
+                switch (status){
+                    case ErrorCodes.SUCCESS:
+                        Snackbar.make(rootView,"Başarıyla parolan değiştirildi.", 2000).show();
+                        break;
+                    case ErrorCodes.SYSFAIL:
+                        Snackbar.make(rootView,"Sistemsel bir hata meydana geldi", 2000)
+                                .setAction(getString(R.string.pleaseTryAgain), new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        btChangePassword.performClick();
+                                    }
+                                }).show();
+                        break;
+                    case ErrorCodes.PASSWORD_EMPTY:
+                        Snackbar.make(rootView,"Parola boş olamaz.", 2000).show();
+                        break;
+                    case ErrorCodes.PASSWORD_MISMATCH:
+                        Snackbar.make(rootView,"Parolalar eşleşmiyor", 2000).show();
+                        break;
+                    case  ErrorCodes.PASSWORD_NOT_LEGAL:
+                        Snackbar.make(rootView,"Belirlediğin parola şartları karşılamıyor.", 2000).show();
+                        break;
+                    case  ErrorCodes.UNAUTHORIZED:
+                        Snackbar.make(rootView,"Geçerli parola yanlış", 2000).show();
+                        break;
+                }
+            }
+        };
+        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(changePasswordReceiver, new IntentFilter(ConstantValues.ACTION_PASSWORD_CHANGE));
         initializeComponents();
+    }
+
+    private void initializeComponents(){
+        btChangePassword = findViewById(R.id.btChangePassword);
+        progressChangePassword = findViewById(R.id.progressChangePassword);
+        etoldPassword = findViewById(R.id.etOldPassword);
+        etnewPassword = findViewById(R.id.etNewPassword);
+        etnewPasswordAgain = findViewById(R.id.etNewPasswordAgain);
 
         btChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if( etnewPassword.getText().toString().isEmpty() || etoldPassword.getText().toString().isEmpty() ||
-                    etnewPasswordAgain.getText().toString().isEmpty()){ // Are fields null?
-
-                    Log.d("ChangePasswordText","gerekli alanlar dolu değil");
-                }else if( !(etnewPassword.getText().toString().equals(etnewPasswordAgain.getText().toString())) ){  // Are New pass and new pass again equal?
-                    Log.d("ChangePasswordText","new pass and new pass again mismatch");
-                }else{                                                                          //Send request to change password
-                    Log.d("ChangePasswordText","İstek atıldı");
-                    PasswordChangeTask.passwordChangeTask(getApplicationContext(),
-                            SessionManager.getInstance().getSessionToken(),
-                            etoldPassword.getText().toString(),
-                            etnewPassword.getText().toString());
-                }
+                attemptChangePassword();
 
             }
         });
-
     }
 
-    private void initializeComponents(){
-        btChangePassword = (Button) findViewById(R.id.btChangePassword);
-        etoldPassword = (EditText)  findViewById(R.id.etOldPassword);
-        etnewPassword = (EditText) findViewById(R.id.etNewPassword);
-        etnewPasswordAgain = (EditText) findViewById(R.id.etNewPasswordAgain);
-        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(changePasswordReceiver, new IntentFilter(ConstantValues.ACTION_PASSWORD_CHANGE));
+    private void attemptChangePassword(){
+        setProgressVisibility(true);
+        // Get user inputs
+        String oldPass = etoldPassword.getText().toString();
+        String newPass = etnewPassword.getText().toString();
+        String newPassAgain = etnewPasswordAgain.getText().toString();
+        setProgressVisibility(true);
 
-
+        PasswordChangeTask.passwordChangeTask(getApplicationContext(),
+                SessionManager.getInstance().getSessionToken(),
+                oldPass,
+                newPass);
     }
 
-    /*
-    *   Receives password process result
-    *
-    * */
-    private BroadcastReceiver changePasswordReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            int status = intent.getIntExtra("status",0);
-            Log.d("receiver", "Got message: " + status);
-
-            //Check status
-            switch (status){
-                case ErrorCodes.SUCCESS:
-                    Log.d("ChangePassword: ",""+ status);
-                    break;
-                case ErrorCodes.SYSFAIL:
-                    Log.d("ChangePassword: ",""+status);
-                    break;
-                case ErrorCodes.PASSWORD_EMPTY:
-                    Log.d("ChangePassword: ",""+status);
-                    break;
-                case ErrorCodes.PASSWORD_MISMATCH:
-                    Log.d("ChangePassword: ",""+status);
-                    break;
-                case  ErrorCodes.PASSWORD_NOT_LEGAL:
-                    Log.d("ChangePassword: ",""+status);
-                    break;
-                case  ErrorCodes.UNAUTHORIZED:
-                    Log.d("ChangePassword: ",""+status);
-                    break;
-            }
+    /**
+     * Sets progress view visibility.
+     * @param visible Set true when progress indicator needs to be shown.
+     */
+    private void setProgressVisibility(boolean visible) {
+        if (visible) {
+            progressChangePassword.setVisibility(View.VISIBLE);
+        } else {
+            progressChangePassword.setVisibility(View.INVISIBLE);
         }
-    };
+    }
+
 }
