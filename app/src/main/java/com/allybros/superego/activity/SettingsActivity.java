@@ -72,9 +72,8 @@ public class SettingsActivity extends AppCompatActivity {
         optionChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ChangePasswordActivity.class);
-                startActivity(intent);
-                finish();
+                Intent i = new Intent(getApplicationContext(), ChangePasswordActivity.class);
+                startActivity(i);
             }
         });
 
@@ -104,8 +103,8 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void logout(){
         AlertDialog.Builder builder =new AlertDialog.Builder(SettingsActivity.this, R.style.SegoAlertDialog);
-        builder.setTitle("Oturumu Sonlandır")
-                .setMessage("Geçerli oturmunu sonlandırmak istediğine emin misin?")
+        builder.setTitle(R.string.alert_title_end_session)
+                .setMessage(R.string.alert_context_end_session)
                 .setPositiveButton(R.string.action_yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

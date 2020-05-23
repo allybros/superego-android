@@ -89,7 +89,6 @@
     <string name="option_sign_out">Oturumu Kapat</string>
     <string name="option_sign_out_desc">Geçerli oturumunu sonlandır.</string>
     <string name="activity_label_options">Seçenekler</string>
-
     <string name="content_about">
         insightof.me arkadaşlarınızın kişiliğinizle ilgili değerlendirme yapabileceği
         bir sosyal platformdur. insightof.me ile oluşturacağınız kendinize özel testiniz
@@ -105,7 +104,17 @@
     <string name="hint_username">Kullanıcı adı</string>
     <string name="search_info">insightof.me\' de kayıtlı arkadaşlarını bulmak için kullanıcı adıyla arama yap.</string>
     <string name="activity_change_password">Parola Değiştir</string>
-    <string name="new_password_again">Yeni Parola (Tekrar)</string>
+    <string name="prompt_new_password_again">Yeni Parola (Tekrar)</string>
     <string name="prompt_new_password">Yeni parola</string>
     <string name="prompt_current_password">Şuanki parolan</string>
+    <string name="alert_title_end_session">Oturumu Sonlandır</string>
+    <string name="alert_context_end_session">Geçerli oturmunu sonlandırmak istediğine emin misin?</string>
+    <string name="info_change_password_success">Parolan başarıyla değiştirildi.</string>
+    <string name="info_password_not_legal">Parolan en az 7 karakterden oluşmalı, özel karakter içermemelidir.</string>
+    <string name="info_password_wrong">Geçerli parolan yanlış.</string>
+    <string name="info_sysfail">Sistemsel bir hata meydana geldi.</string>
+    <string name="action_try_again">Tekrar Dene</string>
+    <string name="input_error_enter_current_password">Geçerli parolanı girmelisin</string>
+    <string name="input_error_enter_new_pass">Yeni bir parola girmelisin</string>
+    <string name="input_error_password_mismatch">Parolalar eşleşmiyor</string>
 </resources>
