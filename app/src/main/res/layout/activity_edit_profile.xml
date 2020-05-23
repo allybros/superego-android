@@ -4,153 +4,130 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:gravity="center"
+    android:layout_height="match_parent"
     android:scrollbars="vertical"
     android:isScrollContainer="true"
     android:orientation="vertical"
-    android:background="@color/White"
-    android:layout_height="match_parent"
+    android:background="@color/fragmentBackground"
     tools:context=".activity.EditProfileActivity">
 
-    <com.vlad1m1r.lemniscate.funny.HeartProgressView
-        android:id="@+id/hearthAnimation"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
-        android:layout_marginTop="36dp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+    <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+        android:id="@+id/progressEditProfile"
+        android:visibility="invisible"
+        android:layout_width="0dp"
+        android:layout_height="3dp"
+        android:indeterminate="true"
         app:layout_constraintTop_toTopOf="parent"
-        app:lineColor="@color/purple"
-        app:maxLineLength="0.8"
-        app:minLineLength="0.4"
-        app:sizeMultiplier="1"
-        app:strokeWidth="3dp"></com.vlad1m1r.lemniscate.funny.HeartProgressView>
-
-    <com.allybros.superego.ui.CircledNetworkImageView
-        android:id="@+id/imageSettings"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
-        android:layout_marginTop="36dp"
-        android:elevation="5dp"
-        android:src="@drawable/simple_profile_photo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></com.allybros.superego.ui.CircledNetworkImageView>
+        app:mpb_progressStyle="horizontal"
+        android:indeterminateTint="@color/materialPurple"
+        style="@style/SegoProgressView"
+    />
 
-    <Button
-        android:id="@+id/btChangePhoto"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="visible"
-        android:text="Değiştir"
-        android:background="@drawable/shape_setting_imageview_filter"
-        android:textColor="@color/White"
-        android:translationZ="1000dp"
-        android:textSize="10dp"
-        android:layout_marginTop="36dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></Button>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/etUsername_text_input"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="20dp"
-        android:fontFamily="@font/comfortaa_light"
-        android:hint="Kullanıcı Adı"
-        app:boxBackgroundColor="@color/trans"
-        app:boxStrokeColor="@color/Black"
-        app:endIconMode="clear_text"
-        app:errorEnabled="true"
-        app:hintTextColor="@color/Black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btChangePhoto">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etUsername"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fontFamily="@font/comfortaa_light"
-            android:inputType="text"
-            android:textColor="@color/Black" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/etEmail_text_input"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="20dp"
-        android:fontFamily="@font/comfortaa_light"
-        android:hint="E-mail"
-        app:boxStrokeColor="@color/Black"
-        app:boxBackgroundColor="@color/trans"
-        app:endIconMode="clear_text"
-        app:errorEnabled="true"
-        app:hintTextColor="@color/Black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etUsername_text_input">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/comfortaa_light"
-            android:inputType="text"
-            android:textColor="@color/Black" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/etInformation_text_input"
+    <!--Edit Profile Form -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cardFormEditProfile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="20dp"
-        android:fontFamily="@font/comfortaa_light"
-        android:hint="Kişisel Bilgiler"
-        app:boxBackgroundColor="@color/trans"
-        app:boxStrokeColor="@color/Black"
-        app:endIconMode="clear_text"
-        app:errorEnabled="true"
-        app:hintTextColor="@color/Black"
+        android:layout_margin="12dp"
+        android:padding="12dp"
+        android:background="@drawable/card_shape"
+        android:elevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etEmail_text_input">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etInformation"
+        <com.allybros.superego.ui.CircledNetworkImageView
+            android:id="@+id/imageSettings"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:elevation="5dp"
+            android:src="@drawable/simple_profile_photo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btChangePhoto"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:background="@drawable/shape_setting_imageview_filter"
+            android:text="Değiştir"
+            android:textColor="@color/White"
+            android:textSize="10dp"
+            android:translationZ="1000dp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etUsername_text_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/comfortaa_light"
-            android:gravity="top|left"
-            android:inputType="textMultiLine"
-            android:lines="4"
-            android:overScrollMode="always"
-            android:scrollbarStyle="insideInset"
-            android:scrollbars="vertical"
-            android:scrollHorizontally="false"
-            android:textColor="@color/Black" />
-    </com.google.android.material.textfield.TextInputLayout>
+            style="@style/SegoInputLayout"
+            android:hint="@string/prompt_username"
+            app:startIconDrawable="@drawable/baseline_person_24"
+            android:layout_marginTop="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btChangePhoto">
 
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etUsername"
+                style="@style/SegoEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btLogout"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:layout_weight="1"
-        android:text="@string/logout"
-        android:textColor="@color/Black"
-        android:textSize="14dp"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etEmail_text_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/SegoInputLayout"
+            app:startIconDrawable="@drawable/v_email"
+            android:layout_marginTop="12dp"
+            android:hint="@string/prompt_email"
+            app:layout_constraintTop_toBottomOf="@+id/etUsername_text_input">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etEmail"
+                style="@style/SegoEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etInformation_text_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Kişisel Bilgiler"
+            app:boxBackgroundColor="@color/trans"
+            app:startIconDrawable="@drawable/v_account_details"
+            style="@style/SegoInputLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etEmail_text_input">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etInformation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:lines="3"
+                android:overScrollMode="always"
+                android:scrollbarStyle="insideInset"
+                android:scrollbars="vertical"
+                android:scrollHorizontally="false"
+
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
