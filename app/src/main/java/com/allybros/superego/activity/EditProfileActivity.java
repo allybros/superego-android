@@ -46,21 +46,26 @@ import com.vlad1m1r.lemniscate.funny.HeartProgressView;
 
 import java.io.IOException;
 
+import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
+
 import static com.allybros.superego.util.HelperMethods.imageToString;
 
 public class EditProfileActivity extends AppCompatActivity {
+    //TODO: Why not private?
+    private MaterialProgressBar progressEditProfile;
+    private ConstraintLayout cardFormEditProfile;
     TextInputEditText username,email,information;
     TextInputLayout etUsername_text_input,etEmail_text_input,etInformation_text_input;
     MaterialButton btLogout;
     private SlidrInterface slidr;
     Button btChangePhoto;
     CircledNetworkImageView settingsImage;
-    HeartProgressView heartAnimation;
     private ActionBar toolbar;
     ConstraintLayout editProfileLayout;
     public static Uri newImagePath=null;
 
-    private final int IMG_REQUEST=1;
+    private final int IMG_REQUEST=1; //TODO: Add description. This is not a usual thing.
+    //TODO: Add free space before each method
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,9 +73,12 @@ public class EditProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_profile);
         toolbar = getSupportActionBar();
 
+        //TODO: Redundant casting. Place spaces when using '=' Ex: a = 5 not a= 5
+        //TODO: Building view hierarchy here is a valid operation. You can keep them here.
         editProfileLayout = (ConstraintLayout) findViewById(R.id.editProfileLayout);
+        progressEditProfile = findViewById(R.id.progressEditProfile);
+        cardFormEditProfile =findViewById(R.id.cardFormEditProfile);
         btChangePhoto=(Button) findViewById(R.id.btChangePhoto);
-        btLogout= (MaterialButton) findViewById(R.id.btLogout);
         username=(TextInputEditText) findViewById(R.id.etUsername);
         email=(TextInputEditText) findViewById(R.id.etEmail);
         information=(TextInputEditText) findViewById(R.id.etInformation);
@@ -78,10 +86,11 @@ public class EditProfileActivity extends AppCompatActivity {
         etEmail_text_input=(TextInputLayout) findViewById(R.id.etEmail_text_input);
         etInformation_text_input=(TextInputLayout) findViewById(R.id.etInformation_text_input);
         settingsImage = (CircledNetworkImageView) findViewById(R.id.imageSettings);
-        heartAnimation = (HeartProgressView) findViewById(R.id.hearthAnimation);
         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(updateInformationReceiver, new IntentFilter(ConstantValues.ACTION_UPDATE_INFORMATION));
         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(updateImageReceiver, new IntentFilter(ConstantValues.ACTION_UPDATE_IMAGE));
 
+        //TODO: Initializing Buttons, TextFields, AvatarChooser tasks are separated and there are no shared dependency.
+        // There is no need to keep them together. Separate them to subroutines, in java methods, for making easier to modify.
         btChangePhoto.bringToFront();
         btChangePhoto.invalidate();
 
@@ -100,11 +109,9 @@ public class EditProfileActivity extends AppCompatActivity {
         String URL= ConstantValues.AVATAR_URL+SessionManager.getInstance().getUser().getImage();
         ImageLoader mImageLoader;
         mImageLoader = RequestForGetImage.getInstance(getApplicationContext()).getImageLoader();
+        //TODO: Use default avatar
         mImageLoader.get(URL, ImageLoader.getImageListener(settingsImage, R.drawable.simple_profile_photo, android.R.drawable.ic_dialog_alert));
         settingsImage.setImageUrl(URL, mImageLoader);
-
-
-        toolbar.setTitle("Settings");
 
         slidr= Slidr.attach(this);
         slidr.unlock();
@@ -114,26 +121,6 @@ public class EditProfileActivity extends AppCompatActivity {
                 selectImage();
             }
         });
-        btLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String session_token;
-                SharedPreferences pref = getApplicationContext().getSharedPreferences(ConstantValues.USER_INFORMATION_PREF, Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = pref.edit();
-                session_token=pref.getString("session_token","");
-                editor.clear();
-                editor.commit();
-                LogoutTask.logoutTask(getApplicationContext(),session_token);
-
-
-                LoginActivity.mGoogleSignInClient.signOut();
-
-                Intent intent=new Intent(getApplicationContext(), LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                getApplicationContext().startActivity(intent);
-            }
-        });
-
     }
 
     @Override
@@ -154,6 +141,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 if(information.getText().toString().isEmpty()) etInformation_text_input.setError("Lütfen değer giriniz");
 
                 if(!username.getText().toString().isEmpty() && !email.getText().toString().isEmpty() && !information.getText().toString().isEmpty()){
+                    setProgressVisibility(true);
                     ChangeInfoTask.changeInfoTask(getApplicationContext(),username.getText().toString(),email.getText().toString(),information.getText().toString(), SessionManager.getInstance().getSessionToken());
                 }
               break;
@@ -181,7 +169,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     SessionManager.getInstance().getUser().setAvatar(bitmap);
                     settingsImage.setImageBitmap(SessionManager.getInstance().getUser().getAvatar());
                     settingsImage.setVisibility(View.INVISIBLE);
-                    heartAnimation.setVisibility(View.VISIBLE);
+                    setProgressVisibility(true);
                     ImageChangeTask.imageChangeTask(imageToString(SessionManager.getInstance().getUser().getAvatar()),getApplicationContext());
                 }else{
                     Snackbar.make(editProfileLayout,"Seçilen dosya boyutu çok büyük",Snackbar.LENGTH_LONG).show();
@@ -192,12 +180,31 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         }
     }
+
+    /**
+     * Shows material progress bar and disables form
+     * @param visible
+     */
+    private void setProgressVisibility(boolean visible){
+        if (visible) {
+            progressEditProfile.setVisibility(View.VISIBLE);
+            cardFormEditProfile.setAlpha(0.5f);
+        } else {
+            progressEditProfile.setVisibility(View.INVISIBLE);
+            cardFormEditProfile.setAlpha(1f);
+        }
+    }
+
+    //TODO: What about moving assignment to onCreate method?
+    // Do not instantiate not primitive types outside in a method. It is confusing.
+    // However there is nothing wrong about instantiating empty collections such as ArrayList
     private BroadcastReceiver updateInformationReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
 
             int status = intent.getIntExtra("status",0);
             Log.d("receiver", "Got message: " + status);
+            setProgressVisibility(false);
 
             //Check status
             switch (status){
@@ -280,14 +287,14 @@ public class EditProfileActivity extends AppCompatActivity {
         }
     };
 
+    //TODO: Clear redundant blank spaces in order to make reading easier. Just add 1 blank space after break statement.
     private BroadcastReceiver updateImageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             int status = intent.getIntExtra("status",0);
             Log.d("receiver", "Got message: " + status);
-
+            setProgressVisibility(false);
             settingsImage.setVisibility(View.VISIBLE);
-            heartAnimation.setVisibility(View.GONE);
             //Check status
             switch (status){
                 case ErrorCodes.SUCCESS:

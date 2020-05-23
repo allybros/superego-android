@@ -117,4 +117,5 @@
     <string name="input_error_enter_current_password">Geçerli parolanı girmelisin</string>
     <string name="input_error_enter_new_pass">Yeni bir parola girmelisin</string>
     <string name="input_error_password_mismatch">Parolalar eşleşmiyor</string>
+    <string name="activity_label_edit_profile">Profili Düzenle</string>
 </resources>
