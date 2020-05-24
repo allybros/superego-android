@@ -64,7 +64,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/etUsername_text_input"
+            android:id="@+id/textInputUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/SegoInputLayout"
@@ -84,14 +84,14 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/etEmail_text_input"
+            android:id="@+id/textInputEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/SegoInputLayout"
             app:startIconDrawable="@drawable/v_email"
             android:layout_marginTop="12dp"
             android:hint="@string/prompt_email"
-            app:layout_constraintTop_toBottomOf="@+id/etUsername_text_input">
+            app:layout_constraintTop_toBottomOf="@+id/textInputUsername">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etEmail"
@@ -112,10 +112,11 @@
             style="@style/SegoInputLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etEmail_text_input">
+            app:layout_constraintTop_toBottomOf="@+id/textInputEmail">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etInformation"
+                android:textColor="@color/Black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine"
@@ -127,6 +128,17 @@
 
                 />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btnSaveProfile"
+            style="@style/SegoBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/action_save"
+            app:layout_constraintTop_toBottomOf="@+id/etInformation_text_input"
+            tools:layout_editor_absoluteX="16dp" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

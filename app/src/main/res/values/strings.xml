@@ -119,4 +119,6 @@
     <string name="input_error_password_mismatch">Parolalar eşleşmiyor</string>
     <string name="activity_label_edit_profile">Profili Düzenle</string>
     <string name="default_bio">insightof.me kullanıcısı.</string>
+    <string name="action_save">Kaydet</string>
+    <string name="error_field_required">Bu alan boş olamaz.</string>
 </resources>

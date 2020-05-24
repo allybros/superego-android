@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
+import android.drm.DrmStore;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
@@ -27,7 +27,6 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.allybros.superego.R;
 import com.allybros.superego.api.ChangeInfoTask;
 import com.allybros.superego.api.ImageChangeTask;
-import com.allybros.superego.api.LogoutTask;
 import com.allybros.superego.ui.CircledNetworkImageView;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
@@ -42,7 +41,6 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrInterface;
-import com.vlad1m1r.lemniscate.funny.HeartProgressView;
 
 import java.io.IOException;
 
@@ -56,36 +54,37 @@ public class EditProfileActivity extends AppCompatActivity {
     private ConstraintLayout cardFormEditProfile;
     TextInputEditText username,email,information;
     TextInputLayout etUsername_text_input,etEmail_text_input,etInformation_text_input;
-    MaterialButton btLogout;
     private SlidrInterface slidr;
     Button btChangePhoto;
     CircledNetworkImageView settingsImage;
-    private ActionBar toolbar;
     ConstraintLayout editProfileLayout;
     public static Uri newImagePath=null;
+
+    private Button btnSaveProfile;
 
     private final int IMG_REQUEST=1; //TODO: Add description. This is not a usual thing.
     //TODO: Add free space before each method
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
-        toolbar = getSupportActionBar();
 
         //TODO: Redundant casting. Place spaces when using '=' Ex: a = 5 not a= 5
         //TODO: Building view hierarchy here is a valid operation. You can keep them here.
-        editProfileLayout = (ConstraintLayout) findViewById(R.id.editProfileLayout);
+        editProfileLayout = findViewById(R.id.editProfileLayout);
         progressEditProfile = findViewById(R.id.progressEditProfile);
         cardFormEditProfile =findViewById(R.id.cardFormEditProfile);
-        btChangePhoto=(Button) findViewById(R.id.btChangePhoto);
-        username=(TextInputEditText) findViewById(R.id.etUsername);
-        email=(TextInputEditText) findViewById(R.id.etEmail);
-        information=(TextInputEditText) findViewById(R.id.etInformation);
-        etUsername_text_input=(TextInputLayout) findViewById(R.id.etUsername_text_input);
-        etEmail_text_input=(TextInputLayout) findViewById(R.id.etEmail_text_input);
-        etInformation_text_input=(TextInputLayout) findViewById(R.id.etInformation_text_input);
-        settingsImage = (CircledNetworkImageView) findViewById(R.id.imageSettings);
+        btChangePhoto= findViewById(R.id.btChangePhoto);
+        username= findViewById(R.id.etUsername);
+        email= findViewById(R.id.etEmail);
+        information= findViewById(R.id.etInformation);
+        etUsername_text_input= findViewById(R.id.textInputUsername);
+        etEmail_text_input= findViewById(R.id.textInputEmail);
+        etInformation_text_input= findViewById(R.id.etInformation_text_input);
+        settingsImage = findViewById(R.id.imageSettings);
+        btnSaveProfile = findViewById(R.id.btnSaveProfile);
+
         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(updateInformationReceiver, new IntentFilter(ConstantValues.ACTION_UPDATE_INFORMATION));
         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(updateImageReceiver, new IntentFilter(ConstantValues.ACTION_UPDATE_IMAGE));
 
@@ -121,33 +120,15 @@ public class EditProfileActivity extends AppCompatActivity {
                 selectImage();
             }
         });
+
+        btnSaveProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveProfile();
+            }
+        });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.settings,menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.aciton_save:
-                etEmail_text_input.setErrorEnabled(false);
-                etInformation_text_input.setErrorEnabled(false);
-                etUsername_text_input.setErrorEnabled(false);
-                if(username.getText().toString().isEmpty()) etUsername_text_input.setError("Lütfen değer giriniz");
-                if(email.getText().toString().isEmpty()) etEmail_text_input.setError("Lütfen değer giriniz");
-                if(information.getText().toString().isEmpty()) etInformation_text_input.setError("Lütfen değer giriniz");
-
-                if(!username.getText().toString().isEmpty() && !email.getText().toString().isEmpty() && !information.getText().toString().isEmpty()){
-                    setProgressVisibility(true);
-                    ChangeInfoTask.changeInfoTask(getApplicationContext(),username.getText().toString(),email.getText().toString(),information.getText().toString(), SessionManager.getInstance().getSessionToken());
-                }
-              break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
     private void selectImage(){
        Intent intent = new Intent();
        intent.setType("image/*");
@@ -182,16 +163,37 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     /**
-     * Shows material progress bar and disables form
-     * @param visible
+     * Shows material progress bar and disables form.
+     * @param visible set true when progress view needs to be shown.
      */
     private void setProgressVisibility(boolean visible){
         if (visible) {
             progressEditProfile.setVisibility(View.VISIBLE);
             cardFormEditProfile.setAlpha(0.5f);
+            btnSaveProfile.setEnabled(false);
         } else {
             progressEditProfile.setVisibility(View.INVISIBLE);
             cardFormEditProfile.setAlpha(1f);
+            btnSaveProfile.setEnabled(true);;
+        }
+    }
+
+    /**
+     * Validate user information and send request to the API
+     */
+    private void saveProfile(){
+        // Moved menu item option here
+        etEmail_text_input.setErrorEnabled(false);
+        etInformation_text_input.setErrorEnabled(false);
+        etUsername_text_input.setErrorEnabled(false);
+
+        if(username.getText().toString().isEmpty()) etUsername_text_input.setError(getString(R.string.error_field_required));
+        if(email.getText().toString().isEmpty()) etEmail_text_input.setError(getString(R.string.error_field_required));
+
+        if(!username.getText().toString().isEmpty()
+                && !email.getText().toString().isEmpty() ){
+            setProgressVisibility(true);
+            ChangeInfoTask.changeInfoTask(getApplicationContext(),username.getText().toString(),email.getText().toString(),information.getText().toString(), SessionManager.getInstance().getSessionToken());
         }
     }
 
