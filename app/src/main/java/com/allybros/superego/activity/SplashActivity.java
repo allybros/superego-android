@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.allybros.superego.R;
 import com.allybros.superego.api.LoadProfileTask;
-import com.allybros.superego.api.SearchTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.Trait;
 import com.allybros.superego.util.SessionManager;
@@ -35,11 +34,10 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        SplashActivity.getAllTraits(getApplicationContext());
-        SearchTask.searchTask(getApplicationContext(),"test");
+        SplashActivity.getAllTraits(getApplicationContext());       //Fill traits list
 
         SessionManager.getInstance().readInfo(getApplicationContext());
-        if(!SessionManager.getInstance().getSessionToken().isEmpty()){
+        if(!SessionManager.getInstance().getSessionToken().isEmpty()){      //If did sign in?
             LoadProfileTask.loadProfileTask(getApplicationContext(), SessionManager.getInstance().getSessionToken(),"load");
         }else{
             Intent intent=new Intent(this,LoginActivity.class);
@@ -49,8 +47,12 @@ public class SplashActivity extends AppCompatActivity {
         }
     }
 
-    public static void getAllTraits(final Context currentContext){
-        RequestQueue queue = Volley.newRequestQueue(currentContext);
+    /**
+     * Sets all trait list
+     * @param context    require for sending request
+     */
+    public static void getAllTraits(final Context context){
+        RequestQueue queue = Volley.newRequestQueue(context);
         final ArrayList<Trait> traits=new ArrayList<>();
 
         final StringRequest jsonRequest = new StringRequest(Request.Method.GET, ConstantValues.ALL_TRAITS, new Response.Listener<String>() {
@@ -80,7 +82,7 @@ public class SplashActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(currentContext,currentContext.getString(R.string.connection_error), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,context.getString(R.string.connection_error), Toast.LENGTH_SHORT).show();
             }
         });
         queue.add(jsonRequest);
