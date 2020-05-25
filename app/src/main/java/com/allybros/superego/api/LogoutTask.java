@@ -24,8 +24,16 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Class includes the function of signing out function
+ * @author 0rcun
+ */
 public class LogoutTask {
-
+    /**
+     * Function requests to server and then receives response. After that broadcasts the response.
+     * @param context       required to build request and send Broadcast
+     * @param session_token require for verify user
+     */
     public static void logoutTask(final Context context, final String session_token) {
         RequestQueue queue = Volley.newRequestQueue(context);
 
@@ -55,6 +63,7 @@ public class LogoutTask {
 
             }
         }) {
+            //Add parameters in request
             @Override
             protected Map<String,String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();

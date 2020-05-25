@@ -64,10 +64,11 @@ public class SocialMediaSignInTask {
                 LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
             }
         }) {
+            //Add parameters in request
             @Override
             protected Map<String,String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("authenticator", authenticator);
+                params.put("authenticator", authenticator);     //Which way for login, Facebook or Google
                 params.put("access_token", access_token);
                 return params;
             }

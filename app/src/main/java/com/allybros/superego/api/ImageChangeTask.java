@@ -23,12 +23,19 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ *  Class includes the function of changing image
+ * @author 0rcun
+ */
 public class ImageChangeTask {
 
+    /**
+     * Function sends request to API. For changing image.
+     * When results come from API, function broadcasts results
+     * @param image     that is to be changed image
+     * @param context   required to build request and send Broadcast
+     */
     public static void   imageChangeTask(final String image, final Context context){
-        Log.d("Image",image);
-        Log.d("Session",SessionManager.getInstance().getSessionToken());
-
         final Intent intent = new Intent(ConstantValues.ACTION_UPDATE_IMAGE);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, ConstantValues.UPLOAD_IMAGE, new Response.Listener<String>() {
@@ -90,12 +97,10 @@ public class ImageChangeTask {
             }
         })
         {
+            //Add parameters in request
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
-                Log.d("Image",image);
-                Log.d("Session",SessionManager.getInstance().getSessionToken());
-
                 params.put("session-token", SessionManager.getInstance().getSessionToken());
                 params.put("new-avatar-base64",image);
                 return params;

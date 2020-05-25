@@ -23,10 +23,19 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+/**
+ * Class includes the function of accepting awards
+ * @author 0rcun
+ */
 
 public class EarnRewardTask {
 
-
+    /**
+     * Function sends request to API. For accepting awards.
+     * When results come from API, function broadcasts results
+     * @param context       required to build request and send Broadcast
+     * @param session_token required to verify the user
+     */
     public static void EarnRewardTask(final Context context, final String session_token){
 
         final Intent intent = new Intent(ConstantValues.ACTION_EARNED_REWARD);
@@ -68,6 +77,7 @@ public class EarnRewardTask {
 
             }
         }) {
+            //Add parameters in request
             @Override
             protected Map<String,String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
