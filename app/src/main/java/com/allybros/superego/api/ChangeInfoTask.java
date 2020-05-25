@@ -23,7 +23,10 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * Class includes the function of changing users profile information
+ * @author 0rcun
+ */
 public class ChangeInfoTask extends Activity {
     /**
      * User informations change request to API
@@ -69,6 +72,7 @@ public class ChangeInfoTask extends Activity {
                 LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
             }
         }) {
+            //Add parameters in request
             @Override
             protected Map<String,String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();

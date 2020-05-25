@@ -19,9 +19,15 @@ import com.android.volley.toolbox.Volley;
 
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * @author 0rcun
+ */
 public class AddTestTask extends Activity {
-
+    /**
+     * Function sends request to show create test. When receive request, opens WebviewActivity class.
+     *
+     * @param context   required to build request and to open webview page
+     */
     public static void addTestTask(final Context context) {
         final Intent mainActivityIntent=new Intent(context, LoginActivity.class);
         mainActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

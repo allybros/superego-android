@@ -24,9 +24,11 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * Class includes the function of changing password
+ * @author 0rcun
+ */
 public class PasswordChangeTask extends Activity {
-
     /**
      * Password change request to API
      * @param context       required to build request and send Broadcast
@@ -71,6 +73,7 @@ public class PasswordChangeTask extends Activity {
                 LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
             }
         }) {
+            //Add parameters in request
             @Override
             protected Map<String,String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();

@@ -14,7 +14,6 @@ import com.android.volley.toolbox.ImageLoader;
 
 /**
  * RequestForGetImage class defines the request to get image from url
- *
  * @author 0rcun
  */
 
