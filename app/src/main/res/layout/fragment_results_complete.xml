@@ -17,6 +17,7 @@
             android:id="@+id/listViewTraits"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingTop="12dp"
             android:clickable="false"
             android:divider="@null"
             android:dividerHeight="0dp" >

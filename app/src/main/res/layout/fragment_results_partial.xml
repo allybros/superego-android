@@ -13,48 +13,51 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayoutResult"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardInfoPartial"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayoutResult"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:elevation="4dp"
-                app:cardBackgroundColor="@color/White"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="wrap_content" >
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:id="@+id/cardInfoPartial"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:background="@drawable/card_shape"
+                    android:backgroundTint="@color/materialIceBlue"
+                    android:elevation="4dp"
+                    android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="10dp">
+                    android:padding="12dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginBottom="12dp"
+                        android:src="@drawable/em_hourglass_done" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:text="@string/info_title_waiting_rates"
-                        android:textSize="18sp"
-                        android:fontFamily="@font/comfortaa_light"
-                        android:textColor="@color/Blue"
-                        android:textFontWeight="600"
-                        android:gravity="center"
-                        />
-
+                        android:textColor="@color/materialLightBlue"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/comfortaa_light"
                         android:gravity="center"
-                        android:text="@string/info_partial_rates" />
+                        android:text="@string/info_partial_rates"
+                        android:textSize="16sp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -67,32 +70,29 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
-                            android:elevation="4dp"
                             android:background="@drawable/result_bg"
-                            android:fontFamily="@font/comfortaa_light"
+                            android:elevation="4dp"
                             android:padding="8dp"
                             android:text="remainingRates"
+                            android:textSize="16sp"
                             android:textColor="@color/White"
                             tools:ignore="HardcodedText" />
                     </LinearLayout>
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
 
-            <ListView
-                android:id="@+id/listViewPartialTraits"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginTop="16dp"
-                android:clickable="false"
-                android:divider="@null"
-                android:dividerHeight="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardInfoPartial"
-                app:layout_constraintVertical_bias="1.0"
-                tools:layout_editor_absoluteX="-101dp" />
+                <ListView
+                    android:id="@+id/listViewPartialTraits"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:divider="@null"
+                    android:dividerHeight="0dp"
+                    app:layout_constraintTop_toBottomOf="@+id/cardInfoPartial"
+                    app:layout_constraintVertical_bias="0">
+                </ListView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

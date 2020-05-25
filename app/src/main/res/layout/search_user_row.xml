@@ -11,7 +11,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="2dp"
         android:text="userbio"
         android:textColor="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"
