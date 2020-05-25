@@ -50,9 +50,8 @@ public class EditProfileActivity extends AppCompatActivity {
     private CircledNetworkImageView settingsImage;
     private ConstraintLayout editProfileLayout;
     public static Uri newImagePath=null;
-
+    private BroadcastReceiver updateInformationReceiver, updateImageReceiver;
     private Button btnSaveProfile;
-
     private final int IMG_REQUEST=1;    //Needs for image selection from local storage
 
 
@@ -67,7 +66,7 @@ public class EditProfileActivity extends AppCompatActivity {
         setupUi();
     }
 
-    public void initializeComponents(){
+    private void initializeComponents(){
         editProfileLayout = findViewById(R.id.editProfileLayout);
         progressEditProfile = findViewById(R.id.progressEditProfile);
         cardFormEditProfile = findViewById(R.id.cardFormEditProfile);
@@ -82,12 +81,95 @@ public class EditProfileActivity extends AppCompatActivity {
         btnSaveProfile = findViewById(R.id.btnSaveProfile);
     }
 
-    public void setupReceivers(){
+    private void setupReceivers(){
+        /**
+         * Catches broadcasts of api/ChangeInfoTask class
+         */
+        updateInformationReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+                int status = intent.getIntExtra("status", 0);
+                Log.d("receiver", "Got message: " + status);
+                setProgressVisibility(false);
+
+                //Check status
+                switch (status) {
+
+                    case ErrorCodes.SESSION_EXPIRED:
+                        Snackbar.make(editProfileLayout, getApplicationContext().getString(R.string.session_expired), Snackbar.LENGTH_LONG).show();
+                        break;
+
+                    case ErrorCodes.USERNAME_NOT_LEGAL:
+                        Snackbar.make(editProfileLayout, getApplicationContext().getString(R.string.usernameNotLegal), Snackbar.LENGTH_LONG).show();
+                        break;
+
+                    case ErrorCodes.USERNAME_ALREADY_EXIST:
+                        Snackbar.make(editProfileLayout, getApplicationContext().getString(R.string.usernameAlreadyExist), Snackbar.LENGTH_LONG).show();
+                        break;
+
+                    case ErrorCodes.EMAIL_NOT_LEGAL:
+                        Snackbar.make(editProfileLayout, getApplicationContext().getString(R.string.emailNotLegal), Snackbar.LENGTH_LONG).show();
+                        break;
+
+                    case ErrorCodes.EMAIL_ALREADY_EXIST:
+                        Snackbar.make(editProfileLayout, getApplicationContext().getString(R.string.emailAlreadyExist), Snackbar.LENGTH_LONG).show();
+                        break;
+
+                    case ErrorCodes.SUCCESS:
+                        Snackbar.make(editProfileLayout, getApplicationContext().getString(R.string.processComplated), Snackbar.LENGTH_LONG).show();
+                        break;
+
+                    case ErrorCodes.SYSFAIL:
+                        Snackbar.make(editProfileLayout, getApplicationContext().getString(R.string.connection_error), Snackbar.LENGTH_LONG).show();
+                        break;
+
+                }
+            }
+        };
+        /**
+         * Catches broadcasts of api/ImageChangeTask class
+         */
+        updateImageReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                int status = intent.getIntExtra("status",0);
+                Log.d("receiver", "Got message: " + status);
+                setProgressVisibility(false);
+                settingsImage.setVisibility(View.VISIBLE);
+                //Check status
+                switch (status){
+                    case ErrorCodes.SUCCESS:
+                        Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.processComplated),Snackbar.LENGTH_LONG).show();
+                        break;
+
+                    case ErrorCodes.SYSFAIL:
+                        Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.connection_error),Snackbar.LENGTH_LONG).show();
+                        break;
+
+                    case ErrorCodes.INVALID_FILE_EXTENSION:
+                        Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.invalid_file_extension),Snackbar.LENGTH_LONG).show();
+                        break;
+
+                    case ErrorCodes.INVALID_FILE_TYPE:
+                        Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.invalid_file_type),Snackbar.LENGTH_LONG).show();
+                        break;
+
+                    case ErrorCodes.INVALID_FILE_SIZE:
+                        Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.invalid_file_size),Snackbar.LENGTH_LONG).show();
+                        break;
+
+                    case ErrorCodes.FILE_WRITE_ERROR:
+                        Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.connection_error),Snackbar.LENGTH_LONG).show();
+                        break;
+                }
+            }
+        };
         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(updateInformationReceiver, new IntentFilter(ConstantValues.ACTION_UPDATE_INFORMATION));
         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(updateImageReceiver, new IntentFilter(ConstantValues.ACTION_UPDATE_IMAGE));
     }
 
-    public void setupUi(){
+    private void setupUi(){
 
         btChangePhoto.bringToFront();
         btChangePhoto.invalidate();
@@ -193,89 +275,6 @@ public class EditProfileActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Catches broadcasts of api/ChangeInfoTask class
-     */
-    private BroadcastReceiver updateInformationReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-            int status = intent.getIntExtra("status",0);
-            Log.d("receiver", "Got message: " + status);
-            setProgressVisibility(false);
-
-            //Check status
-            switch (status){
-
-                case ErrorCodes.SESSION_EXPIRED:
-                    Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.session_expired),Snackbar.LENGTH_LONG).show();
-                    break;
-
-                case ErrorCodes.USERNAME_NOT_LEGAL:
-                    Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.usernameNotLegal),Snackbar.LENGTH_LONG).show();
-                    break;
-
-                case ErrorCodes.USERNAME_ALREADY_EXIST:
-                    Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.usernameAlreadyExist),Snackbar.LENGTH_LONG).show();
-                    break;
-
-                case ErrorCodes.EMAIL_NOT_LEGAL:
-                    Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.emailNotLegal),Snackbar.LENGTH_LONG).show();
-                    break;
-
-                case ErrorCodes.EMAIL_ALREADY_EXIST:
-                    Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.emailAlreadyExist),Snackbar.LENGTH_LONG).show();
-                    break;
-
-                case ErrorCodes.SUCCESS:
-                    Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.processComplated),Snackbar.LENGTH_LONG).show();
-                    break;
-
-                case ErrorCodes.SYSFAIL:
-                    Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.connection_error),Snackbar.LENGTH_LONG).show();
-                    break;
-
-            }
-        }
-    };
-    /**
-     * Catches broadcasts of api/ImageChangeTask class
-     */
-    private BroadcastReceiver updateImageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            int status = intent.getIntExtra("status",0);
-            Log.d("receiver", "Got message: " + status);
-            setProgressVisibility(false);
-            settingsImage.setVisibility(View.VISIBLE);
-            //Check status
-            switch (status){
-                case ErrorCodes.SUCCESS:
-                    Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.processComplated),Snackbar.LENGTH_LONG).show();
-                    break;
-
-                case ErrorCodes.SYSFAIL:
-                    Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.connection_error),Snackbar.LENGTH_LONG).show();
-                    break;
-
-                case ErrorCodes.INVALID_FILE_EXTENSION:
-                    Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.invalid_file_extension),Snackbar.LENGTH_LONG).show();
-                    break;
-
-                case ErrorCodes.INVALID_FILE_TYPE:
-                    Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.invalid_file_type),Snackbar.LENGTH_LONG).show();
-                    break;
-
-                case ErrorCodes.INVALID_FILE_SIZE:
-                    Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.invalid_file_size),Snackbar.LENGTH_LONG).show();
-                    break;
-
-                case ErrorCodes.FILE_WRITE_ERROR:
-                    Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.connection_error),Snackbar.LENGTH_LONG).show();
-                    break;
-            }
-        }
-    };
     @Override
     public void onDestroy() {
         //Delete receivers

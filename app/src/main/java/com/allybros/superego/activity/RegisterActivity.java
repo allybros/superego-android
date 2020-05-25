@@ -32,6 +32,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Button btSignUp;
     private TextView tvAggrementRegister;
     private CheckBox checkBoxAggrement;
+    private BroadcastReceiver registerReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
         setupUi();
     }
 
-    public void initializeComponents(){
+    private void initializeComponents(){
         btSignUp=(MaterialButton) findViewById(R.id.btSignUp);
         etRegisterPassword=(TextInputEditText)findViewById(R.id.etRegisterPassword);
         etRegisterMail=(TextInputEditText)findViewById(R.id.etRegisterMail);
@@ -53,12 +54,48 @@ public class RegisterActivity extends AppCompatActivity {
         checkBoxAggrement=(CheckBox) findViewById(R.id.checkboxAggrement);
     }
 
-    public void setupReceivers(){
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter(ConstantValues.ACTION_REGISTER));
+    private void setupReceivers(){
+        /**
+         * Catches broadcasts of api/RegisterTask class
+         */
+        registerReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                int status = intent.getIntExtra("status",0);
+                Log.d("receiver", "Got message: " + status);
+                switch (status) {
+                    case ErrorCodes.SYSFAIL:
+                        username_text_input_register.setError("Bir şeyler yanlış gitti");
+                        email_text_input_register.setError("Lütfen tekrar deneyin.");
+                        password_text_input_register.setError("Bir sonrakinde başaracağım söz");
+                        break;
 
+                    case ErrorCodes.USERNAME_NOT_LEGAL:
+                        username_text_input_register.setError("Kullanıcı adı kurallara uymamaktadır.");
+                        break;
+
+                    case ErrorCodes.USERNAME_ALREADY_EXIST:
+                        username_text_input_register.setError("Kullanıcı adı başkası tarafından alınmış");
+                        break;
+
+                    case ErrorCodes.EMAIL_ALREADY_EXIST:
+                        email_text_input_register.setError("Bu e posta adresi zaten kayıtlı");
+                        break;
+
+                    case ErrorCodes.EMAIL_NOT_LEGAL:
+                        email_text_input_register.setError("E posta kurallara uymamaktadır.");
+                        break;
+
+                    case ErrorCodes.PASSWORD_NOT_LEGAL:
+                        password_text_input_register.setError("Parola kurallara uymamaktadır.");
+                        break;
+                }
+            }
+        };
+        LocalBroadcastManager.getInstance(this).registerReceiver(registerReceiver, new IntentFilter(ConstantValues.ACTION_REGISTER));
     }
 
-    public void setupUi(){
+    private void setupUi(){
         tvAggrementRegister.setMovementMethod(LinkMovementMethod.getInstance());
 
         checkBoxAggrement.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -121,41 +158,4 @@ public class RegisterActivity extends AppCompatActivity {
         finish();
     }
 
-    /**
-     * Catches broadcasts of api/RegisterTask class
-     */
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            int status = intent.getIntExtra("status",0);
-            Log.d("receiver", "Got message: " + status);
-            switch (status) {
-                case ErrorCodes.SYSFAIL:
-                    username_text_input_register.setError("Bir şeyler yanlış gitti");
-                    email_text_input_register.setError("Lütfen tekrar deneyin.");
-                    password_text_input_register.setError("Bir sonrakinde başaracağım söz");
-                    break;
-
-                case ErrorCodes.USERNAME_NOT_LEGAL:
-                    username_text_input_register.setError("Kullanıcı adı kurallara uymamaktadır.");
-                    break;
-
-                case ErrorCodes.USERNAME_ALREADY_EXIST:
-                    username_text_input_register.setError("Kullanıcı adı başkası tarafından alınmış");
-                    break;
-
-                case ErrorCodes.EMAIL_ALREADY_EXIST:
-                    email_text_input_register.setError("Bu e posta adresi zaten kayıtlı");
-                    break;
-
-                case ErrorCodes.EMAIL_NOT_LEGAL:
-                    email_text_input_register.setError("E posta kurallara uymamaktadır.");
-                    break;
-
-                case ErrorCodes.PASSWORD_NOT_LEGAL:
-                    password_text_input_register.setError("Parola kurallara uymamaktadır.");
-                    break;
-            }
-        }
-    };
 }
