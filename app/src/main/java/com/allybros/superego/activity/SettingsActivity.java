@@ -45,7 +45,7 @@ public class SettingsActivity extends AppCompatActivity {
     private ConstraintLayout optionLicenses;
     private ConstraintLayout optionSignOut;
     private SlidrInterface slidr;
-
+    private BroadcastReceiver logoutReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +64,7 @@ public class SettingsActivity extends AppCompatActivity {
         optionLicenses = findViewById(R.id.cardBtnLicenses);
         optionSignOut = findViewById(R.id.cardBtnSingOut);
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(logoutReceiver, new IntentFilter(ConstantValues.ACTION_LOGOUT));
+        setupReceivers();
 
         optionEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,6 +104,30 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
+    private void setupReceivers(){
+        logoutReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                int status = intent.getIntExtra("status",0);
+                Log.d("receiver", "Got message: " + status);
+                switch (status){
+                    case ErrorCodes.SYSFAIL:
+                        Log.d("Logout-status",""+status);
+                        break;
+                    case ErrorCodes.SUCCESS:
+                        Log.d("Logout-status",""+status);
+                        SessionManager.getInstance().clearSession(getApplicationContext()); //Clear local variables that use login
+
+                        Intent intent1=new Intent(getApplicationContext(), SplashActivity.class);
+                        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        getApplicationContext().startActivity(intent1);
+                        finish();
+                        break;
+                }
+            }
+        };
+        LocalBroadcastManager.getInstance(this).registerReceiver(logoutReceiver, new IntentFilter(ConstantValues.ACTION_LOGOUT));
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -204,27 +228,8 @@ public class SettingsActivity extends AppCompatActivity {
         builder.setTitle(R.string.option_licenses);
         builder.setView(dialogView).show();
     }
-    private BroadcastReceiver logoutReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            int status = intent.getIntExtra("status",0);
-            Log.d("receiver", "Got message: " + status);
-            switch (status){
-                case ErrorCodes.SYSFAIL:
-                    Log.d("Logout-status",""+status);
-                    break;
-                case ErrorCodes.SUCCESS:
-                    Log.d("Logout-status",""+status);
-                    SessionManager.getInstance().clearSession(getApplicationContext()); //Clear local variables that use login
 
-                    Intent intent1=new Intent(getApplicationContext(), SplashActivity.class);
-                    intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    getApplicationContext().startActivity(intent1);
-                    finish();
-                    break;
-            }
-        }
-    };
+
 
     @Override
     protected void onDestroy() {

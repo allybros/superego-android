@@ -52,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
     GoogleSignInClient mGoogleSignInClient;
     CallbackManager callbackManager;
     private static final int RC_SIGN_IN = 0;    // It require to come back from Google Sign in intent
+    private BroadcastReceiver loginSocialMediaReceiver, loginReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         setupUi();
 
     }
-    public void initializeComponents(){
+    private void initializeComponents(){
         usernameTextInput = findViewById(R.id.username_text_input);
         btLogin = findViewById(R.id.btLogin);
         signInFacebook = findViewById(R.id.sign_in_facebook);
@@ -74,12 +75,158 @@ public class LoginActivity extends AppCompatActivity {
         passwordTextInput = findViewById(R.id.password_text_input);
     }
 
-    public void setupReceivers(){
+    private void setupReceivers(){
+        /**
+         * Catches broadcasts of api/LoginTask class
+         */
+        loginReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                int status = intent.getIntExtra("status",0);
+                Log.d("receiver", "Got message: " + status);
+                switch (status){
+
+                    case ErrorCodes.SYSFAIL:
+                        passwordTextInput.setError(getString(R.string.loginFailed));
+                        usernameTextInput.setError(getString(R.string.loginFailed));
+                        YoYo.with(Techniques.FadeInDown)
+                                .duration(700)
+                                .repeat(0)
+                                .playOn(findViewById(R.id.loginCard));
+                        btLogin.setEnabled(true);
+                        break;
+
+                    case ErrorCodes.CAPTCHA_REQUIRED:
+                        passwordTextInput.setError(getString(R.string.loginFailed));
+                        usernameTextInput.setError(getString(R.string.loginFailed));
+                        YoYo.with(Techniques.FadeInDown)
+                                .duration(700)
+                                .repeat(0)
+                                .playOn(findViewById(R.id.loginCard));
+                        btLogin.setEnabled(true);
+                        break;
+
+                    case ErrorCodes.SUSPEND_SESSION:
+                        passwordTextInput.setError(getString(R.string.session_suspend));
+                        usernameTextInput.setError(getString(R.string.session_suspend));
+                        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                        builder.setTitle("insightof.me");
+                        builder.setMessage(getString(R.string.session_suspend));
+                        builder.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                btLogin.setEnabled(true);
+                                YoYo.with(Techniques.FadeInDown)
+                                        .duration(700)
+                                        .repeat(0)
+                                        .playOn(findViewById(R.id.loginCard));
+                            }
+                        });
+                        builder.show();
+                        break;
+
+                    case ErrorCodes.SUCCESS:
+
+
+                        Intent intent1=new Intent(getApplicationContext(), SplashActivity.class);
+                        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent1);
+                        break;
+
+                    case ErrorCodes.CONNECTION_ERROR:
+                        passwordTextInput.setError(getString(R.string.checkConnection));
+                        usernameTextInput.setError(getString(R.string.checkConnection));
+                        AlertDialog.Builder builder1 = new AlertDialog.Builder(LoginActivity.this);
+                        builder1.setTitle("insightof.me");
+                        builder1.setMessage(getString(R.string.checkConnection));
+                        builder1.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                btLogin.setEnabled(true);
+                                YoYo.with(Techniques.FadeInDown)
+                                        .duration(700)
+                                        .repeat(0)
+                                        .playOn(findViewById(R.id.loginCard));
+
+                            }
+                        });
+                        builder1.show();
+                        break;
+                }
+            }
+        };
+        /**
+         * Catches broadcasts of api/SocialMediaSignInTask class
+         */
+        loginSocialMediaReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                int status = intent.getIntExtra("status",0);
+                Log.d("receiver", "Got message: " + status);
+                switch (status){
+
+                    case ErrorCodes.SYSFAIL:
+                        AlertDialog.Builder builder2 = new AlertDialog.Builder(LoginActivity.this);
+                        builder2.setTitle("insightof.me");
+                        builder2.setMessage(R.string.sysfail_login_social_media);
+                        builder2.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {}
+                        });
+                        builder2.show();
+                        break;
+
+                    case ErrorCodes.EMAIL_EMPTY:
+                        AlertDialog.Builder builder3 = new AlertDialog.Builder(LoginActivity.this);
+                        builder3.setTitle("insightof.me");
+                        builder3.setMessage(R.string.social_media_email_empty);
+                        builder3.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {}
+                        });
+                        builder3.show();
+                        break;
+                    case ErrorCodes.EMAIL_NOT_LEGAL:
+                        AlertDialog.Builder builder4 = new AlertDialog.Builder(LoginActivity.this);
+                        builder4.setTitle("insightof.me");
+                        builder4.setMessage(R.string.social_media_email_not_legal);
+                        builder4.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {}
+                        });
+                        builder4.show();
+                        break;
+                    case ErrorCodes.USERNAME_NOT_LEGAL:
+                        AlertDialog.Builder builder5 = new AlertDialog.Builder(LoginActivity.this);
+                        builder5.setTitle("insightof.me");
+                        builder5.setMessage(R.string.social_media_username_not_legal);
+                        builder5.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {}
+                        });
+                        builder5.show();
+                        break;
+
+                    case ErrorCodes.SUCCESS:
+                        Intent intent1=new Intent(getApplicationContext(), SplashActivity.class);
+                        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent1);
+                        break;
+
+                    case ErrorCodes.CONNECTION_ERROR:
+                        passwordTextInput.setError(getString(R.string.checkConnection));
+                        usernameTextInput.setError(getString(R.string.checkConnection));
+                        AlertDialog.Builder builder1 = new AlertDialog.Builder(LoginActivity.this);
+                        builder1.setTitle("insightof.me");
+                        builder1.setMessage(getString(R.string.checkConnection));
+                        builder1.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {}
+                        });
+                        builder1.show();
+                        break;
+                }
+            }
+        };
+
         LocalBroadcastManager.getInstance(this).registerReceiver(loginReceiver, new IntentFilter(ConstantValues.ACTION_LOGIN));
         LocalBroadcastManager.getInstance(this).registerReceiver(loginSocialMediaReceiver, new IntentFilter(ConstantValues.ACTION_SOCIAL_MEDIA_LOGIN));
     }
 
-    public void setupUi(){
+    private void setupUi(){
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -210,152 +357,6 @@ public class LoginActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
     }
-
-    /**
-     * Catches broadcasts of api/LoginTask class
-     */
-    private BroadcastReceiver loginReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            int status = intent.getIntExtra("status",0);
-            Log.d("receiver", "Got message: " + status);
-            switch (status){
-
-                case ErrorCodes.SYSFAIL:
-                    passwordTextInput.setError(getString(R.string.loginFailed));
-                    usernameTextInput.setError(getString(R.string.loginFailed));
-                    YoYo.with(Techniques.FadeInDown)
-                            .duration(700)
-                            .repeat(0)
-                            .playOn(findViewById(R.id.loginCard));
-                    btLogin.setEnabled(true);
-                    break;
-
-                case ErrorCodes.CAPTCHA_REQUIRED:
-                    passwordTextInput.setError(getString(R.string.loginFailed));
-                    usernameTextInput.setError(getString(R.string.loginFailed));
-                    YoYo.with(Techniques.FadeInDown)
-                            .duration(700)
-                            .repeat(0)
-                            .playOn(findViewById(R.id.loginCard));
-                    btLogin.setEnabled(true);
-                    break;
-
-                case ErrorCodes.SUSPEND_SESSION:
-                    passwordTextInput.setError(getString(R.string.session_suspend));
-                    usernameTextInput.setError(getString(R.string.session_suspend));
-                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                    builder.setTitle("insightof.me");
-                    builder.setMessage(getString(R.string.session_suspend));
-                    builder.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            btLogin.setEnabled(true);
-                            YoYo.with(Techniques.FadeInDown)
-                                    .duration(700)
-                                    .repeat(0)
-                                    .playOn(findViewById(R.id.loginCard));
-                        }
-                    });
-                    builder.show();
-                    break;
-
-                case ErrorCodes.SUCCESS:
-
-
-                    Intent intent1=new Intent(getApplicationContext(), SplashActivity.class);
-                    intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent1);
-                    break;
-
-                case ErrorCodes.CONNECTION_ERROR:
-                    passwordTextInput.setError(getString(R.string.checkConnection));
-                    usernameTextInput.setError(getString(R.string.checkConnection));
-                    AlertDialog.Builder builder1 = new AlertDialog.Builder(LoginActivity.this);
-                    builder1.setTitle("insightof.me");
-                    builder1.setMessage(getString(R.string.checkConnection));
-                    builder1.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            btLogin.setEnabled(true);
-                            YoYo.with(Techniques.FadeInDown)
-                                    .duration(700)
-                                    .repeat(0)
-                                    .playOn(findViewById(R.id.loginCard));
-
-                        }
-                    });
-                    builder1.show();
-                    break;
-            }
-        }
-    };
-    /**
-     * Catches broadcasts of api/SocialMediaSignInTask class
-     */
-    private BroadcastReceiver loginSocialMediaReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            int status = intent.getIntExtra("status",0);
-            Log.d("receiver", "Got message: " + status);
-            switch (status){
-
-                case ErrorCodes.SYSFAIL:
-                    AlertDialog.Builder builder2 = new AlertDialog.Builder(LoginActivity.this);
-                    builder2.setTitle("insightof.me");
-                    builder2.setMessage(R.string.sysfail_login_social_media);
-                    builder2.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {}
-                    });
-                    builder2.show();
-                    break;
-
-                case ErrorCodes.EMAIL_EMPTY:
-                    AlertDialog.Builder builder3 = new AlertDialog.Builder(LoginActivity.this);
-                    builder3.setTitle("insightof.me");
-                    builder3.setMessage(R.string.social_media_email_empty);
-                    builder3.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {}
-                    });
-                    builder3.show();
-                    break;
-                case ErrorCodes.EMAIL_NOT_LEGAL:
-                    AlertDialog.Builder builder4 = new AlertDialog.Builder(LoginActivity.this);
-                    builder4.setTitle("insightof.me");
-                    builder4.setMessage(R.string.social_media_email_not_legal);
-                    builder4.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {}
-                    });
-                    builder4.show();
-                    break;
-                case ErrorCodes.USERNAME_NOT_LEGAL:
-                    AlertDialog.Builder builder5 = new AlertDialog.Builder(LoginActivity.this);
-                    builder5.setTitle("insightof.me");
-                    builder5.setMessage(R.string.social_media_username_not_legal);
-                    builder5.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {}
-                    });
-                    builder5.show();
-                    break;
-
-                case ErrorCodes.SUCCESS:
-                    Intent intent1=new Intent(getApplicationContext(), SplashActivity.class);
-                    intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent1);
-                    break;
-
-                case ErrorCodes.CONNECTION_ERROR:
-                    passwordTextInput.setError(getString(R.string.checkConnection));
-                    usernameTextInput.setError(getString(R.string.checkConnection));
-                    AlertDialog.Builder builder1 = new AlertDialog.Builder(LoginActivity.this);
-                    builder1.setTitle("insightof.me");
-                    builder1.setMessage(getString(R.string.checkConnection));
-                    builder1.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {}
-                    });
-                    builder1.show();
-                    break;
-            }
-        }
-    };
 
     @Override
     protected void onDestroy() {
