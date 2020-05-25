@@ -31,24 +31,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
-/**
- * @author 0rcun
- */
 
 public class LoadProfileTask{
 
     static Intent intent;
 
-    /**
-     * Load and refresh process requests to API
-     *
-     * Function requests to server and then receives response. After that broadcasts the response.
-     * @param context           required to build request and send Broadcast
-     * @param session_token     required to verify the user
-     * @param action            required to define type of broadcast
-     *                          If call for loadProfile process define action parameter "load" else call ConstantValues.getActionRefreshProfile()
-     */
     public static void loadProfileTask(final Context context, final String session_token , final String action){
+
+        /*
+         *       If call for loadProfile process define action parameter "load" else call ConstantValues.getActionRefreshProfile()
+         *
+         *
+         *
+         * */
 
         RequestQueue queue = Volley.newRequestQueue(context);
         if(action.equals(ConstantValues.ACTION_REFRESH_PROFILE)) intent = new Intent(ConstantValues.ACTION_REFRESH_PROFILE);

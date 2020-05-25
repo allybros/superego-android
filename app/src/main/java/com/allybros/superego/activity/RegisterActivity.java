@@ -45,6 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
         etRegisterPassword=(TextInputEditText)findViewById(R.id.etRegisterPassword);
         etRegisterMail=(TextInputEditText)findViewById(R.id.etRegisterMail);
         etRegisterUsername=(TextInputEditText)findViewById(R.id.etRegisterUsername);
+        //TODO:Policy için siteye linke yönlendirme olması lazım o eksik
         tvAggrementRegister=(TextView) findViewById(R.id.tvAggrementRegister);
         username_text_input_register=(TextInputLayout) findViewById(R.id.username_text_input_register);
         email_text_input_register=(TextInputLayout) findViewById(R.id.email_text_input_register);
