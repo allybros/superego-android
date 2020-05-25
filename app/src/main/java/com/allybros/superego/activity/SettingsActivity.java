@@ -121,7 +121,7 @@ public class SettingsActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //Sign Out Google
-                        if (SessionManager.getInstance().getUser().getUserType() == 1){
+                        if (SessionManager.getInstance().getUser().getUserType() == 1){ //Google Sign out
                             GoogleSignInClient mGoogleSignInClient;
                             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                                     .requestIdToken(getString(R.string.GOOGLE_CLIENT_ID))
@@ -162,8 +162,6 @@ public class SettingsActivity extends AppCompatActivity {
                             getApplicationContext().startActivity(intent1);
                             finish();
                         }
-
-
                     }
                 })
                 .setNegativeButton(R.string.action_no, null)

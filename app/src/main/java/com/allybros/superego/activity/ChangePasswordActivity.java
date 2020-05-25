@@ -31,13 +31,13 @@ import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 
 public class ChangePasswordActivity extends AppCompatActivity {
 
-    ScrollView rootView;
-    MaterialProgressBar progressChangePassword;
-    Button btChangePassword;
-    EditText etOldPassword, etNewPassword, etNewPasswordAgain;
-    TextInputLayout tilOldPassword, tilNewPassword, tilNewPasswordAgain;
-    ConstraintLayout cardFormChangePassword;
-    SlidrInterface slidr;
+    private ScrollView rootView;
+    private MaterialProgressBar progressChangePassword;
+    private Button btChangePassword;
+    private EditText etOldPassword, etNewPassword, etNewPasswordAgain;
+    private TextInputLayout tilOldPassword, tilNewPassword, tilNewPasswordAgain;
+    private ConstraintLayout cardFormChangePassword;
+    private SlidrInterface slidr;
 
     private BroadcastReceiver changePasswordReceiver;
     @Override

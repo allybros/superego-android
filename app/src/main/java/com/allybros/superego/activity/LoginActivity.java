@@ -49,27 +49,37 @@ public class LoginActivity extends AppCompatActivity {
     public TextInputLayout passwordTextInput, usernameTextInput;
     static LoginButton signInFacebook;
     private Button btSignInFacebook, btSignInGoogle;
-    GoogleSignInClient mGoogleSignInClient;      //Signing out use this variable so can not make it private
+    GoogleSignInClient mGoogleSignInClient;
     CallbackManager callbackManager;
-    private static final int RC_SIGN_IN = 0;    // Google login constant variable
+    private static final int RC_SIGN_IN = 0;    // It require to come back from Google Sign in intent
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        initializeComponents();
+        setupReceivers();
+        setupUi();
+
+    }
+    public void initializeComponents(){
         usernameTextInput = findViewById(R.id.username_text_input);
         btLogin = findViewById(R.id.btLogin);
         signInFacebook = findViewById(R.id.sign_in_facebook);
         btSignInGoogle = findViewById(R.id.btSignInGoogle);
         btSignInFacebook = findViewById(R.id.btSignInFacebook);
-
         btRegister = findViewById(R.id.btRegister);
         etMail = findViewById(R.id.etMail);
         etPassword = findViewById(R.id.etPassword);
         passwordTextInput = findViewById(R.id.password_text_input);
+    }
+
+    public void setupReceivers(){
         LocalBroadcastManager.getInstance(this).registerReceiver(loginReceiver, new IntentFilter(ConstantValues.ACTION_LOGIN));
         LocalBroadcastManager.getInstance(this).registerReceiver(loginSocialMediaReceiver, new IntentFilter(ConstantValues.ACTION_SOCIAL_MEDIA_LOGIN));
+    }
 
+    public void setupUi(){
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,10 +115,6 @@ public class LoginActivity extends AppCompatActivity {
                             .playOn(findViewById(R.id.loginCard));
                     LoginTask.loginTask(getApplicationContext(),etMail.getText().toString(),etPassword.getText().toString());
                 }
-
-
-
-
             }
         });
 
@@ -122,7 +128,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
-        //Google Sign In
+        //Set Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.GOOGLE_CLIENT_ID))
                 .requestEmail()
@@ -137,7 +143,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        //Facebook
+        //Set Facebook Sign In
         btSignInFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -172,6 +178,7 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
+    //Provides that cacth the results that come back from Google an Facebook sign in
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -185,8 +192,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-
-
+    //Sends request to Ally Bros Api for signing in with Google
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
@@ -205,6 +211,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
+    /**
+     * Catches broadcasts of api/LoginTask class
+     */
     private BroadcastReceiver loginReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -276,11 +285,12 @@ public class LoginActivity extends AppCompatActivity {
                     });
                     builder1.show();
                     break;
-
             }
-
         }
     };
+    /**
+     * Catches broadcasts of api/SocialMediaSignInTask class
+     */
     private BroadcastReceiver loginSocialMediaReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -349,6 +359,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        //Delete receivers
         LocalBroadcastManager.getInstance(this).unregisterReceiver(loginReceiver);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(loginSocialMediaReceiver);
         super.onDestroy();
