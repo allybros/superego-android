@@ -55,7 +55,13 @@
                         android:textStyle="bold"
                         app:layout_constraintStart_toEndOf="@+id/ivEditProfile"
                         app:layout_constraintTop_toTopOf="parent" />
-
+                    <com.facebook.login.widget.LoginButton
+                        android:id="@+id/logoutFacebook"
+                        android:visibility="gone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:ignore="MissingConstraints">
+                    </com.facebook.login.widget.LoginButton>
                     <TextView
                         android:id="@+id/tvEditProfileDesc"
                         android:layout_width="wrap_content"
