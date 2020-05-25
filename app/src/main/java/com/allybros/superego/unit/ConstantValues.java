@@ -32,7 +32,7 @@ public class ConstantValues {
     public static final String PARAM_TEST = "https://api.allybros.com/superego/param_test.php";
     public static final String PASSWORD_CHANGE = "https://api.allybros.com/superego/reset-password.php";
     public static final String RATE_URL = "https://demo.allybros.com/superego/rate.php?embed=true&test=";
-    public static final String LOGOUT_URL ="https://api.allybros.com/superego/logout.php";
+    public static final String LOGOUT_URL ="https://api.insightof.me/logout.php";
 
     //Broadcast-Reciever actions
     public static final String ACTION_UPDATE_INFORMATION ="update-info-status-share";

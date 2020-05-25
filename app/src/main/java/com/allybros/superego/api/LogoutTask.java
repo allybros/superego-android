@@ -41,6 +41,8 @@ public class LogoutTask {
             @Override
             public void onResponse(String response) {
                 int status;
+                Log.d("sego-Response-logout",response.toString());
+
                 try {
                     JSONObject jsonObj=new JSONObject(response);
                     Log.d("sego-Response-logout",response.toString());
