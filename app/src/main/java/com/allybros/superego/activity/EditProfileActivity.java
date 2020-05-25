@@ -2,7 +2,6 @@ package com.allybros.superego.activity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
@@ -30,7 +29,6 @@ import com.allybros.superego.util.HelperMethods;
 import com.allybros.superego.util.RequestForGetImage;
 import com.allybros.superego.util.SessionManager;
 import com.android.volley.toolbox.ImageLoader;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -44,7 +42,6 @@ import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 import static com.allybros.superego.util.HelperMethods.imageToString;
 
 public class EditProfileActivity extends AppCompatActivity {
-    //TODO: Why not private?
     private MaterialProgressBar progressEditProfile;
     private ConstraintLayout cardFormEditProfile;
     private TextInputEditText username,email,information;
@@ -203,77 +200,31 @@ public class EditProfileActivity extends AppCompatActivity {
             switch (status){
 
                 case ErrorCodes.SESSION_EXPIRED:
-
-                     new MaterialAlertDialogBuilder(EditProfileActivity.this)
-                            .setTitle("insightof.me")
-                            .setMessage(getApplicationContext().getString(R.string.session_expired))
-                            .setPositiveButton(getString(R.string.action_ok), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                    getApplicationContext().startActivity(intent);
-                                }
-                            })
-                            .show();
+                    Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.session_expired),Snackbar.LENGTH_LONG).show();
                     break;
 
                 case ErrorCodes.USERNAME_NOT_LEGAL:
-
-                    new MaterialAlertDialogBuilder(EditProfileActivity.this)
-                            .setTitle("insightof.me")
-                            .setMessage(getApplicationContext().getString(R.string.usernameNotLegal))
-                            .setPositiveButton(getString(R.string.action_ok), null)
-                            .show();
+                    Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.usernameNotLegal),Snackbar.LENGTH_LONG).show();
                     break;
 
                 case ErrorCodes.USERNAME_ALREADY_EXIST:
-
-                    new MaterialAlertDialogBuilder(EditProfileActivity.this)
-                            .setTitle("insightof.me")
-                            .setMessage(getApplicationContext().getString(R.string.usernameAlreadyExist))
-                            .setPositiveButton(getString(R.string.action_ok), null)
-                            .show();
+                    Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.usernameAlreadyExist),Snackbar.LENGTH_LONG).show();
                     break;
 
                 case ErrorCodes.EMAIL_NOT_LEGAL:
-
-                    new MaterialAlertDialogBuilder(EditProfileActivity.this)
-                            .setTitle("insightof.me")
-                            .setMessage(getApplicationContext().getString(R.string.emailNotLegal))
-                            .setPositiveButton(getString(R.string.action_ok), null)
-                            .show();
+                    Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.emailNotLegal),Snackbar.LENGTH_LONG).show();
                     break;
 
                 case ErrorCodes.EMAIL_ALREADY_EXIST:
-
-                    new MaterialAlertDialogBuilder(EditProfileActivity.this)
-                            .setTitle("insightof.me")
-                            .setMessage(getApplicationContext().getString(R.string.emailAlreadyExist))
-                            .setPositiveButton(getString(R.string.action_ok), null)
-                            .show();
+                    Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.emailAlreadyExist),Snackbar.LENGTH_LONG).show();
                     break;
 
                 case ErrorCodes.SUCCESS:
-
-                    new MaterialAlertDialogBuilder(EditProfileActivity.this)
-                            .setTitle("insightof.me")
-                            .setMessage(getApplicationContext().getString(R.string.processComplated))
-                            .setPositiveButton(getString(R.string.action_ok), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Log.d("Success","İşlem tamam patron");
-                                }
-                            }).show();
+                    Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.processComplated),Snackbar.LENGTH_LONG).show();
                     break;
 
                 case ErrorCodes.SYSFAIL:
-
-                    new MaterialAlertDialogBuilder(EditProfileActivity.this)
-                            .setTitle("insightof.me")
-                            .setMessage(getApplicationContext().getString(R.string.connection_error))
-                            .setPositiveButton(getString(R.string.action_ok), null)
-                            .show();
+                    Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.connection_error),Snackbar.LENGTH_LONG).show();
                     break;
 
             }
@@ -290,53 +241,27 @@ public class EditProfileActivity extends AppCompatActivity {
             //Check status
             switch (status){
                 case ErrorCodes.SUCCESS:
-                    new MaterialAlertDialogBuilder(EditProfileActivity.this)
-                            .setTitle("insightof.me")
-                            .setMessage(getApplicationContext().getString(R.string.processComplated))
-                            .setPositiveButton(getString(R.string.action_ok), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {}
-                            }).show();
+                    Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.processComplated),Snackbar.LENGTH_LONG).show();
                     break;
 
                 case ErrorCodes.SYSFAIL:
-                    new MaterialAlertDialogBuilder(EditProfileActivity.this)
-                            .setTitle("insightof.me")
-                            .setMessage(getApplicationContext().getString(R.string.connection_error))
-                            .setPositiveButton(getString(R.string.action_ok), null)
-                            .show();
+                    Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.connection_error),Snackbar.LENGTH_LONG).show();
                     break;
 
                 case ErrorCodes.INVALID_FILE_EXTENSION:
-                    new MaterialAlertDialogBuilder(EditProfileActivity.this)
-                            .setTitle("insightof.me")
-                            .setMessage(getApplicationContext().getString(R.string.invalid_file_extension)+" "+getApplicationContext().getString(R.string.connection_error)+status)
-                            .setPositiveButton(getString(R.string.action_ok), null)
-                            .show();
+                    Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.invalid_file_extension),Snackbar.LENGTH_LONG).show();
                     break;
 
                 case ErrorCodes.INVALID_FILE_TYPE:
-                    new MaterialAlertDialogBuilder(EditProfileActivity.this)
-                            .setTitle("insightof.me")
-                            .setMessage(getApplicationContext().getString(R.string.invalid_file_type)+" "+getApplicationContext().getString(R.string.connection_error)+status)
-                            .setPositiveButton(getString(R.string.action_ok), null)
-                            .show();
+                    Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.invalid_file_type),Snackbar.LENGTH_LONG).show();
                     break;
 
                 case ErrorCodes.INVALID_FILE_SIZE:
-                    new MaterialAlertDialogBuilder(EditProfileActivity.this)
-                            .setTitle("insightof.me")
-                            .setMessage(getApplicationContext().getString(R.string.invalid_file_size)+" "+getApplicationContext().getString(R.string.connection_error)+status)
-                            .setPositiveButton(getString(R.string.action_ok), null)
-                            .show();
+                    Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.invalid_file_size),Snackbar.LENGTH_LONG).show();
                     break;
 
                 case ErrorCodes.FILE_WRITE_ERROR:
-                    new MaterialAlertDialogBuilder(EditProfileActivity.this)
-                            .setTitle("insightof.me")
-                            .setMessage(getApplicationContext().getString(R.string.connection_error)+" "+getApplicationContext().getString(R.string.connection_error)+status)
-                            .setPositiveButton(getString(R.string.action_ok), null)
-                            .show();
+                    Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.connection_error),Snackbar.LENGTH_LONG).show();
                     break;
             }
         }

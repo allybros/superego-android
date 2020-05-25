@@ -1,25 +1,36 @@
 package com.allybros.superego.activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.R;
-import com.allybros.superego.api.LogoutTask;
 import com.allybros.superego.ui.LicensesAdapter;
+import com.allybros.superego.unit.ConstantValues;
+import com.allybros.superego.unit.ErrorCodes;
+import com.allybros.superego.util.SessionManager;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrInterface;
 
@@ -28,7 +39,6 @@ import java.util.Arrays;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    final String USER_INFORMATION_PREF="USER_INFORMATION_PREF";
     private ConstraintLayout optionEditProfile;
     private ConstraintLayout optionChangePassword;
     private ConstraintLayout optionAbout;
@@ -53,6 +63,8 @@ public class SettingsActivity extends AppCompatActivity {
         optionAbout = findViewById(R.id.cardBtnAbout);
         optionLicenses = findViewById(R.id.cardBtnLicenses);
         optionSignOut = findViewById(R.id.cardBtnSingOut);
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(logoutReceiver, new IntentFilter(ConstantValues.ACTION_LOGOUT));
 
         optionEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,21 +120,50 @@ public class SettingsActivity extends AppCompatActivity {
                 .setPositiveButton(R.string.action_yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        //Sign Out
-                        String session_token;
-                        SharedPreferences pref = getApplicationContext().getSharedPreferences(USER_INFORMATION_PREF, Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = pref.edit();
-                        session_token = pref.getString("session_token","");
-                        editor.clear().apply();
+                        //Sign Out Google
+                        if (SessionManager.getInstance().getUser().getUserType() == 1){
+                            GoogleSignInClient mGoogleSignInClient;
+                            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                                    .requestIdToken(getString(R.string.GOOGLE_CLIENT_ID))
+                                    .requestEmail()
+                                    .build();
+                            mGoogleSignInClient = GoogleSignIn.getClient(getApplicationContext(), gso);
+                            mGoogleSignInClient.signOut()
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            Log.d("Google-Logout","Google-Logout");
+                                            /*String session_token = SessionManager.getInstance().getSessionToken();
+                                            LogoutTask.logoutTask(getApplicationContext(), session_token);*/
 
-                        LogoutTask.logoutTask(getApplicationContext(), session_token);
-                        if (LoginActivity.mGoogleSignInClient != null)
-                            LoginActivity.mGoogleSignInClient.signOut();
 
-                        Intent intent=new Intent(getApplicationContext(), SplashActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        getApplicationContext().startActivity(intent);
-                        finish();
+                                            //TODO: Bizim logout çalışınca silinmeli
+                                            SessionManager.getInstance().clearSession(getApplicationContext()); //Clear local variables that use login
+                                            Intent intent1=new Intent(getApplicationContext(), SplashActivity.class);
+                                            intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                            getApplicationContext().startActivity(intent1);
+                                            finish();
+                                        }
+                                    });
+                        }else if(SessionManager.getInstance().getUser().getUserType() == 2){  //Sign Out Facebook
+                            if(LoginActivity.signInFacebook != null) LoginActivity.signInFacebook.callOnClick();
+                            //TODO: Bizim logout çalışınca silinmeli
+                            SessionManager.getInstance().clearSession(getApplicationContext()); //Clear local variables that use login
+                            Intent intent1=new Intent(getApplicationContext(), SplashActivity.class);
+                            intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            getApplicationContext().startActivity(intent1);
+                            finish();
+                        }else{
+                            //Sign out Ally Bros
+                            SessionManager.getInstance().clearSession(getApplicationContext()); //Clear local variables that use login
+                            //TODO: Bizim logout çalışınca silinmeli
+                            Intent intent1=new Intent(getApplicationContext(), SplashActivity.class);
+                            intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            getApplicationContext().startActivity(intent1);
+                            finish();
+                        }
+
+
                     }
                 })
                 .setNegativeButton(R.string.action_no, null)
@@ -164,5 +205,33 @@ public class SettingsActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this, R.style.SegoAlertDialog);
         builder.setTitle(R.string.option_licenses);
         builder.setView(dialogView).show();
+    }
+    private BroadcastReceiver logoutReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int status = intent.getIntExtra("status",0);
+            Log.d("receiver", "Got message: " + status);
+            switch (status){
+                case ErrorCodes.SYSFAIL:
+                    Log.d("Logout-status",""+status);
+                    break;
+                case ErrorCodes.SUCCESS:
+                    Log.d("Logout-status",""+status);
+                    SessionManager.getInstance().clearSession(getApplicationContext()); //Clear local variables that use login
+
+                    Intent intent1=new Intent(getApplicationContext(), SplashActivity.class);
+                    intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    getApplicationContext().startActivity(intent1);
+                    finish();
+                    break;
+            }
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(logoutReceiver);
+
     }
 }
