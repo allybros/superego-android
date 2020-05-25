@@ -23,20 +23,8 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-/**
- * @author 0rcun
- */
 
 public class LoginTask extends Activity {
-
-    /**
-     * Login process request to API
-     *
-     * Function requests to server and then receives response. After that broadcasts the response.
-     * @param context       required to build request and send Broadcast
-     * @param uid           required to verify the user
-     * @param password      required to verify the user
-     */
     public static void loginTask(final Context context, final String uid, final String password) {
         final Intent intent = new Intent(ConstantValues.ACTION_LOGIN);
 

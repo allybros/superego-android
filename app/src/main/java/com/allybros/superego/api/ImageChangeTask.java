@@ -22,17 +22,9 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-/**
- * @author 0rcun
- */
+
 public class ImageChangeTask {
 
-    /**
-     * Image change request to API
-     * Function requests to server and then receives response. After that broadcasts the response.
-     * @param image     that is to be changed image
-     * @param context   required to build request and send Broadcast
-     */
     public static void   imageChangeTask(final String image, final Context context){
         Log.d("Image",image);
         Log.d("Session",SessionManager.getInstance().getSessionToken());
