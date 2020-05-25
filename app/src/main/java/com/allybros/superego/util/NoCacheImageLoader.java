@@ -8,7 +8,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 /**
  * Provide to be imageloder that is no cache
- *
  * @author 0rcun
  */
 public class NoCacheImageLoader extends ImageLoader {

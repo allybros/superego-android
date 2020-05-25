@@ -16,9 +16,16 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-
+/**
+ * Class includes the function of searching user
+ * @author umutalacam
+ */
 public class SearchTask {
-
+    /**
+     * The function sends a request for searching user. After that broadcasts the response.
+     * @param context
+     * @param query
+     */
     public static void searchTask(final Context context, final String query) {
         RequestQueue queue = Volley.newRequestQueue(context);
         final Intent intent = new Intent(ConstantValues.SEARCH_URL);
@@ -28,22 +35,16 @@ public class SearchTask {
         StringRequest jsonRequest=new StringRequest(Request.Method.GET, requestUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
                 int status;
-
                 try {
                     JSONArray jsonObject=new JSONArray(response);
                     Log.d("query-Response",response.toString());
                     intent.putExtra("result",response.toString());
                     intent.setAction(ConstantValues.ACTION_SEARCH);
                     LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -51,8 +52,6 @@ public class SearchTask {
 
             }
         });
-
-
         queue.add(jsonRequest);
 
     }

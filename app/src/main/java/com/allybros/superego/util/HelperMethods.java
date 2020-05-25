@@ -19,7 +19,6 @@ import java.util.Date;
 
 /**
  * HelperMethods contains some methods for projects
- *
  * @author 0rcun
  */
 
@@ -27,7 +26,6 @@ public class HelperMethods {
 
     /**
      * Converts from bitmap to string
-     *
      * @param bitmap    to be converted bitmap
      * @return          string form bitmap
      */
@@ -39,7 +37,6 @@ public class HelperMethods {
     }
     /**
      * Converts from bitmap to string
-     *
      * @param context       require to use requst method
      * @param imageView     to be filled imageView
      * @param URL           which contains the image
@@ -57,7 +54,6 @@ public class HelperMethods {
 
     /**
      * Returns current date
-     *
      * @return formattedDate    current date that is dd-mm-yyyy format
      */
     @RequiresApi(api = Build.VERSION_CODES.N)
