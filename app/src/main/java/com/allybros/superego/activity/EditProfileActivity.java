@@ -25,7 +25,6 @@ import com.allybros.superego.api.ImageChangeTask;
 import com.allybros.superego.ui.CircledNetworkImageView;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
-import com.allybros.superego.util.HelperMethods;
 import com.allybros.superego.util.RequestForGetImage;
 import com.allybros.superego.util.SessionManager;
 import com.android.volley.toolbox.ImageLoader;
@@ -63,6 +62,12 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
+        initializeComponents();
+        setupReceivers();
+        setupUi();
+    }
+
+    public void initializeComponents(){
         editProfileLayout = findViewById(R.id.editProfileLayout);
         progressEditProfile = findViewById(R.id.progressEditProfile);
         cardFormEditProfile = findViewById(R.id.cardFormEditProfile);
@@ -75,33 +80,34 @@ public class EditProfileActivity extends AppCompatActivity {
         etInformation_text_input = findViewById(R.id.etInformation_text_input);
         settingsImage = findViewById(R.id.imageSettings);
         btnSaveProfile = findViewById(R.id.btnSaveProfile);
+    }
 
+    public void setupReceivers(){
         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(updateInformationReceiver, new IntentFilter(ConstantValues.ACTION_UPDATE_INFORMATION));
         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(updateImageReceiver, new IntentFilter(ConstantValues.ACTION_UPDATE_IMAGE));
+    }
+
+    public void setupUi(){
 
         btChangePhoto.bringToFront();
         btChangePhoto.invalidate();
 
+        //Set view components
         email.setText(SessionManager.getInstance().getUser().getEmail());
         username.setText(SessionManager.getInstance().getUser().getUsername());
         information.setText(SessionManager.getInstance().getUser().getUserBio());
 
-        if(SessionManager.getInstance().getUser().getAvatar()!=null){
-            Log.d("OnCreate-1","Run");
-            settingsImage.setImageBitmap(SessionManager.getInstance().getUser().getAvatar());
-        }else{
-            Log.d("OnCreate-2","Run");
-            HelperMethods.imageLoadFromUrl(getApplicationContext(), ConstantValues.AVATAR_URL+SessionManager.getInstance().getUser().getImage(),settingsImage);
-        }
-
+        //Load image
         String URL= ConstantValues.AVATAR_URL+SessionManager.getInstance().getUser().getImage();
         ImageLoader mImageLoader;
         mImageLoader = RequestForGetImage.getInstance(getApplicationContext()).getImageLoader();
         mImageLoader.get(URL, ImageLoader.getImageListener(settingsImage, R.drawable.img_avatar, android.R.drawable.ic_dialog_alert));
         settingsImage.setImageUrl(URL, mImageLoader);
 
+        //Require for slide behaviour
         slidr= Slidr.attach(this);
         slidr.unlock();
+
         btChangePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,6 +123,7 @@ public class EditProfileActivity extends AppCompatActivity {
         });
     }
 
+    //Opens intent that provide selecting image from local storage
     private void selectImage(){
        Intent intent = new Intent();
        intent.setType("image/*");
@@ -124,6 +131,7 @@ public class EditProfileActivity extends AppCompatActivity {
        startActivityForResult(intent,IMG_REQUEST);
     }
 
+    //Provides that cacth the results that come back from selectImage() function
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -185,9 +193,9 @@ public class EditProfileActivity extends AppCompatActivity {
         }
     }
 
-    //TODO: What about moving assignment to onCreate method?
-    // Do not instantiate not primitive types outside in a method. It is confusing.
-    // However there is nothing wrong about instantiating empty collections such as ArrayList
+    /**
+     * Catches broadcasts of api/ChangeInfoTask class
+     */
     private BroadcastReceiver updateInformationReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -230,7 +238,9 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         }
     };
-
+    /**
+     * Catches broadcasts of api/ImageChangeTask class
+     */
     private BroadcastReceiver updateImageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -266,35 +276,12 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         }
     };
-
-
     @Override
     public void onDestroy() {
+        //Delete receivers
         LocalBroadcastManager.getInstance(EditProfileActivity.this).unregisterReceiver(updateImageReceiver);
         LocalBroadcastManager.getInstance(EditProfileActivity.this).unregisterReceiver(updateInformationReceiver);
         Log.d("SettingsDestroy","RUN");
         super.onDestroy();
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        if(SessionManager.getInstance().getUser().getAvatar()!=null){
-            settingsImage.setImageBitmap(SessionManager.getInstance().getUser().getAvatar());
-        }else{
-            HelperMethods.imageLoadFromUrl(getApplicationContext(), ConstantValues.AVATAR_URL+SessionManager.getInstance().getUser().getImage(),settingsImage);
-        }
-
-        Log.d("SettingsResume","RUN");
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d("SettingsPause","RUN");
-
     }
 }

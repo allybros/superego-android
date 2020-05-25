@@ -1,7 +1,4 @@
 package com.allybros.superego.activity;
-
-
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -30,17 +27,21 @@ import com.google.android.material.textfield.TextInputLayout;
 
 public class RegisterActivity extends AppCompatActivity {
 
-
-    TextInputEditText etRegisterUsername,etRegisterMail,etRegisterPassword;
-    TextInputLayout username_text_input_register,email_text_input_register,password_text_input_register;
-    Button btSignUp;
-    TextView tvAggrementRegister;
-    CheckBox checkBoxAggrement;
+    private TextInputEditText etRegisterUsername,etRegisterMail,etRegisterPassword;
+    private TextInputLayout username_text_input_register,email_text_input_register,password_text_input_register;
+    private Button btSignUp;
+    private TextView tvAggrementRegister;
+    private CheckBox checkBoxAggrement;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_page);
+        initializeComponents();
+        setupReceivers();
+        setupUi();
+    }
 
+    public void initializeComponents(){
         btSignUp=(MaterialButton) findViewById(R.id.btSignUp);
         etRegisterPassword=(TextInputEditText)findViewById(R.id.etRegisterPassword);
         etRegisterMail=(TextInputEditText)findViewById(R.id.etRegisterMail);
@@ -50,10 +51,14 @@ public class RegisterActivity extends AppCompatActivity {
         email_text_input_register=(TextInputLayout) findViewById(R.id.email_text_input_register);
         password_text_input_register=(TextInputLayout) findViewById(R.id.password_text_input);
         checkBoxAggrement=(CheckBox) findViewById(R.id.checkboxAggrement);
+    }
 
-
+    public void setupReceivers(){
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter(ConstantValues.ACTION_REGISTER));
 
+    }
+
+    public void setupUi(){
         tvAggrementRegister.setMovementMethod(LinkMovementMethod.getInstance());
 
         checkBoxAggrement.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -106,8 +111,8 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-    }
 
+    }
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -116,6 +121,9 @@ public class RegisterActivity extends AppCompatActivity {
         finish();
     }
 
+    /**
+     * Catches broadcasts of api/RegisterTask class
+     */
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -148,7 +156,6 @@ public class RegisterActivity extends AppCompatActivity {
                     password_text_input_register.setError("Parola kurallara uymamaktadır.");
                     break;
             }
-
         }
     };
 }
