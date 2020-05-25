@@ -14,7 +14,7 @@ public class ConstantValues {
     //    private static final String API_ROOT =  "https://api.insightof.me";
     public static final String API_ROOT =  "https://api.allybros.com/superego/";//TODO: Yukarıda bulunan api roota geçilecek
     public static final String AVATAR_URL = API_ROOT + "images.php?get=";
-    public static final String TEST_LINK_ROOT = "https://demo.allybros.com/superego/rate.php?test=";   //TODO: Test links must be like AVATAR_URL variable
+    public static final String TEST_LINK_ROOT = "https://demo.allybros.com/superego/rate.php?test=";
 
 
     //API LINKS
