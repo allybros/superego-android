@@ -30,6 +30,10 @@
     <color name="loginScreenBlack">#46000000</color>
     <color name="fragmentBackground">#f9f9f9</color>
 
+    <!--Brand Buttons Color-->
+    <color name="google">#FF0219</color>
+    <color name="facebook">#4167B2</color>
+
     <!-- Material Palette -->
     <color name="materialPurple">#9C27B0</color>
     <color name="materialPurpleOverlay">#C09C27B0</color>
