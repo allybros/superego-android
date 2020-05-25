@@ -32,12 +32,14 @@ public class ConstantValues {
     public static final String PARAM_TEST = "https://api.allybros.com/superego/param_test.php";
     public static final String PASSWORD_CHANGE = "https://api.allybros.com/superego/reset-password.php";
     public static final String RATE_URL = "https://demo.allybros.com/superego/rate.php?embed=true&test=";
+    public static final String LOGOUT_URL ="https://api.allybros.com/superego/logout.php";
 
     //Broadcast-Reciever actions
     public static final String ACTION_UPDATE_INFORMATION ="update-info-status-share";
     public static final String ACTION_UPDATE_IMAGE="update-image-status-share";
     public static final String ACTION_EARNED_REWARD="earned-reward-status-share";
     public static final String ACTION_LOGIN = "login-status-share";
+    public static final String ACTION_LOGOUT = "logout-status-share";
     public static final String ACTION_SOCIAL_MEDIA_LOGIN = "social-media-login-status-share";
     public static final String ACTION_REFRESH_PROFILE = "profile-refresh-status-share";
     public static final String ACTION_REGISTER = "register-status-share";

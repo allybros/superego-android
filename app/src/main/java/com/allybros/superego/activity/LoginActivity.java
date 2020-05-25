@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,11 +32,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -43,31 +42,31 @@ import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity {
     private MaterialButton btLogin;
+
     private MaterialButton btRegister;
     private TextInputEditText etMail;
     private TextInputEditText etPassword;
     public TextInputLayout passwordTextInput, usernameTextInput;
-    private MaterialCardView loginCard;
-    private SignInButton signInGoogle;
-    private LoginButton signInFacebook;
-    static GoogleSignInClient mGoogleSignInClient;
+    static LoginButton signInFacebook;
+    private Button btSignInFacebook, btSignInGoogle;
+    GoogleSignInClient mGoogleSignInClient;      //Signing out use this variable so can not make it private
     CallbackManager callbackManager;
-    private static final int RC_SIGN_IN = 0;
+    private static final int RC_SIGN_IN = 0;    // Google login constant variable
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        usernameTextInput =(TextInputLayout) findViewById(R.id.username_text_input);
-        btLogin=(MaterialButton) findViewById(R.id.btLogin);
-        signInGoogle = (SignInButton) findViewById(R.id.sign_in_google);
-        signInFacebook = (LoginButton) findViewById(R.id.sign_in_facebook);
+        usernameTextInput = findViewById(R.id.username_text_input);
+        btLogin = findViewById(R.id.btLogin);
+        signInFacebook = findViewById(R.id.sign_in_facebook);
+        btSignInGoogle = findViewById(R.id.btSignInGoogle);
+        btSignInFacebook = findViewById(R.id.btSignInFacebook);
 
-        btRegister=(MaterialButton) findViewById(R.id.btRegister);
-        etMail=(TextInputEditText)findViewById(R.id.etMail);
-        etPassword=(TextInputEditText)findViewById(R.id.etPassword);
-        passwordTextInput=(TextInputLayout)findViewById(R.id.password_text_input);
-        loginCard= (MaterialCardView) findViewById(R.id.loginCard);
+        btRegister = findViewById(R.id.btRegister);
+        etMail = findViewById(R.id.etMail);
+        etPassword = findViewById(R.id.etPassword);
+        passwordTextInput = findViewById(R.id.password_text_input);
         LocalBroadcastManager.getInstance(this).registerReceiver(loginReceiver, new IntentFilter(ConstantValues.ACTION_LOGIN));
         LocalBroadcastManager.getInstance(this).registerReceiver(loginSocialMediaReceiver, new IntentFilter(ConstantValues.ACTION_SOCIAL_MEDIA_LOGIN));
 
@@ -128,18 +127,23 @@ public class LoginActivity extends AppCompatActivity {
                 .requestIdToken(getString(R.string.GOOGLE_CLIENT_ID))
                 .requestEmail()
                 .build();
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        mGoogleSignInClient = GoogleSignIn.getClient(getApplicationContext(), gso);
 
-        signInGoogle.setOnClickListener(new View.OnClickListener() {
+        btSignInGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-                    startActivityForResult(signInIntent, RC_SIGN_IN);
-
+                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+                startActivityForResult(signInIntent, RC_SIGN_IN);
             }
         });
 
         //Facebook
+        btSignInFacebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signInFacebook.callOnClick();
+            }
+        });
         callbackManager = CallbackManager.Factory.create();
         signInFacebook.setPermissions(Arrays.asList("email","public_profile"));
 

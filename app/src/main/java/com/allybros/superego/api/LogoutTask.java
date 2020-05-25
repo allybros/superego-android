@@ -6,8 +6,9 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.allybros.superego.R;
-import com.allybros.superego.activity.LoginActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
+import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -25,43 +26,32 @@ import java.util.Map;
 
 public class LogoutTask {
 
-    public static void logoutTask(final Context currentContext, final String session_token) {
+    public static void logoutTask(final Context context, final String session_token) {
+        RequestQueue queue = Volley.newRequestQueue(context);
 
-        final String LOGIN_URL ="https://api.allybros.com/superego/logout.php";
-        final String logoutSuccesful= (String) currentContext.getString(R.string.logoutSuccesful);
-        final String sysFail=(String)currentContext.getString(R.string.connection_error);
-
-        final Intent mainActivityIntent=new Intent(currentContext, LoginActivity.class);
-        mainActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-        RequestQueue queue = Volley.newRequestQueue(currentContext);
-
-        StringRequest jsonRequest=new StringRequest(Request.Method.POST, LOGIN_URL, new Response.Listener<String>() {
+        StringRequest jsonRequest=new StringRequest(Request.Method.POST, ConstantValues.LOGOUT_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 int status;
-                Log.d("sego-Response-Logout",response.toString());
                 try {
                     JSONObject jsonObj=new JSONObject(response);
+                    Log.d("sego-Response-logout",response.toString());
                     status = jsonObj.getInt("status");
-                    switch (status){
-                        case ErrorCodes.SYSFAIL:
-                            Toast.makeText(currentContext, sysFail, Toast.LENGTH_SHORT).show();
-                            break;
 
-                        case ErrorCodes.SUCCESS:
+                    Intent intent = new Intent(ConstantValues.ACTION_LOGOUT);
+                    intent.putExtra("status", status);
+                    LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
 
-                            Toast.makeText(currentContext, logoutSuccesful,Toast.LENGTH_SHORT).show();
-                            break;
-                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
+
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(currentContext,sysFail, Toast.LENGTH_SHORT);
+                Toast.makeText(context, ErrorCodes.CONNECTION_ERROR, Toast.LENGTH_SHORT);
 
             }
         }) {
