@@ -132,14 +132,18 @@
 
         <Button
             android:id="@+id/btSignInGoogle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
+            style="@style/SegoBtn"
+            android:layout_width="160dp"
+            android:layout_height="64dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="24dp"
-            android:text="google"
+            android:background="@color/buttonLoginScreen"
+            android:drawableLeft="@drawable/brand_google"
+            android:text="Google"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btSignInFacebook"
             app:layout_constraintTop_toBottomOf="@+id/loginCard" />
 
         <com.facebook.login.widget.LoginButton
@@ -150,17 +154,21 @@
             android:layout_gravity="center_horizontal"
             app:layout_constraintStart_toEndOf="@+id/sign_in_google"
             app:layout_constraintTop_toBottomOf="@+id/loginCard"/>
+
         <Button
             android:id="@+id/btSignInFacebook"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/SegoBtn"
+            android:layout_width="160dp"
+            android:layout_height="64dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="12dp"
-            android:layout_marginEnd="24dp"
-            android:text="facebook"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="5dp"
+            android:background="@color/buttonLoginScreen"
+            android:drawableLeft="@drawable/brand_facebook"
+            android:text="Facebook"
+            app:layout_constraintEnd_toStartOf="@+id/btSignInGoogle"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btSignInGoogle" />
+            app:layout_constraintTop_toBottomOf="@+id/loginCard" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btRegister"
