@@ -121,4 +121,6 @@
     <string name="default_bio">insightof.me kullanıcısı.</string>
     <string name="action_save">Kaydet</string>
     <string name="error_field_required">Bu alan boş olamaz.</string>
+    <string name="action_sign_up">YENİ HESAP OLUŞTUR</string>
+    <string name="call_or_connect_via">ya da bağlan;</string>
 </resources>
