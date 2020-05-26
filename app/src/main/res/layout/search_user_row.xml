@@ -35,5 +35,5 @@
         android:layout_marginStart="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/img_avatar" />
+        app:srcCompat="@drawable/default_avatar" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,161 +1,205 @@
 package com.allybros.superego.activity;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.R;
+import com.allybros.superego.api.LoginTask;
 import com.allybros.superego.api.RegisterTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
+import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 
 public class RegisterActivity extends AppCompatActivity {
 
     private TextInputEditText etRegisterUsername,etRegisterMail,etRegisterPassword;
-    private TextInputLayout username_text_input_register,email_text_input_register,password_text_input_register;
-    private Button btSignUp;
-    private TextView tvAggrementRegister;
-    private CheckBox checkBoxAggrement;
+    private TextInputLayout inputLayoutUsername, inputLayoutEmail, inputLayoutPassword;
+    private Button btnRegister;
+    private CheckBox checkBoxAgreement;
+    private LinearLayout cardFormRegister;
+    private MaterialProgressBar progressView;
     private BroadcastReceiver registerReceiver;
+    private BroadcastReceiver autoLoginReceiver;
+
+    private String usernameInput;
+    private String emailInput;
+    private String passwordInput;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register_page);
+        setContentView(R.layout.activity_register);
         initializeComponents();
         setupReceivers();
         setupUi();
     }
 
     private void initializeComponents(){
-        btSignUp=(MaterialButton) findViewById(R.id.btSignUp);
-        etRegisterPassword=(TextInputEditText)findViewById(R.id.etRegisterPassword);
-        etRegisterMail=(TextInputEditText)findViewById(R.id.etRegisterMail);
-        etRegisterUsername=(TextInputEditText)findViewById(R.id.etRegisterUsername);
-        tvAggrementRegister=(TextView) findViewById(R.id.tvAggrementRegister);
-        username_text_input_register=(TextInputLayout) findViewById(R.id.username_text_input_register);
-        email_text_input_register=(TextInputLayout) findViewById(R.id.email_text_input_register);
-        password_text_input_register=(TextInputLayout) findViewById(R.id.password_text_input);
-        checkBoxAggrement=(CheckBox) findViewById(R.id.checkboxAggrement);
+        btnRegister = findViewById(R.id.btSignUp);
+        etRegisterPassword = findViewById(R.id.etRegisterPassword);
+        etRegisterMail = findViewById(R.id.etRegisterMail);
+        etRegisterUsername = findViewById(R.id.etRegisterUsername);
+        inputLayoutUsername = findViewById(R.id.inputLayoutRegisterUsername);
+        inputLayoutEmail = findViewById(R.id.inputLayoutRegisterEmail);
+        inputLayoutPassword = findViewById(R.id.inputLayoutRegisterPassword);
+        checkBoxAgreement = findViewById(R.id.checkboxAgreement);
+        cardFormRegister = findViewById(R.id.cardFormRegister);
+        progressView = findViewById(R.id.progressViewRegister);
     }
 
     private void setupReceivers(){
-        /**
-         * Catches broadcasts of api/RegisterTask class
-         */
+        /* Catches broadcasts of api/RegisterTask class */
         registerReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 int status = intent.getIntExtra("status",0);
-                Log.d("receiver", "Got message: " + status);
+                Log.d("Register receiver", "Got message: " + status);
+                setProgress(false);
                 switch (status) {
+                    case ErrorCodes.SUCCESS:
+                        //Auto Login User
+                        LoginTask.loginTask(getApplicationContext(), usernameInput, passwordInput);
+                        setProgress(true);
+                        break;
                     case ErrorCodes.SYSFAIL:
-                        username_text_input_register.setError("Bir şeyler yanlış gitti");
-                        email_text_input_register.setError("Lütfen tekrar deneyin.");
-                        password_text_input_register.setError("Bir sonrakinde başaracağım söz");
+                        new AlertDialog.Builder(getApplicationContext(), R.style.SegoAlertDialog)
+                                .setTitle(R.string.action_sign_up)
+                                .setMessage(R.string.info_sysfail)
+                                .setPositiveButton(R.string.action_ok, null)
+                                .show();
                         break;
 
                     case ErrorCodes.USERNAME_NOT_LEGAL:
-                        username_text_input_register.setError("Kullanıcı adı kurallara uymamaktadır.");
+                        inputLayoutUsername.setError(getString(R.string.usernameNotLegal));
                         break;
 
                     case ErrorCodes.USERNAME_ALREADY_EXIST:
-                        username_text_input_register.setError("Kullanıcı adı başkası tarafından alınmış");
+                        inputLayoutUsername.setError(getString(R.string.usernameAlreadyExist));
                         break;
 
                     case ErrorCodes.EMAIL_ALREADY_EXIST:
-                        email_text_input_register.setError("Bu e posta adresi zaten kayıtlı");
+                        inputLayoutEmail.setError(getString(R.string.emailAlreadyExist));
                         break;
 
                     case ErrorCodes.EMAIL_NOT_LEGAL:
-                        email_text_input_register.setError("E posta kurallara uymamaktadır.");
+                        inputLayoutEmail.setError(getString(R.string.emailNotLegal));
                         break;
 
                     case ErrorCodes.PASSWORD_NOT_LEGAL:
-                        password_text_input_register.setError("Parola kurallara uymamaktadır.");
+                        inputLayoutPassword.setError(getString(R.string.passwordNotLegal));
                         break;
                 }
             }
         };
+
+        /* Automatically called login task receiver which is called when register operation succeed. */
+        autoLoginReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                int status = intent.getIntExtra("status", ErrorCodes.SYSFAIL);
+                //User logged in successfully
+                if (status == ErrorCodes.SUCCESS) {
+                    Log.d("Register Activity", "Automated login succeeded");
+                    //Redirect to splash
+                    Intent i = new Intent(RegisterActivity.this, SplashActivity.class);
+                    startActivity(i);
+                    finish();
+                    // Finish the parent for performance
+                    if (getParent() != null)
+                        getParent().finish();
+                }
+            }
+        };
+
         LocalBroadcastManager.getInstance(this).registerReceiver(registerReceiver, new IntentFilter(ConstantValues.ACTION_REGISTER));
+        LocalBroadcastManager.getInstance(this).registerReceiver(autoLoginReceiver, new IntentFilter(ConstantValues.ACTION_LOGIN));
     }
 
     private void setupUi(){
-        tvAggrementRegister.setMovementMethod(LinkMovementMethod.getInstance());
 
-        checkBoxAggrement.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(checkBoxAggrement.isChecked()){
-                    btSignUp.setBackgroundTintList(getApplicationContext().getColorStateList(R.color.buttonLoginScreen));
-                }else{
-                    btSignUp.setBackgroundTintList(getApplicationContext().getColorStateList(R.color.grey));
-                }
-            }
-        });
-
-        btSignUp.setOnClickListener(new View.OnClickListener() {
+        btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                username_text_input_register.setErrorEnabled(false);
-                email_text_input_register.setErrorEnabled(false);
-                password_text_input_register.setErrorEnabled(false);
-                if(checkBoxAggrement.isChecked()){
-                    if(!etRegisterUsername.getText().toString().equals("") && !etRegisterMail.getText().toString().equals("") && !etRegisterPassword.getText().toString().equals("")) {
-                        Log.d("Register request send","Register request send");
-                        RegisterTask.registerTask(getApplicationContext(), etRegisterUsername.getText().toString(), etRegisterMail.getText().toString(), etRegisterPassword.getText().toString(), true);
-                    } else{
-                        if(etRegisterUsername.getText().toString().equals("")) {
-                            username_text_input_register.setError("Kullanıcı adı doldurulmalıdır");
-                        }
-                        if(etRegisterPassword.getText().toString().equals("")) {
-                            password_text_input_register.setError("Parola alanı doldurulmalıdır");
-                        }
-                        if(etRegisterMail.getText().toString().equals("")) {
-                            email_text_input_register.setError("E posta alanı doldurulmalıdır");
-                        }
-                    }
-                }else{
-                    if(etRegisterUsername.getText().toString().equals("")) {
-                        username_text_input_register.setError("Kullanıcı adı doldurulmalıdır");
-                    }
-                    if(etRegisterPassword.getText().toString().equals("")) {
-                        password_text_input_register.setError("Parola alanı doldurulmalıdır");
-                    }
-                    if(etRegisterMail.getText().toString().equals("")) {
-                        email_text_input_register.setError("E posta alanı doldurulmalıdır");
-                    }
-                    YoYo.with(Techniques.Shake)
-                            .duration(700)
-                            .repeat(0)
-                            .playOn(findViewById(R.id.layoutAggrement));
+                inputLayoutUsername.setErrorEnabled(false);
+                inputLayoutEmail.setErrorEnabled(false);
+                inputLayoutPassword.setErrorEnabled(false);
+
+                usernameInput = etRegisterUsername.getText().toString();
+                emailInput = etRegisterMail.getText().toString();
+                passwordInput = etRegisterPassword.getText().toString();
+                boolean conditions = checkBoxAgreement.isChecked();
+
+                //Validate fields
+                if (usernameInput.isEmpty()) inputLayoutUsername.setError("Kullanıcı adı doldurulmalıdır");
+
+                if (emailInput.isEmpty()) inputLayoutEmail.setError("E posta alanı doldurulmalıdır");
+
+                if (passwordInput.isEmpty()) inputLayoutPassword.setError("Parola alanı doldurulmalıdır");
+
+                if (!conditions) checkBoxAgreement.setError("Kabul et!");
+
+                if (!usernameInput.isEmpty()
+                        && !emailInput.isEmpty()
+                        && !passwordInput.isEmpty()
+                        && conditions) {
+                    Log.d("Register request send","Register request send");
+                    setProgress(true);
+                    RegisterTask.registerTask(getApplicationContext(), etRegisterUsername.getText().toString(), etRegisterMail.getText().toString(), etRegisterPassword.getText().toString(), true);
                 }
+
             }
         });
 
-
     }
+
+    /**
+     * Shows progress view upon login form and disables form items,
+     * Indicates a process is going on
+     * @param visible Set true when progress view needs to be shown.
+     */
+    private void setProgress(boolean visible){
+        if (visible) {
+            // Disable form elements
+            inputLayoutUsername.setEnabled(false);
+            inputLayoutEmail.setEnabled(false);
+            inputLayoutPassword.setEnabled(false);
+            checkBoxAgreement.setEnabled(false);
+            btnRegister.setEnabled(false);
+
+            cardFormRegister.setAlpha(0.8f);
+            progressView.setVisibility(View.VISIBLE);
+
+        } else {
+            //Enable form elements
+            inputLayoutUsername.setEnabled(true);
+            inputLayoutEmail.setEnabled(true);
+            inputLayoutPassword.setEnabled(true);
+            checkBoxAgreement.setEnabled(true);
+            btnRegister.setEnabled(true);
+
+            cardFormRegister.setAlpha(1f);
+            progressView.setVisibility(View.GONE);
+        }
+    }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
-        startActivity(intent);
         finish();
     }
-
 }

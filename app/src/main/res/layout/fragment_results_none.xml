@@ -25,7 +25,7 @@
                 android:orientation="vertical"
                 android:padding="12dp"
                 android:layout_margin="12dp"
-                android:background="@drawable/card_shape"
+                android:background="@drawable/shape_card"
                 android:backgroundTint="@color/materialIceBlue"
                 android:gravity="center"
                 android:elevation="4dp"
