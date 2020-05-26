@@ -123,4 +123,5 @@
     <string name="error_field_required">Bu alan boş olamaz.</string>
     <string name="action_sign_up">YENİ HESAP OLUŞTUR</string>
     <string name="call_or_connect_via">ya da bağlan;</string>
+    <string name="desc_call_register">Hesabın Yok Mu? | <font color='#2A71AC'>Yeni Hesap Oluştur</font></string>
 </resources>

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,10 +43,9 @@ import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity {
     private MaterialButton btLogin;
-
-    private MaterialButton btRegister;
     private TextInputEditText etMail;
     private TextInputEditText etPassword;
+    private TextView tvRegister;
     public TextInputLayout passwordTextInput, usernameTextInput;
     static LoginButton signInFacebook;
     private Button btSignInFacebook, btSignInGoogle;
@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
         signInFacebook = findViewById(R.id.sign_in_facebook);
         btSignInGoogle = findViewById(R.id.btSignInGoogle);
         btSignInFacebook = findViewById(R.id.btSignInFacebook);
-        btRegister = findViewById(R.id.btRegister);
+        tvRegister = findViewById(R.id.tvRegister);
         etMail = findViewById(R.id.etMail);
         etPassword = findViewById(R.id.etPassword);
         passwordTextInput = findViewById(R.id.password_text_input);
@@ -265,7 +265,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        btRegister.setOnClickListener(new View.OnClickListener() {
+        tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(getApplicationContext(), RegisterActivity.class);
