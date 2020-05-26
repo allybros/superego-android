@@ -1,4 +1,4 @@
-package com.allybros.superego.fragments;
+package com.allybros.superego.fragment;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -35,7 +35,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
