@@ -19,10 +19,11 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="16dp"
             android:text="@string/login_text_header"
             android:textColor="@color/White"
-            android:textSize="30sp"
+            android:textSize="24sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -30,39 +31,42 @@
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="16dp"
             android:text="@string/login_text_sub"
             android:textColor="@color/White"
-            android:textSize="18dp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
 
         <ImageView
             android:id="@+id/textView"
-            android:layout_width="220dp"
-            android:layout_height="65dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="36dp"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="30dp"
             android:src="@drawable/brand_white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Hidden Buttons -->
 
         <LinearLayout
             android:id="@+id/loginCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:background="@drawable/card_shape"
             android:elevation="4dp"
             android:orientation="vertical"
             android:padding="12dp"
-            app:layout_constraintBottom_toTopOf="@+id/btRegister"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView5"
-            app:layout_constraintVertical_bias="0.19999999">
+            app:layout_constraintVertical_bias="0.106">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/username_text_input"
@@ -113,18 +117,24 @@
                 android:text="@string/login"
                 android:textColor="@color/White" />
 
+            <TextView
+                android:id="@+id/tvRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:text="@string/desc_call_register" />
+
 
         </LinearLayout>
-
-        <!-- Hidden Buttons -->
 
         <LinearLayout
             android:id="@+id/socialButtons"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="12dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginEnd="32dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -183,28 +193,14 @@
             app:layout_constraintTop_toBottomOf="@+id/loginCard"
             tools:ignore="MissingConstraints" />
 
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btRegister"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="55dp"
-            android:text="@string/action_sign_up"
-            android:textColor="@color/grey"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:strokeColor="@color/ButtonColorSignUp" />
-
         <TextView
             android:id="@+id/tvConnectCall"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
             android:text="@string/call_or_connect_via"
             android:textColor="@color/grey"
-            android:gravity="center"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
