@@ -1,4 +1,4 @@
-package com.allybros.superego.fragments;
+package com.allybros.superego.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
