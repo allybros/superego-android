@@ -235,7 +235,7 @@
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="12dp"
                 android:layout_marginBottom="12dp"
-                android:background="@drawable/card_shape"
+                android:background="@drawable/shape_card"
                 android:elevation="4dp">
 
                 <com.google.android.gms.ads.AdView

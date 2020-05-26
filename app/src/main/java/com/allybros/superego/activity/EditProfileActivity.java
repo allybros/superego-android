@@ -183,7 +183,7 @@ public class EditProfileActivity extends AppCompatActivity {
         String URL= ConstantValues.AVATAR_URL+SessionManager.getInstance().getUser().getImage();
         ImageLoader mImageLoader;
         mImageLoader = RequestForGetImage.getInstance(getApplicationContext()).getImageLoader();
-        mImageLoader.get(URL, ImageLoader.getImageListener(settingsImage, R.drawable.img_avatar, android.R.drawable.ic_dialog_alert));
+        mImageLoader.get(URL, ImageLoader.getImageListener(settingsImage, R.drawable.default_avatar, android.R.drawable.ic_dialog_alert));
         settingsImage.setImageUrl(URL, mImageLoader);
 
         //Require for slide behaviour
