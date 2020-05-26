@@ -47,19 +47,8 @@ public class RegisterTask {
                 try {
                     JSONObject jsonObj = new JSONObject(response);
                     status = jsonObj.getInt("status");
-                    switch (status) {
-                        case ErrorCodes.SUCCESS:
-                            Intent intent1=new Intent(context, LoginActivity.class);
-                            intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            context.startActivity(intent1);
-                            break;
-
-                        default:
-                            intent.putExtra("status", status);
-                            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-                            break;
-
-                    }
+                    intent.putExtra("status", status);
+                    LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

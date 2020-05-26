@@ -13,7 +13,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="12dp"
-        android:background="@drawable/card_shape"
+        android:background="@drawable/shape_card"
         android:cursorVisible="true"
         android:drawableStart="@drawable/v_magnify"
         android:drawablePadding="12dp"

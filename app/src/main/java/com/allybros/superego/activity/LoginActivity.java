@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -41,18 +42,24 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Arrays;
 
+import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
+
 public class LoginActivity extends AppCompatActivity {
     private MaterialButton btLogin;
-    private TextInputEditText etMail;
+    private TextInputEditText etUid;
     private TextInputEditText etPassword;
     private TextView tvRegister;
     public TextInputLayout passwordTextInput, usernameTextInput;
-    static LoginButton signInFacebook;
     private Button btSignInFacebook, btSignInGoogle;
+    private LinearLayout cardFormLogin;
+    private MaterialProgressBar progressView;
+
+    static LoginButton btHiddenFacebook;
     GoogleSignInClient mGoogleSignInClient;
     CallbackManager callbackManager;
     private static final int RC_SIGN_IN = 0;    // It require to come back from Google Sign in intent
     private BroadcastReceiver loginSocialMediaReceiver, loginReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,91 +68,67 @@ public class LoginActivity extends AppCompatActivity {
         initializeComponents();
         setupReceivers();
         setupUi();
-
     }
+
     private void initializeComponents(){
-        usernameTextInput = findViewById(R.id.username_text_input);
+        usernameTextInput = findViewById(R.id.inputLayoutLoginUid);
         btLogin = findViewById(R.id.btLogin);
-        signInFacebook = findViewById(R.id.sign_in_facebook);
+        btHiddenFacebook = findViewById(R.id.btHiddenFacebook);
         btSignInGoogle = findViewById(R.id.btSignInGoogle);
         btSignInFacebook = findViewById(R.id.btSignInFacebook);
         tvRegister = findViewById(R.id.tvRegister);
-        etMail = findViewById(R.id.etMail);
-        etPassword = findViewById(R.id.etPassword);
-        passwordTextInput = findViewById(R.id.password_text_input);
+        etUid = findViewById(R.id.etLoginUid);
+        etPassword = findViewById(R.id.etLoginPassword);
+        passwordTextInput = findViewById(R.id.inputLayoutLoginPassword);
+        cardFormLogin = findViewById(R.id.cardFormLogin);
+        progressView = findViewById(R.id.progressViewLogin);
     }
 
     private void setupReceivers(){
-        /**
-         * Catches broadcasts of api/LoginTask class
-         */
+        /* Catches broadcasts of api/LoginTask class */
         loginReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 int status = intent.getIntExtra("status",0);
                 Log.d("receiver", "Got message: " + status);
+                setProgress(false);
                 switch (status){
 
                     case ErrorCodes.SYSFAIL:
-                        passwordTextInput.setError(getString(R.string.loginFailed));
-                        usernameTextInput.setError(getString(R.string.loginFailed));
-                        YoYo.with(Techniques.FadeInDown)
-                                .duration(700)
-                                .repeat(0)
-                                .playOn(findViewById(R.id.loginCard));
-                        btLogin.setEnabled(true);
-                        break;
-
                     case ErrorCodes.CAPTCHA_REQUIRED:
+                        usernameTextInput.setError(" ");
                         passwordTextInput.setError(getString(R.string.loginFailed));
-                        usernameTextInput.setError(getString(R.string.loginFailed));
-                        YoYo.with(Techniques.FadeInDown)
-                                .duration(700)
-                                .repeat(0)
-                                .playOn(findViewById(R.id.loginCard));
-                        btLogin.setEnabled(true);
+                        YoYo.with(Techniques.Shake)
+                                .duration(400)
+                                .playOn(findViewById(R.id.cardFormLogin));
                         break;
 
                     case ErrorCodes.SUSPEND_SESSION:
-                        passwordTextInput.setError(getString(R.string.session_suspend));
-                        usernameTextInput.setError(getString(R.string.session_suspend));
-                        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this, R.style.SegoAlertDialog);
                         builder.setTitle("insightof.me");
                         builder.setMessage(getString(R.string.session_suspend));
                         builder.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                btLogin.setEnabled(true);
-                                YoYo.with(Techniques.FadeInDown)
-                                        .duration(700)
-                                        .repeat(0)
-                                        .playOn(findViewById(R.id.loginCard));
+                                dialog.dismiss();
                             }
                         });
                         builder.show();
                         break;
 
                     case ErrorCodes.SUCCESS:
-
-
-                        Intent intent1=new Intent(getApplicationContext(), SplashActivity.class);
-                        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent1);
+                        //Login User
+                        Intent i =new Intent(getApplicationContext(), SplashActivity.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(i);
                         break;
 
                     case ErrorCodes.CONNECTION_ERROR:
-                        passwordTextInput.setError(getString(R.string.checkConnection));
-                        usernameTextInput.setError(getString(R.string.checkConnection));
-                        AlertDialog.Builder builder1 = new AlertDialog.Builder(LoginActivity.this);
+                        AlertDialog.Builder builder1 = new AlertDialog.Builder(LoginActivity.this, R.style.SegoAlertDialog);
                         builder1.setTitle("insightof.me");
                         builder1.setMessage(getString(R.string.checkConnection));
                         builder1.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                btLogin.setEnabled(true);
-                                YoYo.with(Techniques.FadeInDown)
-                                        .duration(700)
-                                        .repeat(0)
-                                        .playOn(findViewById(R.id.loginCard));
-
+                               dialog.dismiss();
                             }
                         });
                         builder1.show();
@@ -153,70 +136,63 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         };
-        /**
-         * Catches broadcasts of api/SocialMediaSignInTask class
-         */
+
+        /* Listens broadcasts of api/SocialMediaSignInTask class */
         loginSocialMediaReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 int status = intent.getIntExtra("status",0);
                 Log.d("receiver", "Got message: " + status);
+                setProgress(false);
                 switch (status){
 
                     case ErrorCodes.SYSFAIL:
-                        AlertDialog.Builder builder2 = new AlertDialog.Builder(LoginActivity.this);
-                        builder2.setTitle("insightof.me");
-                        builder2.setMessage(R.string.sysfail_login_social_media);
-                        builder2.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {}
-                        });
-                        builder2.show();
+                        new AlertDialog.Builder(LoginActivity.this, R.style.SegoAlertDialog)
+                            .setTitle("insightof.me")
+                            .setMessage(R.string.sysfail_login_social_media)
+                            .setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {}
+                            }).show();
                         break;
 
                     case ErrorCodes.EMAIL_EMPTY:
-                        AlertDialog.Builder builder3 = new AlertDialog.Builder(LoginActivity.this);
-                        builder3.setTitle("insightof.me");
-                        builder3.setMessage(R.string.social_media_email_empty);
-                        builder3.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {}
-                        });
-                        builder3.show();
+                        new AlertDialog.Builder(LoginActivity.this, R.style.SegoAlertDialog)
+                            .setTitle("insightof.me")
+                            .setMessage(R.string.social_media_email_empty)
+                            .setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {}
+                            }).show();
                         break;
                     case ErrorCodes.EMAIL_NOT_LEGAL:
-                        AlertDialog.Builder builder4 = new AlertDialog.Builder(LoginActivity.this);
-                        builder4.setTitle("insightof.me");
-                        builder4.setMessage(R.string.social_media_email_not_legal);
-                        builder4.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {}
-                        });
-                        builder4.show();
+                        new AlertDialog.Builder(LoginActivity.this, R.style.SegoAlertDialog)
+                            .setTitle("insightof.me")
+                            .setMessage(R.string.social_media_email_not_legal)
+                            .setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {}
+                            }).show();
                         break;
                     case ErrorCodes.USERNAME_NOT_LEGAL:
-                        AlertDialog.Builder builder5 = new AlertDialog.Builder(LoginActivity.this);
-                        builder5.setTitle("insightof.me");
-                        builder5.setMessage(R.string.social_media_username_not_legal);
-                        builder5.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {}
-                        });
-                        builder5.show();
+                        new AlertDialog.Builder(LoginActivity.this, R.style.SegoAlertDialog)
+                            .setTitle("insightof.me")
+                            .setMessage(R.string.social_media_username_not_legal)
+                            .setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {}
+                            }).show();
                         break;
 
                     case ErrorCodes.SUCCESS:
-                        Intent intent1=new Intent(getApplicationContext(), SplashActivity.class);
-                        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent1);
+                        Intent i = new Intent(getApplicationContext(), SplashActivity.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(i);
                         break;
 
                     case ErrorCodes.CONNECTION_ERROR:
-                        passwordTextInput.setError(getString(R.string.checkConnection));
-                        usernameTextInput.setError(getString(R.string.checkConnection));
-                        AlertDialog.Builder builder1 = new AlertDialog.Builder(LoginActivity.this);
-                        builder1.setTitle("insightof.me");
-                        builder1.setMessage(getString(R.string.checkConnection));
-                        builder1.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {}
-                        });
-                        builder1.show();
+                        new AlertDialog.Builder(LoginActivity.this, R.style.SegoAlertDialog)
+                            .setTitle("insightof.me")
+                            .setMessage(R.string.connection_error)
+                            .setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {}
+                            }).show();
                         break;
                 }
             }
@@ -230,47 +206,27 @@ public class LoginActivity extends AppCompatActivity {
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                YoYo.with(Techniques.FadeOutUp)
-                        .duration(700)
-                        .repeat(0)
-                        .playOn(findViewById(R.id.loginCard));
-                btLogin.setEnabled(true);
+            passwordTextInput.setErrorEnabled(false);
+            usernameTextInput.setErrorEnabled(false);
 
-                passwordTextInput.setErrorEnabled(false);
-                usernameTextInput.setErrorEnabled(false);
-
-                if(etMail.getText().toString().isEmpty()){
-                    usernameTextInput.setError(getString(R.string.usernameEmpty));
-                    YoYo.with(Techniques.FadeInDown)
-                            .duration(700)
-                            .repeat(0)
-                            .playOn(findViewById(R.id.loginCard));
-                    btLogin.setEnabled(true);
-                }
-                if(etPassword.getText().toString().isEmpty()){
-                    passwordTextInput.setError(getString(R.string.passwordEmpty));
-                    YoYo.with(Techniques.FadeInDown)
-                            .duration(700)
-                            .repeat(0)
-                            .playOn(findViewById(R.id.loginCard));
-                    btLogin.setEnabled(true);
-                }
-                if(!etPassword.getText().toString().isEmpty() && !etMail.getText().toString().isEmpty()){
-                    YoYo.with(Techniques.FadeOutUp)
-                            .duration(700)
-                            .repeat(0)
-                            .playOn(findViewById(R.id.loginCard));
-                    LoginTask.loginTask(getApplicationContext(),etMail.getText().toString(),etPassword.getText().toString());
-                }
+            if(etUid.getText().toString().isEmpty()){
+                usernameTextInput.setError(getString(R.string.usernameEmpty));
+            }
+            if(etPassword.getText().toString().isEmpty()){
+                passwordTextInput.setError(getString(R.string.passwordEmpty));
+            }
+            if(!etPassword.getText().toString().isEmpty() && !etUid.getText().toString().isEmpty()){
+                setProgress(true);
+                LoginTask.loginTask(getApplicationContext(), etUid.getText().toString(),etPassword.getText().toString());
+            }
             }
         });
 
         tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(), RegisterActivity.class);
-                startActivity(intent);
-                finish();
+            Intent intent=new Intent(getApplicationContext(), RegisterActivity.class);
+            startActivity(intent);
             }
         });
 
@@ -294,11 +250,11 @@ public class LoginActivity extends AppCompatActivity {
         btSignInFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signInFacebook.callOnClick();
+                btHiddenFacebook.callOnClick();
             }
         });
         callbackManager = CallbackManager.Factory.create();
-        signInFacebook.setPermissions(Arrays.asList("email","public_profile"));
+        btHiddenFacebook.setPermissions(Arrays.asList("email","public_profile"));
 
         callbackManager = CallbackManager.Factory.create();
 
@@ -325,7 +281,7 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    //Provides that cacth the results that come back from Google an Facebook sign in
+    //Provides that cacth the results that come back from Google an Facebook sign in //TODO: Make javadoc
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -339,7 +295,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    //Sends request to Ally Bros Api for signing in with Google
+    //Sends request to Ally Bros Api for signing in with Google TODO: Make javadoc.
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
@@ -353,9 +309,25 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
+    /**
+     * Shows progress view upon login form and disables form items,
+     * Indicates a process is going on
+     * @param visible Set true when progress view needs to be shown.
+     */
+    private void setProgress(boolean visible) {
+        if (visible) {
+            passwordTextInput.setEnabled(false);
+            usernameTextInput.setEnabled(false);
+            btLogin.setEnabled(false);
+            cardFormLogin.setAlpha(0.8f);
+            progressView.setVisibility(View.VISIBLE);
+        } else {
+            passwordTextInput.setEnabled(true);
+            usernameTextInput.setEnabled(true);
+            btLogin.setEnabled(true);
+            cardFormLogin.setAlpha(1f);
+            progressView.setVisibility(View.GONE);
+        }
     }
 
     @Override
