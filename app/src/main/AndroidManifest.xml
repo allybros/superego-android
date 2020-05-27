@@ -15,39 +15,39 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".activity.ChangePasswordActivity"
+        <activity android:name="com.allybros.superego.activity.ChangePasswordActivity"
             android:label="@string/activity_change_password"
             android:theme="@style/AppTheme.TransparentBackground"
             android:windowSoftInputMode="adjustPan"/>
 
         <activity
-            android:name=".activity.WebViewActivity"
+            android:name="com.allybros.superego.activity.WebViewActivity"
             android:parentActivityName=".activity.UserPageActivity"
             android:theme="@style/AppTheme.TransparentBackground" />
 
         <activity
-            android:name=".activity.EditProfileActivity"
+            android:name="com.allybros.superego.activity.EditProfileActivity"
             android:parentActivityName=".activity.UserPageActivity"
             android:label="@string/activity_label_edit_profile"
             android:theme="@style/AppTheme.TransparentBackground"
             android:windowSoftInputMode="adjustPan" />
 
         <activity
-            android:name=".activity.LoginActivity"
+            android:name="com.allybros.superego.activity.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.UserPageActivity"
+            android:name="com.allybros.superego.activity.UserPageActivity"
             android:label="@string/activity_label_profile"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name=".activity.RegisterActivity"
+            android:name="com.allybros.superego.activity.RegisterActivity"
             android:label="@string/title_activity_register_page"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.SplashActivity"
+            android:name="com.allybros.superego.activity.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -55,6 +55,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name="com.allybros.superego.activity.SettingsActivity"/>
+
 
         <meta-data
             android:name="preloaded_fonts"
