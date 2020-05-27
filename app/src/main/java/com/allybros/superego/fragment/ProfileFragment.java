@@ -67,7 +67,6 @@ public class ProfileFragment extends Fragment {
     private BroadcastReceiver rewardReceiver;
     //Current session
     private SessionManager sessionManager = SessionManager.getInstance();
-    private boolean newTest = false;
 
     public ProfileFragment() {
         // Set Up receivers
@@ -96,7 +95,6 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onReceive(Context context, Intent intent) {
                 int status = intent.getIntExtra("status",0);
-                Log.d("receiver", "Got message: " + status);
                 switch (status){
                     case ErrorCodes.SYSFAIL:
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.SegoAlertDialog);
@@ -152,7 +150,6 @@ public class ProfileFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -172,7 +169,6 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @SuppressLint("DefaultLocale")
     private void initProfileCard(){
         //Set profile card components
@@ -184,7 +180,7 @@ public class ProfileFragment extends Fragment {
 
         //Populate views
         tvUserbio.setText(sessionManager.getUser().getUserBio());
-        tvUsername.setText(sessionManager.getUser().getUsername());
+        tvUsername.setText("@"+sessionManager.getUser().getUsername());
         btnBadgeCredit.setText(String.format("%d %s", sessionManager.getUser().getCredit(), getString(R.string.credit)));
 
         if(sessionManager.getUser().getRated() >= 5){
@@ -195,9 +191,6 @@ public class ProfileFragment extends Fragment {
                     .duration(1000)
                     .repeat(5)
                     .playOn(getView().findViewById(R.id.badgeCredit));
-            if(sessionManager.getUser().getRated()>=10){
-                btnBadgeRated.setText(getString(R.string.complated));
-            }
         }
 
         btnBadgeCredit.setOnClickListener(new View.OnClickListener() {

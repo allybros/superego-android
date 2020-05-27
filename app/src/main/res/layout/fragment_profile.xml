@@ -23,126 +23,92 @@
             android:orientation="vertical">
 
             <!-- Profile Card View -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardViewProfile"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="12dp"
-                android:elevation="4dp"
-                android:padding="8dp"
-                app:cardCornerRadius="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="match_parent"
+                android:background="@drawable/shape_card"
+                android:clipToPadding="false"
+                android:padding="12dp"
+                android:layout_margin="12dp"
+                android:elevation="4dp">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <TextView
+                    android:id="@+id/tvUsername"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="\@username"
+                    android:textColor="#262626"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/user_avatar" />
+
+                <TextView
+                    android:id="@+id/tvUserbio"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:gravity="center"
-                    android:padding="16dp">
+                    android:text="man who chooses to enjoy a pleasure thaasure?"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvUsername" />
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/usernameRow"
+                <LinearLayout
+                    android:id="@+id/badgesRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="12dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:clipToPadding="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvUserbio">
+
+                    <Button
+                        android:id="@+id/badgeRated"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginEnd="8dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/user_avatar">
+                        android:layout_height="36dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@drawable/shape_rated"
+                        android:elevation="4dp"
+                        android:enabled="false"
+                        android:drawableStart="@drawable/baseline_done_white_18"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:text="Score"
+                        android:textAllCaps="false"
+                        tools:ignore="HardcodedText,RtlHardcoded" />
 
-                        <TextView
-                            android:id="@+id/tvUsername"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="username"
-                            android:textColor="#000"
-                            android:textSize="20sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/imageView"
-                            app:layout_constraintTop_toTopOf="parent" />
+                    <Button
+                        android:id="@+id/badgeCredit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:textAllCaps="false"
+                        android:background="@drawable/passive_credit_bg"
+                        android:elevation="4dp"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:enabled="false"
+                        android:drawableStart="@drawable/ic_chamleon"
+                        android:text="Credit" />
 
-                        <ImageView
-                            android:id="@+id/imageView"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginEnd="5dp"
-                            android:src="@drawable/baseline_person_black_18"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/tvUsername"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/tvUserbio"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:gravity="center"
-                        android:text="man who chooses to enjoy a pleasure thaasure?"
-                        android:textSize="16sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/usernameRow" />
+                <com.allybros.superego.ui.CircledNetworkImageView
+                    android:id="@+id/user_avatar"
+                    android:layout_width="135dp"
+                    android:layout_height="135dp"
+                    android:src="@drawable/default_avatar"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <LinearLayout
-                        android:id="@+id/badgesRow"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="12dp"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:clipToPadding="false"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvUserbio">
 
-                        <Button
-                            android:id="@+id/badgeRated"
-                            android:layout_width="wrap_content"
-                            android:layout_height="36dp"
-                            android:layout_marginRight="8dp"
-                            android:background="@drawable/shape_rated"
-                            android:elevation="4dp"
-                            android:enabled="false"
-                            android:drawableStart="@drawable/baseline_done_white_18"
-                            android:paddingStart="8dp"
-                            android:paddingEnd="8dp"
-                            android:text="Score"
-                            android:textAllCaps="false"
-                            tools:ignore="HardcodedText,RtlHardcoded" />
-
-                        <Button
-                            android:id="@+id/badgeCredit"
-                            android:layout_width="wrap_content"
-                            android:layout_height="36dp"
-                            android:textAllCaps="false"
-                            android:background="@drawable/passive_credit_bg"
-                            android:elevation="4dp"
-                            android:paddingStart="8dp"
-                            android:paddingEnd="8dp"
-                            android:enabled="false"
-                            android:drawableStart="@drawable/baseline_account_balance_wallet_white_18"
-                            android:text="Credit" />
-
-                    </LinearLayout>
-
-                    <com.allybros.superego.ui.CircledNetworkImageView
-                        android:id="@+id/user_avatar"
-                        android:layout_width="135dp"
-                        android:layout_height="135dp"
-                        android:src="@drawable/default_avatar"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </androidx.cardview.widget.CardView>
 
             <!-- ToolBar Buttons -->
             <LinearLayout
@@ -150,7 +116,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:layout_marginTop="12dp"
                 android:layout_marginEnd="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -161,6 +126,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
+                    android:layout_marginBottom="12dp"
                     android:layout_weight="0.33"
                     android:elevation="4dp"
 
@@ -179,6 +145,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:layout_marginEnd="4dp"
+                    android:layout_marginBottom="12dp"
                     android:layout_weight="0.33"
                     android:background="@drawable/selector_btn_share_test"
                     android:drawableTop="@drawable/outline_link_white_36"
@@ -198,6 +165,7 @@
                     android:drawableTop="@drawable/baseline_share_white_36"
                     android:layout_weight="0.33"
                     android:layout_marginStart="4dp"
+                    android:layout_marginBottom="12dp"
                     android:paddingTop="12dp"
                     android:paddingBottom="12dp"
                     android:text="@string/btn_share_results"
@@ -217,12 +185,12 @@
                 android:focusable="true"
                 android:enabled="true"
                 android:layout_marginStart="12dp"
-                android:layout_marginTop="12dp"
                 android:layout_marginEnd="12dp"
                 android:background="@drawable/selector_profile_textview"
                 android:elevation="4dp"
                 android:gravity="center"
                 android:padding="12dp"
+                android:textSize="15sp"
                 android:text="man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?"
                 android:textColor="@color/White" />
 

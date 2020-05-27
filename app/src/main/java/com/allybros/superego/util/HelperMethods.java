@@ -2,7 +2,7 @@ package com.allybros.superego.util;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.icu.text.SimpleDateFormat;
+
 import android.icu.util.Calendar;
 import android.os.Build;
 import android.util.Base64;
@@ -15,6 +15,7 @@ import com.allybros.superego.ui.CircledNetworkImageView;
 import com.android.volley.toolbox.ImageLoader;
 
 import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -41,7 +42,7 @@ public class HelperMethods {
      * @param imageView     to be filled imageView
      * @param URL           which contains the image
      */
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
     public static void imageLoadFromUrl(Context context, String URL, CircledNetworkImageView imageView){
         URL = URL+"&"+HelperMethods.getDate();
         Log.d("imageLoadFromUrl","Image Loading from: "+URL);
@@ -56,9 +57,8 @@ public class HelperMethods {
      * Returns current date
      * @return formattedDate    current date that is dd-mm-yyyy format
      */
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public static String getDate(){
-        Date c = Calendar.getInstance().getTime();
+    private static String getDate(){
+        Date c = new Date(System.currentTimeMillis());
         System.out.println("Current time => " + c);
         SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
         String formattedDate = df.format(c);
