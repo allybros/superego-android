@@ -11,7 +11,7 @@
         android:strokeWidth="0.26070052"
         android:fillAlpha="1">
       <aapt:attr name="android:fillColor">
-        <gradient 
+        <gradient
             android:startY="114.14882"
             android:startX="7.5595236"
             android:endY="22.678574"
