@@ -64,7 +64,7 @@
                 android:id="@+id/traitEmojiView"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                app:srcCompat="@drawable/simple_profile_photo" />
+                app:srcCompat="@drawable/em_hourglass_done" />
         </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
