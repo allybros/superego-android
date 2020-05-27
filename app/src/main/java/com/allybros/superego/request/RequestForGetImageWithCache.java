@@ -1,8 +1,9 @@
-package com.allybros.superego.util;
-
+package com.allybros.superego.request;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+
+import androidx.collection.LruCache;
 
 import com.android.volley.Cache;
 import com.android.volley.Network;
@@ -13,13 +14,13 @@ import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.ImageLoader;
 
 /**
- * RequestForGetImage class defines the request to get image from url
+ * RequestForGetImage class defines the request to get image without cache from url
  * @author 0rcun
  */
 
-public class RequestForGetImage {
+public class RequestForGetImageWithCache {
 
-    private static RequestForGetImage mInstance;
+    private static RequestForGetImageWithCache mInstance;
     private static Context mCtx;
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
@@ -28,25 +29,30 @@ public class RequestForGetImage {
     /**
      * Sets the variables needed
      */
-    private RequestForGetImage(Context context) {
+    private RequestForGetImageWithCache(Context context) {
         mCtx = context;
         mRequestQueue = getRequestQueue();
 
-        mImageLoader = new NoCacheImageLoader(mRequestQueue,    //No cache
+        mImageLoader = new ImageLoader(mRequestQueue,
                 new ImageLoader.ImageCache() {
+                    private final LruCache<String, Bitmap>
+                            cache = new LruCache<String, Bitmap>(20);
+
                     @Override
                     public Bitmap getBitmap(String url) {
-                        return null;
+                        return cache.get(url);
                     }
 
                     @Override
-                    public void putBitmap(String url, Bitmap bitmap) {}
+                    public void putBitmap(String url, Bitmap bitmap) {
+                        cache.put(url, bitmap);
+                    }
                 });
     }
 
-    public static synchronized RequestForGetImage getInstance(Context context) {
+    public static synchronized RequestForGetImageWithCache getInstance(Context context) {
         if (mInstance == null) {
-            mInstance = new RequestForGetImage(context);
+            mInstance = new RequestForGetImageWithCache(context);
         }
         return mInstance;
     }

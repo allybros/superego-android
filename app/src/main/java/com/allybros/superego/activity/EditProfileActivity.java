@@ -23,7 +23,7 @@ import com.allybros.superego.api.ImageChangeTask;
 import com.allybros.superego.ui.CircledNetworkImageView;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
-import com.allybros.superego.util.RequestForGetImage;
+import com.allybros.superego.request.RequestForGetImageNoCache;
 import com.allybros.superego.util.SessionManager;
 import com.android.volley.toolbox.ImageLoader;
 import com.google.android.material.snackbar.Snackbar;
@@ -179,7 +179,7 @@ public class EditProfileActivity extends AppCompatActivity {
         //Load image
         String URL= ConstantValues.AVATAR_URL+SessionManager.getInstance().getUser().getImage();
         ImageLoader mImageLoader;
-        mImageLoader = RequestForGetImage.getInstance(getApplicationContext()).getImageLoader();
+        mImageLoader = RequestForGetImageNoCache.getInstance(getApplicationContext()).getImageLoader();
         mImageLoader.get(URL, ImageLoader.getImageListener(settingsImage, R.drawable.default_avatar, android.R.drawable.ic_dialog_alert));
         settingsImage.setImageUrl(URL, mImageLoader);
 

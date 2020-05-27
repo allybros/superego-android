@@ -1,4 +1,4 @@
-package com.allybros.superego.util;
+package com.allybros.superego.request;
 
 import android.content.Context;
 

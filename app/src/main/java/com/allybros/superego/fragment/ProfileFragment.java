@@ -219,7 +219,7 @@ public class ProfileFragment extends Fragment {
         btnBadgeRated.setText(sessionManager.getUser().getRated() + getString(R.string.rated));
         Log.d("Test Id", sessionManager.getUser().getTestId());
 
-        HelperMethods.imageLoadFromUrl(getContext(), ConstantValues.AVATAR_URL+sessionManager.getUser().getImage(), imageViewAvatar);
+        HelperMethods.imageLoadFromUrlNoCache(getContext(), ConstantValues.AVATAR_URL+sessionManager.getUser().getImage(), imageViewAvatar);
     }
 
     /**
