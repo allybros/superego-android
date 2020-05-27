@@ -49,7 +49,7 @@ public class SearchAdapter extends ArrayAdapter<User> {
 
         tvSearchUsername.setText(u.getUsername());
         tvSearchUserbio.setText(bioSum);
-        HelperMethods.imageLoadFromUrl(getContext(), ConstantValues.AVATAR_URL+u.getAvatarName(), ivSearchUserAvatar);
+        HelperMethods.imageLoadFromUrlCache(getContext(), ConstantValues.AVATAR_URL+u.getAvatarName(), ivSearchUserAvatar);
 
         return convertView;
     }
