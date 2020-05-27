@@ -47,7 +47,7 @@ public class HelperMethods {
         Log.d("imageLoadFromUrl","Image Loading from: "+URL);
         ImageLoader mImageLoader;
         mImageLoader = RequestForGetImage.getInstance(context).getImageLoader();
-        mImageLoader.get(URL, ImageLoader.getImageListener(imageView, R.drawable.simple_profile_photo, android.R.drawable.ic_dialog_alert));
+        mImageLoader.get(URL, ImageLoader.getImageListener(imageView, R.drawable.default_avatar, android.R.drawable.ic_dialog_alert));
         imageView.setImageUrl(URL, mImageLoader);
     }
 
