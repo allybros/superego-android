@@ -1,8 +1,6 @@
 package com.allybros.superego.ui;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +9,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 
 import com.allybros.superego.R;
-import com.allybros.superego.activity.WebViewActivity;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.User;
 import com.allybros.superego.util.HelperMethods;
@@ -27,7 +23,6 @@ public class SearchAdapter extends ArrayAdapter<User> {
         super(context, R.layout.search_user_row, users);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {

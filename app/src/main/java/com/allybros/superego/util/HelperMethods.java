@@ -2,13 +2,8 @@ package com.allybros.superego.util;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-
-import android.icu.util.Calendar;
-import android.os.Build;
 import android.util.Base64;
 import android.util.Log;
-
-import androidx.annotation.RequiresApi;
 
 import com.allybros.superego.R;
 import com.allybros.superego.ui.CircledNetworkImageView;

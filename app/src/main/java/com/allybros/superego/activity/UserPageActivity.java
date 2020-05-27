@@ -3,6 +3,7 @@ package com.allybros.superego.activity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -172,13 +173,17 @@ public class UserPageActivity extends AppCompatActivity {
         viewPager.setCurrentItem(index);
         //Disable all navigation Items
         for (BottomNavigationItemView navItem: navigationItems) {
-            navItem.setTextColor(ColorStateList.valueOf(getColor(R.color.grey)));
-            navItem.setIconTintList(ColorStateList.valueOf(getColor(R.color.grey)));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                navItem.setTextColor(ColorStateList.valueOf(getColor(R.color.grey)));
+                navItem.setIconTintList(ColorStateList.valueOf(getColor(R.color.grey)));
+            }
             navItem.setChecked(false);
         }
         //Enable selected item
-        activeNavItem.setTextColor(ColorStateList.valueOf(getColor(R.color.White)));
-        activeNavItem.setIconTintList(ColorStateList.valueOf(getColor(R.color.White)));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            activeNavItem.setTextColor(ColorStateList.valueOf(getColor(R.color.White)));
+            activeNavItem.setIconTintList(ColorStateList.valueOf(getColor(R.color.White)));
+        }
         activeNavItem.setChecked(true);
         viewPager.setCurrentItem(index);
         //Hide soft keyboard if showing.
