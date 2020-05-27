@@ -6,6 +6,8 @@ import android.util.Base64;
 import android.util.Log;
 
 import com.allybros.superego.R;
+import com.allybros.superego.request.RequestForGetImageNoCache;
+import com.allybros.superego.request.RequestForGetImageWithCache;
 import com.allybros.superego.ui.CircledNetworkImageView;
 import com.android.volley.toolbox.ImageLoader;
 
@@ -32,17 +34,31 @@ public class HelperMethods {
         return Base64.encodeToString(imgByte,Base64.DEFAULT);
     }
     /**
-     * Converts from bitmap to string
+     * Load image from url without cache
      * @param context       require to use requst method
      * @param imageView     to be filled imageView
      * @param URL           which contains the image
      */
-
-    public static void imageLoadFromUrl(Context context, String URL, CircledNetworkImageView imageView){
+    public static void imageLoadFromUrlNoCache(Context context, String URL, CircledNetworkImageView imageView){
         URL = URL+"&"+HelperMethods.getDate();
         Log.d("imageLoadFromUrl","Image Loading from: "+URL);
         ImageLoader mImageLoader;
-        mImageLoader = RequestForGetImage.getInstance(context).getImageLoader();
+        mImageLoader = RequestForGetImageNoCache.getInstance(context).getImageLoader();
+        mImageLoader.get(URL, ImageLoader.getImageListener(imageView, R.drawable.default_avatar, android.R.drawable.ic_dialog_alert));
+        imageView.setImageUrl(URL, mImageLoader);
+    }
+
+    /**
+     * Load image from url with cache
+     * @param context
+     * @param URL
+     * @param imageView
+     */
+    public static void imageLoadFromUrlCache(Context context, String URL, CircledNetworkImageView imageView){
+        URL = URL+"&"+HelperMethods.getDate();
+        Log.d("imageLoadFromUrl","Image Loading from: "+URL);
+        ImageLoader mImageLoader;
+        mImageLoader = RequestForGetImageWithCache.getInstance(context).getImageLoader();
         mImageLoader.get(URL, ImageLoader.getImageListener(imageView, R.drawable.default_avatar, android.R.drawable.ic_dialog_alert));
         imageView.setImageUrl(URL, mImageLoader);
     }
