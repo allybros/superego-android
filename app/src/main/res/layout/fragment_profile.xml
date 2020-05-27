@@ -135,8 +135,8 @@
                     <com.allybros.superego.ui.CircledNetworkImageView
                         android:id="@+id/user_avatar"
                         android:layout_width="135dp"
-                        android:layout_height="1350dp"
-                        android:src="@drawable/simple_profile_photo"
+                        android:layout_height="135dp"
+                        android:src="@drawable/default_avatar"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
