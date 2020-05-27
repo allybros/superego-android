@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -203,6 +205,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void setupUi(){
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            tvRegister.setText(Html.fromHtml(getResources().getString(R.string.desc_call_register), Html.FROM_HTML_MODE_COMPACT));
+        } else {
+            tvRegister.setText(Html.fromHtml(getResources().getString(R.string.desc_call_register)));
+        }
+
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
