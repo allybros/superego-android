@@ -118,8 +118,8 @@ public class UserPageActivity extends AppCompatActivity {
         resultsFragment = new ResultsFragment();
         searchFragment = new SearchFragment();
         adapter.addFrag(profileFragment, getResources().getString(R.string.profile));
-        adapter.addFrag(resultsFragment, getResources().getString(R.string.results));
-        adapter.addFrag(searchFragment, getResources().getString(R.string.title_search));
+        adapter.addFrag(resultsFragment, getResources().getString(R.string.activity_label_results));
+        adapter.addFrag(searchFragment, getResources().getString(R.string.activity_label_search));
         this.viewPager.setAdapter(adapter);
     }
 

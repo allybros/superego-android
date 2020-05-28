@@ -98,19 +98,19 @@ public class EditProfileActivity extends AppCompatActivity {
                         break;
 
                     case ErrorCodes.USERNAME_NOT_LEGAL:
-                        Snackbar.make(editProfileLayout, getApplicationContext().getString(R.string.usernameNotLegal), Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(editProfileLayout, getApplicationContext().getString(R.string.error_username_not_legal), Snackbar.LENGTH_LONG).show();
                         break;
 
                     case ErrorCodes.USERNAME_ALREADY_EXIST:
-                        Snackbar.make(editProfileLayout, getApplicationContext().getString(R.string.usernameAlreadyExist), Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(editProfileLayout, getApplicationContext().getString(R.string.error_username_taken), Snackbar.LENGTH_LONG).show();
                         break;
 
                     case ErrorCodes.EMAIL_NOT_LEGAL:
-                        Snackbar.make(editProfileLayout, getApplicationContext().getString(R.string.emailNotLegal), Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(editProfileLayout, getApplicationContext().getString(R.string.error_email_not_legal), Snackbar.LENGTH_LONG).show();
                         break;
 
                     case ErrorCodes.EMAIL_ALREADY_EXIST:
-                        Snackbar.make(editProfileLayout, getApplicationContext().getString(R.string.emailAlreadyExist), Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(editProfileLayout, getApplicationContext().getString(R.string.error_email_already_exist), Snackbar.LENGTH_LONG).show();
                         break;
 
                     case ErrorCodes.SUCCESS:
@@ -118,7 +118,7 @@ public class EditProfileActivity extends AppCompatActivity {
                         break;
 
                     case ErrorCodes.SYSFAIL:
-                        Snackbar.make(editProfileLayout, getApplicationContext().getString(R.string.connection_error), Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(editProfileLayout, getApplicationContext().getString(R.string.error_no_connection), Snackbar.LENGTH_LONG).show();
                         break;
 
                 }
@@ -141,7 +141,7 @@ public class EditProfileActivity extends AppCompatActivity {
                         break;
 
                     case ErrorCodes.SYSFAIL:
-                        Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.connection_error),Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.error_no_connection),Snackbar.LENGTH_LONG).show();
                         break;
 
                     case ErrorCodes.INVALID_FILE_EXTENSION:
@@ -157,7 +157,7 @@ public class EditProfileActivity extends AppCompatActivity {
                         break;
 
                     case ErrorCodes.FILE_WRITE_ERROR:
-                        Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.connection_error),Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.error_no_connection),Snackbar.LENGTH_LONG).show();
                         break;
                 }
             }
