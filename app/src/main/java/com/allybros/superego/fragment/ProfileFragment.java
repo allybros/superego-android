@@ -76,7 +76,7 @@ public class ProfileFragment extends Fragment {
                 switch (status){
                     case ErrorCodes.SYSFAIL:
                         profileSwipeLayout.setRefreshing(false); //Last
-                        Toast.makeText(getContext(), getContext().getString(R.string.connection_error), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getContext().getString(R.string.error_desc_connection_error), Toast.LENGTH_SHORT).show();
                         break;
 
                     case ErrorCodes.SUCCESS:
@@ -196,7 +196,7 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.SegoAlertDialog);
                 builder.setTitle(Html.fromHtml(getString(R.string.app_name)));
-                builder.setMessage(Html.fromHtml(getString(R.string.add_text)));
+                builder.setMessage(Html.fromHtml(getString(R.string.info_ads_desc)));
                 builder.setPositiveButton(getString(R.string.action_ok), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         if (rewardedAd.isLoaded()) {
@@ -206,7 +206,7 @@ public class ProfileFragment extends Fragment {
                         }
                     }
                 });
-                builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(getString(R.string.action_cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.dismiss();
@@ -236,7 +236,7 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
             Intent addTestIntent = new Intent(getContext(), WebViewActivity.class);
             addTestIntent.putExtra("url", ConstantValues.CREATE_TEST);
-            addTestIntent.putExtra("title", getString(R.string.title_activity_new_test));
+            addTestIntent.putExtra("title", getString(R.string.activity_label_new_test));
             startActivity(addTestIntent);
             }
         });
@@ -400,9 +400,9 @@ public class ProfileFragment extends Fragment {
         //TODO: Decouple test url from here
         String testUrl = String.format("https://insightof.me/%s", sessionManager.getUser().getTestId());
         String shareBody = getString(R.string.share_results_body, resultsBuilder.toString(), testUrl);
-        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, R.string.btn_share_results);
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, R.string.action_btn_share_results);
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-        startActivity(Intent.createChooser(sharingIntent, getString(R.string.btn_share_results)));
+        startActivity(Intent.createChooser(sharingIntent, getString(R.string.action_btn_share_results)));
     }
 
     /**
@@ -413,9 +413,9 @@ public class ProfileFragment extends Fragment {
         sharingIntent.setType("text/plain");
         String testUrl = String.format("https://insightof.me/%s", sessionManager.getUser().getTestId());
         String shareBody = getString(R.string.share_test_body, testUrl);
-        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, R.string.btn_share_test);
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, R.string.action_btn_share_test);
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-        startActivity(Intent.createChooser(sharingIntent, getString(R.string.btn_share_test)));
+        startActivity(Intent.createChooser(sharingIntent, getString(R.string.action_btn_share_test)));
     }
 
     @Override

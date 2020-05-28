@@ -1,6 +1,7 @@
 package com.allybros.superego.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -69,9 +70,8 @@ public class WebViewActivity extends AppCompatActivity {
         //Set webview client
         webViewClient = new WebViewClient(){
             @Override
-            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                Uri responseUri = request.getUrl();
-                String url = request.getUrl().toString();
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                Uri responseUri = Uri.parse(url);
                 if (Objects.equals(responseUri.getScheme(), "intent")){
                     // Valid intent scheme
                     int startIndex = url.indexOf("://");
@@ -84,7 +84,7 @@ public class WebViewActivity extends AppCompatActivity {
                     // Activity result
                     finish();
                 }
-                return super.shouldOverrideUrlLoading(view, request);
+                super.onPageStarted(view, url, favicon);
             }
         };
         webView.setWebViewClient(webViewClient);
