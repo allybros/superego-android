@@ -97,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
                     case ErrorCodes.SYSFAIL:
                     case ErrorCodes.CAPTCHA_REQUIRED:
                         usernameTextInput.setError(" ");
-                        passwordTextInput.setError(getString(R.string.loginFailed));
+                        passwordTextInput.setError(getString(R.string.error_login_failed));
                         YoYo.with(Techniques.Shake)
                                 .duration(400)
                                 .playOn(findViewById(R.id.cardFormLogin));
@@ -106,7 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                     case ErrorCodes.SUSPEND_SESSION:
                         AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this, R.style.SegoAlertDialog);
                         builder.setTitle("insightof.me");
-                        builder.setMessage(getString(R.string.session_suspend));
+                        builder.setMessage(getString(R.string.error_desc_session_suspended));
                         builder.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.dismiss();
@@ -125,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
                     case ErrorCodes.CONNECTION_ERROR:
                         AlertDialog.Builder builder1 = new AlertDialog.Builder(LoginActivity.this, R.style.SegoAlertDialog);
                         builder1.setTitle("insightof.me");
-                        builder1.setMessage(getString(R.string.checkConnection));
+                        builder1.setMessage(getString(R.string.check_connection));
                         builder1.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                dialog.dismiss();
@@ -189,7 +189,7 @@ public class LoginActivity extends AppCompatActivity {
                     case ErrorCodes.CONNECTION_ERROR:
                         new AlertDialog.Builder(LoginActivity.this, R.style.SegoAlertDialog)
                             .setTitle("insightof.me")
-                            .setMessage(R.string.connection_error)
+                            .setMessage(R.string.error_no_connection)
                             .setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {}
                             }).show();
@@ -210,10 +210,10 @@ public class LoginActivity extends AppCompatActivity {
             usernameTextInput.setErrorEnabled(false);
 
             if(etUid.getText().toString().isEmpty()){
-                usernameTextInput.setError(getString(R.string.usernameEmpty));
+                usernameTextInput.setError(getString(R.string.error_username_empty));
             }
             if(etPassword.getText().toString().isEmpty()){
-                passwordTextInput.setError(getString(R.string.passwordEmpty));
+                passwordTextInput.setError(getString(R.string.error_password_empty));
             }
             if(!etPassword.getText().toString().isEmpty() && !etUid.getText().toString().isEmpty()){
                 setProgress(true);

@@ -15,15 +15,42 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name="com.allybros.superego.activity.ChangePasswordActivity"
-            android:label="@string/activity_change_password"
-            android:theme="@style/AppTheme.TransparentBackground"
-            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name="com.allybros.superego.activity.SplashActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <activity
-            android:name="com.allybros.superego.activity.WebViewActivity"
-            android:parentActivityName=".activity.UserPageActivity"
-            android:theme="@style/AppTheme.TransparentBackground" />
+            android:name="com.allybros.superego.activity.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name="com.allybros.superego.activity.UserPageActivity"
+            android:label="@string/activity_label_profile"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <activity
+            android:name="com.allybros.superego.activity.RegisterActivity"
+            android:label="@string/activity_label_register"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+
+
+        <activity android:name="com.allybros.superego.activity.SettingsActivity"
+            android:theme="@style/AppTheme.TransparentBackground"
+            android:label="@string/activity_label_options"/>
+
+
+        <activity android:name="com.allybros.superego.activity.ChangePasswordActivity"
+            android:label="@string/activity_label_change_password"
+            android:theme="@style/AppTheme.TransparentBackground"
+            android:windowSoftInputMode="adjustPan"/>
 
         <activity
             android:name="com.allybros.superego.activity.EditProfileActivity"
@@ -33,30 +60,9 @@
             android:windowSoftInputMode="adjustPan" />
 
         <activity
-            android:name="com.allybros.superego.activity.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name="com.allybros.superego.activity.UserPageActivity"
-            android:label="@string/activity_label_profile"
-            android:launchMode="singleTop"
-            android:windowSoftInputMode="adjustResize"/>
-        <activity
-            android:name="com.allybros.superego.activity.RegisterActivity"
-            android:label="@string/title_activity_register_page"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name="com.allybros.superego.activity.SplashActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <activity android:name="com.allybros.superego.activity.SettingsActivity"/>
+            android:name="com.allybros.superego.activity.WebViewActivity"
+            android:parentActivityName=".activity.UserPageActivity"
+            android:theme="@style/AppTheme.TransparentBackground" />
 
 
         <meta-data

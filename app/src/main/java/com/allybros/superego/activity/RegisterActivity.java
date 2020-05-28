@@ -85,23 +85,23 @@ public class RegisterActivity extends AppCompatActivity {
                         break;
 
                     case ErrorCodes.USERNAME_NOT_LEGAL:
-                        inputLayoutUsername.setError(getString(R.string.usernameNotLegal));
+                        inputLayoutUsername.setError(getString(R.string.error_username_not_legal));
                         break;
 
                     case ErrorCodes.USERNAME_ALREADY_EXIST:
-                        inputLayoutUsername.setError(getString(R.string.usernameAlreadyExist));
+                        inputLayoutUsername.setError(getString(R.string.error_username_taken));
                         break;
 
                     case ErrorCodes.EMAIL_ALREADY_EXIST:
-                        inputLayoutEmail.setError(getString(R.string.emailAlreadyExist));
+                        inputLayoutEmail.setError(getString(R.string.error_email_already_exist));
                         break;
 
                     case ErrorCodes.EMAIL_NOT_LEGAL:
-                        inputLayoutEmail.setError(getString(R.string.emailNotLegal));
+                        inputLayoutEmail.setError(getString(R.string.error_email_not_legal));
                         break;
 
                     case ErrorCodes.PASSWORD_NOT_LEGAL:
-                        inputLayoutPassword.setError(getString(R.string.passwordNotLegal));
+                        inputLayoutPassword.setError(getString(R.string.error_password_not_legal));
                         break;
                 }
             }
