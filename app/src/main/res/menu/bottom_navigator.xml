@@ -5,7 +5,7 @@
         android:id="@+id/navigation_profile"
         android:icon="@drawable/baseline_person_24"
         android:state_checked="true"
-        android:title="@string/profile" />
+        android:title="@string/activity_label_profile" />
     <item
         android:id="@+id/navigation_results"
         android:icon="@drawable/baseline_view_list_24"
