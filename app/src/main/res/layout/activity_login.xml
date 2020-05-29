@@ -94,7 +94,7 @@
                 style="@style/SegoInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/usernameOrEmail"
+                android:hint="@string/prompt_uid"
                 app:errorEnabled="false"
                 app:startIconDrawable="@drawable/baseline_person_24">
 
@@ -114,7 +114,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:hint="@string/password"
+                android:hint="@string/prompt_password"
                 app:endIconMode="password_toggle"
                 app:errorEnabled="false"
                 app:startIconDrawable="@drawable/v_account_key">
@@ -136,7 +136,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:backgroundTint="@color/materialPurple"
-                android:text="@string/login"
+                android:text="@string/action_login"
                 android:textColor="@color/White" />
 
             <!-- Register TV -->

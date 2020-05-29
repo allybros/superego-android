@@ -111,7 +111,7 @@ public class SearchFragment extends Fragment {
                 User u = (User) adapterView.getItemAtPosition(i);
                 // Set web activity title
                 String belirtmeHali = "" + turkceBelirtmeHalEkiBulucu(u.getUsername());
-                final String webActivityTitle = getContext().getString(R.string.title_activity_rate_user, u.getUsername(), belirtmeHali);
+                final String webActivityTitle = getContext().getString(R.string.activity_label_rate_user, u.getUsername(), belirtmeHali);
 
                 String testUrl = ConstantValues.RATE_URL + u.getTestId();
                 Intent intent = new Intent(getContext(), WebViewActivity.class);

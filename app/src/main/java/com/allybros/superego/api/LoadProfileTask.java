@@ -65,7 +65,7 @@ public class LoadProfileTask{
                                 intent.putExtra("status", ErrorCodes.SUCCESS);
                                 LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                             }else {
-                                Toast.makeText(context, context.getString(R.string.please_login_again), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, context.getString(R.string.error_login_again), Toast.LENGTH_SHORT).show();
                                 intent=new Intent(context, SplashActivity.class);
                                 context.startActivity(intent);
                             }
@@ -118,7 +118,7 @@ public class LoadProfileTask{
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context,context.getString(R.string.connection_error), Toast.LENGTH_SHORT);
+                Toast.makeText(context,context.getString(R.string.error_no_connection), Toast.LENGTH_SHORT);
 
             }
         }) {

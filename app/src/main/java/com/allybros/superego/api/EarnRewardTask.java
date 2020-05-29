@@ -73,7 +73,7 @@ public class EarnRewardTask {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context,context.getString(R.string.connection_error), Toast.LENGTH_SHORT);
+                Toast.makeText(context,context.getString(R.string.error_no_connection), Toast.LENGTH_SHORT);
 
             }
         }) {
