@@ -1,55 +1,60 @@
 <resources>
     <string name="app_name">insightof.me</string>
-    <string name="todo">TODO</string>
     <string name="facebook_app_id">278557299968701</string>
     <string name="fb_login_protocol_scheme">fb278557299968701</string>
     <string name="web_root">insightof.me</string>
-    <string name="activity_label_profile">ProfilePage</string>
-    <string name="title_activity_register_page">RegisterPage</string>
-    <string name="title_activity_new_test">Test Oluştur</string>
-    <string name="title_activity_rate_user">%1$s\'%2$s değerlendir</string>
-    <string name="loginFailed">Giriş bilgilerin yanlış. Lütfen Tekrar dene.</string>
-    <string name="loginSuccess">session_tokenBaşarılı :)</string>
-    <string name="usernameEmpty">Kullanıcı adı alanı boş olamaz.</string>
-    <string name="passwordEmpty">Parola alanı boş olamaz</string>
-    <string name="usernameOrEmail">Kullanıcı Adı veya E-mail</string>
-    <string name="password">Parola</string>
+    <string name="activity_label_profile">Profil</string>
+    <string name="activity_label_results">Sonuçlar</string>
+    <string name="activity_label_search">Arkadaşlarını Bul</string>
+    <string name="activity_label_register">Kayıt Ol</string>
+    <string name="activity_label_new_test">Test Oluştur</string>
+    <string name="activity_label_rate_user">%1$s\'%2$s değerlendir</string>
+    <string name="activity_label_edit_profile">Profili Düzenle</string>
+    <string name="activity_label_change_password">Parola Değiştir</string>
+    <string name="activity_label_options">Seçenekler</string>
+
+    <string name="error_login_failed">Giriş bilgilerin yanlış. Lütfen Tekrar dene.</string>
+    <string name="toast_login_success">Giriş Başarılı</string>
+    <string name="error_username_empty">Kullanıcı adı boş olamaz.</string>
+    <string name="error_password_empty">Parola boş olamaz.</string>
+    <string name="error_no_connection">Bağlantı Hatası</string>
+    <string name="error_desc_connection_error">Bağlantı Hatası, Lütfen ağ bağlantını kontrol edip tekrar dene.</string>
+    <string name="error_login_again">Lütfen tekrar giriş yap.</string>
+    <string name="prompt_uid">Kullanıcı Adı veya E-Posta</string>
+    <string name="prompt_password">Parola</string>
+
     <string name="profile">Profil</string>
-    <string name="connection_error">Bağlantı Hatası, Lütfen tekrar deneyiniz.</string>
-    <string name="must_not_be_here">Burada olmaman gerekiyor :(</string>
-    <string name="please_login_again">Tekrar giriş yapınız.</string>
-    <string name="results">Sonuçlar</string>
-    <string name="logout">Oturumu Kapat</string>
-    <string name="logoutSuccesful">Çıkış Başarılı</string>
-    <string name="emailEmpty">Email alanı boş olamaz</string>
-    <string name="usernameNotLegal">Lütfen uygun bir kullanıcı adı seçiniz</string>
-    <string name="usernameAlreadyExist">Bu kullanıcı adı alınmış</string>
-    <string name="emailAlreadyExist">Bu email sistemimizde kayıtlıdır.</string>
-    <string name="emailNotLegal">E-mail uygun değildir.</string>
-    <string name="passwordNotLegal">Parola uygun değildir.</string>
-    <string name="successRegister">Kayıt Başarılı</string>
+    <string name="option_logout">Oturumu Kapat</string>
+    <string name="error_email_empty">Email alanı boş olamaz</string>
+    <string name="error_username_not_legal">Lütfen uygun bir kullanıcı adı seçiniz</string>
+    <string name="error_username_taken">Bu kullanıcı adı alınmış</string>
+    <string name="error_email_already_exist">Bu email sistemimizde kayıtlıdır.</string>
+    <string name="error_email_not_legal">E-mail uygun değildir.</string>
+    <string name="error_password_not_legal">Parola uygun değildir.</string>
+    <string name="message_logout_succeed">Çıkış Başarılı</string>
+    <string name="message_register_succeed">Kayıt Başarılı</string>
     <string name="action_yes">Evet</string>
     <string name="action_no">Hayır</string>
     <string name="action_close">Kapat</string>
     <string name="action_ok">Tamam</string>
+    <string name="action_cancel">İptal</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_change_password">ChangePasswordActivity</string>
-    <string name="link_copied">Test adresiniz kopyalandı</string>
     <string name="share_test_body">Beni nasıl görüyorsun? Kişilik özelliklerimi kimliğini gizleyerek değerlendir. %1$s</string>
     <string name="share_results_body">Arkadaşlarıma göre kişilik özelliklerim;\n%1$s\nSen de beni değerlendir. %2$s</string>
-    <string name="btn_new_test">Test Oluştur</string>
-    <string name="btn_share_test">Testi Gönder</string>
-    <string name="btn_share_results">Sonuç Paylaş</string>
-    <string name="login">Giriş Yap</string>
-    <string name="pleaseTryAgain">Lütfen tekrar deneyiniz.</string>
-    <string name="register">Kayıt Ol</string>
-    <string name="username_must_fill">Kullanıcı alanı boş olamaz</string>
-    <string name="session_suspend">Bu üyelik 3 dakika askıya alınmıştır.</string>
-    <string name="checkConnection">Bağlantınızı kontrol ediniz.</string>
-    <string name="infoNotRated"><b>Henüz ilk sonucu görüntülemek için yeterli değerlendirmeye sahip değilsin.</b>\nYeterli değerlendirme sayısına ulaştığında kişilik özelliklerini görebileceksin.</string>
-    <string name="add_text">Merhaba, Reklam izleyerek ego puanı kazanabilirsin. Ego puanı ile değerlendirme sayını arttırabilirsin.</string>
-    <string name="cancel">Kapat</string>
+    <string name="action_btn_new_test">Test Oluştur</string>
+    <string name="action_btn_share_test">Testi Gönder</string>
+    <string name="action_btn_share_results">Sonuç Paylaş</string>
+    <string name="action_login">Giriş Yap</string>
+    <string name="error_try_again">Lütfen tekrar deneyiniz.</string>
+    <string name="action_register">Kayıt Ol</string>
+    <string name="action_agreement_link"><font color="#2A71AC"><a  href="https://insightof.me/conditions">Kullanım koşulları</a></font>\'nı okudum ve kabul ediyorum.</string>
+    <string name="error_desc_session_suspended">Bu üyelik 3 dakika askıya alınmıştır.</string>
+    <string name="check_connection">Bağlantınızı kontrol ediniz.</string>
+    <string name="info_not_rated"><b>Henüz ilk sonucu görüntülemek için yeterli değerlendirmeye sahip değilsin.</b>\nYeterli değerlendirme sayısına ulaştığında kişilik özelliklerini görebileceksin.</string>
+    <string name="info_ads_desc">Reklam izleyerek ego puanı kazanabilirsin. Ego puanın arttıkça sonuçları görmek için gerekli değerlendirme sayın azalacak.</string>
     <string name="processComplated">İşlem başarılı</string>
     <string name="invalid_file_extension">Lütfen uygun bir dosya seçiniz.</string>
     <string name="invalid_file_type">Lütfen uygun bir dosya seçiniz.</string>
@@ -87,7 +92,6 @@
     <string name="option_licenses_desc">Yararlandığımız yazılım lisanslarını incele.</string>
     <string name="option_sign_out">Oturumu Kapat</string>
     <string name="option_sign_out_desc">Geçerli oturumunu sonlandır.</string>
-    <string name="activity_label_options">Seçenekler</string>
     <string name="content_about">
         insightof.me arkadaşlarınızın kişiliğinizle ilgili değerlendirme yapabileceği
         bir sosyal platformdur. insightof.me ile oluşturacağınız kendinize özel testiniz
@@ -99,10 +103,9 @@
     </string>
     <string name="content_developers_title">Gelişticiler</string>
     <string name="content_developers">Orçun Kamiloğlu\nUmut Can Alaçam</string>
-    <string name="title_search">Arkadaşlarını Bul</string>
+
     <string name="hint_username">Kullanıcı adı</string>
     <string name="search_info">insightof.me\' de kayıtlı arkadaşlarını bulmak için kullanıcı adıyla arama yap.</string>
-    <string name="activity_change_password">Parola Değiştir</string>
     <string name="prompt_new_password_again">Yeni Parola (Tekrar)</string>
     <string name="prompt_new_password">Yeni parola</string>
     <string name="prompt_current_password">Şuanki parolan</string>
@@ -116,13 +119,11 @@
     <string name="input_error_enter_current_password">Geçerli parolanı girmelisin</string>
     <string name="input_error_enter_new_pass">Yeni bir parola girmelisin</string>
     <string name="input_error_password_mismatch">Parolalar eşleşmiyor</string>
-    <string name="activity_label_edit_profile">Profili Düzenle</string>
     <string name="default_bio">insightof.me kullanıcısı.</string>
     <string name="action_save">Kaydet</string>
     <string name="error_field_required">Bu alan boş olamaz.</string>
     <string name="action_sign_up">YENİ HESAP OLUŞTUR</string>
     <string name="call_or_connect_via">ya da bağlan;</string>
-    <string name="aggrementLink"><font color="#2A71AC"><a href="https://insightof.me/conditions">Kullanım koşulları</a></font>\'nı okudum ve kabul ediyorum.</string>
-    <string name="desc_call_register">Hesabın Yok Mu? |  <font color="#2A71AC">Yeni Hesap Oluştur</font></string>
+    <string name="desc_call_register">Hesabın Yok Mu? | <font color='#2A71AC'>Yeni Hesap Oluştur</font></string>
     <string name="header_register">Arkadaşlarının gözünden\nkendini gör.</string>
 </resources>

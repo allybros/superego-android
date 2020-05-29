@@ -58,7 +58,7 @@ public class ResultsFragment extends Fragment {
                     swipeLayout.setRefreshing(false);
                 } else {
                     swipeLayout.setRefreshing(false); //Last
-                    Toast.makeText(getContext(), getContext().getString(R.string.connection_error), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getContext().getString(R.string.error_no_connection), Toast.LENGTH_SHORT).show();
                 }
             }
         };
