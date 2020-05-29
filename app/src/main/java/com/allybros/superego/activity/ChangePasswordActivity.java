@@ -59,19 +59,19 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 //Check status
                 switch (status){
                     case ErrorCodes.SUCCESS:
-                        Snackbar.make(rootView, R.string.info_change_password_success, BaseTransientBottomBar.LENGTH_LONG).show();
+                        Snackbar.make(rootView, R.string.message_process_succeed, BaseTransientBottomBar.LENGTH_LONG).show();
                         break;
 
                     case  ErrorCodes.PASSWORD_NOT_LEGAL:
-                        tilNewPassword.setError(getString(R.string.info_password_not_legal));
+                        tilNewPassword.setError(getString(R.string.error_password_not_legal));
                         tilNewPasswordAgain.setError("");
                         break;
                     case  ErrorCodes.UNAUTHORIZED:
-                        tilOldPassword.setError(getString(R.string.info_password_wrong));
+                        tilOldPassword.setError(getString(R.string.error_current_password_wrong));
                         break;
 
                     default:
-                        Snackbar.make(rootView, R.string.info_sysfail, BaseTransientBottomBar.LENGTH_LONG)
+                        Snackbar.make(rootView, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG)
                                 .setAction(R.string.action_try_again, new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {

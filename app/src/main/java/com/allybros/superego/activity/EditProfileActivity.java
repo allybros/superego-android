@@ -94,7 +94,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 switch (status) {
 
                     case ErrorCodes.SESSION_EXPIRED:
-                        Snackbar.make(editProfileLayout, getApplicationContext().getString(R.string.session_expired), Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(editProfileLayout, getApplicationContext().getString(R.string.error_session_expired), Snackbar.LENGTH_LONG).show();
                         break;
 
                     case ErrorCodes.USERNAME_NOT_LEGAL:
@@ -114,7 +114,7 @@ public class EditProfileActivity extends AppCompatActivity {
                         break;
 
                     case ErrorCodes.SUCCESS:
-                        Snackbar.make(editProfileLayout, getApplicationContext().getString(R.string.processComplated), Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(editProfileLayout, getApplicationContext().getString(R.string.message_process_succeed), Snackbar.LENGTH_LONG).show();
                         break;
 
                     case ErrorCodes.SYSFAIL:
@@ -137,7 +137,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 //Check status
                 switch (status){
                     case ErrorCodes.SUCCESS:
-                        Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.processComplated),Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.message_process_succeed),Snackbar.LENGTH_LONG).show();
                         break;
 
                     case ErrorCodes.SYSFAIL:
@@ -145,15 +145,15 @@ public class EditProfileActivity extends AppCompatActivity {
                         break;
 
                     case ErrorCodes.INVALID_FILE_EXTENSION:
-                        Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.invalid_file_extension),Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.error_invalid_file_type),Snackbar.LENGTH_LONG).show();
                         break;
 
                     case ErrorCodes.INVALID_FILE_TYPE:
-                        Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.invalid_file_type),Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.error_invalid_file_type),Snackbar.LENGTH_LONG).show();
                         break;
 
                     case ErrorCodes.INVALID_FILE_SIZE:
-                        Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.invalid_file_size),Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.error_invalid_file_size),Snackbar.LENGTH_LONG).show();
                         break;
 
                     case ErrorCodes.FILE_WRITE_ERROR:
@@ -262,8 +262,8 @@ public class EditProfileActivity extends AppCompatActivity {
         etInformation_text_input.setErrorEnabled(false);
         etUsername_text_input.setErrorEnabled(false);
 
-        if(username.getText().toString().isEmpty()) etUsername_text_input.setError(getString(R.string.error_field_required));
-        if(email.getText().toString().isEmpty()) etEmail_text_input.setError(getString(R.string.error_field_required));
+        if(username.getText().toString().isEmpty()) etUsername_text_input.setError(getString(R.string.input_error_field_required));
+        if(email.getText().toString().isEmpty()) etEmail_text_input.setError(getString(R.string.input_error_field_required));
 
         if(!username.getText().toString().isEmpty()
                 && !email.getText().toString().isEmpty() ){

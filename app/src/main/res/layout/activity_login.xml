@@ -94,7 +94,7 @@
                 style="@style/SegoInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/prompt_uid"
+                android:hint="@string/hint_login_uid"
                 app:errorEnabled="false"
                 app:startIconDrawable="@drawable/baseline_person_24">
 
@@ -114,7 +114,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:hint="@string/prompt_password"
+                android:hint="@string/hint_login_password"
                 app:endIconMode="password_toggle"
                 app:errorEnabled="false"
                 app:startIconDrawable="@drawable/v_account_key">
