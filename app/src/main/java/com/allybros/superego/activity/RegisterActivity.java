@@ -78,8 +78,8 @@ public class RegisterActivity extends AppCompatActivity {
                         break;
                     case ErrorCodes.SYSFAIL:
                         new AlertDialog.Builder(getApplicationContext(), R.style.SegoAlertDialog)
-                                .setTitle(R.string.action_sign_up)
-                                .setMessage(R.string.info_sysfail)
+                                .setTitle(R.string.alert_sign_up)
+                                .setMessage(R.string.error_no_connection)
                                 .setPositiveButton(R.string.action_ok, null)
                                 .show();
                         break;

@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -125,7 +127,7 @@ public class LoginActivity extends AppCompatActivity {
                     case ErrorCodes.CONNECTION_ERROR:
                         AlertDialog.Builder builder1 = new AlertDialog.Builder(LoginActivity.this, R.style.SegoAlertDialog);
                         builder1.setTitle("insightof.me");
-                        builder1.setMessage(getString(R.string.check_connection));
+                        builder1.setMessage(getString(R.string.error_check_connection));
                         builder1.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                dialog.dismiss();
@@ -149,7 +151,7 @@ public class LoginActivity extends AppCompatActivity {
                     case ErrorCodes.SYSFAIL:
                         new AlertDialog.Builder(LoginActivity.this, R.style.SegoAlertDialog)
                             .setTitle("insightof.me")
-                            .setMessage(R.string.sysfail_login_social_media)
+                            .setMessage(R.string.error_no_connection)
                             .setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {}
                             }).show();
@@ -158,7 +160,7 @@ public class LoginActivity extends AppCompatActivity {
                     case ErrorCodes.EMAIL_EMPTY:
                         new AlertDialog.Builder(LoginActivity.this, R.style.SegoAlertDialog)
                             .setTitle("insightof.me")
-                            .setMessage(R.string.social_media_email_empty)
+                            .setMessage(R.string.error_email_empty)
                             .setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {}
                             }).show();
@@ -166,7 +168,7 @@ public class LoginActivity extends AppCompatActivity {
                     case ErrorCodes.EMAIL_NOT_LEGAL:
                         new AlertDialog.Builder(LoginActivity.this, R.style.SegoAlertDialog)
                             .setTitle("insightof.me")
-                            .setMessage(R.string.social_media_email_not_legal)
+                            .setMessage(R.string.error_email_not_legal)
                             .setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {}
                             }).show();
@@ -174,7 +176,7 @@ public class LoginActivity extends AppCompatActivity {
                     case ErrorCodes.USERNAME_NOT_LEGAL:
                         new AlertDialog.Builder(LoginActivity.this, R.style.SegoAlertDialog)
                             .setTitle("insightof.me")
-                            .setMessage(R.string.social_media_username_not_legal)
+                            .setMessage(R.string.error_username_not_legal)
                             .setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {}
                             }).show();
@@ -203,6 +205,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void setupUi(){
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            tvRegister.setText(Html.fromHtml(getResources().getString(R.string.desc_call_register), Html.FROM_HTML_MODE_COMPACT));
+        } else {
+            tvRegister.setText(Html.fromHtml(getResources().getString(R.string.desc_call_register)));
+        }
+
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

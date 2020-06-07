@@ -76,7 +76,7 @@ public class ProfileFragment extends Fragment {
                 switch (status){
                     case ErrorCodes.SYSFAIL:
                         profileSwipeLayout.setRefreshing(false); //Last
-                        Toast.makeText(getContext(), getContext().getString(R.string.error_desc_connection_error), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getContext().getString(R.string.error_no_connection), Toast.LENGTH_SHORT).show();
                         break;
 
                     case ErrorCodes.SUCCESS:
@@ -97,7 +97,7 @@ public class ProfileFragment extends Fragment {
                     case ErrorCodes.SYSFAIL:
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.SegoAlertDialog);
                         builder.setTitle("insightof.me");
-                        builder.setMessage(R.string.reward_earned_sysfail);
+                        builder.setMessage(R.string.error_no_connection);
                         builder.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                             Intent intent = new Intent(getContext(), LoginActivity.class);
@@ -111,7 +111,7 @@ public class ProfileFragment extends Fragment {
                     case ErrorCodes.SUCCESS:
                         AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity(), R.style.SegoAlertDialog);
                         builder1.setTitle("insightof.me");
-                        builder1.setMessage(R.string.earned_reward);
+                        builder1.setMessage(R.string.message_earn_reward_succeed);
                         builder1.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 LoadProfileTask.loadProfileTask(getContext(), sessionManager.getSessionToken(),"load");
@@ -123,7 +123,7 @@ public class ProfileFragment extends Fragment {
                     case ErrorCodes.SESSION_EXPIRED:
                         AlertDialog.Builder builder2 = new AlertDialog.Builder(getActivity(), R.style.SegoAlertDialog);
                         builder2.setTitle("insightof.me");
-                        builder2.setMessage(R.string.reward_earned_session_expired);
+                        builder2.setMessage(R.string.error_session_expired);
                         builder2.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {}
                         });
@@ -263,9 +263,9 @@ public class ProfileFragment extends Fragment {
         tvProfileInfoCard = getView().findViewById(R.id.tvProfileInfoCard);
 
         if(sessionManager.getUser().getTestId().equals("null")){ //User don't have a test
-            tvProfileInfoCard.setText(R.string.infocard_no_test);
+            tvProfileInfoCard.setText(R.string.info_no_test);
         }else{//User have test
-            tvProfileInfoCard.setText(R.string.infocard_share_test);
+            tvProfileInfoCard.setText(R.string.info_share_test);
         }
 
         tvProfileInfoCard.setOnClickListener(new View.OnClickListener() {
@@ -399,7 +399,7 @@ public class ProfileFragment extends Fragment {
         }
         //TODO: Decouple test url from here
         String testUrl = String.format("https://insightof.me/%s", sessionManager.getUser().getTestId());
-        String shareBody = getString(R.string.share_results_body, resultsBuilder.toString(), testUrl);
+        String shareBody = getString(R.string.body_share_results, resultsBuilder.toString(), testUrl);
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, R.string.action_btn_share_results);
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
         startActivity(Intent.createChooser(sharingIntent, getString(R.string.action_btn_share_results)));
@@ -412,7 +412,7 @@ public class ProfileFragment extends Fragment {
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
         String testUrl = String.format("https://insightof.me/%s", sessionManager.getUser().getTestId());
-        String shareBody = getString(R.string.share_test_body, testUrl);
+        String shareBody = getString(R.string.body_share_test, testUrl);
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, R.string.action_btn_share_test);
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
         startActivity(Intent.createChooser(sharingIntent, getString(R.string.action_btn_share_test)));
