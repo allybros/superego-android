@@ -177,7 +177,12 @@ public class ProfileFragment extends Fragment {
         btnBadgeRated = getView().findViewById(R.id.badgeRated);
 
         //Populate views
-        tvUserbio.setText(sessionManager.getUser().getUserBio());
+        if (sessionManager.getUser().getUserBio() != null) {
+            tvUserbio.setText(sessionManager.getUser().getUserBio());
+        } else {
+            tvUserbio.setText(R.string.default_bio_profile);
+        }
+
         tvUsername.setText("@"+sessionManager.getUser().getUsername());
         btnBadgeCredit.setText(String.format("%d %s", sessionManager.getUser().getCredit(), getString(R.string.credit)));
 
@@ -347,7 +352,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onRewardedAdFailedToLoad(int errorCode) {
                 // Ad failed to load.
-                Log.d("Reward Ad","Ad failed to load.");
+                Log.d("Reward Ad","Ad failed to load. Try again");
                 prepareRewardedAd();
             }
         };
