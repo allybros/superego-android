@@ -40,7 +40,7 @@ public class SearchAdapter extends ArrayAdapter<User> {
 
         String bioSum = u.getUserBio();
         if (u.getUserBio() == null) {
-            bioSum = convertView.getContext().getString(R.string.default_bio);
+            bioSum = convertView.getContext().getString(R.string.default_bio_search);
         }
         else if (u.getUserBio().length() >= 75){
             bioSum = u.getUserBio().substring(0,75);

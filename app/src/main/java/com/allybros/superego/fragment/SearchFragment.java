@@ -209,7 +209,7 @@ public class SearchFragment extends Fragment {
             }
         }
 
-        if (Arrays.binarySearch(unluler, isim.charAt(isim.length()-1)) != -1) {
+        if (Arrays.binarySearch(unluler, isim.charAt(isim.length()-1)) >= 0) {
             return "y"+sonEk;
         }
 

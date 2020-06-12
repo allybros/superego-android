@@ -115,7 +115,7 @@
     <string name="header_register">Arkadaşlarının gözünden\nkendini gör.</string>
 
     <string name="info_search">insightof.me\' de kayıtlı arkadaşlarını bulmak için kullanıcı adıyla arama yap.</string>
-    <string name="default_bio">insightof.me kullanıcısı.</string>
+    <string name="default_bio_search">insightof.me kullanıcısı.</string>
 
     <string name="login_text_header">Karakter Özelliklerini\nÖğren</string>
     <string name="login_text_sub">Arkadaşlarına sorarak gerçek kişilik\nözelliklerini öğren</string>
@@ -139,12 +139,12 @@
     <string name="credit">\ Ego</string>
     <string name="error_code">Kod: </string>
     <string name="remaining_credits">Kalan Değerlendirme: %1$s</string>
+    <string name="default_bio_profile">Kendini tanıtan kısa bir yazı yazabilirsin.</string>
 
     <!--Alert Dialogs-->
     <string name="alert_title_end_session">Oturumu Sonlandır</string>
     <string name="alert_context_end_session">Geçerli oturmunu sonlandırmak istediğine emin misin?</string>
     <string name="alert_sign_up">Yeni Hesap Oluştur</string>
-
 
 
 
