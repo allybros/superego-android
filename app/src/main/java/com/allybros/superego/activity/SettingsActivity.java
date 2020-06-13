@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -235,15 +236,18 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void showLicensesDialog(){
-        //Get licenses
-        String[] licenses = getResources().getStringArray(R.array.licenses);
-        ArrayList<String> licenseList = new ArrayList<>(Arrays.asList(licenses));
-        LicensesAdapter adapter = new LicensesAdapter(getApplicationContext(), licenseList);
 
         //Infalate dialog layout
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_licenses, null);
         ListView listViewLicenses = dialogView.findViewById(R.id.listviewLicenses);
+
+        //Get licenses
+        String[] licenses = getResources().getStringArray(R.array.licenses);
+        ArrayList<String> licenseList = new ArrayList<>(Arrays.asList(licenses));
+        LicensesAdapter adapter = new LicensesAdapter(getApplicationContext(), licenseList, listViewLicenses);
+
+        //Show
         listViewLicenses.setAdapter(adapter);
 
         //Show dialog

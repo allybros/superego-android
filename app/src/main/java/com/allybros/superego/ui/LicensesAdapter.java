@@ -1,10 +1,14 @@
 package com.allybros.superego.ui;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,8 +21,26 @@ import java.util.ArrayList;
 
 public class LicensesAdapter extends ArrayAdapter<String> {
 
-    public LicensesAdapter(Context context, ArrayList<String> licenses) {
+    private ListView parentListView;
+    private ArrayList<String> licenses;
+
+    public LicensesAdapter(Context context, final ArrayList<String> licenses, ListView parentListView) {
         super(context, R.layout.license_list_row, licenses);
+        this.parentListView = parentListView;
+        parentListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // URL
+                String licenseLine = licenses.get(position);
+                String[] licenseParts = licenseLine.split(",");
+                if (licenseParts.length != 4) return;
+                String licenseUrl = licenseParts[3];
+
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(licenseUrl));
+                browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                view.getContext().startActivity(browserIntent);
+            }
+        });
     }
 
 
@@ -32,7 +54,7 @@ public class LicensesAdapter extends ArrayAdapter<String> {
 
         String licenseData = getItem(position);
         if (licenseData == null) return convertView;
-        String[] licenseParts = licenseData.split(",");
+        final String[] licenseParts = licenseData.split(",");
         if (licenseParts.length < 4) return convertView;
 
         TextView tvLicenseLibName = convertView.findViewById(R.id.licenseLibName);
@@ -45,4 +67,6 @@ public class LicensesAdapter extends ArrayAdapter<String> {
 
         return convertView;
     }
+
+
 }
