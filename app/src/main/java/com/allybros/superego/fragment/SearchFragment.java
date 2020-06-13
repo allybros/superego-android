@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.R;
+import com.allybros.superego.activity.UserPageActivity;
 import com.allybros.superego.activity.WebViewActivity;
 import com.allybros.superego.api.SearchTask;
 import com.allybros.superego.ui.SearchAdapter;
@@ -128,12 +129,13 @@ public class SearchFragment extends Fragment {
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { performSearch(charSequence.toString()); }
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                performSearch(charSequence.toString());
+            }
 
             @Override
             public void afterTextChanged(Editable editable) { }
         });
-
 
     }
 
@@ -150,28 +152,32 @@ public class SearchFragment extends Fragment {
         Activity parent = getActivity();
         if (parent == null) return;
 
-        if (users.size() != 0){
-            // Result set is not empty, hide search info
-            YoYo.with(Techniques.FadeOut).duration(200).playOn(ivIconSearchInfo);
-            YoYo.with(Techniques.FadeOut).duration(200).playOn(tvSearchInfo);
-            ivIconSearchInfo.setVisibility(View.INVISIBLE);
-            tvSearchInfo.setVisibility(View.INVISIBLE);
-            // Show results
-            YoYo.with(Techniques.FadeOut).duration(300).playOn(listViewSearchResults);
-            SearchAdapter adapter = new SearchAdapter(parent.getApplicationContext(), users);
-            listViewSearchResults.setAdapter(adapter);
-            YoYo.with(Techniques.FadeIn).duration(300).playOn(listViewSearchResults);
-        } else if (tvSearchInfo.getVisibility() == View.INVISIBLE) {
-            //Show info if not visible
-            YoYo.with(Techniques.FadeIn).duration(300).playOn(ivIconSearchInfo);
-            YoYo.with(Techniques.FadeIn).duration(300).playOn(tvSearchInfo);
-            ivIconSearchInfo.setVisibility(View.VISIBLE);
-            tvSearchInfo.setVisibility(View.VISIBLE);
-            // Clear results
-            YoYo.with(Techniques.FadeOut).duration(300).playOn(listViewSearchResults);
-            SearchAdapter adapter = new SearchAdapter(parent.getApplicationContext(), users);
-            listViewSearchResults.setAdapter(adapter);
+        if (tvSearchInfo.getVisibility() == View.INVISIBLE) {
+            if (users.size() == 0) {
+                //Show info if not visible
+                YoYo.with(Techniques.FadeIn).duration(300).playOn(ivIconSearchInfo);
+                YoYo.with(Techniques.FadeIn).duration(300).playOn(tvSearchInfo);
+                ivIconSearchInfo.setVisibility(View.VISIBLE);
+                tvSearchInfo.setVisibility(View.VISIBLE);
+                // Hide list
+                YoYo.with(Techniques.FadeOut).duration(300).playOn(listViewSearchResults);
+                listViewSearchResults.setVisibility(View.INVISIBLE);
+            }
+        } else {
+            if (users.size() > 0) {
+                // Result set is not empty, hide search info
+                YoYo.with(Techniques.FadeOut).duration(200).playOn(ivIconSearchInfo);
+                YoYo.with(Techniques.FadeOut).duration(200).playOn(tvSearchInfo);
+                ivIconSearchInfo.setVisibility(View.INVISIBLE);
+                tvSearchInfo.setVisibility(View.INVISIBLE);
+                //Show list
+                YoYo.with(Techniques.FadeIn).duration(300).playOn(listViewSearchResults);
+                listViewSearchResults.setVisibility(View.VISIBLE);
+            }
         }
+
+        SearchAdapter adapter = new SearchAdapter(parent.getApplicationContext(), users);
+        listViewSearchResults.setAdapter(adapter);
     }
 
     /**
