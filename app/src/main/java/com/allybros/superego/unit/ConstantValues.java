@@ -11,9 +11,9 @@ public class ConstantValues {
 
     //Links
 
-    public static final String API_ROOT =  "https://api.allybros.com/superego/";
+    public static final String API_ROOT =  "https://api.insightof.me/";
     public static final String AVATAR_URL = API_ROOT + "images.php?get=";
-    public static final String TEST_LINK_ROOT = "https://demo.allybros.com/superego/rate.php?test=";
+    public static final String TEST_LINK_ROOT = "https://insightof.me/";
 
 
     //API LINKS
@@ -28,8 +28,8 @@ public class ConstantValues {
     public static final String SEARCH_URL = API_ROOT +  "search.php?q=";
     public static final String PARAM_TEST = API_ROOT +  "param_test.php";
     public static final String PASSWORD_CHANGE = API_ROOT +  "reset-password.php";
-    public static final String CREATE_TEST = "https://demo.allybros.com/superego/create.php";
-    public static final String RATE_URL = "https://demo.allybros.com/superego/rate.php?embed=true&test=";
+    public static final String CREATE_TEST = "https://insightof.me/create.php";
+    public static final String RATE_URL = "https://insightof.me/rate.php?embed=true&test=";
     public static final String LOGOUT_URL = API_ROOT + "logout.php";
 
     //Broadcast-Reciever actions
