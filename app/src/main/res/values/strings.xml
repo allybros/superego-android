@@ -37,7 +37,6 @@
     <string name="error_session_expired">Oturumun süresi dolmuştur. Tekrar giriş yapınız.</string>
     <string name="error_current_password_wrong">Geçerli parolan yanlış.</string>
 
-
     <!--Input Errors:
     these are error messages which catched in Android application-->
     <string name="input_error_enter_current_password">Geçerli parolanı girmelisin</string>
@@ -51,7 +50,6 @@
     <string name="message_logout_succeed">Çıkış Başarılı</string>
     <string name="message_register_succeed">Kayıt Başarılı</string>
     <string name="message_earn_reward_succeed">Ödülünüz hesabınıza aktarılmıştır.</string>
-
 
     <!--Hints:
     Fills input fields-->
@@ -73,7 +71,6 @@
     <string name="hint_register_email">E-Posta</string>
     <string name="hint_register_password">Parola</string>
 
-
    <!--Actions:
     Actions shows on the buttons or forwarder-->
     <string name="action_yes">Evet</string>
@@ -90,8 +87,6 @@
     <string name="action_agreement_link"><font color="#2A71AC"><a  href="https://insightof.me/conditions">Kullanım koşulları</a></font>\'nı okudum ve kabul ediyorum.</string>
     <string name="action_sign_out">Oturumu Kapat</string>
     <string name="action_save">Kaydet</string>
-
-
 
     <!--Contents:
     Contents fills text fills or something like that-->
@@ -144,8 +139,4 @@
     <string name="alert_title_end_session">Oturumu Sonlandır</string>
     <string name="alert_context_end_session">Geçerli oturmunu sonlandırmak istediğine emin misin?</string>
     <string name="alert_sign_up">Yeni Hesap Oluştur</string>
-
-
-
-
 </resources>
