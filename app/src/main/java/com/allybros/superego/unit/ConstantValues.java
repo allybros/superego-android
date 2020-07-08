@@ -11,28 +11,26 @@ public class ConstantValues {
 
     //Links
 
-    //    private static final String API_ROOT =  "https://api.insightof.me";
-    public static final String API_ROOT =  "https://api.allybros.com/superego/";//TODO: Yukarıda bulunan api roota geçilecek
+    public static final String API_ROOT =  "https://api.insightof.me/";
     public static final String AVATAR_URL = API_ROOT + "images.php?get=";
-    public static final String TEST_LINK_ROOT = "https://demo.allybros.com/superego/rate.php?test=";
+    public static final String TEST_LINK_ROOT = "https://insightof.me/";
 
 
     //API LINKS
-    public static final String UPDATE_INFORMATION ="https://api.allybros.com/superego/edit-profile.php";
-    public static final String URL_EARN_REWARD = "https://api.allybros.com/superego/reward.php";
-    public static final String URL_SOCIAL_ACCOUNTS_LOGIN ="https://api.allybros.com/superego/oauth-client.php";
-    public static final String LOGIN_URL ="https://api.allybros.com/superego/login.php";
-    public static final String ADD_TEST_URL = "https://demo.allybros.com/superego/create.php";
-    public static final String UPLOAD_IMAGE = "https://api.allybros.com/superego/upload.php";
-    public static final String ALL_TRAITS = "https://api.allybros.com/superego/traits.php";
-    public static final String LOAD_PROFILE ="https://api.allybros.com/superego/load-profile.php";
-    public static final String REGISTER ="https://api.allybros.com/superego/register.php";
-    public static final String CREATE_TEST = "https://demo.allybros.com/superego/create.php";
-    public static final String SEARCH_URL = "https://api.allybros.com/superego/search.php?q=";
-    public static final String PARAM_TEST = "https://api.allybros.com/superego/param_test.php";
-    public static final String PASSWORD_CHANGE = "https://api.allybros.com/superego/reset-password.php";
-    public static final String RATE_URL = "https://demo.allybros.com/superego/rate.php?embed=true&test=";
-    public static final String LOGOUT_URL ="https://api.insightof.me/logout.php";
+    public static final String UPDATE_INFORMATION = API_ROOT + "edit-profile.php";
+    public static final String URL_EARN_REWARD = API_ROOT + "reward.php";
+    public static final String URL_SOCIAL_ACCOUNTS_LOGIN = API_ROOT +  "oauth-client.php";
+    public static final String LOGIN_URL = API_ROOT +  "login.php";
+    public static final String UPLOAD_IMAGE = API_ROOT +  "upload.php";
+    public static final String ALL_TRAITS = API_ROOT +  "traits.php";
+    public static final String LOAD_PROFILE = API_ROOT + "load-profile.php";
+    public static final String REGISTER = API_ROOT + "register.php";
+    public static final String SEARCH_URL = API_ROOT +  "search.php?q=";
+    public static final String PARAM_TEST = API_ROOT +  "param_test.php";
+    public static final String PASSWORD_CHANGE = API_ROOT +  "reset-password.php";
+    public static final String CREATE_TEST = "https://insightof.me/create.php";
+    public static final String RATE_URL = "https://insightof.me/rate.php?embed=true&test=";
+    public static final String LOGOUT_URL = API_ROOT + "logout.php";
 
     //Broadcast-Reciever actions
     public static final String ACTION_UPDATE_INFORMATION ="update-info-status-share";

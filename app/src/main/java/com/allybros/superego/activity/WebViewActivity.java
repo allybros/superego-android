@@ -1,5 +1,6 @@
 package com.allybros.superego.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -41,27 +42,31 @@ public class WebViewActivity extends AppCompatActivity {
     private String url;
     private String title;
 
-    public static final String WEB_ACTION_CREATE_TEST = "create_test";
-    public static final String WEB_ACTION_RATE = "rate";
+    private static final String WEB_ACTION_CREATE_TEST = "create_test";
+    private static final String WEB_ACTION_RATE = "rate";
 
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Get intent extras, url and title
         Intent intent = getIntent();
         url = intent.getStringExtra("url");
         title = intent.getStringExtra("title");
-        Boolean unlockSlidr = intent.getBooleanExtra("slidr", true);
+        boolean unlockSlidr = intent.getBooleanExtra("slidr", true);
+
         // Init layout
         setContentView(R.layout.activity_add_test);
         webView = findViewById(R.id.webView);
         imageViewLogo = findViewById(R.id.imageViewLogo);
+
         //Set title
         final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle(title);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
         //Set webview
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setGeolocationEnabled(true);
@@ -86,6 +91,14 @@ public class WebViewActivity extends AppCompatActivity {
                 }
                 super.onPageStarted(view, url, favicon);
             }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                imageViewLogo.setVisibility(View.INVISIBLE);
+                webView.setVisibility(View.VISIBLE);
+                YoYo.with(Techniques.FadeIn).duration(400).playOn(webView);
+                super.onPageFinished(view, url);
+            }
         };
         webView.setWebViewClient(webViewClient);
 
@@ -95,23 +108,16 @@ public class WebViewActivity extends AppCompatActivity {
                 .repeat(50)
                 .playOn(findViewById(R.id.imageViewLogo));
 
+        // Post session-token
         String postData=null;
         try {
             postData = "session-token=" + URLEncoder.encode(SessionManager.getInstance().getSessionToken(), "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+
         //Load content
         webView.postUrl(url, postData.getBytes());
-
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                imageViewLogo.setVisibility(View.INVISIBLE);
-                webView.setVisibility(View.VISIBLE);
-            }
-        }, 2000);
 
         if (unlockSlidr){
             slidr= Slidr.attach(this);
