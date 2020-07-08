@@ -148,7 +148,7 @@ public class UserPageActivity extends AppCompatActivity {
      * Show bottom navigation or not.
      * @param visible True if navigation bar needs to be visible
      */
-    private void setBottomNavigationVisible(boolean visible){
+    public void setBottomNavigationVisible(boolean visible){
         if (visible) {
             navigation.setVisibility(View.VISIBLE);
             YoYo.with(Techniques.FadeInUp).duration(300).playOn(navigation);

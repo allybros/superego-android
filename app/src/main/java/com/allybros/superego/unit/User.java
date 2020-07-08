@@ -19,7 +19,8 @@ public class User {
         this.image = image;
         this.testId = testId;
         this.username = username;
-        this.userBio = userBio;
+        if (userBio.equals("null")) this.userBio = null;
+        else this.userBio = userBio;
         this.email = email;
         this.scores = scores;
     }
@@ -27,7 +28,8 @@ public class User {
     public User(String testId, String username, String userBio, String avatarName) {
         this.testId = testId;
         this.username = username;
-        this.userBio = userBio;
+        if (userBio.equals("null")) this.userBio = null;
+        else this.userBio = userBio;
         this.avatarName = avatarName;
     }
 
