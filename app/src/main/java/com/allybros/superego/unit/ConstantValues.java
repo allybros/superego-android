@@ -40,6 +40,7 @@ public class ConstantValues {
     public static final String ACTION_LOGOUT = "logout-status-share";
     public static final String ACTION_SOCIAL_MEDIA_LOGIN = "social-media-login-status-share";
     public static final String ACTION_REFRESH_PROFILE = "profile-refresh-status-share";
+    public static final String ACTION_LOAD_PROFILE = "load-profile-share";
     public static final String ACTION_REGISTER = "register-status-share";
     public static final String ACTION_REFRESH_RESULTS = "refresh-results";
     public static final String ACTION_CREATE_TEST = "create_test";
