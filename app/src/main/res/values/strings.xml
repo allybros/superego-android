@@ -22,8 +22,8 @@
     <string name="error_login_failed">Giriş bilgilerin yanlış. Lütfen Tekrar dene.</string>
     <string name="error_username_empty">Kullanıcı adı boş olamaz.</string>
     <string name="error_password_empty">Parola boş olamaz.</string>
-    <string name="error_no_connection">Bağlantı Hatası, Lütfen ağ bağlantını kontrol edip tekrar dene.</string>
-    <string name="error_login_again">Lütfen tekrar giriş yap.</string>
+    <string name="error_no_connection">insightof.me\' ye bağlanılamıyor, Lütfen ağ bağlantını kontrol edip tekrar dene.</string>
+    <string name="error_login_again">Hesabına giriş yapılamadı. Lütfen tekrar giriş yap.</string>
     <string name="error_check_connection">Bağlantınızı kontrol ediniz.</string>
     <string name="error_email_empty">Email alanı boş olamaz</string>
     <string name="error_username_not_legal">Lütfen uygun bir kullanıcı adı seçiniz</string>

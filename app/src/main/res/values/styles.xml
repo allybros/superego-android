@@ -11,7 +11,7 @@
 
     <style name="SegoAlertDialog" parent="Theme.MaterialComponents.Light.Dialog.Alert">
         <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
-        <item name="android:dialogCornerRadius" tools:targetApi="p">8dp</item>
+        <item name="android:dialogCornerRadius" tools:targetApi="p">12dp</item>
         <item name="dialogPreferredPadding">16dp</item>
 
     </style>
