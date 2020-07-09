@@ -45,12 +45,13 @@ public class LoginTask extends Activity {
                 int status;
                 try {
                     JSONObject jsonObj=new JSONObject(response);
-                    Log.d("sego-Response",response.toString());
+                    Log.d("Login Task Response", response);
                     status = jsonObj.getInt("status");
                     switch (status){
 
                         case ErrorCodes.SUCCESS:
                             String session_token = jsonObj.getString("session_token");
+                            SessionManager.getInstance().setSessionToken(session_token);
                             SessionManager.getInstance().writeInfoLocalStorage(uid,password,session_token,context);
                             intent.putExtra("status", status);
                             LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
