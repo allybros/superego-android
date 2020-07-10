@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="userbio"
-        android:textColor="@color/grey"
+        android:textColor="@color/Gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/nivSearchUserAvatar"
         app:layout_constraintTop_toBottomOf="@+id/tvSearchUsername" />

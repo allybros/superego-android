@@ -12,16 +12,47 @@
         android:id="@+id/swipeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        <ListView
-            android:id="@+id/listViewTraits"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="12dp"
-            android:clickable="false"
-            android:divider="@null"
-            android:dividerHeight="0dp" >
-        </ListView>
+                <ListView
+                    android:id="@+id/listViewTraits"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:divider="@null"
+                    android:dividerHeight="0dp"
+                    android:paddingTop="12dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"></ListView>
+
+                <!-- Google Ad -->
+                <FrameLayout
+                    android:id="@+id/resultCardAd"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="12dp"
+                    android:background="@drawable/shape_card"
+                    android:elevation="4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/listViewTraits">
+
+                    <com.google.android.gms.ads.AdView
+                        android:id="@+id/resultBannerAdd"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:adSize="BANNER"
+                        app:adUnitId="ca-app-pub-3940256099942544/6300978111" />
+                </FrameLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </FrameLayout>

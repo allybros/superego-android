@@ -27,6 +27,12 @@ import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.unit.User;
 import com.allybros.superego.ui.ScoresAdapter;
 import com.allybros.superego.util.SessionManager;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 public class ResultsFragment extends Fragment {
     private TextView tvRemainingRates;
@@ -34,6 +40,7 @@ public class ResultsFragment extends Fragment {
     private SwipeRefreshLayout swipeLayout;
     private User currentUser;
     private BroadcastReceiver resultsRefreshReceiver;
+    private AdView adResultBanner;
 
     //3 states of Result screen represented in an Enum
     private enum State {
@@ -112,12 +119,14 @@ public class ResultsFragment extends Fragment {
                 int remainingRates = 10 - (currentUser.getRated() + currentUser.getCredit());
                 tvRemainingRates.setText(getString(R.string.remaining_credits, remainingRates));
                 listViewTraits.setAdapter( new ScoresAdapter(getActivity(), currentUser.getScores()) );
+                prepareBannerAd();
                 break;
 
             //All results
             case COMPLETE:
                 listViewTraits = getView().findViewById(R.id.listViewTraits);
                 listViewTraits.setAdapter( new ScoresAdapter(getActivity(), currentUser.getScores()) );
+                prepareBannerAd();
                 break;
 
             //No results
@@ -127,6 +136,7 @@ public class ResultsFragment extends Fragment {
                 //Populate views
                 remainingRates = 5 - currentUser.getRated();
                 tvRemainingRates.setText( getString(R.string.remaining_credits, remainingRates) );
+                prepareBannerAd();
                 break;
         }
 
@@ -140,6 +150,59 @@ public class ResultsFragment extends Fragment {
             return State.PARTIAL;
         else
             return State.NONE;
+    }
+
+    private void prepareBannerAd(){
+        // Initialize mobile ads
+        MobileAds.initialize(getActivity(), new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+                Log.d("MobileAds", "Initialized.");
+            }
+        });
+        adResultBanner = getView().findViewById(R.id.resultBannerAdd);
+        final String adTag = "ad_result_banner";
+        // Load ad
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adResultBanner.loadAd(adRequest);
+        // Set ad listener
+        adResultBanner.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                Log.d(adTag,"Result banner ad loaded.");
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                Log.d(adTag,"Result banner ad couldn't be loaded");
+            }
+
+            @Override
+            public void onAdOpened() {
+                // Code to be executed when an ad opens an overlay that
+                // covers the screen.
+                Log.d(adTag,"Result banner ad opened.");
+            }
+
+            @Override
+            public void onAdClicked() {
+                // Code to be executed when the user clicks on an ad.
+                Log.d(adTag,"Result banner ad clicked.");
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+                // Code to be executed when the user has left the app.
+                Log.d(adTag,"User left application");
+            }
+
+            @Override
+            public void onAdClosed() {
+                // Code to be executed when the user is about to return
+                // to the app after tapping on an ad.
+                Log.d(adTag,"User returned from ad.");
+            }
+        });
     }
 
     @Override

@@ -107,7 +107,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:hint="@string/hint_change_info_personal_information"
-            app:boxBackgroundColor="@color/trans"
+            app:boxBackgroundColor="@color/transparent"
             app:startIconDrawable="@drawable/v_account_details"
             style="@style/SegoInputLayout"
             app:layout_constraintEnd_toEndOf="parent"
