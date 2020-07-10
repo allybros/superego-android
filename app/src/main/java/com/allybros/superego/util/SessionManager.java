@@ -47,8 +47,8 @@ public class SessionManager {
     public void writeInfoLocalStorage(String uid, String password, String session_token,Context context){
         SharedPreferences pref = context.getSharedPreferences(USER_INFORMATION_PREF, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
-        editor.putString("uid",uid);
-        editor.putString("password",password);
+        editor.putString("uid", uid);
+        editor.putString("password", password);
         editor.putString("session_token", session_token);
         editor.commit();
     }
@@ -58,6 +58,12 @@ public class SessionManager {
      * @param context
      */
     public void clearSession(Context context){
+        // Clear fields
+        this.user = null;
+        this.userId = null;
+        this.password = null;
+        this.sessionToken = null;
+        // Clear data from device
         SharedPreferences pref = context.getSharedPreferences(USER_INFORMATION_PREF, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         editor.clear().apply();
