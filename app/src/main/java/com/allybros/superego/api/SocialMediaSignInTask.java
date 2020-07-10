@@ -23,8 +23,17 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * Class includes the function of Sign in
+ * @author 0rcun
+ */
 public class SocialMediaSignInTask {
+    /**
+     * Function requests to server and then receives response. After that broadcasts the response.
+     * @param context       required to build request and send Broadcast
+     * @param access_token  required for verify user
+     * @param authenticator required to select a way for sign in
+     */
     public static void loginTask(final Context context, final String access_token,final String authenticator) {
 
         final Intent intent = new Intent(ConstantValues.ACTION_SOCIAL_MEDIA_LOGIN);
