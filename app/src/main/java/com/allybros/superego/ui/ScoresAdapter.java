@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,28 +18,49 @@ import android.widget.TextView;
 import com.allybros.superego.R;
 import com.allybros.superego.unit.Score;
 import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class ScoresAdapter extends ArrayAdapter<Score> {
     //CDN URL for emojis
     private static final String EMOJI_END_POINT = "https://api.allybros.com/twemoji/?name=";
+    private ArrayList<Score> scores;
+    private AdView adResultBanner;
 
     public ScoresAdapter(Context context, ArrayList<Score> scores) {
         super(context, R.layout.scores_list_row, scores);
+        this.scores = scores;
+        scores.add(new Score(-2016, 0));
     }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         if (convertView == null){
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.scores_list_row, parent,false);
+            if (position == scores.size() - 1) {
+                convertView = inflater.inflate(R.layout.list_ad_row, parent,false);
+                adResultBanner = convertView.findViewById(R.id.resultBannerAdd);
+                prepareBannerAd();
+                return convertView;
+            }
+            else{
+                convertView = inflater.inflate(R.layout.scores_list_row, parent,false);
+            }
         }
 
         ImageView traitImage = convertView.findViewById(R.id.traitEmojiView);
         TextView traitNameView = convertView.findViewById(R.id.traitNameView);
         FrameLayout traitEmojiContainer = convertView.findViewById(R.id.imageViewContainer);
+
+        if (traitImage == null || traitNameView == null || traitEmojiContainer == null) return new View(getContext());
 
         Score s = getItem(position);
 
@@ -60,6 +82,58 @@ public class ScoresAdapter extends ArrayAdapter<Score> {
         shape.setColorFilter(Color.rgb(r, g, b), PorterDuff.Mode.SRC_ATOP);
 
         return convertView;
+    }
+
+    private void prepareBannerAd(){
+        // Initialize mobile ads
+        MobileAds.initialize(getContext(), new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+                Log.d("MobileAds", "Initialized.");
+            }
+        });
+        final String adTag = "ad_result_banner";
+        // Load ad
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adResultBanner.loadAd(adRequest);
+        // Set ad listener
+        adResultBanner.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                Log.d(adTag,"Result banner ad loaded.");
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                Log.d(adTag,"Result banner ad couldn't be loaded");
+            }
+
+            @Override
+            public void onAdOpened() {
+                // Code to be executed when an ad opens an overlay that
+                // covers the screen.
+                Log.d(adTag,"Result banner ad opened.");
+            }
+
+            @Override
+            public void onAdClicked() {
+                // Code to be executed when the user clicks on an ad.
+                Log.d(adTag,"Result banner ad clicked.");
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+                // Code to be executed when the user has left the app.
+                Log.d(adTag,"User left application");
+            }
+
+            @Override
+            public void onAdClosed() {
+                // Code to be executed when the user is about to return
+                // to the app after tapping on an ad.
+                Log.d(adTag,"User returned from ad.");
+            }
+        });
     }
 
     @Override

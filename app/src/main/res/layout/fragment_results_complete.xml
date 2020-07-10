@@ -26,29 +26,7 @@
                     android:paddingTop="12dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"></ListView>
-
-                <!-- Google Ad -->
-                <FrameLayout
-                    android:id="@+id/resultCardAd"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="12dp"
-                    android:background="@color/transparent"
-                    android:elevation="4dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/listViewTraits">
-
-                    <com.google.android.gms.ads.AdView
-                        android:id="@+id/resultBannerAdd"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:adSize="LARGE_BANNER"
-                        app:adUnitId="ca-app-pub-3940256099942544/6300978111" />
-                </FrameLayout>
+                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
