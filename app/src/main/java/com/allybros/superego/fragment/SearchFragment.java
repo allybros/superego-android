@@ -5,6 +5,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -19,18 +21,21 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.R;
-import com.allybros.superego.activity.UserPageActivity;
 import com.allybros.superego.activity.WebViewActivity;
 import com.allybros.superego.api.SearchTask;
 import com.allybros.superego.ui.SearchAdapter;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.User;
+import com.allybros.superego.util.SessionManager;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,6 +54,8 @@ public class SearchFragment extends Fragment {
     private ListView listViewSearchResults;
     private ImageView ivIconSearchInfo;
     private TextView tvSearchInfo;
+    private ConstraintLayout constraintSearchFragment;
+    private SessionManager sessionManager = SessionManager.getInstance();
 
     private BroadcastReceiver searchResponseReceiver;
 
@@ -105,7 +112,7 @@ public class SearchFragment extends Fragment {
         listViewSearchResults = getView().findViewById(R.id.listViewSearchResults);
         ivIconSearchInfo = getView().findViewById(R.id.ivIconSearchInfo);
         tvSearchInfo = getView().findViewById(R.id.tvSearchInfo);
-
+        constraintSearchFragment = getView().findViewById(R.id.constraintSearchFragment);
         listViewSearchResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -130,7 +137,17 @@ public class SearchFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                performSearch(charSequence.toString());
+                // Check internet connection
+                ConnectivityManager cm = (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+                boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+                if(isConnected) {
+                    performSearch(charSequence.toString());
+                }
+                else {
+                    Log.d("CONNECTION", String.valueOf(isConnected));
+                    Snackbar.make(constraintSearchFragment, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
+                }
             }
 
             @Override

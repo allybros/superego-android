@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -49,6 +51,8 @@ import com.google.android.gms.ads.rewarded.RewardItem;
 import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdCallback;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
@@ -162,7 +166,18 @@ public class ProfileFragment extends Fragment {
         profileSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-            LoadProfileTask.loadProfileTask(getContext(), sessionManager.getSessionToken(), ConstantValues.ACTION_REFRESH_PROFILE);
+                // Check internet connection
+                ConnectivityManager cm = (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+                boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+                if(isConnected) {
+                    LoadProfileTask.loadProfileTask(getContext(), sessionManager.getSessionToken(), ConstantValues.ACTION_REFRESH_PROFILE);
+                }
+                else {
+                    Log.d("CONNECTION", String.valueOf(isConnected));
+                    Snackbar.make(profileSwipeLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
+                    profileSwipeLayout.setRefreshing(false);
+                }
             }
         });
     }
@@ -205,7 +220,17 @@ public class ProfileFragment extends Fragment {
                 builder.setPositiveButton(getString(R.string.action_ok), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         if (rewardedAd.isLoaded()) {
-                            showRewardedAd();
+                            // Check internet connection
+                            ConnectivityManager cm = (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+                            boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+                            if(isConnected){
+                                showRewardedAd();
+                            }
+                            else {
+                                Toast.makeText(getContext(),getString(R.string.error_no_connection),Toast.LENGTH_LONG).show();
+                                Log.d("CONNECTION", String.valueOf(isConnected));
+                            }
                         } else {
                             Log.d("TAG", "The rewarded ad wasn't loaded yet.");
                         }
@@ -239,10 +264,20 @@ public class ProfileFragment extends Fragment {
         btnNewTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            Intent addTestIntent = new Intent(getContext(), WebViewActivity.class);
-            addTestIntent.putExtra("url", ConstantValues.CREATE_TEST);
-            addTestIntent.putExtra("title", getString(R.string.activity_label_new_test));
-            startActivity(addTestIntent);
+                // Check internet connection
+                ConnectivityManager cm = (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+                boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+                if(isConnected){
+                    Intent addTestIntent = new Intent(getContext(), WebViewActivity.class);
+                    addTestIntent.putExtra("url", ConstantValues.CREATE_TEST);
+                    addTestIntent.putExtra("title", getString(R.string.activity_label_new_test));
+                    startActivity(addTestIntent);
+                }
+                else {
+                    Snackbar.make(profileSwipeLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
+                    Log.d("CONNECTION", String.valueOf(isConnected));
+                }
             }
         });
 
@@ -319,7 +354,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onAdClicked() {
                 // Code to be executed when the user clicks on an ad.
-                Log.d(adTag,"Profile banner ad clicked.");
+                 Log.d(adTag,"Profile banner ad clicked.");
             }
 
             @Override

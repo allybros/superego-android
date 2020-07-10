@@ -7,8 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,7 +18,6 @@ import com.allybros.superego.api.LoginTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.unit.Trait;
-import com.allybros.superego.unit.User;
 import com.allybros.superego.util.SessionManager;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -183,7 +180,7 @@ public class SplashActivity extends AppCompatActivity {
         final StringRequest jsonRequest = new StringRequest(Request.Method.GET, ConstantValues.ALL_TRAITS, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("getAllTraits",response.toString());
+//                Log.d("getAllTraits",response.toString());
 
                 try {
                     JSONObject jsonObject=new JSONObject(response);
