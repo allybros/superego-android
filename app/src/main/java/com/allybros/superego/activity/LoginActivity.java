@@ -92,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
                 int status = intent.getIntExtra("status",0);
-                Log.d("receiver", "Got message: " + status);
+                Log.d("Login receiver", "Status: " + status);
                 setProgress(false);
                 switch (status){
 
@@ -144,19 +144,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
                 int status = intent.getIntExtra("status",0);
-                Log.d("receiver", "Got message: " + status);
+                Log.d("OAuth Receiver", "Status: " + status);
                 setProgress(false);
                 switch (status){
-
-                    case ErrorCodes.SYSFAIL:
-                        new AlertDialog.Builder(LoginActivity.this, R.style.SegoAlertDialog)
-                            .setTitle("insightof.me")
-                            .setMessage(R.string.error_no_connection)
-                            .setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {}
-                            }).show();
-                        break;
-
                     case ErrorCodes.EMAIL_EMPTY:
                         new AlertDialog.Builder(LoginActivity.this, R.style.SegoAlertDialog)
                             .setTitle("insightof.me")
@@ -188,13 +178,14 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(i);
                         break;
 
+                    case ErrorCodes.SYSFAIL:
                     case ErrorCodes.CONNECTION_ERROR:
                         new AlertDialog.Builder(LoginActivity.this, R.style.SegoAlertDialog)
-                            .setTitle("insightof.me")
-                            .setMessage(R.string.error_no_connection)
-                            .setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {}
-                            }).show();
+                                .setTitle("insightof.me")
+                                .setMessage(R.string.error_no_connection)
+                                .setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {}
+                                }).show();
                         break;
                 }
             }
