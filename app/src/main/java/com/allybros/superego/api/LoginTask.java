@@ -31,8 +31,8 @@ public class LoginTask extends Activity {
     /**
      * Function requests to server and then receives response. After that broadcasts the response.
      * @param context   required to build request and send Broadcast
-     * @param uid       require for verify user
-     * @param password  require for verify user
+     * @param uid       required for verify user
+     * @param password  required for verify user
      */
     public static void loginTask(final Context context, final String uid, final String password) {
         final Intent intent = new Intent(ConstantValues.ACTION_LOGIN);

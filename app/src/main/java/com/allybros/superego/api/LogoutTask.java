@@ -32,7 +32,7 @@ public class LogoutTask {
     /**
      * Function requests to server and then receives response. After that broadcasts the response.
      * @param context       required to build request and send Broadcast
-     * @param session_token require for verify user
+     * @param session_token required for verify user
      */
     public static void logoutTask(final Context context, final String session_token) {
         RequestQueue queue = Volley.newRequestQueue(context);
