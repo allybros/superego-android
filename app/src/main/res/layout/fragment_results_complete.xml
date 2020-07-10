@@ -32,11 +32,11 @@
                 <FrameLayout
                     android:id="@+id/resultCardAd"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="12dp"
-                    android:background="@drawable/shape_card"
+                    android:background="@color/transparent"
                     android:elevation="4dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -46,7 +46,7 @@
                         android:id="@+id/resultBannerAdd"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:adSize="BANNER"
+                        app:adSize="LARGE_BANNER"
                         app:adUnitId="ca-app-pub-3940256099942544/6300978111" />
                 </FrameLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
