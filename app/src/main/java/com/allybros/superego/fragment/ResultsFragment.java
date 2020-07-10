@@ -135,14 +135,12 @@ public class ResultsFragment extends Fragment {
                 int remainingRates = 10 - (currentUser.getRated() + currentUser.getCredit());
                 tvRemainingRates.setText(getString(R.string.remaining_credits, remainingRates));
                 listViewTraits.setAdapter( new ScoresAdapter(getActivity(), currentUser.getScores()) );
-                prepareBannerAd();
                 break;
 
             //All results
             case COMPLETE:
                 listViewTraits = getView().findViewById(R.id.listViewTraits);
                 listViewTraits.setAdapter( new ScoresAdapter(getActivity(), currentUser.getScores()) );
-                prepareBannerAd();
                 break;
 
             //No results
