@@ -68,7 +68,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="@string/option_edit_profile_desc"
-                        android:textColor="@color/grey"
+                        android:textColor="@color/Gray"
                         android:textStyle="bold"
                         app:layout_constraintStart_toEndOf="@+id/ivEditProfile"
                         app:layout_constraintTop_toBottomOf="@+id/tvEditProfile" />
@@ -121,7 +121,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="@string/option_password_desc"
-                        android:textColor="@color/grey"
+                        android:textColor="@color/Gray"
                         android:textStyle="bold"
                         app:layout_constraintStart_toEndOf="@+id/ivPassword"
                         app:layout_constraintTop_toBottomOf="@+id/tvPassword" />
@@ -174,7 +174,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="@string/option_about_desc"
-                        android:textColor="@color/grey"
+                        android:textColor="@color/Gray"
                         android:textStyle="bold"
                         app:layout_constraintStart_toEndOf="@+id/ivAbout"
                         app:layout_constraintTop_toBottomOf="@+id/tvAbout" />
@@ -229,7 +229,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="@string/option_licenses_desc"
-                        android:textColor="@color/grey"
+                        android:textColor="@color/Gray"
                         android:textStyle="bold"
                         app:layout_constraintStart_toEndOf="@+id/ivLicenses"
                         app:layout_constraintTop_toBottomOf="@+id/tvLicenses" />
@@ -284,7 +284,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="@string/option_sign_out_desc"
-                        android:textColor="@color/grey"
+                        android:textColor="@color/Gray"
                         android:textStyle="bold"
                         app:layout_constraintStart_toEndOf="@+id/ivSignOut"
                         app:layout_constraintTop_toBottomOf="@+id/tvSignOut" />

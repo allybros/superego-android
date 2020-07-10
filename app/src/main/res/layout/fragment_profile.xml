@@ -196,7 +196,7 @@
 
             <!-- Google Ad -->
             <FrameLayout
-                android:id="@+id/cardAd"
+                android:id="@+id/ProfileCardAd"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="12dp"
@@ -207,7 +207,7 @@
                 android:elevation="4dp">
 
                 <com.google.android.gms.ads.AdView
-                    android:id="@+id/bannerAdd"
+                    android:id="@+id/profileBannerAdd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:adSize="BANNER"

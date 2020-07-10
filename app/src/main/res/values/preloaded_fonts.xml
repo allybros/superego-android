@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="preloaded_fonts" translatable="false">
-        <item>@font/baloo</item>
-        <item>@font/cinzel_bold</item>
-        <item>@font/finger_paint</item>
-        <item>@font/press_start_2p</item>
-        <item>@font/special_elite</item>
-        <item>@font/sue_ellen_francisco</item>
-        <item>@font/walter_turncoat</item>
     </array>
 </resources>

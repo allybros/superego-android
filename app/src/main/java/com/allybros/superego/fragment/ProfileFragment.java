@@ -285,7 +285,14 @@ public class ProfileFragment extends Fragment {
      * Initializes, loads and shows profile banner ad.
      */
     private void prepareBannerAd(){
-        adProfileBanner = getView().findViewById(R.id.bannerAdd);
+        // Initialize mobile ads
+        MobileAds.initialize(getActivity(), new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+                Log.d("MobileAds", "Initialized.");
+            }
+        });
+        adProfileBanner = getView().findViewById(R.id.profileBannerAdd);
         final String adTag = "ad_profile_banner";
         // Load ad
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -326,13 +333,6 @@ public class ProfileFragment extends Fragment {
                 // Code to be executed when the user is about to return
                 // to the app after tapping on an ad.
                 Log.d(adTag,"User returned from ad.");
-            }
-        });
-        // Initialize mobile ads
-        MobileAds.initialize(getActivity(), new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-                Log.d("MobileAds", "Initialized.");
             }
         });
     }
