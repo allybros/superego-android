@@ -4,7 +4,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -129,11 +132,21 @@ public class ChangePasswordActivity extends AppCompatActivity {
         }
         // All requirements are satisfied, proceed for creating new password.
         else if (!oldPass.isEmpty()) {
-            setProgressVisibility(true);
-            PasswordChangeTask.passwordChangeTask(getApplicationContext(),
-                SessionManager.getInstance().getSessionToken(),
-                oldPass,
-                newPass);
+            // Check internet connection
+            ConnectivityManager cm = (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+            boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+            if(isConnected) {
+                setProgressVisibility(true);
+                PasswordChangeTask.passwordChangeTask(getApplicationContext(),
+                        SessionManager.getInstance().getSessionToken(),
+                        oldPass,
+                        newPass);
+            }
+            else {
+                Log.d("CONNECTION", String.valueOf(isConnected));
+                Snackbar.make(rootView, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
+            }
         }
     }
 

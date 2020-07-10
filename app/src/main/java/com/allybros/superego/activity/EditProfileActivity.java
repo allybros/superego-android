@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -20,12 +22,13 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.allybros.superego.R;
 import com.allybros.superego.api.ChangeInfoTask;
 import com.allybros.superego.api.ImageChangeTask;
+import com.allybros.superego.request.RequestForGetImageNoCache;
 import com.allybros.superego.ui.CircledNetworkImageView;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
-import com.allybros.superego.request.RequestForGetImageNoCache;
 import com.allybros.superego.util.SessionManager;
 import com.android.volley.toolbox.ImageLoader;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -176,12 +179,19 @@ public class EditProfileActivity extends AppCompatActivity {
         username.setText(SessionManager.getInstance().getUser().getUsername());
         information.setText(SessionManager.getInstance().getUser().getUserBio());
 
+
+        // Check internet connection
+        ConnectivityManager cm = (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
         //Load image
         String URL= ConstantValues.AVATAR_URL+SessionManager.getInstance().getUser().getImage();
         ImageLoader mImageLoader;
         mImageLoader = RequestForGetImageNoCache.getInstance(getApplicationContext()).getImageLoader();
-        mImageLoader.get(URL, ImageLoader.getImageListener(settingsImage, R.drawable.default_avatar, android.R.drawable.ic_dialog_alert));
+        mImageLoader.get(URL, ImageLoader.getImageListener(settingsImage, R.drawable.default_avatar, R.drawable.default_avatar));
         settingsImage.setImageUrl(URL, mImageLoader);
+        //TODO: Temporary solution, it will be developed
+        if(!isConnected) Snackbar.make(editProfileLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
 
         //Require for slide behaviour
         slidr= Slidr.attach(this);
@@ -190,14 +200,34 @@ public class EditProfileActivity extends AppCompatActivity {
         btChangePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectImage();
+                // Check internet connection
+                ConnectivityManager cm = (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+                boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+                if(isConnected) {
+                    selectImage();
+                }
+                else {
+                    Log.d("CONNECTION", String.valueOf(isConnected));
+                    Snackbar.make(editProfileLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
+                }
             }
         });
 
         btnSaveProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveProfile();
+                // Check internet connection
+                ConnectivityManager cm = (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+                boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+                if(isConnected) {
+                    saveProfile();
+                }
+                else {
+                    Log.d("CONNECTION", String.valueOf(isConnected));
+                    Snackbar.make(editProfileLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
+                }
             }
         });
     }

@@ -5,6 +5,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,6 +35,8 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 public class ResultsFragment extends Fragment {
     private TextView tvRemainingRates;
@@ -101,10 +105,22 @@ public class ResultsFragment extends Fragment {
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-            //Start load task
-            LoadProfileTask.loadProfileTask(getContext(),
-                SessionManager.getInstance().getSessionToken(),
-                ConstantValues.ACTION_REFRESH_RESULTS);
+            // Check internet connection
+            ConnectivityManager cm = (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+            boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+            if(isConnected){
+                //Start load task
+                LoadProfileTask.loadProfileTask(getContext(),
+                        SessionManager.getInstance().getSessionToken(),
+                        ConstantValues.ACTION_REFRESH_RESULTS);
+            }
+            else {
+                Snackbar.make(swipeLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
+                Log.d("CONNECTION", String.valueOf(isConnected));
+                swipeLayout.setRefreshing(false);
+            }
+
             }
         });
 
