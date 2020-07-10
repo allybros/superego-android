@@ -23,8 +23,8 @@ import org.json.JSONException;
 public class SearchTask {
     /**
      * The function sends a request for searching user. After that broadcasts the response.
-     * @param context
-     * @param query
+     * @param context   required to build request and send Broadcast
+     * @param query     required for searching from server
      */
     public static void searchTask(final Context context, final String query) {
         RequestQueue queue = Volley.newRequestQueue(context);
