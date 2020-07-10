@@ -174,8 +174,8 @@ public class UserPageActivity extends AppCompatActivity {
         //Disable all navigation Items
         for (BottomNavigationItemView navItem: navigationItems) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                navItem.setTextColor(ColorStateList.valueOf(getColor(R.color.grey)));
-                navItem.setIconTintList(ColorStateList.valueOf(getColor(R.color.grey)));
+                navItem.setTextColor(ColorStateList.valueOf(getColor(R.color.Gray)));
+                navItem.setIconTintList(ColorStateList.valueOf(getColor(R.color.Gray)));
             }
             navItem.setChecked(false);
         }

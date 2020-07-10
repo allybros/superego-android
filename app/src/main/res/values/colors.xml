@@ -4,30 +4,13 @@
     <color name="colorPrimary">#25324D</color>
     <color name="colorPrimaryDark">#1C2331</color>
     <color name="colorAccent">#FFFFFF</color>
-    <color name="Blue">#C3020E77</color>
-    <color name="OpacityYellow">#4afcdb73</color>
-    <color name="loginScreenBottomComponentColor">#908b658b</color>
-    <color name="bottomComponentColor">#b70216c7</color>
     <color name="Black">#000000</color>
-    <color name="EditTextColor1">#DD540492</color>
-    <color name="EditTextColor2">#C38420CF</color>
-    <color name="ButtonColorSignUp">#41DBA2FF</color>
+    <color name="Gray">#808080</color>
     <color name="White">#ffffff</color>
-    <color name="loginScreenButtonColor">#b0ff3b0a</color>
-    <color name="editText">#6a1b9a</color>
-    <color name="trans">#00000000</color>
+    <color name="transparent">#00000000</color>
+
+    <!--Component Colors-->
     <color name="bgBottomNavigation">#25324D</color>
-    <color name="buttonPublishColor">#0048AF</color>
-    <color name="buttonCopyColor">#5400BB</color>
-    <color name="buttonNewTestColor">#00B409</color>
-    <color name="buttonLoginScreen">#9933CC</color>
-    <color name="logoColor">#1D2331</color>
-    <color name="logoFilter">#CE1D2331</color>
-    <color name="grey">#A3A3A3</color>
-    <color name="grey2">#FCFCFC</color>
-    <color name="newBlue">#C30007FF</color>
-    <color name="WhiteOpacity">#52FFFFFF</color>
-    <color name="loginScreenBlack">#46000000</color>
     <color name="fragmentBackground">#f9f9f9</color>
 
     <!--Brand Buttons Color-->
@@ -69,4 +52,6 @@
     <color name="green1">#06CF09</color>
     <color name="green2">#A8E7A8</color>
     <color name="orange">#FF7700</color>
+
+
 </resources>
