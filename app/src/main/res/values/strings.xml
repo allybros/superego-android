@@ -1,10 +1,10 @@
 <resources>
     <!--Constants-->
-    <string name="app_name">insightof.me</string>
-    <string name="facebook_app_id">278557299968701</string>
-    <string name="fb_login_protocol_scheme">fb278557299968701</string>
-    <string name="web_root">insightof.me</string>
-    <string name="GOOGLE_CLIENT_ID">878431533810-k60n0juqnidet1p2pvi2rv6itltmoej4.apps.googleusercontent.com</string>
+    <string name="app_name" translatable="false">insightof.me</string>
+    <string name="facebook_app_id" translatable="false">278557299968701</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb278557299968701</string>
+    <string name="web_root" translatable="false">insightof.me</string>
+    <string name="GOOGLE_CLIENT_ID" translatable="false">878431533810-k60n0juqnidet1p2pvi2rv6itltmoej4.apps.googleusercontent.com</string>
 
     <!--Labels-->
     <string name="activity_label_profile">Profil</string>
@@ -91,21 +91,13 @@
     <!--Contents:
     Contents fills text fills or something like that-->
     <string name="body_share_test">Beni nasıl görüyorsun? Kişilik özelliklerimi kimliğini gizleyerek değerlendir. %1$s</string>
-    <string name="body_share_results">Arkadaşlarıma göre kişilik özelliklerim;\n%1$s\nSen de beni değerlendir. %2$s</string>
-    <string name="content_about">
-        insightof.me arkadaşlarınızın kişiliğinizle ilgili değerlendirme yapabileceği
-        bir sosyal platformdur. insightof.me ile oluşturacağınız kendinize özel testiniz
-        sayesinde, arkadaşlarınız sizi farklı kişilik özellikleri üzerinden oylarlar.
-        insightof.me bütün bu değerlendirmelerin ortalama değerlerini hesaplayarak, sizi
-        en çok betimleyen altı özelliğinizi öne çıkarır. Bu özellikler arkadaşlarınızın
-        hakkınızda düşündükleri ve çevreniz tarafından nasıl gözlemlendiğiniz ile
-        ilgili ipuçları sunabilir.\n
-    </string>
-    <string name="info_not_rated"><b>Henüz ilk sonucu görüntülemek için yeterli değerlendirmeye sahip değilsin.</b>\nYeterli değerlendirme sayısına ulaştığında kişilik özelliklerini görebileceksin.</string>
+    <string name="body_share_results">Arkadaşlarıma göre kişilik özelliklerim; %1$s Sen de beni değerlendir. %2$s</string>
+    <string name="content_about">"insightof.me arkadaşlarınızın kişiliğinizle ilgili değerlendirme yapabileceği bir sosyal platformdur. insightof.me ile oluşturacağınız kendinize özel testiniz sayesinde, arkadaşlarınız sizi farklı kişilik özellikleri üzerinden oylarlar. insightof.me bütün bu değerlendirmelerin ortalama değerlerini hesaplayarak, sizi en çok betimleyen altı özelliğinizi öne çıkarır. Bu özellikler arkadaşlarınızın hakkınızda düşündükleri ve çevreniz tarafından nasıl gözlemlendiğiniz ile ilgili ipuçları sunabilir. "</string>
+    <string name="info_not_rated"><b>Henüz ilk sonucu görüntülemek için yeterli değerlendirmeye sahip değilsin.</b> Yeterli değerlendirme sayısına ulaştığında kişilik özelliklerini görebileceksin.</string>
     <string name="info_ads_desc">Reklam izleyerek ego puanı kazanabilirsin. Ego puanın arttıkça sonuçları görmek için gerekli değerlendirme sayın azalacak.</string>
-    <string name="info_no_test">Henüz test oluşturmamışsın. Arkadaşlarının seni değerlendirebilmesi için önce bir test oluşturmalısın.\nYeterli sayıda değerlendirmeye ulaştığında kişilik özelliklerini görebileceksin</string>
-    <string name="info_share_test">Arkadaşlarının seni değerlendirebilmeleri için testini arkadaşların ile paylaşmalısın.\nDeğerlendirme sayın arttıkça daha detaylı sonuçlar görebileceksin.</string>
-    <string name="info_partial_rates"><b>Tüm sonuçlarını görmek için yeterli değerlendirme sayısına sahip değilsin.</b>\nArkadaşlarının değerlendirmesini beklemek istemiyorsan reklam izleyerek Ego puanı kazanabilirsin.</string>
+    <string name="info_no_test">Henüz test oluşturmamışsın. Arkadaşlarının seni değerlendirebilmesi için önce bir test oluşturmalısın. Yeterli sayıda değerlendirmeye ulaştığında kişilik özelliklerini görebileceksin</string>
+    <string name="info_share_test">Arkadaşlarının seni değerlendirebilmeleri için testini arkadaşların ile paylaşmalısın. Değerlendirme sayın arttıkça daha detaylı sonuçlar görebileceksin.</string>
+    <string name="info_partial_rates"><b>Tüm sonuçlarını görmek için yeterli değerlendirme sayısına sahip değilsin.</b> Arkadaşlarının değerlendirmesini beklemek istemiyorsan reklam izleyerek Ego puanı kazanabilirsin.</string>
     <string name="info_title_waiting_rates">Değerlendirilmelerin Bekleniyor...</string>
     <string name="header_register">Arkadaşlarının gözünden\nkendini gör.</string>
 
@@ -124,14 +116,14 @@
     <string name="option_licenses">Lisans Bilgileri</string>
     <string name="option_licenses_desc">Yararlandığımız yazılım lisanslarını incele.</string>
     <string name="option_sign_out_desc">Geçerli oturumunu sonlandır.</string>
-    <string name="with_version_from">v.0.5 (Beta) From Ally Bros Corporation</string>
+    <string name="with_version_from" translatable="false">v.0.5 (Beta) From Ally Bros Corporation</string>
 
     <string name="call_or_connect_via">ya da bağlan;</string>
     <string name="desc_call_register">Hesabın Yok Mu? | <font color='#2A71AC'>Yeni Hesap Oluştur</font></string>
 
     <!--TODO: Bunların kullanımı için kategori ismi oluşturulmalı-->
     <string name="rated">\ Değerlendirme</string>
-    <string name="credit">\ Ego</string>
+    <string name="credit" translatable="false">\ Ego</string>
     <string name="error_code">Kod: </string>
     <string name="remaining_credits">Kalan Değerlendirme: %1$s</string>
     <string name="default_bio_profile">Kendini tanıtan kısa bir yazı yazabilirsin.</string>
