@@ -38,12 +38,15 @@ public class SplashActivity extends AppCompatActivity {
     private BroadcastReceiver loadProfileRegister;
     private BroadcastReceiver loginReceiver;
 
+    boolean loadTaskLock = false;
+    boolean getTraitsLock = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         //TODO: Fix empty traits issue
-        SplashActivity.getAllTraits(getApplicationContext());
+        getAllTraits(getApplicationContext());
         setupReceivers();
 
         SessionManager.getInstance().readInfo(getApplicationContext());
@@ -65,13 +68,8 @@ public class SplashActivity extends AppCompatActivity {
                 switch (status) {
                     case ErrorCodes.SUCCESS:
                         // Profile loaded successfully, current user must be set on SessionManager
-                        LocalBroadcastManager.getInstance(context).unregisterReceiver(loadProfileRegister);
-                        LocalBroadcastManager.getInstance(context).unregisterReceiver(loginReceiver);
-
-                        Intent i = new Intent(SplashActivity.this, UserPageActivity.class);
-                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(i);
-                        finish();
+                        loadTaskLock = true;
+                        notifyTaskComplete();
                         break;
 
                     case ErrorCodes.SESSION_EXPIRED:
@@ -157,6 +155,22 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     /**
+     * Checks if both task are completed. If both of them completed, starts UserPageActivity
+     */
+    private void notifyTaskComplete(){
+        if (loadTaskLock && getTraitsLock) {
+            // Both task are completed
+            LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(loadProfileRegister);
+            LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(loginReceiver);
+
+            Intent i = new Intent(SplashActivity.this, UserPageActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(i);
+            finish();
+        }
+    }
+
+    /**
      * Starts login activity and finished this activity
      */
     private void returnLoginActivity(){
@@ -173,7 +187,7 @@ public class SplashActivity extends AppCompatActivity {
      * Sets all trait list
      * @param context    require for sending request
      */
-    public static void getAllTraits(final Context context){
+    public void getAllTraits(final Context context){
         RequestQueue queue = Volley.newRequestQueue(context);
         final ArrayList<Trait> traits=new ArrayList<>();
 
@@ -181,7 +195,6 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
 //                Log.d("getAllTraits",response.toString());
-
                 try {
                     JSONObject jsonObject=new JSONObject(response);
 
@@ -197,6 +210,9 @@ public class SplashActivity extends AppCompatActivity {
                         negativeIcon=iter.getString("negative_icon");
                         traits.add(new Trait(traitNo,positiveName,negativeName,positiveIcon,negativeIcon));
                     }
+                    getTraitsLock = true;
+                    notifyTaskComplete();
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -204,7 +220,8 @@ public class SplashActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                getTraitsLock = true;
+                notifyTaskComplete();
             }
         });
         queue.add(jsonRequest);
