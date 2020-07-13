@@ -80,7 +80,7 @@
     <string name="alert_sign_up">Create New Account</string>
     <string name="header_register">Insight of You From Your Friends</string>
     <string name="login_text_header">Learn Your Traits</string>
-    <string name="login_text_sub">Reveal your true personality by asking your friends</string>
+    <string name="login_text_sub">Reveal your true personality by\nasking your friends</string>
     <string name="default_bio_search">insightof.me user.</string>
     <string name="info_search">Search your friends by username.</string>
     <string name="info_title_waiting_rates">Waiting Your Rates...</string>

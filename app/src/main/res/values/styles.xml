@@ -49,7 +49,7 @@
     </style>
 
     <style name="SegoEditText">
-        <item name="android:textColor">@color/materialDeepPurple</item>
+        <item name="android:textColor">@color/Gray</item>
         <item name="android:padding">0dp</item>
     </style>
 
