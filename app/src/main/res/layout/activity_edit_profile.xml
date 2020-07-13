@@ -116,17 +116,15 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etInformation"
-                android:textColor="@color/Black"
+                android:lines="3"
+                android:textColor="@color/Gray"
+                android:inputType="textMultiLine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textMultiLine"
-                android:lines="3"
-                android:overScrollMode="always"
+                android:overScrollMode="ifContentScrolls"
                 android:scrollbarStyle="insideInset"
                 android:scrollbars="vertical"
-                android:scrollHorizontally="false"
-
-                />
+                android:scrollHorizontally="false"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button

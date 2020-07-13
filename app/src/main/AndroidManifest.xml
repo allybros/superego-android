@@ -27,6 +27,7 @@
         <activity
             android:name="com.allybros.superego.activity.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
         <activity
@@ -39,6 +40,7 @@
             android:name="com.allybros.superego.activity.RegisterActivity"
             android:label="@string/activity_label_register"
             android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
 
@@ -63,7 +65,6 @@
             android:name="com.allybros.superego.activity.WebViewActivity"
             android:parentActivityName=".activity.UserPageActivity"
             android:theme="@style/AppTheme.TransparentBackground" />
-
 
         <meta-data
             android:name="preloaded_fonts"
