@@ -190,6 +190,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
 
+        //Registers Receivers
         LocalBroadcastManager.getInstance(this).registerReceiver(loginReceiver, new IntentFilter(ConstantValues.ACTION_LOGIN));
         LocalBroadcastManager.getInstance(this).registerReceiver(loginSocialMediaReceiver, new IntentFilter(ConstantValues.ACTION_SOCIAL_MEDIA_LOGIN));
     }

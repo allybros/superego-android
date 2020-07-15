@@ -45,7 +45,6 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        //TODO: Fix empty traits issue
         getAllTraits(getApplicationContext());
         setupReceivers();
 
@@ -157,7 +156,7 @@ public class SplashActivity extends AppCompatActivity {
     /**
      * Checks if both task are completed. If both of them completed, starts UserPageActivity
      */
-    private void notifyTaskComplete(){
+    private synchronized void notifyTaskComplete(){
         if (loadTaskLock && getTraitsLock) {
             // Both task are completed
             LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(loadProfileRegister);
