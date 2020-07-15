@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -53,29 +54,6 @@ public class ResultsFragment extends Fragment {
 
     public ResultsFragment() {
         this.currentUser = SessionManager.getInstance().getUser();
-        //Set up refresh receiver
-        resultsRefreshReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                int status = intent.getIntExtra("status",0);
-                swipeLayout.setRefreshing(false);
-
-                //Update fragments
-                UserPageActivity pageActivity = (UserPageActivity) getActivity();
-                if (pageActivity != null) pageActivity.refreshFragments(1);
-
-                if (status == ErrorCodes.SUCCESS) {
-                    Log.d("Profile refresh", "Success");
-                    swipeLayout.setRefreshing(false);
-                } else {
-                    swipeLayout.setRefreshing(false); //Last
-                    Toast.makeText(getContext(), getContext().getString(R.string.error_no_connection), Toast.LENGTH_SHORT).show();
-                }
-            }
-        };
-        //TODO: Replace when new API package is developed
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(resultsRefreshReceiver,
-                new IntentFilter(ConstantValues.ACTION_REFRESH_RESULTS));
     }
 
     @Override
@@ -99,62 +77,9 @@ public class ResultsFragment extends Fragment {
     @SuppressLint("StringFormatMatches")
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        //Setup refresher
-        swipeLayout = getView().findViewById(R.id.swipeLayout);
-        if (swipeLayout != null)
-        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-            // Check internet connection
-            ConnectivityManager cm = (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-            boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-            if(isConnected){
-                //Start load task
-                LoadProfileTask.loadProfileTask(getContext(),
-                        SessionManager.getInstance().getSessionToken(),
-                        ConstantValues.ACTION_REFRESH_RESULTS);
-            }
-            else {
-                Snackbar.make(swipeLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
-                Log.d("CONNECTION", String.valueOf(isConnected));
-                swipeLayout.setRefreshing(false);
-            }
-
-            }
-        });
-
-        //Populate views depending on current state
-        switch (this.getState()) {
-            //One result
-            case PARTIAL:
-                //Get views
-                listViewTraits = getView().findViewById(R.id.listViewPartialTraits);
-                tvRemainingRates = getView().findViewById(R.id.tvRemainingRatesPartial);
-                //Populate views
-                int remainingRates = 10 - (currentUser.getRated() + currentUser.getCredit());
-                tvRemainingRates.setText(getString(R.string.remaining_credits, remainingRates));
-                listViewTraits.setAdapter( new ScoresAdapter(getActivity(), currentUser.getScores()) );
-                break;
-
-            //All results
-            case COMPLETE:
-                listViewTraits = getView().findViewById(R.id.listViewTraits);
-                listViewTraits.setAdapter( new ScoresAdapter(getActivity(), currentUser.getScores()) );
-                break;
-
-            //No results
-            default:
-                //Get views
-                tvRemainingRates = getView().findViewById(R.id.tvRatedResultPage);
-                //Populate views
-                remainingRates = 5 - currentUser.getRated();
-                tvRemainingRates.setText( getString(R.string.remaining_credits, remainingRates) );
-                prepareBannerAd();
-                break;
-        }
-
         super.onActivityCreated(savedInstanceState);
+        setupReceiver();
+        setupView();
     }
 
     private State getState(){
@@ -217,6 +142,117 @@ public class ResultsFragment extends Fragment {
                 Log.d(adTag,"User returned from ad.");
             }
         });
+    }
+
+
+
+    //Set up view objects
+    @SuppressLint("StringFormatMatches")
+    private void setupView(){
+        //Setup refresher
+        swipeLayout = getView().findViewById(R.id.swipeLayout);
+        if (swipeLayout != null)
+            swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    // Check internet connection
+                    ConnectivityManager cm = (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                    NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+                    boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+                    if(isConnected){
+                        //Start load task
+                        LoadProfileTask.loadProfileTask(getContext(),
+                                SessionManager.getInstance().getSessionToken(),
+                                ConstantValues.ACTION_REFRESH_RESULTS);
+                    }
+                    else {
+                        Snackbar.make(swipeLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
+                        Log.d("CONNECTION", String.valueOf(isConnected));
+                        swipeLayout.setRefreshing(false);
+                    }
+
+                }
+            });
+
+        //Populate views depending on current state
+        switch (this.getState()) {
+            //One result
+            case PARTIAL:
+                //Get views
+                listViewTraits = getView().findViewById(R.id.listViewPartialTraits);
+                tvRemainingRates = getView().findViewById(R.id.tvRemainingRatesPartial);
+                //Populate views
+                int remainingRates = 10 - (currentUser.getRated() + currentUser.getCredit());
+                tvRemainingRates.setText(getString(R.string.remaining_credits, remainingRates));
+                listViewTraits.setAdapter( new ScoresAdapter(getActivity(), currentUser.getScores()) );
+                break;
+
+            //All results
+            case COMPLETE:
+                listViewTraits = getView().findViewById(R.id.listViewTraits);
+                listViewTraits.setAdapter( new ScoresAdapter(getActivity(), currentUser.getScores()) );
+                break;
+
+            //No results
+            default:
+                //Get views
+                tvRemainingRates = getView().findViewById(R.id.tvRatedResultPage);
+                //Populate views
+                remainingRates = 5 - currentUser.getRated();
+                tvRemainingRates.setText( getString(R.string.remaining_credits, remainingRates) );
+                prepareBannerAd();
+                break;
+        }
+    }
+
+    //Set up refresh receiver
+    private void setupReceiver(){
+        resultsRefreshReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                int status = intent.getIntExtra("status",0);
+                swipeLayout.setRefreshing(false);
+
+                //Update fragments
+                UserPageActivity pageActivity = (UserPageActivity) getActivity();
+                if (pageActivity != null) pageActivity.refreshFragments(1);
+
+                if (status == ErrorCodes.SUCCESS) {
+                    Log.d("Profile refresh", "Success");
+                    swipeLayout.setRefreshing(false);
+                } else {
+                    swipeLayout.setRefreshing(false); //Last
+                    Toast.makeText(getContext(), getContext().getString(R.string.error_no_connection), Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+        //TODO: Replace when new API package is developed
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(resultsRefreshReceiver,new IntentFilter(ConstantValues.ACTION_REFRESH_RESULTS));
+    }
+
+    /**
+     *  Detects orientation changing and resets view objects and their controller.
+     * @param newConfig     represents configs that are current situation of phone. Used for detecting orientation config
+     */
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Checks the orientation of the screen
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            //Delete old receivers
+            LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(resultsRefreshReceiver);
+            //Reset all view object and their controllers
+            setupReceiver();
+            setupView();
+            prepareBannerAd();
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            //Delete old receivers
+            LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(resultsRefreshReceiver);
+            //Reset all view object and their controllers
+            setupReceiver();
+            setupView();
+            prepareBannerAd();
+        }
     }
 
     @Override
