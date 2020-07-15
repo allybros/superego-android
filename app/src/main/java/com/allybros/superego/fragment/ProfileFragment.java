@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -70,7 +71,35 @@ public class ProfileFragment extends Fragment {
     //Current session
     private SessionManager sessionManager = SessionManager.getInstance();
 
-    public ProfileFragment() {
+    public ProfileFragment() {}
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_profile, container, false);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setupReceivers();
+        initProfileCard();
+        initButtons();
+        initInfoCard();
+        prepareRewardedAd();
+        prepareBannerAd();
+        initLayout();
+    }
+
+    /**
+     * Does configure receivers
+     */
+    private void setupReceivers(){
         // Set Up receivers
         refreshReceiver = new BroadcastReceiver() {
             @Override
@@ -104,9 +133,9 @@ public class ProfileFragment extends Fragment {
                         builder.setMessage(R.string.error_no_connection);
                         builder.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                            Intent intent = new Intent(getContext(), LoginActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
+                                Intent intent = new Intent(getContext(), LoginActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
                             }
                         });
                         builder.show();
@@ -137,49 +166,9 @@ public class ProfileFragment extends Fragment {
             }
         };
 
+        //Registers Receivers
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(refreshReceiver, new IntentFilter(ConstantValues.ACTION_REFRESH_PROFILE));
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(rewardReceiver, new IntentFilter(ConstantValues.ACTION_EARNED_REWARD));
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_profile, container, false);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        initProfileCard();
-        initButtons();
-        initInfoCard();
-        prepareRewardedAd();
-        prepareBannerAd();
-
-        //Setup refresh layout
-        profileSwipeLayout = getView().findViewById(R.id.profileSwipeLayout);
-        profileSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                // Check internet connection
-                ConnectivityManager cm = (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-                NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-                boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-                if(isConnected) {
-                    LoadProfileTask.loadProfileTask(getContext(), sessionManager.getSessionToken(), ConstantValues.ACTION_REFRESH_PROFILE);
-                }
-                else {
-                    Log.d("CONNECTION", String.valueOf(isConnected));
-                    Snackbar.make(profileSwipeLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
-                    profileSwipeLayout.setRefreshing(false);
-                }
-            }
-        });
     }
 
     @SuppressLint("DefaultLocale")
@@ -312,6 +301,31 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 shareTest();
+            }
+        });
+    }
+
+    /**
+     * Initializes, configure refresh layout.
+     */
+    private void initLayout(){
+        //Setup refresh layout
+        profileSwipeLayout = getView().findViewById(R.id.profileSwipeLayout);
+        profileSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Check internet connection
+                ConnectivityManager cm = (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+                boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+                if(isConnected) {
+                    LoadProfileTask.loadProfileTask(getContext(), sessionManager.getSessionToken(), ConstantValues.ACTION_REFRESH_PROFILE);
+                }
+                else {
+                    Log.d("CONNECTION", String.valueOf(isConnected));
+                    Snackbar.make(profileSwipeLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
+                    profileSwipeLayout.setRefreshing(false);
+                }
             }
         });
     }
@@ -457,6 +471,42 @@ public class ProfileFragment extends Fragment {
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
         startActivity(Intent.createChooser(sharingIntent, getString(R.string.action_btn_share_test)));
     }
+
+    /**
+     *  Detects orientation changing and resets view objects and their controller.
+     * @param newConfig     represents configs that are current situation of phone. Used for detecting orientation config
+     */
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Checks the orientation of the screen
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            //Delete old receivers
+            LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(refreshReceiver);
+            LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(rewardReceiver);
+            //Reset all view object and their controllers
+            setupReceivers();
+            initProfileCard();
+            initButtons();
+            initInfoCard();
+            prepareRewardedAd();
+            prepareBannerAd();
+            initLayout();
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            //Delete old receivers
+            LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(refreshReceiver);
+            LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(rewardReceiver);
+            //Reset all view object and their controllers
+            setupReceivers();
+            initProfileCard();
+            initButtons();
+            initInfoCard();
+            prepareRewardedAd();
+            prepareBannerAd();
+            initLayout();
+        }
+    }
+
 
     @Override
     public void onDestroy() {
