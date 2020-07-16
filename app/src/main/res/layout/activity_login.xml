@@ -174,7 +174,7 @@
             android:layout_marginTop="12dp"
             android:gravity="center"
             android:text="@string/call_or_connect_via"
-            android:textColor="@color/Gray"
+            android:textColor="@color/fragmentBackground"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
