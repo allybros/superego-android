@@ -197,10 +197,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private void setupUi(){
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            tvRegister.setText(Html.fromHtml(getResources().getString(R.string.desc_call_register), Html.FROM_HTML_MODE_COMPACT));
-        } else {
-            tvRegister.setText(Html.fromHtml(getResources().getString(R.string.desc_call_register)));
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            tvRegister.setText(Html.fromHtml(getResources().getString(R.string.desc_call_register)), TextView.BufferType.SPANNABLE);
         }
 
         btLogin.setOnClickListener(new View.OnClickListener() {
