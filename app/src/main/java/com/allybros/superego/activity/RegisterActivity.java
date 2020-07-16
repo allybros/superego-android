@@ -145,13 +145,13 @@ public class RegisterActivity extends AppCompatActivity {
                 boolean conditions = checkBoxAgreement.isChecked();
 
                 //Validate fields
-                if (usernameInput.isEmpty()) inputLayoutUsername.setError("Kullanıcı adı doldurulmalıdır");
+                if (usernameInput.isEmpty()) inputLayoutUsername.setError(getResources().getString(R.string.error_username_empty));
 
-                if (emailInput.isEmpty()) inputLayoutEmail.setError("E posta alanı doldurulmalıdır");
+                if (emailInput.isEmpty()) inputLayoutEmail.setError(getResources().getString(R.string.error_email_empty));
 
-                if (passwordInput.isEmpty()) inputLayoutPassword.setError("Parola alanı doldurulmalıdır");
+                if (passwordInput.isEmpty()) inputLayoutPassword.setError(getResources().getString(R.string.error_password_empty));
 
-                if (!conditions) checkBoxAgreement.setError("Kabul et!");
+                if (!conditions) checkBoxAgreement.setError(getResources().getString(R.string.error_conditions_not_accepted));
 
                 if (!usernameInput.isEmpty()
                         && !emailInput.isEmpty()
