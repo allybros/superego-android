@@ -24,16 +24,16 @@ android {
         testImplementation 'junit:junit:4.12'
         androidTestImplementation 'androidx.test:core:1.2.0'
         androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-        androidTestImplementation 'androidx.test:runner:1.3.0-beta02'
+        androidTestImplementation 'androidx.test:runner:1.3.0-rc01'
         implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
         implementation 'androidx.appcompat:appcompat:1.3.0-alpha01'
 
 
-        implementation 'com.google.android.gms:play-services-auth:18.0.0'
-        implementation 'com.google.android.gms:play-services-ads:19.1.0'
+        implementation 'com.google.android.gms:play-services-auth:18.1.0'
+        implementation 'com.google.android.gms:play-services-ads:19.2.0'
 
         //Third part
-        api 'com.google.android.material:material:1.2.0-alpha06'
+        api 'com.google.android.material:material:1.3.0-alpha01'
         implementation 'com.android.volley:volley:1.1.1'
         implementation 'com.github.2coffees1team:GlideToVectorYou:v1.2.0'
         implementation 'com.github.VladimirWrites:Lemniscate:2.0.2'
