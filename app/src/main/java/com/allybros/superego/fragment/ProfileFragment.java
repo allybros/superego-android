@@ -221,7 +221,18 @@ public class ProfileFragment extends Fragment {
                                 Log.d("CONNECTION", String.valueOf(isConnected));
                             }
                         } else {
-                            Log.d("TAG", "The rewarded ad wasn't loaded yet.");
+                            // Show error dialog
+                            new AlertDialog.Builder(getActivity(), R.style.SegoAlertDialog)
+                                    .setTitle("insightof.me")
+                                    .setMessage(R.string.info_reward_ad_not_loaded)
+                                    .setPositiveButton(getString(R.string.action_ok), new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    })
+                                    .show();
+                            Log.d("EgoRewardAd", "The rewarded ad wasn't loaded yet.");
                         }
                     }
                 });
@@ -390,7 +401,7 @@ public class ProfileFragment extends Fragment {
      * Initializes and loads rewarded video ad.
      */
     private void prepareRewardedAd(){
-        this.rewardedAd = new RewardedAd(getActivity(), ConstantValues.ADMOB_ADD_INTERFACE_ID);
+        this.rewardedAd = new RewardedAd(getActivity(), getResources().getString(R.string.admob_ad_interface));
         final RewardedAdLoadCallback adLoadCallback = new RewardedAdLoadCallback() {
             @Override
             public void onRewardedAdLoaded() {
@@ -480,19 +491,8 @@ public class ProfileFragment extends Fragment {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         // Checks the orientation of the screen
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            //Delete old receivers
-            LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(refreshReceiver);
-            LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(rewardReceiver);
-            //Reset all view object and their controllers
-            setupReceivers();
-            initProfileCard();
-            initButtons();
-            initInfoCard();
-            prepareRewardedAd();
-            prepareBannerAd();
-            initLayout();
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE
+            || newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
             //Delete old receivers
             LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(refreshReceiver);
             LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(rewardReceiver);

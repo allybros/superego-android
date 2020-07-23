@@ -89,10 +89,10 @@
         <!--Google ads-->
         <meta-data
             android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" /> <!-- Ally bros admob id:ca-app-pub-5360761814312438~5777371170 -->
+            android:resource="@array/preloaded_fonts" />
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713" />
+            android:value="ca-app-pub-2623014329613137~3784090001" />
     </application>
 
 </manifest>
