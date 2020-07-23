@@ -133,5 +133,7 @@
     <string name="alert_title_end_session">Oturumu Sonlandır</string>
     <string name="alert_context_end_session">Geçerli oturmunu sonlandırmak istediğine emin misin?</string>
     <string name="alert_sign_up">Yeni Hesap Oluştur</string>
+    <string name="error_google_signin">Google hesabınla giriş yaparken bir sorunla karşılaştık. Lütfen tekrar dene.</string>
+    <string name="info_reward_ad_not_loaded">Şuan için sana gösterebileceğimiz uygun bir reklam bulunmuyor. Daha sonra tekrar deneyebilirsin.</string>
 
 </resources>

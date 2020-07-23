@@ -4,13 +4,12 @@ public class ConstantValues {
 
     //Const variables
     public static final String RECAPTCHA_SKIP = "d860b038b50ddc9c137ce15fdc93b738";
-    public static final String ADMOB_ADD_INTERFACE_ID = "ca-app-pub-3940256099942544/5224354917";//TODO: ally bros-->ca-app-pub-5360761814312438/1782285846
+    public static final String ADMOB_ADD_INTERFACE_ID = "ca-app-pub-2623014329613137/2914518004";
     public static final int RATED_LIMIT = 10;
     public static final String USER_INFORMATION_PREF="USER_INFORMATION_PREF";  //Shared preferences Tag
     public static final int MAX_FILE_SIZE = 33177600;
 
     //Links
-
     public static final String API_ROOT =  "https://api.insightof.me/";
     public static final String AVATAR_URL = API_ROOT + "images.php?get=";
     public static final String TEST_LINK_ROOT = "https://insightof.me/";

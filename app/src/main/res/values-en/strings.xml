@@ -93,4 +93,6 @@
     <string name="content_about">insightof.me is a social platform where your friends can rate your personality. Thanks to your unique test with insightof.me, your friends will rate you on different personality traits. insightof.me highlights the six features that describe you most, by calculating the average values ​​of all these rates. These features can provide clues about what your friends think about you and how you are observed by your environment.</string>
     <string name="info_not_rated"><b> You don\'t have enough rates to see the first result yet. </b> Once you have reached the enough number of rates, you will be able to see personality traits.</string>
     <string name="error_conditions_not_accepted">You need to accept terms and conditions.</string>
+    <string name="error_google_signin">An error occurred while signing in with your Google account. Please try again.</string>
+    <string name="info_reward_ad_not_loaded">There is not an available ad right now. You can try again later.</string>
 </resources>

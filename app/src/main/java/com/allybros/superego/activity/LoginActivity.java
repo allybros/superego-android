@@ -23,6 +23,7 @@ import com.allybros.superego.api.LoginTask;
 import com.allybros.superego.api.SocialMediaSignInTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
+import com.allybros.superego.util.SessionManager;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.facebook.AccessToken;
@@ -304,6 +305,18 @@ public class LoginActivity extends AppCompatActivity {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.w("GoogleSignInError", "signInResult:failed code=" + e.getStatusCode());
+
+            // Show error dialog
+            new AlertDialog.Builder(LoginActivity.this, R.style.SegoAlertDialog)
+                .setTitle("insightof.me")
+                .setMessage(R.string.error_google_signin)
+                .setPositiveButton(getString(R.string.action_ok), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
         }
     }
 
