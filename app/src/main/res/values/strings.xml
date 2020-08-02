@@ -1,10 +1,7 @@
 <resources>
     <!--Constants-->
     <string name="app_name" translatable="false">insightof.me</string>
-    <string name="facebook_app_id" translatable="false">165834514837193</string>
-    <string name="fb_login_protocol_scheme" translatable="false">fb165834514837193</string>
     <string name="web_root" translatable="false">insightof.me</string>
-    <string name="GOOGLE_CLIENT_ID" translatable="false">199827498051-0ambd7a242u7o680kdq52a2ai2kegc2i.apps.googleusercontent.com</string>
 
     <!--Labels-->
     <string name="activity_label_profile">Profil</string>

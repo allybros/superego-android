@@ -7,6 +7,7 @@ import android.util.Log;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.allybros.superego.R;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.util.SessionManager;
@@ -82,7 +83,7 @@ public class LoginTask extends Activity {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("uid", uid);
                 params.put("password", password);
-                params.put("g-recaptcha-response", ConstantValues.RECAPTCHA_SKIP);
+                params.put("g-recaptcha-response", context.getResources().getString(R.string.recaptcha_skip));
                 return params;
             }
         };
