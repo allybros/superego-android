@@ -289,6 +289,7 @@ public class LoginActivity extends AppCompatActivity {
         if (requestCode == RC_SIGN_IN) {
             // The Task returned from this call is always completed, no need to attach
             // a listener.
+            setProgress(true);
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
         }
@@ -305,7 +306,7 @@ public class LoginActivity extends AppCompatActivity {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.w("GoogleSignInError", "signInResult:failed code=" + e.getStatusCode());
-
+            setProgress(false);
             // Show error dialog
             new AlertDialog.Builder(LoginActivity.this, R.style.SegoAlertDialog)
                 .setTitle("insightof.me")

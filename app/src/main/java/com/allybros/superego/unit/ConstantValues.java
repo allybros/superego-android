@@ -3,9 +3,6 @@ package com.allybros.superego.unit;
 public class ConstantValues {
 
     //Const variables
-    public static final String RECAPTCHA_SKIP = "d860b038b50ddc9c137ce15fdc93b738";
-    public static final String ADMOB_ADD_INTERFACE_ID = "ca-app-pub-2623014329613137/2914518004";
-    public static final int RATED_LIMIT = 10;
     public static final String USER_INFORMATION_PREF="USER_INFORMATION_PREF";  //Shared preferences Tag
     public static final int MAX_FILE_SIZE = 33177600;
 
