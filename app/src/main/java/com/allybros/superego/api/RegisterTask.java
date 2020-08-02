@@ -6,6 +6,7 @@ import android.util.Log;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.allybros.superego.R;
 import com.allybros.superego.activity.LoginActivity;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
@@ -69,7 +70,7 @@ public class RegisterTask {
                 params.put("email", email);
                 params.put("password", password);
                 params.put("conditions", String.valueOf(agreement));
-                params.put("g-recaptcha-response", ConstantValues.RECAPTCHA_SKIP);
+                params.put("g-recaptcha-response", context.getResources().getString(R.string.recaptcha_skip));
                 return params;
             }
         };
