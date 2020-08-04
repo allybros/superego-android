@@ -473,9 +473,13 @@ public class ProfileFragment extends Fragment {
         sharingIntent.setType("text/plain");
         ArrayList<Score> scores = sessionManager.getUser().getScores();
         StringBuilder resultsBuilder = new StringBuilder();
+        resultsBuilder.append("\n");
         for (int i = 0; i < scores.size(); i++) {
+            Score s = scores.get(i);
+            // If Ad placeholder skip Score object
+            if (s.getTraitNo() == -2016) continue;
             @SuppressLint("DefaultLocale")
-            String scoreLine = String.format("%d) %s\n", i+1, scores.get(i).getTraitName() );
+            String scoreLine = String.format("%d) %s\n", i+1, s.getTraitName() );
             resultsBuilder.append(scoreLine);
         }
         //TODO: Decouple test url from here

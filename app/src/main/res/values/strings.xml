@@ -91,7 +91,7 @@
     <!--Contents:
     Contents fills text fills or something like that-->
     <string name="body_share_test">Beni nasıl görüyorsun? Kişilik özelliklerimi kimliğini gizleyerek değerlendir. %1$s</string>
-    <string name="body_share_results">Arkadaşlarıma göre kişilik özelliklerim; %1$s Sen de beni değerlendir. %2$s</string>
+    <string name="body_share_results">Arkadaşlarıma göre kişilik özelliklerim; %1$sSen de beni değerlendir; %2$s</string>
     <string name="content_about">"insightof.me arkadaşlarınızın kişiliğinizle ilgili değerlendirme yapabileceği bir sosyal platformdur. insightof.me ile oluşturacağınız kendinize özel testiniz sayesinde, arkadaşlarınız sizi farklı kişilik özellikleri üzerinden oylarlar. insightof.me bütün bu değerlendirmelerin ortalama değerlerini hesaplayarak, sizi en çok betimleyen altı özelliğinizi öne çıkarır. Bu özellikler arkadaşlarınızın hakkınızda düşündükleri ve çevreniz tarafından nasıl gözlemlendiğiniz ile ilgili ipuçları sunabilir. "</string>
     <string name="info_not_rated"><b>Henüz ilk sonucu görüntülemek için yeterli değerlendirmeye sahip değilsin.</b> Yeterli değerlendirme sayısına ulaştığında kişilik özelliklerini görebileceksin.</string>
     <string name="info_ads_desc">Reklam izleyerek ego puanı kazanabilirsin. Ego puanın arttıkça sonuçları görmek için gerekli değerlendirme sayın azalacak.</string>
