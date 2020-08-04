@@ -417,7 +417,10 @@ public class ProfileFragment extends Fragment {
      * Initializes and loads rewarded video ad.
      */
     private void prepareRewardedAd(){
-        this.rewardedAd = new RewardedAd(getActivity(), getResources().getString(R.string.admob_ad_interface));
+        Context fragmentContext = getActivity();
+        if (fragmentContext==null) return;
+
+        this.rewardedAd = new RewardedAd(fragmentContext, getResources().getString(R.string.admob_ad_interface));
         final RewardedAdLoadCallback adLoadCallback = new RewardedAdLoadCallback() {
             @Override
             public void onRewardedAdLoaded() {

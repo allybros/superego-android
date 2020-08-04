@@ -67,7 +67,7 @@ public class SearchFragment extends Fragment {
                 String query = intent.getStringExtra("query");
                 String resultResponse = intent.getStringExtra("result");
 
-                if (!query.equals(etSearchUser.getText().toString())) {
+                if (etSearchUser != null && !query.equals(etSearchUser.getText().toString())) {
                     Log.d("Search Receiver", "Late response, skipping results");
                     return;
                 }
