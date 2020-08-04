@@ -5,7 +5,7 @@
     <string name="activity_label_search">Find Friends</string>
     <string name="activity_label_register">Sign Up</string>
     <string name="activity_label_new_test">Create Test</string>
-    <string name="activity_label_rate_user">Rate %1$</string>
+    <string name="activity_label_rate_user">Rate %1$s</string>
     <string name="activity_label_edit_profile">Edit Profile</string>
     <string name="activity_label_change_password">Reset Password</string>
     <string name="activity_label_options">Options</string>

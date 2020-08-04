@@ -1,0 +1,136 @@
+<resources>
+    <!--Constants-->
+    <string name="app_name" translatable="false">insightof.me</string>
+    <string name="web_root" translatable="false">insightof.me</string>
+
+    <!--Labels-->
+    <string name="activity_label_profile">Profil</string>
+    <string name="activity_label_results">Sonuçlar</string>
+    <string name="activity_label_search">Arkadaşlarını Bul</string>
+    <string name="activity_label_register">Kayıt Ol</string>
+    <string name="activity_label_new_test">Test Oluştur</string>
+    <string name="activity_label_rate_user">%1$s\'%2$s değerlendir</string>
+    <string name="activity_label_edit_profile">Profili Düzenle</string>
+    <string name="activity_label_change_password">Parola Değiştir</string>
+    <string name="activity_label_options">Seçenekler</string>
+
+    <!--Process Results Negative:
+    these are general error messages that comes from API-->
+    <string name="error_login_failed">Giriş bilgilerin yanlış. Lütfen Tekrar dene.</string>
+    <string name="error_username_empty">Kullanıcı adı boş olamaz.</string>
+    <string name="error_password_empty">Parola boş olamaz.</string>
+    <string name="error_conditions_not_accepted">Kullanım koşullarını kabul etmen gerekiyor.</string>
+    <string name="error_no_connection">insightof.me\' ye bağlanılamıyor, Lütfen ağ bağlantını kontrol edip tekrar dene.</string>
+    <string name="error_login_again">Hesabına giriş yapılamadı. Lütfen tekrar giriş yap.</string>
+    <string name="error_check_connection">Bağlantınızı kontrol ediniz.</string>
+    <string name="error_email_empty">Email alanı boş olamaz</string>
+    <string name="error_username_not_legal">Lütfen uygun bir kullanıcı adı seçiniz</string>
+    <string name="error_username_taken">Bu kullanıcı adı alınmış</string>
+    <string name="error_email_already_exist">Bu email sistemimizde kayıtlıdır.</string>
+    <string name="error_email_not_legal">E-mail uygun değildir.</string>
+    <string name="error_password_not_legal">Parola uygun değildir.</string>
+    <string name="error_desc_session_suspended">Bu üyelik 3 dakika askıya alınmıştır.</string>
+    <string name="error_invalid_file_type">Lütfen uygun bir dosya seçiniz.</string>
+    <string name="error_invalid_file_size">Dosya boyutu çok büyük</string>
+    <string name="error_session_expired">Oturumun süresi dolmuştur. Tekrar giriş yapınız.</string>
+    <string name="error_current_password_wrong">Geçerli parolan yanlış.</string>
+    <string name="error_google_signin">Google hesabınla giriş yaparken bir sorun oluştu. Lütfen daha sonra tekrar dene.</string>
+    <string name="info_reward_ad_not_loaded">Şu an için sana gösterebileceğimiz uygun bir reklam bulunmuyor. Lütfen daha sonra tekrar dene.</string>
+
+    <!--Input Errors:
+    these are error messages which catched in Android application-->
+    <string name="input_error_enter_current_password">Geçerli parolanı girmelisin</string>
+    <string name="input_error_enter_new_pass">Yeni bir parola girmelisin</string>
+    <string name="input_error_password_mismatch">Parolalar eşleşmiyor</string>
+    <string name="input_error_field_required">Bu alan boş olamaz.</string>
+
+    <!--Process Results Positive-:
+    these are general success messages that comes from API-->
+    <string name="message_process_succeed">İşlem başarılı</string>
+    <string name="message_logout_succeed">Çıkış Başarılı</string>
+    <string name="message_register_succeed">Kayıt Başarılı</string>
+    <string name="message_earn_reward_succeed">Ödülünüz hesabınıza aktarılmıştır.</string>
+
+    <!--Hints:
+    Fills input fields-->
+    <string name="hint_login_uid">Kullanıcı Adı veya E-Posta</string>
+    <string name="hint_login_password">Parola</string>
+
+    <string name="hint_searchbar_username">Kullanıcı Adı</string>
+
+    <string name="hint_change_password_new_password_again">Yeni Parola (Tekrar)</string>
+    <string name="hint_change_password_new_password">Yeni parola</string>
+    <string name="hint_change_password_current_password">Geçerli parola</string>
+
+    <string name="hint_change_info_username">Kullanıcı Adı</string>
+    <string name="hint_change_info_email">E-posta</string>
+    <string name="hint_change_info_personal_information">Kişisel Bilgiler</string>
+
+
+    <string name="hint_register_uid">Kullanıcı Adı</string>
+    <string name="hint_register_email">E-Posta</string>
+    <string name="hint_register_password">Parola</string>
+
+   <!--Actions:
+    Actions shows on the buttons or forwarder-->
+    <string name="action_yes">Evet</string>
+    <string name="action_no">Hayır</string>
+    <string name="action_close">Kapat</string>
+    <string name="action_ok">Tamam</string>
+    <string name="action_cancel">İptal</string>
+    <string name="action_try_again">Tekrar Dene</string>
+    <string name="action_btn_new_test">Test Oluştur</string>
+    <string name="action_btn_share_test">Testi Gönder</string>
+    <string name="action_btn_share_results">Sonuç Paylaş</string>
+    <string name="action_login">Giriş Yap</string>
+    <string name="action_register">Kayıt Ol</string>
+    <string name="action_agreement_link"><font color="#2A71AC"><a  href="https://insightof.me/conditions">Kullanım koşulları</a></font>\'nı okudum ve kabul ediyorum.</string>
+    <string name="action_sign_out">Oturumu Kapat</string>
+    <string name="action_save">Kaydet</string>
+
+    <!--Contents:
+    Contents fills text fills or something like that-->
+    <string name="body_share_test">Beni nasıl görüyorsun? Kişilik özelliklerimi kimliğini gizleyerek değerlendir. %1$s</string>
+    <string name="body_share_results">Arkadaşlarıma göre kişilik özelliklerim; %1$s Sen de beni değerlendir. %2$s</string>
+    <string name="content_about">"insightof.me arkadaşlarınızın kişiliğinizle ilgili değerlendirme yapabileceği bir sosyal platformdur. insightof.me ile oluşturacağınız kendinize özel testiniz sayesinde, arkadaşlarınız sizi farklı kişilik özellikleri üzerinden oylarlar. insightof.me bütün bu değerlendirmelerin ortalama değerlerini hesaplayarak, sizi en çok betimleyen altı özelliğinizi öne çıkarır. Bu özellikler arkadaşlarınızın hakkınızda düşündükleri ve çevreniz tarafından nasıl gözlemlendiğiniz ile ilgili ipuçları sunabilir. "</string>
+    <string name="info_not_rated"><b>Henüz ilk sonucu görüntülemek için yeterli değerlendirmeye sahip değilsin.</b> Yeterli değerlendirme sayısına ulaştığında kişilik özelliklerini görebileceksin.</string>
+    <string name="info_ads_desc">Reklam izleyerek ego puanı kazanabilirsin. Ego puanın arttıkça sonuçları görmek için gerekli değerlendirme sayın azalacak.</string>
+    <string name="info_no_test">Henüz test oluşturmamışsın. Arkadaşlarının seni değerlendirebilmesi için önce bir test oluşturmalısın. Yeterli sayıda değerlendirmeye ulaştığında kişilik özelliklerini görebileceksin</string>
+    <string name="info_share_test">Arkadaşlarının seni değerlendirebilmeleri için testini arkadaşların ile paylaşmalısın. Değerlendirme sayın arttıkça daha detaylı sonuçlar görebileceksin.</string>
+    <string name="info_partial_rates"><b>Tüm sonuçlarını görmek için yeterli değerlendirme sayısına sahip değilsin.</b> Arkadaşlarının değerlendirmesini beklemek istemiyorsan reklam izleyerek Ego puanı kazanabilirsin.</string>
+    <string name="info_title_waiting_rates">Değerlendirilmelerin Bekleniyor...</string>
+    <string name="header_register">Arkadaşlarının gözünden\nkendini gör.</string>
+
+    <string name="info_search">insightof.me\' de kayıtlı arkadaşlarını bulmak için kullanıcı adıyla arama yap.</string>
+    <string name="default_bio_search">insightof.me kullanıcısı.</string>
+
+    <string name="login_text_header">Karakter Özelliklerini\nÖğren</string>
+    <string name="login_text_sub">Arkadaşlarına sorarak gerçek kişilik\nözelliklerini öğren</string>
+
+    <string name="option_edit_profile">Profili Düzenle</string>
+    <string name="option_edit_profile_desc">Kullanıcı adın, açıklaman gibi bilgileri değiştir.</string>
+    <string name="option_password">Giriş ve Güvenlik</string>
+    <string name="option_password_desc">Parolanı veya giriş yöntemini değiştir.</string>
+    <string name="option_about">Hakkında</string>
+    <string name="option_about_desc">insightof.me hakkında detaylı bilgi al.</string>
+    <string name="option_licenses">Lisans Bilgileri</string>
+    <string name="option_licenses_desc">Yararlandığımız yazılım lisanslarını incele.</string>
+    <string name="option_sign_out_desc">Geçerli oturumunu sonlandır.</string>
+    <string name="with_version_from" translatable="false">v.0.5 (Beta) From Ally Bros Corporation</string>
+
+    <string name="call_or_connect_via">ya da bağlan;</string>
+    <string name="desc_call_register">Hesabın Yok Mu? | <font color='#2A71AC'>Yeni Hesap Oluştur</font></string>
+
+    <!--TODO: Bunların kullanımı için kategori ismi oluşturulmalı-->
+    <string name="rated">\ Değerlendirme</string>
+    <string name="credit" translatable="false">\ Ego</string>
+    <string name="error_code">Kod: </string>
+    <string name="remaining_credits">Kalan Değerlendirme: %1$s</string>
+    <string name="default_bio_profile">Kendini tanıtan kısa bir yazı yazabilirsin.</string>
+
+    <!--Alert Dialogs-->
+    <string name="alert_title_end_session">Oturumu Sonlandır</string>
+    <string name="alert_context_end_session">Geçerli oturmunu sonlandırmak istediğine emin misin?</string>
+    <string name="alert_sign_up">Yeni Hesap Oluştur</string>
+
+</resources>
