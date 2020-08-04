@@ -28,7 +28,10 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/shape_card"
                 android:clipToPadding="false"
-                android:padding="12dp"
+                android:paddingTop="12dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="0dp"
                 android:layout_margin="12dp"
                 android:elevation="4dp">
 
@@ -61,6 +64,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:clipToPadding="false"
@@ -74,7 +78,7 @@
                         android:layout_height="36dp"
                         android:layout_marginRight="8dp"
                         android:background="@drawable/shape_rated"
-                        android:elevation="4dp"
+                        android:elevation="12dp"
                         android:enabled="false"
                         android:drawableStart="@drawable/baseline_done_white_18"
                         android:paddingStart="12dp"
@@ -89,7 +93,7 @@
                         android:layout_height="36dp"
                         android:textAllCaps="false"
                         android:background="@drawable/passive_credit_bg"
-                        android:elevation="4dp"
+                        android:elevation="12dp"
                         android:paddingStart="12dp"
                         android:paddingEnd="12dp"
                         android:enabled="false"
@@ -198,7 +202,7 @@
             <FrameLayout
                 android:id="@+id/ProfileCardAd"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="12dp"
@@ -210,7 +214,7 @@
                     android:id="@+id/profileBannerAdd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:adSize="BANNER"
+                    app:adSize="LARGE_BANNER"
                     app:adUnitId="@string/admob_profile_banner" />
             </FrameLayout>
 

@@ -41,6 +41,16 @@
     <color name="peachLight">#DAB44E</color>
     <color name="peachDark">#E47B7B</color>
 
+    <!-- Sego Palette -->
+    <color name="segoPurple400">#9933CC</color>
+    <color name="segoPurple300">#843FC5</color>
+    <color name="segoPurple200">#6E4BBD</color>
+    <color name="segoPurple100">#5857B6</color>
+    <color name="segoBlue400">#4262AE</color>
+    <color name="segoBlue300">#3B5696</color>
+    <color name="segoBlue200">#344A7E</color>
+    <color name="segoBlue100">#25324D</color>
+
     <!--Colors for try-->
     <color name="blue">#2875FA</color>
     <color name="purple">#9600FF</color>
