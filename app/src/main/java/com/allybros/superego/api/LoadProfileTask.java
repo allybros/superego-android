@@ -47,9 +47,9 @@ public class LoadProfileTask{
      *                          If call for loadProfile process define action parameter "load" else call ConstantValues.getActionRefreshProfile()
      */
     public static void loadProfileTask(final Context context, final String session_token , final String action){
-        RequestQueue queue = Volley.newRequestQueue(context);
         // Create intent
         intent = new Intent(action);
+        RequestQueue queue = Volley.newRequestQueue(context);
 
         final StringRequest jsonRequest=new StringRequest(Request.Method.POST, ConstantValues.LOAD_PROFILE, new Response.Listener<String>() {
             @Override

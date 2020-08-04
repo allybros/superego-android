@@ -93,7 +93,15 @@ public class ProfileFragment extends Fragment {
         initInfoCard();
         prepareRewardedAd();
         prepareBannerAd();
-        initLayout();
+        initSwipeLayout();
+    }
+
+    /**
+     * Reloads profile content with API.
+     */
+    public void reloadProfile(){
+        // Call API task
+        LoadProfileTask.loadProfileTask(getActivity().getApplicationContext(), sessionManager.getSessionToken(), ConstantValues.ACTION_REFRESH_PROFILE);
     }
 
     /**
@@ -108,16 +116,19 @@ public class ProfileFragment extends Fragment {
                 Log.d("receiver", "Got message: " + status);
                 switch (status){
                     case ErrorCodes.SYSFAIL:
-                        profileSwipeLayout.setRefreshing(false); //Last
                         Toast.makeText(getContext(), getContext().getString(R.string.error_no_connection), Toast.LENGTH_SHORT).show();
                         break;
 
                     case ErrorCodes.SUCCESS:
                         Log.d("Profile refresh","Success");
-                        profileSwipeLayout.setRefreshing(false);
+
                         UserPageActivity userPageActivity = (UserPageActivity) getActivity();
                         userPageActivity.refreshFragments(0);
                         break;
+                    default:
+                        UserPageActivity upa = (UserPageActivity) getActivity();
+                        if (upa != null) upa.setProgressVisibility(false);
+                        profileSwipeLayout.setRefreshing(false);
                 }
             }
         };
@@ -147,6 +158,7 @@ public class ProfileFragment extends Fragment {
                         builder1.setMessage(R.string.message_earn_reward_succeed);
                         builder1.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
+                                btnBadgeCredit.setText(sessionManager.getUser().getCredit() + 1);
                                 LoadProfileTask.loadProfileTask(getContext(), sessionManager.getSessionToken(),"load");
                             }
                         });
@@ -335,7 +347,7 @@ public class ProfileFragment extends Fragment {
     /**
      * Initializes, configure refresh layout.
      */
-    private void initLayout(){
+    private void initSwipeLayout(){
         //Setup refresh layout
         profileSwipeLayout = getView().findViewById(R.id.profileSwipeLayout);
         profileSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -526,7 +538,7 @@ public class ProfileFragment extends Fragment {
             initInfoCard();
             prepareRewardedAd();
             prepareBannerAd();
-            initLayout();
+            initSwipeLayout();
         }
     }
 

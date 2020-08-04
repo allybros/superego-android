@@ -6,6 +6,7 @@ import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.se.omapi.Session;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.allybros.superego.R;
+import com.allybros.superego.api.LoadProfileTask;
 import com.allybros.superego.fragment.ProfileFragment;
 import com.allybros.superego.fragment.ResultsFragment;
 import com.allybros.superego.fragment.SearchFragment;
@@ -31,6 +33,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 
+import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
+
 public class UserPageActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
@@ -40,6 +44,7 @@ public class UserPageActivity extends AppCompatActivity {
     private ResultsFragment resultsFragment;
     private SearchFragment searchFragment;
     private InputMethodWatcher inputMethodWatcher;
+    private MaterialProgressBar userPageProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +55,8 @@ public class UserPageActivity extends AppCompatActivity {
         navigationItems.add((BottomNavigationItemView) findViewById(R.id.navigation_profile));
         navigationItems.add((BottomNavigationItemView) findViewById(R.id.navigation_results));
         navigationItems.add((BottomNavigationItemView) findViewById(R.id.navigation_search));
+
+        userPageProgressBar = findViewById(R.id.progressUserPage);
 
         initInputMethodWatcher();
         initViewPager();
@@ -64,7 +71,9 @@ public class UserPageActivity extends AppCompatActivity {
         //Return from webviews
         if (SessionManager.getInstance().isModified()) {
             SessionManager.getInstance().getUser(); // Remove modified flag
-            refreshFragments(0);
+            setViewPagerAdapter();
+            setProgressVisibility(true);
+            profileFragment.reloadProfile();
         }
         super.onResume();
     }
@@ -202,7 +211,23 @@ public class UserPageActivity extends AppCompatActivity {
         YoYo.with(Techniques.FadeOut).duration(400).playOn(this.viewPager);
         setViewPagerAdapter();
         YoYo.with(Techniques.FadeIn).duration(400).playOn(this.viewPager);
-        this.viewPager.setCurrentItem(pageIndex);
+        setActivePage(pageIndex);
+    }
+
+    /**
+     * Shows progress bar if visible flag set
+     * @param visible progress view visiblity
+     */
+    public void setProgressVisibility(boolean visible){
+        if (visible) {
+            this.userPageProgressBar.setVisibility(View.VISIBLE);
+            this.viewPager.setAlpha(0.6f);
+            this.viewPager.setEnabled(false);
+        } else {
+            this.userPageProgressBar.setVisibility(View.INVISIBLE);
+            this.viewPager.setAlpha(1f);
+            this.viewPager.setEnabled(true);
+        }
     }
 
     @Override
