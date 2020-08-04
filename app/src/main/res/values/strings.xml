@@ -132,5 +132,7 @@
     <string name="alert_title_end_session">Oturumu Sonlandır</string>
     <string name="alert_context_end_session">Geçerli oturmunu sonlandırmak istediğine emin misin?</string>
     <string name="alert_sign_up">Yeni Hesap Oluştur</string>
+    <string name="alert_no_test">Testini paylaşabilmek için önce bir test oluşturman gerekiyor.</string>
+    <string name="alert_no_results">Sonuçlarını görebilmek ve paylaşabilmek için daha fazla değerlendirilmeye ihtiyacın var.</string>
 
 </resources>

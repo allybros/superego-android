@@ -17,7 +17,8 @@ public class User {
         this.rated = rated;
         this.credit = credit;
         this.image = image;
-        this.testId = testId;
+        if (testId.equals("null")) this.testId = null;
+        else this.testId = testId;
         this.username = username;
         if (userBio.equals("null")) this.userBio = null;
         else this.userBio = userBio;
@@ -26,7 +27,8 @@ public class User {
     }
 
     public User(String testId, String username, String userBio, String avatarName) {
-        this.testId = testId;
+        if (testId.equals("null")) this.testId = null;
+        else this.testId = testId;
         this.username = username;
         if (userBio.equals("null")) this.userBio = null;
         else this.userBio = userBio;
@@ -115,5 +117,13 @@ public class User {
 
     public void setAvatar(Bitmap avatar) {
         this.avatar = avatar;
+    }
+
+    public boolean hasTest(){
+        return this.getTestId() != null;
+    }
+
+    public boolean hasResults(){
+        return this.getScores().size() > 0;
     }
 }

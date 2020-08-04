@@ -247,7 +247,6 @@ public class ProfileFragment extends Fragment {
         });
 
         btnBadgeRated.setText(sessionManager.getUser().getRated() + getString(R.string.rated));
-        Log.d("Test Id", sessionManager.getUser().getTestId());
 
         HelperMethods.imageLoadFromUrlNoCache(getContext(), ConstantValues.AVATAR_URL+sessionManager.getUser().getImage(), imageViewAvatar);
     }
@@ -260,6 +259,14 @@ public class ProfileFragment extends Fragment {
         btnNewTest = getView().findViewById(R.id.btnAddTest);
         btnShareTest = getView().findViewById(R.id.btnShareTest);
         btnShareResults = getView().findViewById(R.id.btnShareResult);
+
+        if (!sessionManager.getUser().hasResults()) {
+            btnShareResults.setAlpha(0.6f);
+        }
+
+        if (!sessionManager.getUser().hasTest()) {
+            btnShareTest.setAlpha(0.6f);
+        }
 
         btnNewTest.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -284,14 +291,23 @@ public class ProfileFragment extends Fragment {
         btnShareTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                shareTest();
+                if (sessionManager.getUser().hasTest()) {
+                    shareTest();
+                } else {
+                    Snackbar.make(profileSwipeLayout, R.string.alert_no_test, BaseTransientBottomBar.LENGTH_LONG).show();
+                }
             }
         });
 
         btnShareResults.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                shareResults();
+                if (sessionManager.getUser().hasResults()) {
+                    shareResults();
+                } else {
+                    Snackbar.make(profileSwipeLayout, R.string.alert_no_results, BaseTransientBottomBar.LENGTH_LONG).show();
+                }
+
             }
         });
     }
@@ -302,7 +318,7 @@ public class ProfileFragment extends Fragment {
     private void initInfoCard(){
         tvProfileInfoCard = getView().findViewById(R.id.tvProfileInfoCard);
 
-        if(sessionManager.getUser().getTestId().equals("null")){ //User don't have a test
+        if(!sessionManager.getUser().hasTest()){ //User don't have a test
             tvProfileInfoCard.setText(R.string.info_no_test);
         }else{//User have test
             tvProfileInfoCard.setText(R.string.info_share_test);

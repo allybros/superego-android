@@ -95,4 +95,6 @@
     <string name="error_conditions_not_accepted">You need to accept terms and conditions.</string>
     <string name="error_google_signin">An error occurred while signing in with your Google account. Please try again.</string>
     <string name="info_reward_ad_not_loaded">There is not an available ad right now. You can try again later.</string>
+    <string name="alert_no_test">You need to create a test to share your test.</string>
+    <string name="alert_no_results">You need more rates to see and share your results.</string>
 </resources>
