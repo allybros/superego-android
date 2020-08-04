@@ -35,16 +35,11 @@ public class SearchTask {
         StringRequest jsonRequest=new StringRequest(Request.Method.GET, requestUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                int status;
-                try {
-                    JSONArray jsonObject=new JSONArray(response);
-                    Log.d("query-Response",response.toString());
-                    intent.putExtra("result",response.toString());
-                    intent.setAction(ConstantValues.ACTION_SEARCH);
-                    LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                Log.d("query-Response",response);
+                intent.putExtra("query", query);
+                intent.putExtra("result", response);
+                intent.setAction(ConstantValues.ACTION_SEARCH);
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
             }
         }, new Response.ErrorListener() {
             @Override

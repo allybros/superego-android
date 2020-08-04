@@ -64,7 +64,14 @@ public class SearchFragment extends Fragment {
         searchResponseReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
+                String query = intent.getStringExtra("query");
                 String resultResponse = intent.getStringExtra("result");
+
+                if (!query.equals(etSearchUser.getText().toString())) {
+                    Log.d("Search Receiver", "Late response, skipping results");
+                    return;
+                }
+
                 try {
                     JSONArray results = new JSONArray(resultResponse);
                     ArrayList<User> usersFound = new ArrayList<>();
