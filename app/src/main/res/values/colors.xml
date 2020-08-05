@@ -19,6 +19,7 @@
 
     <!-- Material Palette -->
     <color name="materialPurple">#9C27B0</color>
+    <color name="materialLightPurple">#BA68C8</color>
     <color name="materialPurpleOverlay">#C09C27B0</color>
     <color name="materialDeepPurple">#7557AC</color>
     <color name="materialLightBlue">#2A71AC</color>

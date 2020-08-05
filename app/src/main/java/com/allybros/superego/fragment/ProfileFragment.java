@@ -10,6 +10,7 @@ import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -114,6 +115,7 @@ public class ProfileFragment extends Fragment {
             public void onReceive(Context context, Intent intent) {
                 int status = intent.getIntExtra("status",0);
                 Log.d("receiver", "Got message: " + status);
+
                 switch (status){
                     case ErrorCodes.SYSFAIL:
                         Toast.makeText(getContext(), getContext().getString(R.string.error_no_connection), Toast.LENGTH_SHORT).show();
@@ -121,15 +123,15 @@ public class ProfileFragment extends Fragment {
 
                     case ErrorCodes.SUCCESS:
                         Log.d("Profile refresh","Success");
-
                         UserPageActivity userPageActivity = (UserPageActivity) getActivity();
                         userPageActivity.refreshFragments(0);
                         break;
-                    default:
-                        UserPageActivity upa = (UserPageActivity) getActivity();
-                        if (upa != null) upa.setProgressVisibility(false);
-                        profileSwipeLayout.setRefreshing(false);
                 }
+
+                // Disable progress view
+                UserPageActivity upa = (UserPageActivity) getActivity();
+                if (upa != null) upa.setProgressVisibility(false);
+                profileSwipeLayout.setRefreshing(false);
             }
         };
 
@@ -158,8 +160,7 @@ public class ProfileFragment extends Fragment {
                         builder1.setMessage(R.string.message_earn_reward_succeed);
                         builder1.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                btnBadgeCredit.setText(sessionManager.getUser().getCredit() + 1);
-                                LoadProfileTask.loadProfileTask(getContext(), sessionManager.getSessionToken(),"load");
+                                reloadProfile();
                             }
                         });
                         builder1.show();
@@ -201,16 +202,6 @@ public class ProfileFragment extends Fragment {
 
         tvUsername.setText("@"+sessionManager.getUser().getUsername());
         btnBadgeCredit.setText(String.format("%d %s", sessionManager.getUser().getCredit(), getString(R.string.credit)));
-
-        if(sessionManager.getUser().getRated() >= 5){
-            //User able to use Ego points
-            btnBadgeCredit.setBackground(ContextCompat.getDrawable(getContext() ,R.drawable.selector_credit));
-            btnBadgeCredit.setEnabled(true);
-            YoYo.with(Techniques.Bounce)
-                    .duration(1000)
-                    .repeat(5)
-                    .playOn(getView().findViewById(R.id.badgeCredit));
-        }
 
         btnBadgeCredit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -306,7 +297,14 @@ public class ProfileFragment extends Fragment {
                 if (sessionManager.getUser().hasTest()) {
                     shareTest();
                 } else {
-                    Snackbar.make(profileSwipeLayout, R.string.alert_no_test, BaseTransientBottomBar.LENGTH_LONG).show();
+                   Snackbar.make(profileSwipeLayout, R.string.alert_no_test, BaseTransientBottomBar.LENGTH_LONG)
+                       .setAction(R.string.action_btn_new_test, new View.OnClickListener() {
+                           @Override
+                           public void onClick(View v) {
+                               btnNewTest.performClick();
+                           }
+                       }).setActionTextColor(getResources().getColor(R.color.materialLightPurple))
+                       .show();
                 }
             }
         });
@@ -339,7 +337,7 @@ public class ProfileFragment extends Fragment {
         tvProfileInfoCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                shareTest();
+                btnShareResults.performClick();
             }
         });
     }
@@ -429,7 +427,7 @@ public class ProfileFragment extends Fragment {
      * Initializes and loads rewarded video ad.
      */
     private void prepareRewardedAd(){
-        Context fragmentContext = getActivity();
+        final Context fragmentContext = getActivity();
         if (fragmentContext==null) return;
 
         this.rewardedAd = new RewardedAd(fragmentContext, getResources().getString(R.string.admob_ad_interface));
@@ -438,6 +436,15 @@ public class ProfileFragment extends Fragment {
             public void onRewardedAdLoaded() {
                 // Ad successfully loaded.
                 Log.d("Reward Ad","Ad successfully loaded.");
+                if(sessionManager.getUser().getRated() >= 5){
+                    //User able to use Ego points
+                    btnBadgeCredit.setBackground(ContextCompat.getDrawable(fragmentContext, R.drawable.selector_credit));
+                    btnBadgeCredit.setEnabled(true);
+                    YoYo.with(Techniques.Bounce)
+                            .duration(1000)
+                            .repeat(5)
+                            .playOn(btnBadgeCredit);
+                }
             }
 
             @Override
