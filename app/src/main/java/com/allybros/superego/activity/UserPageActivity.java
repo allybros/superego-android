@@ -1,85 +1,244 @@
 package com.allybros.superego.activity;
 
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
+import android.se.omapi.Session;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import com.allybros.superego.R;
-import com.allybros.superego.api.LogoutTask;
-import com.allybros.superego.fragments.ProfilFragment;
-import com.allybros.superego.fragments.ResultsFragment;
-import com.allybros.superego.util.PagerAdapter;
+import com.allybros.superego.api.LoadProfileTask;
+import com.allybros.superego.fragment.ProfileFragment;
+import com.allybros.superego.fragment.ResultsFragment;
+import com.allybros.superego.fragment.SearchFragment;
+import com.allybros.superego.ui.PagerAdapter;
+import com.allybros.superego.util.InputMethodWatcher;
+import com.allybros.superego.util.SessionManager;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.ArrayList;
+
+import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 
 public class UserPageActivity extends AppCompatActivity {
-    final String USER_INFORMATION_PREF="USER_INFORMATION_PREF";
 
-    private ActionBar toolbar;
-    ViewPager viewPager;
-    MenuItem prevMenuItem;
+    private ViewPager viewPager;
+    private BottomNavigationView navigation;
+    private ArrayList<BottomNavigationItemView> navigationItems = new ArrayList<>();
+    private ProfileFragment profileFragment;
+    private ResultsFragment resultsFragment;
+    private SearchFragment searchFragment;
+    private InputMethodWatcher inputMethodWatcher;
+    private MaterialProgressBar userPageProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_page);
-        toolbar = getSupportActionBar();
 
+        //Add navigation items
+        navigationItems.add((BottomNavigationItemView) findViewById(R.id.navigation_profile));
+        navigationItems.add((BottomNavigationItemView) findViewById(R.id.navigation_results));
+        navigationItems.add((BottomNavigationItemView) findViewById(R.id.navigation_search));
 
-        final BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        userPageProgressBar = findViewById(R.id.progressUserPage);
 
-        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        initInputMethodWatcher();
+        initViewPager();
+        setViewPagerAdapter();
+        initBottomNavigation();
+        setActivePage(0); //Set active page as "Profile" initially
+
+    }
+
+    @Override
+    protected void onResume() {
+        //Return from webviews
+        if (SessionManager.getInstance().isModified()) {
+            SessionManager.getInstance().getUser(); // Remove modified flag
+            setViewPagerAdapter();
+            setProgressVisibility(true);
+            profileFragment.reloadProfile();
+        }
+        super.onResume();
+    }
+
+    /**
+     * Initializes input method watcher for detecting virtual keyboard.
+     */
+    private void initInputMethodWatcher(){
+        View contentRoot = ((ViewGroup) findViewById(android.R.id.content)).getChildAt(0);
+        inputMethodWatcher = new InputMethodWatcher(contentRoot);
+        inputMethodWatcher.setKeyboardStatusListener(new InputMethodWatcher.KeyboardStatusListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                Fragment fragment;
-                switch (menuItem.getItemId()) {
-                    case R.id.navigation_profile:
-                        toolbar.setTitle(R.string.profile);
-                        viewPager.setCurrentItem(0);
-                        fragment = new ProfilFragment();
-                        return true;
-                    case R.id.navigation_results:
-                        viewPager.setCurrentItem(1);
-                        toolbar.setTitle(R.string.results);
-                        fragment = new ResultsFragment();
-                        return true;
-                }
-                return false;
+            public void onShown() {
+                Log.d("Caught keyboard", "Shown");
+                setBottomNavigationVisible(false);
+            }
+
+            @Override
+            public void onHidden() {
+                Log.d("Caught keyboard", "Hidden");
+                setBottomNavigationVisible(true);
             }
         });
+    }
 
-        toolbar.setTitle(R.string.profile);
-
-
-        viewPager = (ViewPager) findViewById(R.id.simpleViewPager);
-        setupViewPager(viewPager);
+    /**
+     * Initializes view pager
+     */
+    private void initViewPager(){
+        viewPager = findViewById(R.id.mainViewPager);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {}
 
-            @Override
             public void onPageSelected(int position) {
-                if (prevMenuItem != null) {
-                    prevMenuItem.setChecked(false);
-                } else {
-                    navigation.getMenu().getItem(0).setChecked(false);
-                }
-                navigation.getMenu().getItem(position).setChecked(true);
-                prevMenuItem = navigation.getMenu().getItem(position);
-                toolbar.setTitle(prevMenuItem.getTitle());
+                setActivePage(position);
             }
 
             @Override
             public void onPageScrollStateChanged(int position) {}
         });
+        //Prepare all fragments for performance
+        viewPager.setOffscreenPageLimit(navigationItems.size() - 1);
+    }
 
+    /**
+     * Creates fragments and prepares viewpager
+     */
+    private void setViewPagerAdapter() {
+        PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager());
+        profileFragment = new ProfileFragment();
+        resultsFragment = new ResultsFragment();
+        searchFragment = new SearchFragment();
+        adapter.addFrag(profileFragment, getResources().getString(R.string.activity_label_profile));
+        adapter.addFrag(resultsFragment, getResources().getString(R.string.activity_label_results));
+        adapter.addFrag(searchFragment, getResources().getString(R.string.activity_label_search));
+        this.viewPager.setAdapter(adapter);
+    }
+
+    /**
+     * Initialize bottom navigation bar
+     */
+    private void initBottomNavigation(){
+        navigation = findViewById(R.id.navigation);
+
+        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @SuppressLint("RestrictedApi")
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                for (BottomNavigationItemView navItem : navigationItems) {
+                    if (navItem.getId() == menuItem.getItemId()){
+                        setActivePage(navItem.getItemPosition());
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+    }
+
+    /**
+     * Show bottom navigation or not.
+     * @param visible True if navigation bar needs to be visible
+     */
+    public void setBottomNavigationVisible(boolean visible){
+        if (visible) {
+            navigation.setVisibility(View.VISIBLE);
+            YoYo.with(Techniques.FadeInUp).duration(300).playOn(navigation);
+        } else {
+            YoYo.with(Techniques.FadeOutDown).duration(300).playOn(navigation);
+            navigation.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * Updates navigation bar and action bar with page index
+     * @param index Page Index
+     */
+    @SuppressLint("RestrictedApi")
+    private void setActivePage(int index){
+        //Get active item index and title
+        BottomNavigationItemView activeNavItem = navigationItems.get(index);
+        String activePageTitle = (String) activeNavItem.getItemData().getTitle();
+        //Set actionbar and view pager
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar!=null) actionBar.setTitle(activePageTitle);
+        viewPager.setCurrentItem(index);
+        //Disable all navigation Items
+        for (BottomNavigationItemView navItem: navigationItems) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                navItem.setTextColor(ColorStateList.valueOf(getColor(R.color.Gray)));
+                navItem.setIconTintList(ColorStateList.valueOf(getColor(R.color.Gray)));
+            }
+            navItem.setChecked(false);
+        }
+        //Enable selected item
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            activeNavItem.setTextColor(ColorStateList.valueOf(getColor(R.color.White)));
+            activeNavItem.setIconTintList(ColorStateList.valueOf(getColor(R.color.White)));
+        }
+        activeNavItem.setChecked(true);
+        viewPager.setCurrentItem(index);
+        //Hide soft keyboard if showing.
+        if (inputMethodWatcher.isKeyboardShown()){
+            Log.d("Page changed", "Hide soft keyboard");
+            inputMethodWatcher.hideSoftKeyboard();
+        }
+    }
+
+    /**
+     * Update fragments with state of currentUser
+     * @param pageIndex Index of the fragment will be shown
+     */
+    public void refreshFragments(int pageIndex){
+        YoYo.with(Techniques.FadeOut).duration(400).playOn(this.viewPager);
+        setViewPagerAdapter();
+        YoYo.with(Techniques.FadeIn).duration(400).playOn(this.viewPager);
+        setActivePage(pageIndex);
+    }
+
+    /**
+     * Shows progress bar if visible flag set
+     * @param visible progress view visiblity
+     */
+    public void setProgressVisibility(boolean visible){
+        if (visible) {
+            this.userPageProgressBar.setVisibility(View.VISIBLE);
+            this.viewPager.setAlpha(0.6f);
+            this.viewPager.setEnabled(false);
+        } else {
+            this.userPageProgressBar.setVisibility(View.INVISIBLE);
+            this.viewPager.setAlpha(1f);
+            this.viewPager.setEnabled(true);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_settings:
+                Intent intent1=new Intent(getApplicationContext(), SettingsActivity.class);
+                startActivity(intent1);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -94,38 +253,4 @@ public class UserPageActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.action_logout:
-                String session_token;
-                SharedPreferences pref = getApplicationContext().getSharedPreferences(USER_INFORMATION_PREF, Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = pref.edit();
-                session_token=pref.getString("session_token","");
-                editor.clear();
-                editor.commit();
-                LogoutTask.logoutTask(getApplicationContext(),session_token);
-
-                Intent intent=new Intent(getApplicationContext(), LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                getApplicationContext().startActivity(intent);
-                break;
-            case R.id.action_settings:
-                Intent intent1=new Intent(getApplicationContext(), SettingsActivity.class);
-                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                getApplicationContext().startActivity(intent1);
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void setupViewPager(ViewPager viewPager) {
-        ResultsFragment resultsFragment = new ResultsFragment();
-        resultsFragment.setActivity(this);
-
-        PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new ProfilFragment(), getResources().getString(R.string.profile));
-        adapter.addFrag(resultsFragment, getResources().getString(R.string.results));
-        viewPager.setAdapter(adapter);
-    }
 }

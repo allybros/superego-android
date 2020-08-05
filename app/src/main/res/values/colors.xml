@@ -1,16 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#1C2331</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <!-- TODO: Remove unused colors, duplicates-->
+    <color name="colorPrimary">#25324D</color>
+    <color name="colorPrimaryDark">#1C2331</color>
     <color name="colorAccent">#FFFFFF</color>
-    <color name="Blue">#C3020E77</color>
-    <color name="OpacityYellow">#4afcdb73</color>
-    <color name="loginScreenBottomComponentColor">#908b658b</color>
-    <color name="bottomComponentColor">#b70216c7</color>
     <color name="Black">#000000</color>
+    <color name="Gray">#808080</color>
     <color name="White">#ffffff</color>
-    <color name="loginScreenButtonColor">#b0ff3b0a</color>
-    <color name="editText">#6a1b9a</color>
-    <color name="trans">#00000000</color>
-    <color name="bgBottomNavigation">#1C2331</color>
+    <color name="transparent">#00000000</color>
+
+    <!--Component Colors-->
+    <color name="bgBottomNavigation">#25324D</color>
+    <color name="fragmentBackground">#f9f9f9</color>
+
+    <!--Brand Buttons Color-->
+    <color name="google">#FF0219</color>
+    <color name="facebook">#4167B2</color>
+
+    <!-- Material Palette -->
+    <color name="materialPurple">#9C27B0</color>
+    <color name="materialLightPurple">#BA68C8</color>
+    <color name="materialPurpleOverlay">#C09C27B0</color>
+    <color name="materialDeepPurple">#7557AC</color>
+    <color name="materialLightBlue">#2A71AC</color>
+    <color name="materialIceBlue">#f0f8ff</color>
+    <color name="materialLightGreen">#60C072</color>
+
+    <!--Aqua Palette -->
+    <color name="aquaBlue">#1da0f6</color>
+    <color name="aquaGreen">#07f6ab</color>
+
+    <!-- Yosemite -->
+    <color name="yosemiteOrange">#EA8D8D</color>
+    <color name="yosemitePurple">#A890FE</color>
+
+    <!-- Antarctica -->
+    <color name="antarcticaPurple">#D8B5FF</color>
+    <color name="antarcticaGreen">#1EAE98</color>
+
+    <!-- Peach Pallete -->
+    <color name="peachLight">#DAB44E</color>
+    <color name="peachDark">#E47B7B</color>
+
+    <!-- Sego Palette -->
+    <color name="segoPurple400">#9933CC</color>
+    <color name="segoPurple300">#843FC5</color>
+    <color name="segoPurple200">#6E4BBD</color>
+    <color name="segoPurple100">#5857B6</color>
+    <color name="segoBlue400">#4262AE</color>
+    <color name="segoBlue300">#3B5696</color>
+    <color name="segoBlue200">#344A7E</color>
+    <color name="segoBlue100">#25324D</color>
+
+    <!--Colors for try-->
+    <color name="blue">#2875FA</color>
+    <color name="purple">#9600FF</color>
+    <color name="blue1">#A2C7FF</color>
+    <color name="blue2">#639FFF</color>
+    <color name="rippleColor">#14FFFFFF</color>
+
+    <color name="green">#00FF04</color>
+    <color name="green1">#06CF09</color>
+    <color name="green2">#A8E7A8</color>
+    <color name="orange">#FF7700</color>
+
+
 </resources>

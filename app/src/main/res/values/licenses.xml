@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="licenses">
+        <item>Android Volley,Google,Apache 2.0,https://github.com/google/volley</item>
+        <item>Glide To Vector You,corouteam,Apache 2.0,https://github.com/corouteam/GlideToVectorYou</item>
+        <item>Twemoji,Twitter,Twitter License,https://github.com/twitter/twemoji</item>
+        <item>Twemoji End Point,Ally Bros Corporation,GPL 3.0,https://github.com/allybros/twemojiEndPoint</item>
+        <item>Material Design,Google,Apache License 2.0,https://github.com/material-components</item>
+        <item>Lemniscate,Vladimir Jovanović,Apache License 2.0,https://github.com/VladimirWrites/Lemniscate</item>
+        <item>Facebook SDK for Android,Facebook,Proprietary software,https://github.com/facebook/facebook-android-sdk</item>
+        <item>Slidr,Drew Heavner,Apache License 2.0,https://github.com/r0adkll/Slidr</item>
+        <item>Android View Animations,代码家 (daimajia),MIT License,https://github.com/daimajia/AndroidViewAnimations</item>
+
+
+    </array>
+
+</resources>

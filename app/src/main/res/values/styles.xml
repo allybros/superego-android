@@ -1,13 +1,72 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+        <item name="android:textColorPrimary">@color/White</item>
+        <item name="android:actionBarSize">52dp</item>
     </style>
 
-    <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="SegoAlertDialog" parent="Theme.MaterialComponents.Light.Dialog.Alert">
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:dialogCornerRadius" tools:targetApi="p">12dp</item>
+        <item name="dialogPreferredPadding">16dp</item>
 
-    <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    </style>
+    <style name="AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
+
+    <style name="PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
+
+    <style name="AppTheme.NoActionBar" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Light" >
+    </style>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
+
+    <style name="AppTheme.TransparentBackground" parent="Theme.MaterialComponents.Light">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:action">true</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+        <item name="android:textColorPrimary">@color/White</item>
+        <item name="android:actionBarSize">52dp</item>
+    </style>
+
+    <style name="SegoInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/materialDeepPurple</item>
+        <item name="android:textColor">@color/materialDeepPurple</item>"
+        <item name="hintTextColor">@color/materialDeepPurple</item>
+        <item name="cornerRadius">8dp</item>
+    </style>
+
+    <style name="SegoEditText">
+        <item name="android:textColor">@color/Gray</item>
+        <item name="android:padding">0dp</item>
+    </style>
+
+    <style name="SegoBtn" parent="Widget.MaterialComponents.Button">
+        <item name="cornerRadius">8dp</item>
+        <item name="textAllCaps">false</item>
+        <item name="android:padding">10dp</item>
+        <item name="backgroundTint">@color/materialPurple</item>
+        <item name="android:textColor">@color/White</item>
+        <item name="android:textSize">16sp</item>
+
+    </style>
+
+    <style name="SegoProgressView" parent="Widget.MaterialProgressBar.ProgressBar.Horizontal">
+        <item name="progressBarPadding">0dp</item>
+        <item name="android:layout_height">4dp</item>
+        <item name="mpb_useIntrinsicPadding">false</item>
+    </style>
 
 </resources>

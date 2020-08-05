@@ -3,10 +3,19 @@
 
     <item
         android:id="@+id/navigation_profile"
-        android:icon="@drawable/outline_group_white_48dp"
-        android:title="@string/profile" />
+        android:icon="@drawable/baseline_person_24"
+        android:state_checked="true"
+        android:title="@string/activity_label_profile" />
     <item
         android:id="@+id/navigation_results"
-        android:icon="@drawable/outline_format_align_justify_white_48dp"
-        android:title="@string/results" />
+        android:icon="@drawable/baseline_view_list_24"
+        android:checked="false"
+        android:title="@string/activity_label_results" />
+
+    <item
+        android:id="@+id/navigation_search"
+        android:icon="@drawable/v_magnify"
+        android:iconTint="@color/White"
+        android:checked="false"
+        android:title="@string/activity_label_search" />
 </menu>

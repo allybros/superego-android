@@ -1,118 +1,233 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_bitmap"
     android:gravity="center"
-    android:background="@drawable/login_background_15"
-    tools:context="com.allybros.superego.activity.SplashActivity"
-    tools:layout_editor_absoluteY="25dp">
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="53dp"
-        android:layout_marginStart="123dp"
-        android:layout_marginTop="106dp"
-        android:layout_marginEnd="123dp"
-        android:fontFamily="@font/comfortaa_light"
-        android:text="Logo"
-        android:textAlignment="viewStart"
-        android:textColor="@color/Black"
-        android:textSize="36sp"
-        android:typeface="monospace"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    <LinearLayout
-        android:id="@+id/linearLayout"
+    tools:context="com.allybros.superego.activity.LoginActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/card_shape"
-        android:elevation="40dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_overlay">
+
+        <ImageView
+            android:id="@+id/brandLogo"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/brand_white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvLoginCaption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/login_text_sub"
+            android:textColor="@color/White"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvLoginHeader" />
+
+        <TextView
+            android:id="@+id/tvLoginHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/login_text_header"
+            android:textColor="@color/White"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/brandLogo" />
+
+        <!-- Login Card Form -->
+
+        <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+            android:id="@+id/progressViewLogin"
+            android:visibility="gone"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:translationZ="100dp"
+            app:layout_constraintBottom_toBottomOf="@+id/cardFormLogin"
+            app:layout_constraintEnd_toEndOf="@+id/cardFormLogin"
+            app:layout_constraintStart_toStartOf="@+id/cardFormLogin"
+            app:layout_constraintTop_toTopOf="@+id/cardFormLogin"
+            android:indeterminate="true"
+            app:mpb_progressStyle="circular"
+            app:mpb_progressTint="@color/materialPurple"
+            android:indeterminateTint="@color/materialPurple"
+            style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal"
+            />
+
+
+        <!-- Hidden buttons -->
 
         <LinearLayout
+            android:id="@+id/cardFormLogin"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/shape_card"
+            android:elevation="4dp"
+            android:orientation="vertical"
+            android:padding="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvLoginCaption"
+            app:layout_constraintVertical_bias="0.19999999">
 
-            <ImageView
-                android:layout_width="wrap_content"
+            <!-- Input UID -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputLayoutLoginUid"
+                style="@style/SegoInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_login_uid"
+                app:errorEnabled="false"
+                app:startIconDrawable="@drawable/baseline_person_24">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etLoginUid"
+                    style="@style/SegoEditText"
+                    android:inputType="textWebEmailAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </com.google.android.material.textfield.TextInputEditText>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Input Password -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputLayoutLoginPassword"
+                style="@style/SegoInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="@string/hint_login_password"
+                app:endIconMode="password_toggle"
+                app:errorEnabled="false"
+                app:startIconDrawable="@drawable/v_account_key">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etLoginPassword"
+                    style="@style/SegoEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Login Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btLogin"
+                style="@style/SegoBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:backgroundTint="@color/materialPurple"
+                android:text="@string/action_login"
+                android:textColor="@color/White" />
+
+            <!-- Register TV -->
+            <TextView
+                android:id="@+id/tvRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:text="@string/desc_call_register" />
+
+        </LinearLayout>
+
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/btHiddenFacebook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@+id/btHiddenGoogle"
+            app:layout_constraintTop_toBottomOf="@+id/cardFormLogin" />
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/btHiddenGoogle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/cardFormLogin"
+            tools:ignore="MissingConstraints" />
+
+        <!-- Social Buttons -->
+        <TextView
+            android:id="@+id/tvConnectCall"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:text="@string/call_or_connect_via"
+            android:textColor="@color/fragmentBackground"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardFormLogin" />
+
+        <LinearLayout
+            android:id="@+id/socialButtons"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="32dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvConnectCall">
+
+            <Button
+                android:id="@+id/btSignInGoogle"
+                style="@style/SegoBtn"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:padding="10dp"
-                android:src="@drawable/mail_32" />
+                android:layout_marginEnd="12dp"
+                android:layout_weight="0.5"
+                android:backgroundTint="@color/google"
+                android:drawableLeft="@drawable/brand_google"
+                android:gravity="start|center"
+                android:text="Google"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btSignInFacebook"
+                app:layout_constraintTop_toBottomOf="@+id/cardFormLogin" />
 
-            <EditText
-                android:id="@+id/etMail"
+            <Button
+                android:id="@+id/btSignInFacebook"
+                style="@style/SegoBtn"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:autofillHints=""
-                android:background="@drawable/edit_text_shape"
-                android:hint="@string/usernameOrEmail"
-                android:inputType="textEmailAddress"
-                android:padding="10dp"
-                android:textColor="@color/Black"
-                android:textColorHint="#5C000000" />
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="0.5"
+                android:backgroundTint="@color/facebook"
+                android:drawableLeft="@drawable/brand_facebook"
+                android:gravity="start|center"
+                android:text="Facebook"
+                app:layout_constraintEnd_toStartOf="@+id/btSignInGoogle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardFormLogin" />
+
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:padding="10dp"
-                android:src="@drawable/password_32" />
-
-            <EditText
-                android:id="@+id/etPassword"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:autofillHints=""
-                android:background="@drawable/edit_text_shape"
-                android:hint="@string/password"
-                android:inputType="textPassword"
-                android:padding="10dp"
-                android:textColor="@color/Black"
-                android:textColorHint="#5C000000" />
-        </LinearLayout>
-    </LinearLayout>
-    <Button
-        android:id="@+id/btLogin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="55dp"
-        android:layout_marginEnd="24dp"
-        android:layout_weight="1"
-        android:background="@drawable/sign_in_ripple"
-        android:text="Sign In"
-        android:textSize="14dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
-    <Button
-        android:id="@+id/btRegister"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/sign_up_ripple"
-        android:elevation="20dp"
-        android:text="Sign Up Now"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-</android.support.constraint.ConstraintLayout>
-
-
+</FrameLayout>

@@ -3,14 +3,14 @@ package com.allybros.superego.api;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.util.Log;
-import android.widget.Toast;
+
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import com.allybros.superego.R;
-import com.allybros.superego.activity.LoginActivity;
-import com.allybros.superego.activity.SplashActivity;
-import com.allybros.superego.activity.UserPageActivity;
+import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
+import com.allybros.superego.util.SessionManager;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -24,62 +24,45 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ *  Class includes the function of signing in function
+ * @author 0rcun
+ */
 public class LoginTask extends Activity {
+    /**
+     * Function requests to server and then receives response. After that broadcasts the response.
+     * @param context   required to build request and send Broadcast
+     * @param uid       required for verify user
+     * @param password  required for verify user
+     */
+    public static void loginTask(final Context context, final String uid, final String password) {
+        final Intent intent = new Intent(ConstantValues.ACTION_LOGIN);
 
-    public static void loginTask(final Context currentContext, final String uid, final String password) {
+        RequestQueue queue = Volley.newRequestQueue(context);
 
-        final String LOGIN_URL ="https://api.allybros.com/superego/login.php";
-        final String loginFailed= (String) currentContext.getString(R.string.loginFailed);
-        final String loginSuccess= (String) currentContext.getString(R.string.loginSuccess);
-        final String usernameEmpty= (String) currentContext.getString(R.string.usernameEmpty);
-        final String passwordEmpty= (String) currentContext.getString(R.string.passwordEmpty);
-        final String USER_INFORMATION_PREF="USER_INFORMATION_PREF";
-
-
-        final Intent mainActivityIntent=new Intent(currentContext, LoginActivity.class);
-        mainActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-        RequestQueue queue = Volley.newRequestQueue(currentContext);
-
-        StringRequest jsonRequest=new StringRequest(Request.Method.POST, LOGIN_URL, new Response.Listener<String>() {
+        StringRequest jsonRequest=new StringRequest(Request.Method.POST, ConstantValues.LOGIN_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
-                String session_token;
                 int status;
-
                 try {
                     JSONObject jsonObj=new JSONObject(response);
+                    Log.d("Login Task Response", response);
                     status = jsonObj.getInt("status");
                     switch (status){
-                        case ErrorCodes.SYSFAIL:
-                            Toast.makeText(currentContext, loginFailed, Toast.LENGTH_SHORT).show();
-                            break;
 
                         case ErrorCodes.SUCCESS:
-
-                            SharedPreferences pref = currentContext.getSharedPreferences(USER_INFORMATION_PREF, Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = pref.edit();
-
-                            session_token=jsonObj.getString("session_token");
-                            editor.putString("uid",uid);
-                            editor.putString("password",password);
-                            editor.putString("session_token", session_token);
-                            editor.commit();
-
-                            Intent intent=new Intent(currentContext, SplashActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            currentContext.startActivity(intent);
+                            String session_token = jsonObj.getString("session_token");
+                            SessionManager.getInstance().setSessionToken(session_token);
+                            SessionManager.getInstance().writeInfoLocalStorage(uid,password,session_token,context);
+                            intent.putExtra("status", status);
+                            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                             break;
 
-                        case ErrorCodes.USERNAME_EMPTY:
-                            Toast.makeText(currentContext, usernameEmpty, Toast.LENGTH_SHORT).show();
+                        default:
+                            intent.putExtra("status", status);
+                            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                             break;
 
-                        case ErrorCodes.PASSWORD_EMPTY:
-                            Toast.makeText(currentContext, passwordEmpty, Toast.LENGTH_SHORT).show();
-                            break;
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -90,16 +73,17 @@ public class LoginTask extends Activity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(currentContext,currentContext.getString(R.string.connection_error), Toast.LENGTH_SHORT);
-
+                intent.putExtra("status", ErrorCodes.CONNECTION_ERROR);
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
             }
         }) {
+            //Add parameters in request
             @Override
             protected Map<String,String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("login-submit", "True");
                 params.put("uid", uid);
                 params.put("password", password);
+                params.put("g-recaptcha-response", context.getResources().getString(R.string.recaptcha_skip));
                 return params;
             }
         };

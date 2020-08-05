@@ -1,69 +1,129 @@
 package com.allybros.superego.unit;
 
+
+import android.graphics.Bitmap;
+
 import java.util.ArrayList;
 
 public class User {
 
-    private static int userType;
-    private static String username,userBio,email;
-    private static ArrayList<Trait> scores;
-    private static int rated;
+    private int userType, rated, credit;
+    private String image,testId,username,userBio,email, avatarName;
+    private ArrayList<Score> scores;
+    private Bitmap avatar;      //Görsel öğeler için kullanılıyor.
 
-    public static int getRated() {
-        return rated;
+    public User(int userType, int rated, int credit, String image, String testId, String username, String userBio, String email, ArrayList<Score> scores) {
+        this.userType = userType;
+        this.rated = rated;
+        this.credit = credit;
+        this.image = image;
+        if (testId.equals("null")) this.testId = null;
+        else this.testId = testId;
+        this.username = username;
+        if (userBio.equals("null")) this.userBio = null;
+        else this.userBio = userBio;
+        this.email = email;
+        this.scores = scores;
     }
 
-    public static void setRated(int rated) {
-        User.rated = rated;
+    public User(String testId, String username, String userBio, String avatarName) {
+        if (testId.equals("null")) this.testId = null;
+        else this.testId = testId;
+        this.username = username;
+        if (userBio.equals("null")) this.userBio = null;
+        else this.userBio = userBio;
+        this.avatarName = avatarName;
     }
 
-    public static int getUserType() {
+    public int getUserType() {
         return userType;
     }
 
-    public static void setUserType(int userType) {
-        User.userType = userType;
+    public int getRated() {
+        return rated;
     }
 
-    public static String getUsername() {
+    public int getCredit() {
+        return credit;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public String getTestId() {
+        return testId;
+    }
+
+    public String getUsername() {
         return username;
     }
 
-    public static void setUsername(String username) {
-        User.username = username;
-    }
-
-    public static String getUserBio() {
+    public String getUserBio() {
         return userBio;
     }
 
-    public static void setUserBio(String userBio) {
-        User.userBio = userBio;
-    }
-
-    public static String getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    public static void setEmail(String email) {
-        User.email = email;
-    }
-
-    public static ArrayList<Trait> getScores() {
+    public ArrayList<Score> getScores() {
         return scores;
     }
 
-    public static void setScores(ArrayList<Trait> scores) {
-        User.scores = scores;
+    public Bitmap getAvatar() {
+        return avatar;
     }
 
+    public String getAvatarName() {
+        return avatarName;
+    }
 
-    public User(int userType, String username, String userBio, String email, ArrayList<Trait> scores,int rated) {
+    public void setUserType(int userType) {
         this.userType = userType;
+    }
+
+    public void setRated(int rated) {
+        this.rated = rated;
+    }
+
+    public void setCredit(int credit) {
+        this.credit = credit;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public void setTestId(String testId) {
+        this.testId = testId;
+    }
+
+    public void setUsername(String username) {
         this.username = username;
+    }
+
+    public void setUserBio(String userBio) {
         this.userBio = userBio;
+    }
+
+    public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setScores(ArrayList<Score> scores) {
         this.scores = scores;
-        this.rated=rated;
+    }
+
+    public void setAvatar(Bitmap avatar) {
+        this.avatar = avatar;
+    }
+
+    public boolean hasTest(){
+        return this.getTestId() != null;
+    }
+
+    public boolean hasResults(){
+        return this.getScores().size() > 0;
     }
 }

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/constraintSearchFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fragmentBackground">
+
+    <EditText
+        android:id="@+id/etSearchUser"
+        style="@android:style/Widget.EditText"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/shape_card"
+        android:cursorVisible="true"
+        android:drawableStart="@drawable/v_magnify"
+        android:drawablePadding="12dp"
+        android:drawableTint="@color/Gray"
+        android:elevation="4dp"
+        android:ems="10"
+        android:hint="@string/hint_searchbar_username"
+        android:inputType="textPersonName"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:textColor="@color/Gray"
+        android:textSize="19sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ListView
+        android:id="@+id/listViewSearchResults"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/fragmentBackground"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etSearchUser"
+        app:layout_constraintVertical_bias="0.0"
+        android:isScrollContainer="false"
+        android:focusableInTouchMode="true"/>
+
+    <!-- User search info -->
+    <ImageView
+        android:id="@+id/ivIconSearchInfo"
+        android:layout_width="80dp"
+        android:layout_height="81dp"
+        android:tint="@color/Gray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/v_account_search" />
+
+    <TextView
+        android:id="@+id/tvSearchInfo"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/info_search"
+        android:textSize="16sp"
+        android:textColor="@color/Gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivIconSearchInfo" />
+</androidx.constraintlayout.widget.ConstraintLayout>
