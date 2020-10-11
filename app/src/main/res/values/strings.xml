@@ -87,7 +87,7 @@
     <string name="action_agreement_link"><font color="#2A71AC"><a  href="https://insightof.me/conditions">Kullanım koşulları</a></font>\'nı okudum ve kabul ediyorum.</string>
     <string name="action_sign_out">Oturumu Kapat</string>
     <string name="action_save">Kaydet</string>
-
+    <string name="action_create_test">Test oluştur</string>
     <!--Contents:
     Contents fills text fills or something like that-->
     <string name="body_share_test">Beni nasıl görüyorsun? Kişilik özelliklerimi kimliğini gizleyerek değerlendir. %1$s</string>
@@ -134,5 +134,7 @@
     <string name="alert_sign_up">Yeni Hesap Oluştur</string>
     <string name="alert_no_test">Testini paylaşabilmek için önce bir test oluşturman gerekiyor.</string>
     <string name="alert_no_results">Sonuçlarını görebilmek ve paylaşabilmek için daha fazla değerlendirilmeye ihtiyacın var.</string>
+    <string name="alert_test_not_exist">Henüz test oluşturmadın</string>
+
 
 </resources>

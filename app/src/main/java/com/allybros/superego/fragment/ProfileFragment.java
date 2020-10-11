@@ -268,6 +268,21 @@ public class ProfileFragment extends Fragment {
 
         if (!sessionManager.getUser().hasTest()) {
             btnShareTest.setAlpha(0.6f);
+
+            Log.d("Profile","Test not exist"+sessionManager.getUser().hasTest());
+            //Shows alert dialog for creating test
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.SegoAlertDialog);
+            builder.setTitle("insightof.me");
+            builder.setMessage(R.string.alert_test_not_exist);
+            builder.setPositiveButton( R.string.action_create_test, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    Intent intent = new Intent(getContext(), WebViewActivity.class);
+                    intent.putExtra("url", ConstantValues.CREATE_TEST);
+                    intent.putExtra("title", getString(R.string.activity_label_new_test));
+                    startActivity(intent);
+                }
+            });
+            builder.show();
         }
 
         btnNewTest.setOnClickListener(new View.OnClickListener() {

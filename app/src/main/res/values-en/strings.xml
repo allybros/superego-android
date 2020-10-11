@@ -97,4 +97,6 @@
     <string name="info_reward_ad_not_loaded">There is not an available ad right now. You can try again later.</string>
     <string name="alert_no_test">You need to create a test to share your test.</string>
     <string name="alert_no_results">You need more rates to see and share your results.</string>
+    <string name="action_create_test">Create Test</string>
+    <string name="alert_test_not_exist">Test not exist</string>
 </resources>
