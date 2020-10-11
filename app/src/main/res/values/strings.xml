@@ -116,7 +116,7 @@
     <string name="option_licenses">Lisans Bilgileri</string>
     <string name="option_licenses_desc">Yararlandığımız yazılım lisanslarını incele.</string>
     <string name="option_sign_out_desc">Geçerli oturumunu sonlandır.</string>
-    <string name="with_version_from" translatable="false">v.0.6 From Ally Bros Corporation</string>
+    <string name="with_version_from" translatable="false">v.0.7 From Ally Bros Corporation</string>
 
     <string name="call_or_connect_via">ya da bağlan;</string>
     <string name="desc_call_register">Hesabın Yok Mu? | <font color='#2A71AC'>Yeni Hesap Oluştur</font></string>
