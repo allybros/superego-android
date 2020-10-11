@@ -19,7 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -118,7 +117,7 @@ public class ProfileFragment extends Fragment {
 
                 switch (status){
                     case ErrorCodes.SYSFAIL:
-                        Toast.makeText(getContext(), getContext().getString(R.string.error_no_connection), Toast.LENGTH_SHORT).show();
+                        Snackbar.make(profileSwipeLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
                         break;
 
                     case ErrorCodes.SUCCESS:
@@ -220,7 +219,7 @@ public class ProfileFragment extends Fragment {
                                 showRewardedAd();
                             }
                             else {
-                                Toast.makeText(getContext(),getString(R.string.error_no_connection),Toast.LENGTH_LONG).show();
+                                Snackbar.make(profileSwipeLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
                                 Log.d("CONNECTION", String.valueOf(isConnected));
                             }
                         } else {
