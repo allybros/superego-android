@@ -2,6 +2,7 @@ package com.allybros.superego.fragment;
 
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -18,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -266,23 +268,10 @@ public class ProfileFragment extends Fragment {
             btnShareResults.setAlpha(0.6f);
         }
 
+        //Shows alert dialog for creating test
         if (!sessionManager.getUser().hasTest()) {
             btnShareTest.setAlpha(0.6f);
-
-            Log.d("Profile","Test not exist"+sessionManager.getUser().hasTest());
-            //Shows alert dialog for creating test
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.SegoAlertDialog);
-            builder.setTitle("insightof.me");
-            builder.setMessage(R.string.alert_test_not_exist);
-            builder.setPositiveButton( R.string.action_create_test, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    Intent intent = new Intent(getContext(), WebViewActivity.class);
-                    intent.putExtra("url", ConstantValues.CREATE_TEST);
-                    intent.putExtra("title", getString(R.string.activity_label_new_test));
-                    startActivity(intent);
-                }
-            });
-            builder.show();
+            showDialog();
         }
 
         btnNewTest.setOnClickListener(new View.OnClickListener() {
@@ -561,6 +550,30 @@ public class ProfileFragment extends Fragment {
             prepareBannerAd();
             initSwipeLayout();
         }
+    }
+
+    /**
+     * Shows a create test dialog
+     */
+    private void showDialog(){
+
+        final Dialog dialog = new Dialog(getContext(), R.style.SegoAlertDialog);
+        dialog.setContentView(R.layout.dialog_create_test);
+
+        Button dialogButton = (Button) dialog.findViewById(R.id.dialog_button_create_test);
+
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), WebViewActivity.class);
+                intent.putExtra("url", ConstantValues.CREATE_TEST);
+                intent.putExtra("title", getString(R.string.activity_label_new_test));
+                startActivity(intent);
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 
 

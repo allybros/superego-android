@@ -99,4 +99,6 @@
     <string name="alert_no_results">You need more rates to see and share your results.</string>
     <string name="action_create_test">Create Test</string>
     <string name="alert_test_not_exist">Test not exist</string>
+    <string name="info_no_test_card_title">You haven\'t created a test yet.</string>
+    <string name="info_no_test_card_bottom">For making your friends able to rate you, you need to create a test. When you reach a sufficient number of rates, you will be able to see your personality traits.</string>
 </resources>

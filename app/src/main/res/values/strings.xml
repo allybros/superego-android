@@ -96,6 +96,11 @@
     <string name="info_not_rated"><b>Henüz ilk sonucu görüntülemek için yeterli değerlendirmeye sahip değilsin.</b> Yeterli değerlendirme sayısına ulaştığında kişilik özelliklerini görebileceksin.</string>
     <string name="info_ads_desc">Reklam izleyerek ego puanı kazanabilirsin. Ego puanın arttıkça sonuçları görmek için gerekli değerlendirme sayın azalacak.</string>
     <string name="info_no_test">Henüz test oluşturmamışsın. Arkadaşlarının seni değerlendirebilmesi için önce bir test oluşturmalısın. Yeterli sayıda değerlendirmeye ulaştığında kişilik özelliklerini görebileceksin</string>
+    <string name="info_no_test_card_title">Henüz Test Oluşturmamışsın</string>
+    <string name="info_no_test_card_bottom">Arkadaşların tarafından değerlendirilebilmen için arkadaşlarına sormak istediğin kişilik özelliklerini belirlemelisin.</string>
+
+
+
     <string name="info_share_test">Arkadaşlarının seni değerlendirebilmeleri için testini arkadaşların ile paylaşmalısın. Değerlendirme sayın arttıkça daha detaylı sonuçlar görebileceksin.</string>
     <string name="info_partial_rates"><b>Tüm sonuçlarını görmek için yeterli değerlendirme sayısına sahip değilsin.</b> Arkadaşlarının değerlendirmesini beklemek istemiyorsan reklam izleyerek Ego puanı kazanabilirsin.</string>
     <string name="info_title_waiting_rates">Değerlendirilmelerin Bekleniyor...</string>
