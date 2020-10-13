@@ -3,6 +3,7 @@ package com.allybros.superego.fragment;
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
@@ -13,29 +14,40 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.allybros.superego.R;
 import com.allybros.superego.activity.UserPageActivity;
+import com.allybros.superego.api.EarnRewardTask;
 import com.allybros.superego.api.LoadProfileTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.unit.User;
 import com.allybros.superego.ui.ScoresAdapter;
 import com.allybros.superego.util.SessionManager;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.ads.rewarded.RewardItem;
+import com.google.android.gms.ads.rewarded.RewardedAd;
+import com.google.android.gms.ads.rewarded.RewardedAdCallback;
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -46,7 +58,9 @@ public class ResultsFragment extends Fragment {
     private User currentUser;
     private BroadcastReceiver resultsRefreshReceiver;
     private AdView adResultBanner;
-
+    private Button btnBadgeCredit, btnShowAd;
+    private RewardedAd rewardedAd;
+    private SessionManager sessionManager = SessionManager.getInstance();
     //3 states of Result screen represented in an Enum
     private enum State {
         NONE, PARTIAL, COMPLETE
@@ -181,10 +195,45 @@ public class ResultsFragment extends Fragment {
                 //Get views
                 listViewTraits = getView().findViewById(R.id.listViewPartialTraits);
                 tvRemainingRates = getView().findViewById(R.id.tvRemainingRatesPartial);
+                btnBadgeCredit = getView().findViewById(R.id.partial_credit_button);
+                btnShowAd = getView().findViewById(R.id.button_get_ego);
                 //Populate views
                 int remainingRates = 10 - (currentUser.getRated() + currentUser.getCredit());
                 tvRemainingRates.setText(getString(R.string.remaining_credits, remainingRates));
                 listViewTraits.setAdapter( new ScoresAdapter(getActivity(), currentUser.getScores()) );
+                btnBadgeCredit.setText(String.format("%d %s", sessionManager.getUser().getCredit(), getString(R.string.credit)));
+                prepareRewardedAd();
+                btnShowAd.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (rewardedAd.isLoaded()) {
+                            // Check internet connection
+                            ConnectivityManager cm = (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+                            boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+                            if(isConnected){
+                                showRewardedAd();
+                            }
+                            else {
+                                Snackbar.make(swipeLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
+                                Log.d("CONNECTION", String.valueOf(isConnected));
+                            }
+                        } else {
+                            // Show error dialog
+                            new AlertDialog.Builder(getActivity(), R.style.SegoAlertDialog)
+                                    .setTitle("insightof.me")
+                                    .setMessage(R.string.info_reward_ad_not_loaded)
+                                    .setPositiveButton(getString(R.string.action_ok), new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    })
+                                    .show();
+                            Log.d("EgoRewardAd", "The rewarded ad wasn't loaded yet.");
+                        }
+                    }
+                });
                 break;
 
             //All results
@@ -259,5 +308,60 @@ public class ResultsFragment extends Fragment {
     public void onDestroy() {
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(resultsRefreshReceiver);
         super.onDestroy();
+    }
+
+    /**
+     * Initializes and loads rewarded video ad.
+     */
+    private void prepareRewardedAd(){
+        final Context fragmentContext = getActivity();
+        if (fragmentContext==null) return;
+
+        this.rewardedAd = new RewardedAd(fragmentContext, getResources().getString(R.string.admob_ad_interface));
+        final RewardedAdLoadCallback adLoadCallback = new RewardedAdLoadCallback() {
+            @Override
+            public void onRewardedAdLoaded() {
+                // Ad successfully loaded.
+                Log.d("Reward Ad","Ad successfully loaded.");
+            }
+
+            @Override
+            public void onRewardedAdFailedToLoad(int errorCode) {
+                // Ad failed to load.
+                Log.d("Reward Ad","Ad failed to load. Try again");
+                prepareRewardedAd();
+            }
+        };
+        rewardedAd.loadAd(new AdRequest.Builder().build(), adLoadCallback);
+    }
+
+    /**
+     * Shows rewarded Ad and sets RewardAd callback. Calls reward task user if the user earned.
+     */
+    private void showRewardedAd(){
+        final String rewardCallbackTag = "RewardedAdCallback";
+        //Prepare rewarded ad callback
+        RewardedAdCallback rewardedAdCallback = new RewardedAdCallback() {
+            @Override
+            public void onRewardedAdOpened() {
+                Log.d(rewardCallbackTag,"Ad opened.");
+            }
+            @Override
+            public void onRewardedAdClosed() {
+                Log.d(rewardCallbackTag,"Ad closed.");
+            }
+            @Override
+            public void onUserEarnedReward(@NonNull RewardItem reward) {
+                Log.d(rewardCallbackTag,"User earned reward.");
+                EarnRewardTask.EarnRewardTask(getContext(), sessionManager.getSessionToken());
+                Log.d("Reward",""+reward.getAmount());
+            }
+            @Override
+            public void onRewardedAdFailedToShow(int errorCode) {
+                Log.d(rewardCallbackTag,"Ad failed to display.");
+            }
+        };
+        //Show rewarded ad
+        rewardedAd.show(getActivity(), rewardedAdCallback);
     }
 }

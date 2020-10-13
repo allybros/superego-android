@@ -84,7 +84,7 @@
     <string name="default_bio_search">insightof.me user.</string>
     <string name="info_search">Search your friends by username.</string>
     <string name="info_title_waiting_rates">Waiting Your Rates...</string>
-    <string name="info_partial_rates"><b>You don\'t have enough rates to reveal all of your traits.</b> You can get Ego points by watching ads, if you don\'t want to wait for more rates.</string>
+    <string name="info_partial_rates">You don\'t have enough rates to reveal all of your traits.</string>
     <string name="body_share_test">How do you see me? Rate my personality by hiding your identity. %1$s</string>
     <string name="body_share_results">My traits, according to my friends; %1$sYou can rate me now; %2$s</string>
     <string name="info_ads_desc">You can get Ego points by watching ads. The number of rates you need to reveal your traits will decrease when you earn Ego points.</string>
@@ -101,4 +101,7 @@
     <string name="alert_test_not_exist">Test not exist</string>
     <string name="info_no_test_card_title">You haven\'t created a test yet.</string>
     <string name="info_no_test_card_bottom">For making your friends able to rate you, you need to create a test. When you reach a sufficient number of rates, you will be able to see your personality traits.</string>
+    <string name="info_waiting_card_title">See All Results Now</string>
+    <string name="info_waiting_card_bottom">If you don\'t want to wait for your friends\' reviews, you can earn Ego points by watching ads and view all results without waiting.</string>
+    <string name="action_get_ego_points">Get Ego Points Now</string>
 </resources>

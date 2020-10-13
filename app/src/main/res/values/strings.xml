@@ -88,6 +88,8 @@
     <string name="action_sign_out">Oturumu Kapat</string>
     <string name="action_save">Kaydet</string>
     <string name="action_create_test">Test oluştur</string>
+    <string name="action_get_ego_points">Şimdi Ego Puanlarını Al</string>
+
     <!--Contents:
     Contents fills text fills or something like that-->
     <string name="body_share_test">Beni nasıl görüyorsun? Kişilik özelliklerimi kimliğini gizleyerek değerlendir. %1$s</string>
@@ -98,11 +100,13 @@
     <string name="info_no_test">Henüz test oluşturmamışsın. Arkadaşlarının seni değerlendirebilmesi için önce bir test oluşturmalısın. Yeterli sayıda değerlendirmeye ulaştığında kişilik özelliklerini görebileceksin</string>
     <string name="info_no_test_card_title">Henüz Test Oluşturmamışsın</string>
     <string name="info_no_test_card_bottom">Arkadaşların tarafından değerlendirilebilmen için arkadaşlarına sormak istediğin kişilik özelliklerini belirlemelisin.</string>
+    <string name="info_waiting_card_title">Tüm Sonuçlarını Hemen Gör</string>
+    <string name="info_waiting_card_bottom">Arkadaşlarının değerlendirmelerini beklemek istemiyorsan, reklam izleyerek Ego puanı kazanabilir ve beklemeden tüm sonuçlarını görüntüleyebilirsin.</string>
 
 
 
     <string name="info_share_test">Arkadaşlarının seni değerlendirebilmeleri için testini arkadaşların ile paylaşmalısın. Değerlendirme sayın arttıkça daha detaylı sonuçlar görebileceksin.</string>
-    <string name="info_partial_rates"><b>Tüm sonuçlarını görmek için yeterli değerlendirme sayısına sahip değilsin.</b> Arkadaşlarının değerlendirmesini beklemek istemiyorsan reklam izleyerek Ego puanı kazanabilirsin.</string>
+    <string name="info_partial_rates">Tüm sonuçlarını görmek için yeterli değerlendirme sayısına sahip değilsin.</string>
     <string name="info_title_waiting_rates">Değerlendirilmelerin Bekleniyor...</string>
     <string name="header_register">Arkadaşlarının gözünden\nkendini gör.</string>
 

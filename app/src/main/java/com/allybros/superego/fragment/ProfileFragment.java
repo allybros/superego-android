@@ -11,7 +11,6 @@ import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -19,7 +18,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -191,7 +189,7 @@ public class ProfileFragment extends Fragment {
         imageViewAvatar = getView().findViewById(R.id.user_avatar);
         tvUserbio = getView().findViewById(R.id.tvUserbio);
         tvUsername = getView().findViewById(R.id.tvUsername);
-        btnBadgeCredit = getView().findViewById(R.id.badgeCredit);
+        btnBadgeCredit = getView().findViewById(R.id.partial_credit_button);
         btnBadgeRated = getView().findViewById(R.id.badgeRated);
 
         //Populate views
