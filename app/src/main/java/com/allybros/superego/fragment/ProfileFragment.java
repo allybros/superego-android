@@ -494,20 +494,14 @@ public class ProfileFragment extends Fragment {
     private void shareResults(){
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
-        ArrayList<Score> scores = sessionManager.getUser().getScores();
-        StringBuilder resultsBuilder = new StringBuilder();
-        resultsBuilder.append("\n");
-        for (int i = 0; i < scores.size(); i++) {
-            Score s = scores.get(i);
-            // If Ad placeholder skip Score object
-            if (s.getTraitNo() == -2016) continue;
-            @SuppressLint("DefaultLocale")
-            String scoreLine = String.format("%d) %s\n", i+1, s.getTraitName() );
-            resultsBuilder.append(scoreLine);
-        }
-        //TODO: Decouple test url from here
+
+        String testResultId = SessionManager.getInstance().getUser().getTestResultId();
         String testUrl = String.format("https://insightof.me/%s", sessionManager.getUser().getTestId());
-        String shareBody = getString(R.string.body_share_results, resultsBuilder.toString(), testUrl);
+
+        StringBuilder resultsBuilder = new StringBuilder();
+        resultsBuilder.append(testResultId+"\n");
+
+        String shareBody = getString(R.string.body_share_results, testResultId, testUrl);
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, R.string.action_btn_share_results);
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
         startActivity(Intent.createChooser(sharingIntent, getString(R.string.action_btn_share_results)));

@@ -3,22 +3,26 @@ package com.allybros.superego.unit;
 
 import android.graphics.Bitmap;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 
 public class User {
 
     private int userType, rated, credit;
-    private String image,testId,username,userBio,email, avatarName;
+    private String image,testId, testResultId,username,userBio,email, avatarName;
     private ArrayList<Score> scores;
     private Bitmap avatar;      //Görsel öğeler için kullanılıyor.
 
-    public User(int userType, int rated, int credit, String image, String testId, String username, String userBio, String email, ArrayList<Score> scores) {
+    public User(int userType, int rated, int credit, String image, String testId, String testResultId, String username, String userBio, String email, ArrayList<Score> scores) {
         this.userType = userType;
         this.rated = rated;
         this.credit = credit;
         this.image = image;
         if (testId.equals("null")) this.testId = null;
         else this.testId = testId;
+        if (testResultId.equals("null")) this.testResultId = null;
+        else this.testResultId = testResultId;
         this.username = username;
         if (userBio.equals("null")) this.userBio = null;
         else this.userBio = userBio;
@@ -53,6 +57,10 @@ public class User {
 
     public String getTestId() {
         return testId;
+    }
+
+    public String getTestResultId() {
+        return testResultId;
     }
 
     public String getUsername() {
@@ -97,6 +105,10 @@ public class User {
 
     public void setTestId(String testId) {
         this.testId = testId;
+    }
+
+    public void setTestResultId(String testResultId) {
+        this.testResultId = testResultId;
     }
 
     public void setUsername(String username) {

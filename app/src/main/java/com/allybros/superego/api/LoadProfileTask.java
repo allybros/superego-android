@@ -65,6 +65,7 @@ public class LoadProfileTask{
                         String username = jsonObject.getString("username");
                         String user_bio = jsonObject.getString("user_bio");
                         String test_id = jsonObject.getString("test_id");
+                        String test_result_id = jsonObject.getString("test_result_id");
                         String email = jsonObject.getString("email");
                         String image = jsonObject.getString("avatar");
                         int rated = jsonObject.getInt("rated");
@@ -82,7 +83,7 @@ public class LoadProfileTask{
                         }
 
                         SessionManager.getInstance().setUser(
-                                new User(user_type, rated, credit, image, test_id, username, user_bio, email, scoresList));
+                                new User(user_type, rated, credit, image, test_id, test_result_id, username, user_bio, email, scoresList));
                     }
                     // Send broadcast
                     Log.d("Load Profile Task","Load profile completed.");
