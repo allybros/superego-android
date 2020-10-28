@@ -498,10 +498,7 @@ public class ProfileFragment extends Fragment {
         String testResultId = SessionManager.getInstance().getUser().getTestResultId();
         String testUrl = String.format("https://insightof.me/%s", sessionManager.getUser().getTestId());
 
-        StringBuilder resultsBuilder = new StringBuilder();
-        resultsBuilder.append(testResultId+"\n");
-
-        String shareBody = getString(R.string.body_share_results, testResultId, testUrl);
+        String shareBody = getString(R.string.body_share_results, testResultId+"\n", testUrl);
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, R.string.action_btn_share_results);
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
         startActivity(Intent.createChooser(sharingIntent, getString(R.string.action_btn_share_results)));
