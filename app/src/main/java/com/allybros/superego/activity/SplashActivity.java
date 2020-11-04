@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -197,8 +198,56 @@ public class SplashActivity extends AppCompatActivity {
                 try {
                     JSONObject jsonObject=new JSONObject(response);
 
-                    for (int i = 0; i < jsonObject.getJSONArray("traits").length(); i++) {
-                        JSONObject iter= (JSONObject) jsonObject.getJSONArray("traits").get(i);
+                    for(int i = 0; i < jsonObject.getJSONArray("o").length(); i++) {
+                        JSONObject iter= (JSONObject) jsonObject.getJSONArray("o").get(i);
+                        int traitNo;
+                        String positiveName,negativeName,positiveIcon,negativeIcon;
+
+                        traitNo=iter.getInt("traitNo");
+                        positiveName=iter.getString("positive");
+                        negativeName=iter.getString("negative");
+                        positiveIcon=iter.getString("positive_icon");
+                        negativeIcon=iter.getString("negative_icon");
+                        traits.add(new Trait(traitNo,positiveName,negativeName,positiveIcon,negativeIcon));
+                    }
+                    for(int i = 0; i < jsonObject.getJSONArray("c").length(); i++) {
+                        JSONObject iter= (JSONObject) jsonObject.getJSONArray("c").get(i);
+                        int traitNo;
+                        String positiveName,negativeName,positiveIcon,negativeIcon;
+
+                        traitNo=iter.getInt("traitNo");
+                        positiveName=iter.getString("positive");
+                        negativeName=iter.getString("negative");
+                        positiveIcon=iter.getString("positive_icon");
+                        negativeIcon=iter.getString("negative_icon");
+                        traits.add(new Trait(traitNo,positiveName,negativeName,positiveIcon,negativeIcon));
+                    }
+                    for(int i = 0; i < jsonObject.getJSONArray("e").length(); i++) {
+                        JSONObject iter= (JSONObject) jsonObject.getJSONArray("e").get(i);
+                        int traitNo;
+                        String positiveName,negativeName,positiveIcon,negativeIcon;
+
+                        traitNo=iter.getInt("traitNo");
+                        positiveName=iter.getString("positive");
+                        negativeName=iter.getString("negative");
+                        positiveIcon=iter.getString("positive_icon");
+                        negativeIcon=iter.getString("negative_icon");
+                        traits.add(new Trait(traitNo,positiveName,negativeName,positiveIcon,negativeIcon));
+                    }
+                    for(int i = 0; i < jsonObject.getJSONArray("a").length(); i++) {
+                        JSONObject iter= (JSONObject) jsonObject.getJSONArray("a").get(i);
+                        int traitNo;
+                        String positiveName,negativeName,positiveIcon,negativeIcon;
+
+                        traitNo=iter.getInt("traitNo");
+                        positiveName=iter.getString("positive");
+                        negativeName=iter.getString("negative");
+                        positiveIcon=iter.getString("positive_icon");
+                        negativeIcon=iter.getString("negative_icon");
+                        traits.add(new Trait(traitNo,positiveName,negativeName,positiveIcon,negativeIcon));
+                    }
+                    for(int i = 0; i < jsonObject.getJSONArray("n").length(); i++) {
+                        JSONObject iter= (JSONObject) jsonObject.getJSONArray("n").get(i);
                         int traitNo;
                         String positiveName,negativeName,positiveIcon,negativeIcon;
 
@@ -211,6 +260,7 @@ public class SplashActivity extends AppCompatActivity {
                     }
                     getTraitsLock = true;
                     notifyTaskComplete();
+                    Trait.setAllTraits(traits);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -224,7 +274,6 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
         queue.add(jsonRequest);
-        Trait.setAllTraits(traits);
     }
 }
 
