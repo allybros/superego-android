@@ -190,7 +190,6 @@ public class EditProfileActivity extends AppCompatActivity {
         mImageLoader = RequestForGetImageNoCache.getInstance(getApplicationContext()).getImageLoader();
         mImageLoader.get(URL, ImageLoader.getImageListener(settingsImage, R.drawable.default_avatar, R.drawable.default_avatar));
         settingsImage.setImageUrl(URL, mImageLoader);
-        //TODO: Temporary solution, it will be developed
         if(!isConnected) Snackbar.make(editProfileLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
 
         //Require for slide behaviour
