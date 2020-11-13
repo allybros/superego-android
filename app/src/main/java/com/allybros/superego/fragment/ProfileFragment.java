@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,6 +31,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.allybros.superego.R;
 import com.allybros.superego.activity.LoginActivity;
+import com.allybros.superego.activity.SettingsActivity;
 import com.allybros.superego.activity.UserPageActivity;
 import com.allybros.superego.activity.WebViewActivity;
 import com.allybros.superego.api.EarnRewardTask;
@@ -37,7 +39,6 @@ import com.allybros.superego.api.LoadProfileTask;
 import com.allybros.superego.ui.CircledNetworkImageView;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
-import com.allybros.superego.unit.Score;
 import com.allybros.superego.util.HelperMethods;
 import com.allybros.superego.util.SessionManager;
 import com.daimajia.androidanimations.library.Techniques;
@@ -55,12 +56,10 @@ import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.util.ArrayList;
-
 public class ProfileFragment extends Fragment {
 
-    private TextView tvUsername, tvUserbio, tvProfileInfoCard;
-    private Button btnNewTest, btnShareTest, btnShareResults, btnBadgeCredit, btnBadgeRated;
+    private TextView tvUsername, tvUserbio, tvProfileInfoCard , badgeCredit, badgeRated;
+    private Button btnNewTest, btnShareTest, btnShareResults, btnSettings;
     private CircledNetworkImageView imageViewAvatar;
     private SwipeRefreshLayout profileSwipeLayout;
     private RewardedAd rewardedAd;
@@ -189,8 +188,8 @@ public class ProfileFragment extends Fragment {
         imageViewAvatar = getView().findViewById(R.id.user_avatar);
         tvUserbio = getView().findViewById(R.id.tvUserbio);
         tvUsername = getView().findViewById(R.id.tvUsername);
-        btnBadgeCredit = getView().findViewById(R.id.partial_credit_button);
-        btnBadgeRated = getView().findViewById(R.id.badgeRated);
+        badgeCredit = getView().findViewById(R.id.badgeCredit);
+        badgeRated = getView().findViewById(R.id.badgeRated);
 
         //Populate views
         if (sessionManager.getUser().getUserBio() != null) {
@@ -200,9 +199,9 @@ public class ProfileFragment extends Fragment {
         }
 
         tvUsername.setText("@"+sessionManager.getUser().getUsername());
-        btnBadgeCredit.setText(String.format("%d %s", sessionManager.getUser().getCredit(), getString(R.string.credit)));
+        badgeCredit.setText(String.format("%d %s", sessionManager.getUser().getCredit(), getString(R.string.credit)));
 
-        btnBadgeCredit.setOnClickListener(new View.OnClickListener() {
+        badgeCredit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.SegoAlertDialog);
@@ -248,7 +247,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        btnBadgeRated.setText(sessionManager.getUser().getRated() + getString(R.string.rated));
+        badgeRated.setText(sessionManager.getUser().getRated() + getString(R.string.rated));
 
         HelperMethods.imageLoadFromUrlNoCache(getContext(), ConstantValues.AVATAR_URL+sessionManager.getUser().getImage(), imageViewAvatar);
     }
@@ -261,6 +260,7 @@ public class ProfileFragment extends Fragment {
         btnNewTest = getView().findViewById(R.id.btnAddTest);
         btnShareTest = getView().findViewById(R.id.btnShareTest);
         btnShareResults = getView().findViewById(R.id.btnShareResult);
+        btnSettings = getView().findViewById(R.id.btnSettings);
 
         if (!sessionManager.getUser().hasResults()) {
             btnShareResults.setAlpha(0.6f);
@@ -319,6 +319,14 @@ public class ProfileFragment extends Fragment {
                     Snackbar.make(profileSwipeLayout, R.string.alert_no_results, BaseTransientBottomBar.LENGTH_LONG).show();
                 }
 
+            }
+        });
+
+        btnSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(), SettingsActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -439,12 +447,12 @@ public class ProfileFragment extends Fragment {
                 Log.d("Reward Ad","Ad successfully loaded.");
                 if(sessionManager.getUser().getRated() >= 5){
                     //User able to use Ego points
-                    btnBadgeCredit.setBackground(ContextCompat.getDrawable(fragmentContext, R.drawable.selector_credit));
-                    btnBadgeCredit.setEnabled(true);
+                    badgeCredit.setBackground(ContextCompat.getDrawable(fragmentContext, R.drawable.selector_credit));
+                    badgeCredit.setEnabled(true);
                     YoYo.with(Techniques.Bounce)
                             .duration(1000)
                             .repeat(5)
-                            .playOn(btnBadgeCredit);
+                            .playOn(badgeCredit);
                 }
             }
 
