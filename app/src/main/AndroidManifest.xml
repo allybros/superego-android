@@ -35,7 +35,6 @@
             android:name="com.allybros.superego.activity.UserPageActivity"
             android:label="@string/activity_label_profile"
             android:launchMode="singleTop"
-            android:theme="@style/UserPage.theme"
             android:windowSoftInputMode="adjustResize"/>
 
         <activity
@@ -43,7 +42,7 @@
             android:label="@string/activity_label_register"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
 
 
         <activity android:name="com.allybros.superego.activity.SettingsActivity"

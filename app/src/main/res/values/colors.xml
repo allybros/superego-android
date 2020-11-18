@@ -34,15 +34,9 @@
     <color name="yosemiteOrange">#EA8D8D</color>
     <color name="yosemitePurple">#A890FE</color>
 
-    <!--Vintage Navy & White Colors-->
-    <color name="antiFlashWhite">#F3F3F6</color>
-
     <!-- Antarctica -->
     <color name="antarcticaPurple">#D8B5FF</color>
     <color name="antarcticaGreen">#1EAE98</color>
-    <color name="antarcticaPink">#A091D6</color>
-    <color name="antarcticaLightPink">#F2AEBB</color>
-    <color name="antarcticaDarkBlue">#696FC7</color>
 
     <!-- Peach Pallete -->
     <color name="peachLight">#DAB44E</color>

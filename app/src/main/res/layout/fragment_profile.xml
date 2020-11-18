@@ -11,320 +11,216 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/profileSwipeLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/antiFlashWhite">
-        <ScrollView
+        android:layout_height="match_parent" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/antiFlashWhite">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-
+            <!-- Profile Card View -->
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayoutProfileContainer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/antiFlashWhite"
-                android:paddingBottom="20dp">
+                android:background="@drawable/shape_card"
+                android:clipToPadding="false"
+                android:paddingTop="12dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="0dp"
+                android:layout_margin="12dp"
+                android:elevation="4dp">
 
-
-
-                <!--Renkli kısım-->
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayoutProfileTop"
+                <TextView
+                    android:id="@+id/tvUsername"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/shape_profile_top"
-                    android:elevation="10dp"
-                    android:padding="100dp"
-                    android:translationZ="0dp"
+                    android:layout_marginTop="8dp"
+                    android:text="\@username"
+                    android:textColor="#262626"
+                    android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                    app:layout_constraintTop_toBottomOf="@+id/user_avatar" />
 
-                <!--Profil Fotografı-->
+                <TextView
+                    android:id="@+id/tvUserbio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="man who chooses to enjoy a pleasure thaasure?"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvUsername" />
+
+                <LinearLayout
+                    android:id="@+id/badgesRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:clipToPadding="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvUserbio">
+
+                    <Button
+                        android:id="@+id/badgeRated"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@drawable/shape_rated"
+                        android:elevation="12dp"
+                        android:enabled="false"
+                        android:drawableStart="@drawable/baseline_done_white_18"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:text="Score"
+                        android:textAllCaps="false"
+                        tools:ignore="HardcodedText,RtlHardcoded" />
+
+                    <Button
+                        android:id="@+id/partial_credit_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:textAllCaps="false"
+                        android:background="@drawable/passive_credit_bg"
+                        android:elevation="12dp"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:enabled="false"
+                        android:drawableStart="@drawable/ic_chamleon"
+                        android:text="Credit" />
+
+                </LinearLayout>
+
                 <com.allybros.superego.ui.CircledNetworkImageView
                     android:id="@+id/user_avatar"
                     android:layout_width="135dp"
                     android:layout_height="135dp"
                     android:src="@drawable/default_avatar"
-                    android:layout_marginTop="36dp"
-                    android:translationZ="10dp"
-                    android:elevation="4dp"
-                    app:layout_constraintEnd_toStartOf="parent"
-                    app:layout_constraintStart_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/constraintLayoutProfileContainer" />
-
-                <Button
-                    android:id="@+id/btnSettings"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:background="@drawable/ic_baseline_settings_36"
-                    android:translationZ="12dp"
-                    app:layout_constraintEnd_toEndOf="@+id/constraintLayoutProfileTop"
-                    app:layout_constraintTop_toTopOf="@+id/constraintLayoutProfileTop" />
-
-
-                <!--Profil Card-->
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="36dp"
-                    android:layout_marginTop="90dp"
-                    android:layout_marginEnd="36dp"
-                    android:background="@drawable/shape_card"
-                    android:elevation="4dp"
-                    android:paddingTop="64dp"
-                    android:translationZ="7dp"
-                    app:layout_constraintEnd_toStartOf="parent"
-                    app:layout_constraintStart_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/constraintLayoutProfileContainer">
-
-
-                    <TextView
-                        android:id="@+id/tvUsername"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="\@username"
-                        android:textColor="#262626"
-                        android:textSize="20sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <LinearLayout
-                        android:id="@+id/badgesRow"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:clipToPadding="false"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="8dp"
-                        android:background="@drawable/passive_credit_bg"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvUsername">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="80dp"
-                            android:orientation="vertical"
-                            android:gravity="center"
-                            android:background="@drawable/passive_credit_bg"
-                            android:layout_weight="1">
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_baseline_done_36">
-                            </ImageView>
-                            <TextView
-                                android:id="@+id/badgeRated"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Değerlendirme"
-                                android:layout_gravity="center"
-                                android:textSize="14sp">
-                            </TextView>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="80dp"
-                            android:orientation="vertical"
-                            android:gravity="center"
-                            android:background="@drawable/passive_credit_bg"
-                            android:layout_weight="1">
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_chamleon">
-                            </ImageView>
-                            <TextView
-                                android:id="@+id/badgeCredit"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Credit:"
-                                android:layout_gravity="center"
-                                android:textSize="14sp">
-                            </TextView>
-                        </LinearLayout>
-                    </LinearLayout>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <!--Alt kısım-->
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayoutProfileBottom"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/antiFlashWhite"
-                    android:padding="20dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/constraintLayoutProfileTop">
-
-                    <TextView
-                        android:id="@+id/tvAboutConstant"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="120dp"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginEnd="8dp"
-                        android:gravity="left"
-                        android:text="@string/tvAboutConstant"
-                        android:textSize="22sp"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tvUserbio"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:gravity="center"
-                        android:text="man who chooses to enjoy a pleasure thaasure?"
-                        android:textSize="18sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvAboutConstant" />
-
-                    <TextView
-                        android:id="@+id/tvProfileInfoCard"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginTop="24dp"
-                        android:layout_marginEnd="12dp"
-                        android:background="@drawable/selector_profile_textview"
-                        android:clickable="true"
-                        android:elevation="4dp"
-                        android:enabled="true"
-                        android:focusable="true"
-                        android:gravity="center"
-                        android:padding="12dp"
-                        android:text="man who chooses to enjoy a pleasure that has
-                        no annoying consequences, or one who avoids a pain that
-                        produces no resultant pleasure?"
-                        android:textColor="@color/White"
-                        android:textSize="15sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvUserbio" />
-
-                    <LinearLayout
-                        android:id="@+id/rowButtons"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginTop="24dp"
-                        android:layout_marginEnd="12dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvProfileInfoCard">
-
-                        <Button
-                            android:id="@+id/btnAddTest"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="4dp"
-                            android:layout_marginBottom="12dp"
-                            android:layout_weight="0.33"
-                            android:background="@drawable/v_selector_btn_new_test"
-
-                            android:drawableTop="@drawable/outline_add_white_36"
-                            android:elevation="4dp"
-                            android:paddingTop="12dp"
-                            android:paddingBottom="12dp"
-                            android:text="@string/action_btn_new_test"
-                            android:textAllCaps="false"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <Button
-                            android:id="@+id/btnShareTest"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp"
-                            android:layout_marginEnd="4dp"
-                            android:layout_marginBottom="12dp"
-                            android:layout_weight="0.33"
-                            android:background="@drawable/selector_btn_share_test"
-                            android:drawableTop="@drawable/outline_link_white_36"
-                            android:paddingTop="12dp"
-                            android:paddingBottom="12dp"
-                            android:text="@string/action_btn_share_test"
-                            android:textAllCaps="false"
-                            app:layout_constraintEnd_toStartOf="@+id/shareTest"
-                            app:layout_constraintStart_toEndOf="@+id/addTest"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <Button
-                            android:id="@+id/btnShareResult"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp"
-                            android:layout_marginBottom="12dp"
-                            android:layout_weight="0.33"
-                            android:background="@drawable/selector_btn_share_result"
-                            android:drawableTop="@drawable/baseline_share_white_36"
-                            android:paddingTop="12dp"
-                            android:paddingBottom="12dp"
-                            android:text="@string/action_btn_share_results"
-                            android:textAllCaps="false"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-
-                    </LinearLayout>
-
-
-                    <TextView
-                        android:id="@+id/tvSupporterConstant"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginTop="24dp"
-                        android:layout_marginEnd="8dp"
-                        android:gravity="left"
-                        android:text="@string/tvSupporter"
-                        android:textSize="22sp"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/rowButtons" />
-
-
-                    <FrameLayout
-                        android:id="@+id/ProfileCardAd"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="12dp"
-                        android:layout_marginBottom="12dp"
-                        android:background="@drawable/shape_card"
-                        android:elevation="4dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvSupporterConstant">
-
-                        <com.google.android.gms.ads.AdView
-                            android:id="@+id/profileBannerAdd"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:adSize="LARGE_BANNER"
-                            app:adUnitId="@string/admob_profile_banner" />
-                    </FrameLayout>
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </ScrollView>
+
+
+
+            <!-- ToolBar Buttons -->
+            <LinearLayout
+                android:id="@+id/rowButtons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardViewProfile">
+
+                <Button
+                    android:id="@+id/btnAddTest"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginBottom="12dp"
+                    android:layout_weight="0.33"
+                    android:elevation="4dp"
+
+                    android:background="@drawable/v_selector_btn_new_test"
+                    android:drawableTop="@drawable/outline_add_white_36"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
+                    android:text="@string/action_btn_new_test"
+                    android:textAllCaps="false"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/btnShareTest"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginBottom="12dp"
+                    android:layout_weight="0.33"
+                    android:background="@drawable/selector_btn_share_test"
+                    android:drawableTop="@drawable/outline_link_white_36"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
+                    android:text="@string/action_btn_share_test"
+                    android:textAllCaps="false"
+                    app:layout_constraintEnd_toStartOf="@+id/shareTest"
+                    app:layout_constraintStart_toEndOf="@+id/addTest"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/btnShareResult"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/selector_btn_share_result"
+                    android:drawableTop="@drawable/baseline_share_white_36"
+                    android:layout_weight="0.33"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginBottom="12dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
+                    android:text="@string/action_btn_share_results"
+                    android:textAllCaps="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </LinearLayout>
+
+            <!-- User Info Card -->
+            <TextView
+                android:id="@+id/tvProfileInfoCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:enabled="true"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:background="@drawable/selector_profile_textview"
+                android:elevation="4dp"
+                android:gravity="center"
+                android:padding="12dp"
+                android:textSize="15sp"
+                android:text="man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?"
+                android:textColor="@color/White" />
+
+            <!-- Google Ad -->
+            <FrameLayout
+                android:id="@+id/ProfileCardAd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/shape_card"
+                android:elevation="4dp">
+
+                <com.google.android.gms.ads.AdView
+                    android:id="@+id/profileBannerAdd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:adSize="LARGE_BANNER"
+                    app:adUnitId="@string/admob_profile_banner" />
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </FrameLayout>
