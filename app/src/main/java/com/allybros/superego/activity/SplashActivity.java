@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -26,6 +28,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
@@ -46,17 +49,36 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        getAllTraits(getApplicationContext());
-        setupReceivers();
+        // Check internet connection
+        ConnectivityManager cm = (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+        if(isConnected){
+            getAllTraits(getApplicationContext());
+            setupReceivers();
 
-        SessionManager.getInstance().readInfo(getApplicationContext());
-        if(!SessionManager.getInstance().getSessionToken().isEmpty()){
-            // User signed in before
-            LoadProfileTask.loadProfileTask(getApplicationContext(),
-                    SessionManager.getInstance().getSessionToken(), ConstantValues.ACTION_LOAD_PROFILE);
+            SessionManager.getInstance().readInfo(getApplicationContext());
+            if(!SessionManager.getInstance().getSessionToken().isEmpty()){
+                // User signed in before
+                LoadProfileTask.loadProfileTask(getApplicationContext(),
+                        SessionManager.getInstance().getSessionToken(), ConstantValues.ACTION_LOAD_PROFILE);
 
-        }else{
-            returnLoginActivity();
+            }else{
+                returnLoginActivity();
+            }
+        }
+        else {
+            new AlertDialog.Builder(SplashActivity.this, R.style.SegoAlertDialog)
+                    .setTitle("insightof.me")
+                    .setMessage(R.string.error_no_connection)
+                    .setPositiveButton(getString(R.string.action_ok), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            SplashActivity.this.finish();
+                            System.exit(0);
+                        }
+                    })
+                    .show();
         }
     }
 
@@ -96,22 +118,6 @@ public class SplashActivity extends AppCompatActivity {
                                     }
                                 })
                                 .show();
-
-                    case ErrorCodes.CONNECTION_ERROR:
-                        // TODO: Detect network issues
-                        new AlertDialog.Builder(SplashActivity.this, R.style.SegoAlertDialog)
-                            .setTitle("insightof.me")
-                            .setMessage(R.string.error_no_connection)
-                            .setPositiveButton(getString(R.string.action_ok), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    SplashActivity.this.finish();
-                                    System.exit(0);
-                                }
-                            })
-                            .show();
-
-                        break;
                 }
             }
         };

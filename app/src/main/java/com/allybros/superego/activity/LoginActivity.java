@@ -280,7 +280,12 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    //Provides that cacth the results that come back from Google an Facebook sign in //TODO: Make javadoc
+    /**
+     * Provides that cacth the results that come back from Google an Facebook sign in
+     * @param data is a variable that comes back from the intent. It includes data that is needed.
+     * @param requestCode is a variable that defines what intent come back.
+     * @param resultCode  is a variable that defines intent result.
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -295,7 +300,10 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    //Sends request to Ally Bros Api for signing in with Google TODO: Make javadoc.
+    /**
+     * Sends request to Ally Bros Api for signing in with Google
+     * @param completedTask that has provided from GoogleSignInApi. It has result of google sign in task.
+     */
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
