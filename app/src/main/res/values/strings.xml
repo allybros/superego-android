@@ -131,8 +131,8 @@
     <string name="desc_call_register">Hesabın Yok Mu? | <font color='#2A71AC'>Yeni Hesap Oluştur</font></string>
 
     <!--TODO: Bunların kullanımı için kategori ismi oluşturulmalı-->
-    <string name="rated">\ Değerlendirme</string>
-    <string name="credit" translatable="false">\ Ego</string>
+    <string name="rated">\ Değerlendirme\ </string>
+    <string name="credit" translatable="false">\ Ego\ </string>
     <string name="error_code">Kod: </string>
     <string name="remaining_credits">Kalan Değerlendirme: %1$s</string>
     <string name="default_bio_profile">Kendini tanıtan kısa bir yazı yazabilirsin.</string>
@@ -144,6 +144,8 @@
     <string name="alert_no_test">Testini paylaşabilmek için önce bir test oluşturman gerekiyor.</string>
     <string name="alert_no_results">Sonuçlarını görebilmek ve paylaşabilmek için daha fazla değerlendirilmeye ihtiyacın var.</string>
     <string name="alert_test_not_exist">Henüz test oluşturmadın</string>
+    <string name="tvAboutConstant">Hakkımda:</string>
+    <string name="tvSupporter">Sponsor:</string>
 
 
 </resources>

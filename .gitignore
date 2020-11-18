@@ -1,4 +1,5 @@
 *.iml
+.idea/
 .gradle
 /local.properties
 /.idea/caches/build_file_checksums.ser
@@ -10,3 +11,9 @@
 /captures
 .externalNativeBuild
 app/src/main/res/values/secrets.xml
+.idea/gradle.xml
+.idea/misc.xml
+gradle/wrapper/gradle-wrapper.properties
+./app/.gitignore
+./app/.idea/assetWizardSettings.xml
+./app/.gitignore
