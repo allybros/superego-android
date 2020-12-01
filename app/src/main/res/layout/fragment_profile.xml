@@ -35,7 +35,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/shape_profile_top"
                     android:elevation="10dp"
-                    android:padding="100dp"
+                    android:padding="125dp"
                     android:translationZ="0dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -43,19 +43,25 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <!--Profil Fotografı-->
-                <com.allybros.superego.ui.CircledNetworkImageView
-                    android:id="@+id/user_avatar"
-                    android:layout_width="135dp"
-                    android:layout_height="135dp"
-                    android:src="@drawable/default_avatar"
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="36dp"
+                    android:padding="5dp"
                     android:translationZ="10dp"
+                    android:background="@drawable/shape_circle_imageview"
                     android:elevation="4dp"
                     app:layout_constraintEnd_toStartOf="parent"
                     app:layout_constraintStart_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/constraintLayoutProfileContainer" />
+                    app:layout_constraintTop_toTopOf="@id/constraintLayoutProfileContainer">
+                    <com.allybros.superego.ui.CircledNetworkImageView
+                        android:id="@+id/user_avatar"
+                        android:layout_width="135dp"
+                        android:layout_height="135dp"
+                        android:src="@drawable/default_avatar" />
+                </FrameLayout>
 
-                <Button
+                <ImageView
                     android:id="@+id/btnSettings"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
@@ -72,9 +78,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="36dp"
-                    android:layout_marginTop="90dp"
+                    android:layout_marginTop="125dp"
                     android:layout_marginEnd="36dp"
-                    android:background="@drawable/shape_card"
+                    android:background="@color/transparent"
                     android:elevation="4dp"
                     android:paddingTop="64dp"
                     android:translationZ="7dp"
@@ -87,10 +93,10 @@
                         android:id="@+id/tvUsername"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
                         android:text="\@username"
-                        android:textColor="#262626"
+                        android:textColor="@color/White"
                         android:textSize="20sp"
+                        android:textStyle="italic"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -99,58 +105,63 @@
                         android:id="@+id/badgesRow"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/shape_card"
                         android:clipToPadding="false"
                         android:gravity="center"
                         android:orientation="horizontal"
-                        android:layout_marginTop="8dp"
-                        android:background="@drawable/passive_credit_bg"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tvUsername">
 
-                        <LinearLayout
+                        <!--Rated area-->
+                        <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="0dp"
                             android:layout_height="80dp"
-                            android:orientation="vertical"
+                            android:layout_weight="1"
+                            android:background="@drawable/shape_card"
                             android:gravity="center"
-                            android:background="@drawable/passive_credit_bg"
-                            android:layout_weight="1">
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_baseline_done_36">
-                            </ImageView>
+                            android:orientation="vertical">
+
                             <TextView
                                 android:id="@+id/badgeRated"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Değerlendirme"
                                 android:layout_gravity="center"
-                                android:textSize="14sp">
-                            </TextView>
-                        </LinearLayout>
+                                android:layout_marginTop="16dp"
+                                android:gravity="center"
+                                android:text="Değerlendirme"
+                                android:textSize="18dp"
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"></TextView>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                        <LinearLayout
+                        <!--Credit area-->
+                        <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="0dp"
                             android:layout_height="80dp"
-                            android:orientation="vertical"
+                            android:layout_weight="1"
+                            android:background="@drawable/shape_card"
                             android:gravity="center"
-                            android:background="@drawable/passive_credit_bg"
-                            android:layout_weight="1">
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_chamleon">
-                            </ImageView>
+                            android:orientation="vertical">
+
                             <TextView
                                 android:id="@+id/badgeCredit"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Credit:"
                                 android:layout_gravity="center"
-                                android:textSize="14sp">
-                            </TextView>
-                        </LinearLayout>
+                                android:layout_marginTop="16dp"
+                                android:text="Credit"
+                                android:gravity="center"
+                                android:textSize="18dp"
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"></TextView>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
                     </LinearLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -160,8 +171,10 @@
                     android:id="@+id/constraintLayoutProfileBottom"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
                     android:background="@color/antiFlashWhite"
                     android:padding="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayoutProfileTop">
@@ -170,8 +183,8 @@
                         android:id="@+id/tvAboutConstant"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="120dp"
                         android:layout_marginStart="12dp"
+                        android:layout_marginTop="60dp"
                         android:layout_marginEnd="8dp"
                         android:gravity="left"
                         android:text="@string/tvAboutConstant"

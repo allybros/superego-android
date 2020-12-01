@@ -71,7 +71,7 @@
     <string name="option_sign_out_desc">End current session.</string>
     <string name="call_or_connect_via">or connect;</string>
     <string name="desc_call_register">Don\'t have an account? | <font color="#2A71AC">Create Account</font></string>
-    <string name="rated">\ Rates</string>
+    <string name="rated">\ Rates\n</string>
     <string name="error_code">Code:</string>
     <string name="remaining_credits">Remaining Rates: %1$s</string>
     <string name="default_bio_profile">Short information about you.</string>

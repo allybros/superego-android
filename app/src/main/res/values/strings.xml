@@ -131,8 +131,8 @@
     <string name="desc_call_register">Hesabın Yok Mu? | <font color='#2A71AC'>Yeni Hesap Oluştur</font></string>
 
     <!--TODO: Bunların kullanımı için kategori ismi oluşturulmalı-->
-    <string name="rated">\ Değerlendirme\ </string>
-    <string name="credit" translatable="false">\ Ego\ </string>
+    <string name="rated">\ Değerlendirme\n </string>
+    <string name="credit" translatable="false">\ Ego\n </string>
     <string name="error_code">Kod: </string>
     <string name="remaining_credits">Kalan Değerlendirme: %1$s</string>
     <string name="default_bio_profile">Kendini tanıtan kısa bir yazı yazabilirsin.</string>

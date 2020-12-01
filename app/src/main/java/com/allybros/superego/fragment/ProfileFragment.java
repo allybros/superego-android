@@ -59,7 +59,8 @@ import com.google.android.material.snackbar.Snackbar;
 public class ProfileFragment extends Fragment {
 
     private TextView tvUsername, tvUserbio, tvProfileInfoCard , badgeCredit, badgeRated;
-    private Button btnNewTest, btnShareTest, btnShareResults, btnSettings;
+    private Button btnNewTest, btnShareTest, btnShareResults;
+    private ImageView btnSettings;
     private CircledNetworkImageView imageViewAvatar;
     private SwipeRefreshLayout profileSwipeLayout;
     private RewardedAd rewardedAd;
@@ -192,14 +193,13 @@ public class ProfileFragment extends Fragment {
         badgeRated = getView().findViewById(R.id.badgeRated);
 
         //Populate views
-        if (sessionManager.getUser().getUserBio() != null) {
+        if (sessionManager.getUser().getUserBio() != null && !sessionManager.getUser().getUserBio().isEmpty()) {
             tvUserbio.setText(sessionManager.getUser().getUserBio());
         } else {
             tvUserbio.setText(R.string.default_bio_profile);
         }
 
         tvUsername.setText("@"+sessionManager.getUser().getUsername());
-        badgeCredit.setText(String.format("%d %s", sessionManager.getUser().getCredit(), getString(R.string.credit)));
 
         badgeCredit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -247,7 +247,9 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        badgeRated.setText(sessionManager.getUser().getRated() + getString(R.string.rated));
+        badgeCredit.setText(String.format("%s %d\n\n", getString(R.string.credit) , sessionManager.getUser().getCredit()));
+        badgeRated.setText(String.format("%s %d\n\n", getString(R.string.rated) , sessionManager.getUser().getRated()));
+
 
         HelperMethods.imageLoadFromUrlNoCache(getContext(), ConstantValues.AVATAR_URL+sessionManager.getUser().getImage(), imageViewAvatar);
     }
