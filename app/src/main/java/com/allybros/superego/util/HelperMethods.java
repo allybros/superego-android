@@ -21,6 +21,11 @@ import java.io.ByteArrayOutputStream;
 public class HelperMethods {
 
     /**
+     * Class creating blocked
+     */
+    private HelperMethods(){}
+
+    /**
      * Converts from bitmap to string
      * @param bitmap    to be converted bitmap
      * @return          string form bitmap
