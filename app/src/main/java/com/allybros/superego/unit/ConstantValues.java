@@ -4,11 +4,14 @@ public class ConstantValues {
 
     //Const variables
     public static final String USER_INFORMATION_PREF="USER_INFORMATION_PREF";  //Shared preferences Tag
+    public static final String IS_SHOWN="IS_SHOWN";
+
     public static final int MAX_FILE_SIZE = 33177600;
 
     //Links
 
-    public static final String API_ROOT =  "https://api.insightof.me/";
+//    public static final String API_ROOT =  "https://api.insightof.me/";
+    public static final String API_ROOT =  "https://api.allybros.com/superego/";
     public static final String AVATAR_URL = API_ROOT + "images.php?get=";
     public static final String TEST_LINK_ROOT = "https://insightof.me/";
 

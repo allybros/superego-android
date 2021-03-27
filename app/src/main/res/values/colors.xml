@@ -12,6 +12,7 @@
     <!--Component Colors-->
     <color name="bgBottomNavigation">#25324D</color>
     <color name="fragmentBackground">#f9f9f9</color>
+    <color name="guideBackground">#f2f2f2</color>
 
     <!--Brand Buttons Color-->
     <color name="google">#FF0219</color>

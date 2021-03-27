@@ -71,7 +71,7 @@
     <string name="hint_register_email">E-Posta</string>
     <string name="hint_register_password">Parola</string>
 
-   <!--Actions:
+    <!--Actions:
     Actions shows on the buttons or forwarder-->
     <string name="action_yes">Evet</string>
     <string name="action_no">Hayır</string>
@@ -84,11 +84,16 @@
     <string name="action_btn_share_results">Sonuç Paylaş</string>
     <string name="action_login">Giriş Yap</string>
     <string name="action_register">Kayıt Ol</string>
-    <string name="action_agreement_link"><font color="#2A71AC"><a  href="https://insightof.me/conditions">Kullanım koşulları</a></font>\'nı okudum ve kabul ediyorum.</string>
+    <string name="action_agreement_link"><font color="#2A71AC"><a href="https://insightof.me/conditions">Kullanım koşulları</a></font>\'nı okudum ve kabul ediyorum.</string>
     <string name="action_sign_out">Oturumu Kapat</string>
     <string name="action_save">Kaydet</string>
     <string name="action_create_test">Test oluştur</string>
     <string name="action_get_ego_points">Şimdi Ego Puanlarını Al</string>
+    <string name="action_btn_start">Başla</string>
+    <string name="action_btn_continue">Devam</string>
+    <string name="action_btn_back">Önceki</string>
+
+
 
     <!--Contents:
     Contents fills text fills or something like that-->
@@ -102,6 +107,13 @@
     <string name="info_no_test_card_bottom">Arkadaşların tarafından değerlendirilebilmen için arkadaşlarına sormak istediğin kişilik özelliklerini belirlemelisin.</string>
     <string name="info_waiting_card_title">Tüm Sonuçlarını Hemen Gör</string>
     <string name="info_waiting_card_bottom">Arkadaşlarının değerlendirmelerini beklemek istemiyorsan, reklam izleyerek Ego puanı kazanabilir ve beklemeden tüm sonuçlarını görüntüleyebilirsin.</string>
+
+    <string name="guide_content_1">"   Arkadaşlarının seni değerlendirmesi için kendine özel bir kişilik testi oluştur."</string>
+    <string name="guide_content_2">Oluşturduğun testini yakın arkadaşlarınla paylaş, arkadaşların anonim olarak kişiliğini değerlendirsinler.</string>
+    <string name="guide_content_3">En çok öne çıkan karakter özelliklerin ve arkadaşlarının senin hakkındaki genel görüşleri hakkında fikir sahibi ol.</string>
+    <string name="guide_header_1">Bir Test Oluştur</string>
+    <string name="guide_header_2">Arkadaşların Seni Değerlendirsin</string>
+    <string name="guide_header_3">Gerçek Kişilik\n Özelliklerini Keşfet</string>
 
 
 

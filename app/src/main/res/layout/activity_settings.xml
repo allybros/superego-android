@@ -78,10 +78,10 @@
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginTop="4dp"
-                        android:tint="@color/materialPurple"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/v_account_edit" />
+                        app:srcCompat="@drawable/v_account_edit"
+                        app:tint="@color/materialPurple" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </FrameLayout>
 

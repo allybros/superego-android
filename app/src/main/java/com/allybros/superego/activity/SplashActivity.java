@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -36,6 +37,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import static com.allybros.superego.unit.ConstantValues.IS_SHOWN;
+import static com.allybros.superego.unit.ConstantValues.USER_INFORMATION_PREF;
+
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -49,37 +53,53 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        // Check internet connection
-        ConnectivityManager cm = (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-        if(isConnected){
-            getAllTraits(getApplicationContext());
-            setupReceivers();
 
-            SessionManager.getInstance().readInfo(getApplicationContext());
-            if(!SessionManager.getInstance().getSessionToken().isEmpty()){
-                // User signed in before
-                LoadProfileTask.loadProfileTask(getApplicationContext(),
-                        SessionManager.getInstance().getSessionToken(), ConstantValues.ACTION_LOAD_PROFILE);
+        if(!isShown()){
+            showGuide();
+        } else {
+            // Check internet connection
+            ConnectivityManager cm = (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+            boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+            if(isConnected){
+                getAllTraits(getApplicationContext());
+                setupReceivers();
 
-            }else{
-                returnLoginActivity();
+                SessionManager.getInstance().readInfo(getApplicationContext());
+                if(!SessionManager.getInstance().getSessionToken().isEmpty()){
+                    // User signed in before
+                    LoadProfileTask.loadProfileTask(getApplicationContext(),
+                            SessionManager.getInstance().getSessionToken(), ConstantValues.ACTION_LOAD_PROFILE);
+
+                }else{
+                    returnLoginActivity();
+                }
+            }
+            else {
+                new AlertDialog.Builder(SplashActivity.this, R.style.SegoAlertDialog)
+                        .setTitle("insightof.me")
+                        .setMessage(R.string.error_no_connection)
+                        .setPositiveButton(getString(R.string.action_ok), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                SplashActivity.this.finish();
+                                System.exit(0);
+                            }
+                        })
+                        .show();
             }
         }
-        else {
-            new AlertDialog.Builder(SplashActivity.this, R.style.SegoAlertDialog)
-                    .setTitle("insightof.me")
-                    .setMessage(R.string.error_no_connection)
-                    .setPositiveButton(getString(R.string.action_ok), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            SplashActivity.this.finish();
-                            System.exit(0);
-                        }
-                    })
-                    .show();
-        }
+    }
+
+    private void showGuide(){
+        Intent intent = new Intent(getApplicationContext(), GuideActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private boolean isShown(){
+        SharedPreferences pref = getSharedPreferences(IS_SHOWN, MODE_PRIVATE);
+        return pref.getBoolean("isShown", false);
     }
 
     private void setupReceivers(){

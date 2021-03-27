@@ -83,7 +83,7 @@ public class LoadProfileTask{
                         }
 
                         SessionManager.getInstance().setUser(
-                                new User(user_type, rated, credit, image, test_id, test_result_id, username, user_bio, email, scoresList));
+                                new User(user_type, rated, credit, image, test_id, "test_result_id", username, user_bio, email, scoresList));
                     }
                     // Send broadcast
                     Log.d("Load Profile Task","Load profile completed.");

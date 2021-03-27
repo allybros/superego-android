@@ -104,4 +104,13 @@
     <string name="info_waiting_card_title">See All Results Now</string>
     <string name="info_waiting_card_bottom">If you don\'t want to wait for your friends\' reviews, you can earn Ego points by watching ads and view all results without waiting.</string>
     <string name="action_get_ego_points">Get Ego Points Now</string>
+    <string name="guide_content_1">"   Create a special personality test for your friends to rate you."</string>
+    <string name="guide_content_2">Share the quiz you created with your friends, and your friends will evaluate your personality anonymously.</string>
+    <string name="guide_content_3">Get an idea of your most prominent character traits and your friends\' overall opinion about you.</string>
+    <string name="guide_header_3">Discover Real Personality Traits</string>
+    <string name="guide_header_2">Let Your Friends Evaluate You</string>
+    <string name="guide_header_1">Create a Test</string>
+    <string name="action_btn_start">Start</string>
+    <string name="action_btn_continue">Continue</string>
+    <string name="action_btn_back">Back</string>
 </resources>
