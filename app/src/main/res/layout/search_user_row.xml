@@ -28,7 +28,7 @@
         app:layout_constraintStart_toEndOf="@+id/nivSearchUserAvatar"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.allybros.superego.ui.CircledNetworkImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/nivSearchUserAvatar"
         android:layout_width="55dp"
         android:layout_height="55dp"

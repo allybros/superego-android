@@ -38,7 +38,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.allybros.superego.ui.CircledNetworkImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imageSettings"
             android:layout_width="120dp"
             android:layout_height="120dp"

@@ -23,7 +23,6 @@ import com.allybros.superego.R;
 import com.allybros.superego.api.ChangeInfoTask;
 import com.allybros.superego.api.ImageChangeTask;
 import com.allybros.superego.request.RequestForGetImageNoCache;
-import com.allybros.superego.ui.CircledNetworkImageView;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.util.SessionManager;
@@ -34,9 +33,11 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrInterface;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 
 import static com.allybros.superego.util.HelperMethods.imageToString;
@@ -48,7 +49,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private TextInputLayout etUsername_text_input,etEmail_text_input,etInformation_text_input;
     private SlidrInterface slidr;
     private Button btChangePhoto;
-    private CircledNetworkImageView settingsImage;
+    private CircleImageView settingsImage;
     private ConstraintLayout editProfileLayout;
     public static Uri newImagePath=null;
     private BroadcastReceiver updateInformationReceiver, updateImageReceiver;
@@ -186,10 +187,8 @@ public class EditProfileActivity extends AppCompatActivity {
         boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
         //Load image
         String URL= ConstantValues.AVATAR_URL+SessionManager.getInstance().getUser().getImage();
-        ImageLoader mImageLoader;
-        mImageLoader = RequestForGetImageNoCache.getInstance(getApplicationContext()).getImageLoader();
-        mImageLoader.get(URL, ImageLoader.getImageListener(settingsImage, R.drawable.default_avatar, R.drawable.default_avatar));
-        settingsImage.setImageUrl(URL, mImageLoader);
+        Picasso.get().load(URL).into(settingsImage);
+
         if(!isConnected) Snackbar.make(editProfileLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
 
         //Require for slide behaviour

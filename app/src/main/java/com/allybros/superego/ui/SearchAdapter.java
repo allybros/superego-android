@@ -14,8 +14,11 @@ import com.allybros.superego.R;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.User;
 import com.allybros.superego.util.HelperMethods;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SearchAdapter extends ArrayAdapter<User> {
 
@@ -34,7 +37,7 @@ public class SearchAdapter extends ArrayAdapter<User> {
         final User u = getItem(position);
         if (u == null) return convertView;
 
-        CircledNetworkImageView ivSearchUserAvatar = convertView.findViewById(R.id.nivSearchUserAvatar);
+        CircleImageView ivSearchUserAvatar = convertView.findViewById(R.id.nivSearchUserAvatar);
         TextView tvSearchUsername = convertView.findViewById(R.id.tvSearchUsername);
         TextView tvSearchUserbio = convertView.findViewById(R.id.tvSearchUserBio);
 
@@ -49,7 +52,7 @@ public class SearchAdapter extends ArrayAdapter<User> {
 
         tvSearchUsername.setText(u.getUsername());
         tvSearchUserbio.setText(bioSum);
-        HelperMethods.imageLoadFromUrlCache(getContext(), ConstantValues.AVATAR_URL+u.getAvatarName(), ivSearchUserAvatar);
+        Picasso.get().load(ConstantValues.AVATAR_URL+u.getAvatarName()).into(ivSearchUserAvatar);
 
         return convertView;
     }

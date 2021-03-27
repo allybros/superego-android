@@ -25,8 +25,8 @@
     <!--Use android:dashWidth="2dp" and android:dashGap="2dp"
     to add dashes to your stroke-->
         <stroke
-            android:width="5dp"
-            android:color="@color/White" />
+            android:width="0.1dp"
+            android:color="@color/materialPurple" />
 
     <!--If you want to add padding-->
     <!-- <padding

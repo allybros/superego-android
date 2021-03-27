@@ -24,7 +24,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -36,13 +35,9 @@ import com.allybros.superego.activity.UserPageActivity;
 import com.allybros.superego.activity.WebViewActivity;
 import com.allybros.superego.api.EarnRewardTask;
 import com.allybros.superego.api.LoadProfileTask;
-import com.allybros.superego.ui.CircledNetworkImageView;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
-import com.allybros.superego.util.HelperMethods;
 import com.allybros.superego.util.SessionManager;
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -55,13 +50,16 @@ import com.google.android.gms.ads.rewarded.RewardedAdCallback;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileFragment extends Fragment {
 
-    private TextView tvUsername, tvUserbio, tvProfileInfoCard , badgeCredit, badgeRated;
+    private TextView tvUsername, tvUserbio, badgeCredit, tvProfileInfoCard, badgeRated;
     private Button btnNewTest, btnShareTest, btnShareResults;
     private ImageView btnSettings;
-    private CircledNetworkImageView imageViewAvatar;
+    private CircleImageView imageViewAvatar;
     private SwipeRefreshLayout profileSwipeLayout;
     private RewardedAd rewardedAd;
     private AdView adProfileBanner;
@@ -247,11 +245,11 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        badgeCredit.setText(String.format("%s %d\n\n", getString(R.string.credit) , sessionManager.getUser().getCredit()));
-        badgeRated.setText(String.format("%s %d\n\n", getString(R.string.rated) , sessionManager.getUser().getRated()));
+        badgeCredit.setText(String.valueOf(sessionManager.getUser().getCredit()));
+        badgeRated.setText(String.valueOf(sessionManager.getUser().getRated()));
 
 
-        HelperMethods.imageLoadFromUrlNoCache(getContext(), ConstantValues.AVATAR_URL+sessionManager.getUser().getImage(), imageViewAvatar);
+        Picasso.get().load(ConstantValues.AVATAR_URL+sessionManager.getUser().getImage()).into(imageViewAvatar);
     }
 
     /**
@@ -339,11 +337,11 @@ public class ProfileFragment extends Fragment {
     private void initInfoCard(){
         tvProfileInfoCard = getView().findViewById(R.id.tvProfileInfoCard);
 
-        if(!sessionManager.getUser().hasTest()){ //User don't have a test
+        /*if(!sessionManager.getUser().hasTest()){ //User don't have a test
             tvProfileInfoCard.setText(R.string.info_no_test);
         }else{//User have test
             tvProfileInfoCard.setText(R.string.info_share_test);
-        }
+        }*/
 
         tvProfileInfoCard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -449,12 +447,7 @@ public class ProfileFragment extends Fragment {
                 Log.d("Reward Ad","Ad successfully loaded.");
                 if(sessionManager.getUser().getRated() >= 5){
                     //User able to use Ego points
-                    badgeCredit.setBackground(ContextCompat.getDrawable(fragmentContext, R.drawable.selector_credit));
                     badgeCredit.setEnabled(true);
-                    YoYo.with(Techniques.Bounce)
-                            .duration(1000)
-                            .repeat(5)
-                            .playOn(badgeCredit);
                 }
             }
 

@@ -10,7 +10,10 @@
     <color name="transparent">#00000000</color>
 
     <!--Component Colors-->
-    <color name="bgBottomNavigation">#25324D</color>
+    <color name="bgBottomNavigation">#FAFAFA</color>
+    <color name="bgNavigationItemActive">#9B51E0</color>
+    <color name="bgNavigationItemPassive">#BDBDBD</color>
+
     <color name="fragmentBackground">#f9f9f9</color>
 
     <!--Brand Buttons Color-->

@@ -184,15 +184,15 @@ public class UserPageActivity extends AppCompatActivity {
         //Disable all navigation Items
         for (BottomNavigationItemView navItem: navigationItems) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                navItem.setTextColor(ColorStateList.valueOf(getColor(R.color.Gray)));
-                navItem.setIconTintList(ColorStateList.valueOf(getColor(R.color.Gray)));
+                navItem.setTextColor(ColorStateList.valueOf(getColor(R.color.bgNavigationItemPassive)));
+                navItem.setIconTintList(ColorStateList.valueOf(getColor(R.color.bgNavigationItemPassive)));
             }
             navItem.setChecked(false);
         }
         //Enable selected item
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            activeNavItem.setTextColor(ColorStateList.valueOf(getColor(R.color.White)));
-            activeNavItem.setIconTintList(ColorStateList.valueOf(getColor(R.color.White)));
+            activeNavItem.setTextColor(ColorStateList.valueOf(getColor(R.color.bgNavigationItemActive)));
+            activeNavItem.setIconTintList(ColorStateList.valueOf(getColor(R.color.bgNavigationItemActive)));
         }
         activeNavItem.setChecked(true);
         viewPager.setCurrentItem(index);
