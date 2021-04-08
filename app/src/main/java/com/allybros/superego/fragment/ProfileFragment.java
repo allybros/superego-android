@@ -455,7 +455,7 @@ public class ProfileFragment extends Fragment {
             public void onRewardedAdFailedToLoad(int errorCode) {
                 // Ad failed to load.
                 Log.d("Reward Ad","Ad failed to load. Try again");
-                prepareRewardedAd();
+                //prepareRewardedAd();
             }
         };
         rewardedAd.loadAd(new AdRequest.Builder().build(), adLoadCallback);

@@ -106,8 +106,8 @@
 
 
     <string name="info_share_test">Arkadaşlarının seni değerlendirebilmeleri için testini arkadaşların ile paylaşmalısın. Değerlendirme sayın arttıkça daha detaylı sonuçlar görebileceksin.</string>
-    <string name="info_partial_rates">Tüm sonuçlarını görmek için yeterli değerlendirme sayısına sahip değilsin.</string>
-    <string name="info_title_waiting_rates">Değerlendirilmelerin Bekleniyor...</string>
+    <string name="info_partial_rates">En çok öne çıkan özelliğini tespit edebilmek için en az beş arkadaşının daha değerlendirmesine ihtiyacımız var.</string>
+    <string name="info_title_waiting_rates">Değerlendirilmelerin Bekleniyor…</string>
     <string name="header_register">Arkadaşlarının gözünden\nkendini gör.</string>
 
     <string name="info_search">insightof.me\' de kayıtlı arkadaşlarını bulmak için kullanıcı adıyla arama yap.</string>
@@ -134,8 +134,8 @@
     <string name="rated">\ Değerlendirme\n </string>
     <string name="credit" translatable="false">\ Ego\n </string>
     <string name="error_code">Kod: </string>
-    <string name="remaining_credits">Kalan Değerlendirme: %1$s</string>
-    <string name="default_bio_profile">Kendini tanıtan kısa bir yazı yazabilirsin.</string>
+    <string name="remaining_credits">Kalan Değerlendirmeler: %1$s</string>
+    <string name="default_bio_profile">Kendini tanıtan .kısa bir yazı yazabilirsin.</string>
 
     <!--Alert Dialogs-->
     <string name="alert_title_end_session">Oturumu Sonlandır</string>

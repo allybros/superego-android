@@ -7,25 +7,40 @@
     android:layout_height="match_parent"
     android:background="@color/fragmentBackground"
     tools:context=".fragment.ResultsFragment">
-
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvHeaderPoints"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="16dp"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                android:text="Kişilik Özelliklerin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+            </androidx.appcompat.widget.AppCompatTextView>
             <ListView
                 android:id="@+id/listViewTraits"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:clickable="false"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginTop="15dp"
                 android:divider="@null"
                 android:dividerHeight="0dp"
-                android:paddingTop="12dp"
-                android:scrollingCache="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
+                android:layout_below="@+id/tvHeaderPoints"
+                tools:listitem="@layout/scores_list_row">
+            </ListView>
+        </LinearLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
 </FrameLayout>

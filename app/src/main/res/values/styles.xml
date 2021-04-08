@@ -13,8 +13,13 @@
         <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
         <item name="android:dialogCornerRadius" tools:targetApi="p">12dp</item>
         <item name="dialogPreferredPadding">16dp</item>
-
     </style>
+
+    <style name="SegoCard" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">10%</item>
+    </style>
+
     <style name="AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
 
     <style name="PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />

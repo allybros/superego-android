@@ -58,7 +58,7 @@ public class ResultsFragment extends Fragment {
     private User currentUser;
     private BroadcastReceiver resultsRefreshReceiver;
     private AdView adResultBanner;
-    private Button btnBadgeCredit, btnShowAd;
+    private Button btnShowAd;
     private RewardedAd rewardedAd;
     private SessionManager sessionManager = SessionManager.getInstance();
     //3 states of Result screen represented in an Enum
@@ -194,14 +194,13 @@ public class ResultsFragment extends Fragment {
             case PARTIAL:
                 //Get views
                 listViewTraits = getView().findViewById(R.id.listViewPartialTraits);
-                tvRemainingRates = getView().findViewById(R.id.tvRemainingRatesPartial);
-                btnBadgeCredit = getView().findViewById(R.id.partial_credit_button);
                 btnShowAd = getView().findViewById(R.id.button_get_ego);
+                tvRemainingRates = getView().findViewById(R.id.tvRatedResultPage);
+
                 //Populate views
                 int remainingRates = 10 - (currentUser.getRated() + currentUser.getCredit());
                 tvRemainingRates.setText(getString(R.string.remaining_credits, remainingRates));
                 listViewTraits.setAdapter( new ScoresAdapter(getActivity(), currentUser.getScores()) );
-                btnBadgeCredit.setText(String.format("%d %s", sessionManager.getUser().getCredit(), getString(R.string.credit)));
                 prepareRewardedAd();
                 btnShowAd.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -246,10 +245,44 @@ public class ResultsFragment extends Fragment {
             default:
                 //Get views
                 tvRemainingRates = getView().findViewById(R.id.tvRatedResultPage);
+                btnShowAd = getView().findViewById(R.id.button_get_ego);
+
                 //Populate views
                 remainingRates = 5 - currentUser.getRated();
                 tvRemainingRates.setText( getString(R.string.remaining_credits, remainingRates) );
                 prepareBannerAd();
+                prepareRewardedAd();
+                btnShowAd.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (rewardedAd.isLoaded()) {
+                            // Check internet connection
+                            ConnectivityManager cm = (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+                            boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+                            if(isConnected){
+                                showRewardedAd();
+                            }
+                            else {
+                                Snackbar.make(swipeLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
+                                Log.d("CONNECTION", String.valueOf(isConnected));
+                            }
+                        } else {
+                            // Show error dialog
+                            new AlertDialog.Builder(getActivity(), R.style.SegoAlertDialog)
+                                    .setTitle("insightof.me")
+                                    .setMessage(R.string.info_reward_ad_not_loaded)
+                                    .setPositiveButton(getString(R.string.action_ok), new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    })
+                                    .show();
+                            Log.d("EgoRewardAd", "The rewarded ad wasn't loaded yet.");
+                        }
+                    }
+                });
                 break;
         }
     }
@@ -329,7 +362,7 @@ public class ResultsFragment extends Fragment {
             public void onRewardedAdFailedToLoad(int errorCode) {
                 // Ad failed to load.
                 Log.d("Reward Ad","Ad failed to load. Try again");
-                prepareRewardedAd();
+                //prepareRewardedAd();
             }
         };
         rewardedAd.loadAd(new AdRequest.Builder().build(), adLoadCallback);

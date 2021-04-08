@@ -17,8 +17,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/White">
-
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayoutProfileContainer"
                 android:layout_width="match_parent"
@@ -253,7 +251,7 @@
                     android:id="@+id/constraintLayoutProfileBottom"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="95dp"
+                    android:layout_marginTop="115dp"
                     android:layout_marginBottom="20dp"
                     android:background="@color/White"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -261,117 +259,129 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayoutProfileTop">
 
-
-                    <Button
-                        android:id="@+id/btnAddTest"
-                        android:layout_width="118dp"
-                        android:layout_height="80dp"
+                    <LinearLayout
+                        android:id="@+id/rowButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="18dp"
                         android:layout_marginTop="18dp"
-                        android:layout_weight="0.33"
-                        android:background="@drawable/v_selector_btn_new_test"
-                        android:drawableTop="@drawable/outline_add_white_36"
-                        android:elevation="7dp"
-                        android:outlineProvider="bounds"
-                        android:paddingTop="12dp"
-                        android:paddingBottom="12dp"
-                        android:stateListAnimator="@null"
-                        android:text="@string/action_btn_new_test"
-                        android:textAllCaps="false"
-                        android:translationZ="2dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <Button
-                        android:id="@+id/btnShareTest"
-                        android:layout_width="118dp"
-                        android:layout_height="80dp"
-                        android:layout_marginTop="18dp"
-                        android:layout_weight="0.33"
-                        android:background="@drawable/selector_btn_share_test"
-                        android:drawableTop="@drawable/outline_link_white_36"
-                        android:elevation="7dp"
-                        android:outlineProvider="bounds"
-                        android:paddingTop="12dp"
-                        android:paddingBottom="12dp"
-                        android:stateListAnimator="@null"
-                        android:text="@string/action_btn_share_test"
-                        android:textAllCaps="false"
-                        android:translationZ="2dp"
-                        app:layout_constraintEnd_toStartOf="@+id/btnShareResult"
-                        app:layout_constraintStart_toEndOf="@+id/btnAddTest"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <Button
-                        android:id="@+id/btnShareResult"
-                        android:layout_width="118dp"
-                        android:layout_height="80dp"
-                        android:layout_marginTop="18dp"
                         android:layout_marginEnd="18dp"
-                        android:layout_weight="0.33"
-                        android:background="@drawable/selector_btn_share_result"
-                        android:drawableTop="@drawable/baseline_share_white_36"
-                        android:elevation="7dp"
-                        android:outlineProvider="bounds"
-                        android:paddingTop="12dp"
-                        android:paddingBottom="12dp"
-                        android:stateListAnimator="@null"
-                        android:text="@string/action_btn_share_results"
-                        android:textAllCaps="false"
-                        android:translationZ="2dp"
+                        android:weightSum="3"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                        <Button
+                            android:id="@+id/btnAddTest"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="12dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/v_selector_btn_new_test"
+                            android:drawableTop="@drawable/outline_add_white_36"
+                            android:elevation="7dp"
+                            android:outlineProvider="bounds"
+                            android:paddingTop="12dp"
+                            android:paddingBottom="12dp"
+                            android:stateListAnimator="@null"
+                            android:text="@string/action_btn_new_test"
+                            android:textAllCaps="false"
+                            android:translationZ="2dp" />
+
+
+                        <Button
+                            android:id="@+id/btnShareTest"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/selector_btn_share_test"
+                            android:drawableTop="@drawable/outline_link_white_36"
+                            android:elevation="7dp"
+                            android:outlineProvider="bounds"
+                            android:paddingTop="12dp"
+                            android:paddingBottom="12dp"
+                            android:stateListAnimator="@null"
+                            android:text="@string/action_btn_share_test"
+                            android:textAllCaps="false"
+                            android:translationZ="2dp" />
+
+                        <Button
+                            android:id="@+id/btnShareResult"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/selector_btn_share_result"
+                            android:drawableTop="@drawable/baseline_share_white_36"
+                            android:elevation="7dp"
+                            android:outlineProvider="bounds"
+                            android:paddingTop="12dp"
+                            android:paddingBottom="12dp"
+                            android:stateListAnimator="@null"
+                            android:text="@string/action_btn_share_results"
+                            android:textAllCaps="false"
+                            android:translationZ="2dp" />
+                    </LinearLayout>
+
+
+                    <androidx.cardview.widget.CardView
                         android:id="@+id/clInfoCard"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="18dp"
-                        android:layout_marginTop="32dp"
+                        android:layout_marginTop="18dp"
                         android:layout_marginEnd="18dp"
-                        android:background="@drawable/infocard_bg"
-                        android:paddingBottom="10dp"
+                        android:elevation="4dp"
+                        app:cardCornerRadius="11dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/btnShareTest">
+                        app:layout_constraintTop_toBottomOf="@+id/rowButton">
 
-
-                        <TextView
-                            android:id="@+id/tvProfileInfoCard"
+                        <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="14dp"
-                            android:layout_marginTop="22dp"
-                            android:layout_marginEnd="14dp"
-                            android:layout_marginBottom="44dp"
-                            android:clickable="true"
-                            android:elevation="4dp"
-                            android:enabled="true"
-                            android:focusable="true"
-                            android:gravity="center"
-                            android:lineHeight="25dp"
-                            android:text="Arkadaşlarının seni değerlendirmesi için kişilik testini arkadaşların ile paylaş."
-                            android:textColor="@color/White"
-                            android:textSize="18dp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            android:background="@drawable/infocard_bg"
+                            android:paddingBottom="10dp">
 
-                        <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:background="@drawable/shape_info_button"
-                            android:paddingHorizontal="50dp"
-                            android:text="Testi Paylaş"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/tvProfileInfoCard"></Button>
+                            <TextView
+                                android:id="@+id/tvProfileInfoCard"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="14dp"
+                                android:layout_marginTop="22dp"
+                                android:layout_marginEnd="14dp"
+                                android:layout_marginBottom="44dp"
+                                android:clickable="true"
+                                android:elevation="4dp"
+                                android:enabled="true"
+                                android:focusable="true"
+                                android:gravity="center"
+                                android:lineHeight="25dp"
+                                android:text="Arkadaşlarının seni değerlendirmesi için kişilik testini arkadaşların ile paylaş."
+                                android:textColor="@color/White"
+                                android:textSize="18dp"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                            <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:background="@drawable/shape_info_button"
+                                android:paddingHorizontal="50dp"
+                                android:text="Testi Paylaş"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/tvProfileInfoCard"></Button>
+
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.cardview.widget.CardView>
 
                     <TextView
                         android:id="@+id/tvSupporterConstant"
