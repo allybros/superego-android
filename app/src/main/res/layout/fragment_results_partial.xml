@@ -31,6 +31,7 @@
                     android:layout_marginEnd="16dp"
                     android:textSize="32sp"
                     android:textStyle="bold"
+                    android:textColor="@color/Black"
                     android:text="Kişilik Özelliklerin"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

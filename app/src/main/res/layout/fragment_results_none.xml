@@ -32,6 +32,7 @@ tools:context=".fragment.ResultsFragment" >
                 android:textSize="32sp"
                 android:textStyle="bold"
                 android:text="Kişilik Özelliklerin"
+                android:textColor="@color/Black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">

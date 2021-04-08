@@ -5,6 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/fragmentBackground">
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvSearchHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:textColor="@color/Black"
+        android:text="Arkadaşlarını Bul"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+    </androidx.appcompat.widget.AppCompatTextView>
+
 
     <EditText
         android:id="@+id/etSearchUser"
@@ -14,7 +30,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="12dp"
-        android:background="@drawable/shape_card"
+        android:background="@drawable/shape_search_card"
         android:cursorVisible="true"
         android:drawableStart="@drawable/v_magnify"
         android:drawablePadding="12dp"
@@ -29,7 +45,7 @@
         android:textSize="19sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/tvSearchHeader" />
 
     <ListView
         android:id="@+id/listViewSearchResults"
@@ -51,12 +67,12 @@
         android:id="@+id/ivIconSearchInfo"
         android:layout_width="80dp"
         android:layout_height="81dp"
-        android:tint="@color/Gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/v_account_search" />
+        app:srcCompat="@drawable/v_account_search"
+        app:tint="@color/Gray" />
 
     <TextView
         android:id="@+id/tvSearchInfo"

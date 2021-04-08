@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +21,7 @@ import com.allybros.superego.api.LoginTask;
 import com.allybros.superego.api.RegisterTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
+import com.allybros.superego.util.HelperMethods;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -35,6 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
     private MaterialProgressBar progressView;
     private BroadcastReceiver registerReceiver;
     private BroadcastReceiver autoLoginReceiver;
+    private TextView tvAgreementRegister;
 
     private String usernameInput;
     private String emailInput;
@@ -60,6 +63,8 @@ public class RegisterActivity extends AppCompatActivity {
         checkBoxAgreement = findViewById(R.id.checkboxAgreement);
         cardFormRegister = findViewById(R.id.cardFormRegister);
         progressView = findViewById(R.id.progressViewRegister);
+        tvAgreementRegister = findViewById(R.id.tvAgreementRegister);
+
     }
 
     private void setupReceivers(){
@@ -138,11 +143,15 @@ public class RegisterActivity extends AppCompatActivity {
                 inputLayoutUsername.setErrorEnabled(false);
                 inputLayoutEmail.setErrorEnabled(false);
                 inputLayoutPassword.setErrorEnabled(false);
+                checkBoxAgreement.setError(null);
+                HelperMethods.setMargins(tvAgreementRegister,0,0,0,0);
+
 
                 usernameInput = etRegisterUsername.getText().toString();
                 emailInput = etRegisterMail.getText().toString();
                 passwordInput = etRegisterPassword.getText().toString();
                 boolean conditions = checkBoxAgreement.isChecked();
+
 
                 //Validate fields
                 if (usernameInput.isEmpty()) inputLayoutUsername.setError(getResources().getString(R.string.error_username_empty));
@@ -151,7 +160,10 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if (passwordInput.isEmpty()) inputLayoutPassword.setError(getResources().getString(R.string.error_password_empty));
 
-                if (!conditions) checkBoxAgreement.setError(getResources().getString(R.string.error_conditions_not_accepted));
+                if (!conditions){
+                    checkBoxAgreement.setError(getResources().getString(R.string.error_conditions_not_accepted));
+                    HelperMethods.setMargins(tvAgreementRegister,20,0,0,0);
+                }
 
                 if (!usernameInput.isEmpty()
                         && !emailInput.isEmpty()

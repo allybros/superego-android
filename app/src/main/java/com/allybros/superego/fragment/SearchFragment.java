@@ -1,14 +1,20 @@
 package com.allybros.superego.fragment;
 
+import android.animation.Animator;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Shader;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextPaint;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +25,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -53,7 +60,7 @@ public class SearchFragment extends Fragment {
     private EditText etSearchUser;
     private ListView listViewSearchResults;
     private ImageView ivIconSearchInfo;
-    private TextView tvSearchInfo;
+    private TextView tvSearchInfo, tvSearchHeader;
     private ConstraintLayout constraintSearchFragment;
     private SessionManager sessionManager = SessionManager.getInstance();
 
@@ -120,13 +127,17 @@ public class SearchFragment extends Fragment {
         ivIconSearchInfo = getView().findViewById(R.id.ivIconSearchInfo);
         tvSearchInfo = getView().findViewById(R.id.tvSearchInfo);
         constraintSearchFragment = getView().findViewById(R.id.constraintSearchFragment);
+        tvSearchHeader = getView().findViewById(R.id.tvSearchHeader);
+
+
+
         listViewSearchResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 User u = (User) adapterView.getItemAtPosition(i);
                 // Set web activity title
                 String belirtmeHali = "" + turkceBelirtmeHalEkiBulucu(u.getUsername());
-                final String webActivityTitle = getContext().getString(R.string.activity_label_rate_user, u.getUsername(), belirtmeHali);
+                @SuppressLint("StringFormatMatches") final String webActivityTitle = getContext().getString(R.string.activity_label_rate_user, u.getUsername(), belirtmeHali);
 
                 String testUrl = ConstantValues.RATE_URL + u.getTestId();
                 Intent intent = new Intent(getContext(), WebViewActivity.class);
@@ -159,6 +170,18 @@ public class SearchFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) { }
+        });
+
+        tvSearchHeader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                YoYo.with(Techniques.Hinge).duration(2000).onEnd(new YoYo.AnimatorCallback() {
+                    @Override
+                    public void call(Animator animator) {
+                        Toast.makeText(getContext(),"Tebrikler :) ",Toast.LENGTH_LONG).show();
+                        }
+                }).playOn(tvSearchHeader);
+            }
         });
 
     }
