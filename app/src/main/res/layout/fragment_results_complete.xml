@@ -24,6 +24,7 @@
                 android:layout_marginEnd="16dp"
                 android:textSize="32sp"
                 android:textColor="@color/Black"
+                android:fontFamily="@font/noto_sans_bold"
                 android:textStyle="bold"
                 android:text="Kişilik Özelliklerin"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -13,6 +13,7 @@
         android:layout_marginStart="16dp"
         android:text="userbio"
         android:textColor="@color/Gray"
+        android:fontFamily="@font/noto_sans"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/nivSearchUserAvatar"
         app:layout_constraintTop_toBottomOf="@+id/tvSearchUsername" />
@@ -24,6 +25,7 @@
         android:layout_marginStart="16dp"
         android:text="@string/hint_searchbar_username"
         android:textColor="@color/colorPrimaryDark"
+        android:fontFamily="@font/noto_sans"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/nivSearchUserAvatar"
         app:layout_constraintTop_toTopOf="parent" />

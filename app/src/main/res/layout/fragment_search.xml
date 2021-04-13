@@ -14,6 +14,7 @@
         android:layout_marginEnd="16dp"
         android:textSize="32sp"
         android:textStyle="bold"
+        android:fontFamily="@font/noto_sans_bold"
         android:textColor="@color/Black"
         android:text="Arkadaşlarını Bul"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,6 +38,7 @@
         android:drawableTint="@color/Gray"
         android:elevation="4dp"
         android:ems="10"
+        android:fontFamily="@font/noto_sans"
         android:hint="@string/hint_searchbar_username"
         android:inputType="textPersonName"
         android:paddingStart="8dp"
@@ -82,6 +84,7 @@
         android:text="@string/info_search"
         android:textSize="16sp"
         android:textColor="@color/Gray"
+        android:fontFamily="@font/noto_sans"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivIconSearchInfo" />

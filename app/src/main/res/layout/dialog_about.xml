@@ -25,6 +25,7 @@
         android:gravity="center"
         android:text="@string/with_version_from"
         android:textSize="18sp"
+        android:fontFamily="@font/noto_sans_bold"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -50,6 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:gravity="center"
+        android:fontFamily="@font/noto_sans"
         android:text="@string/content_about"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />

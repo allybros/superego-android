@@ -73,7 +73,7 @@
         <item name="backgroundTint">@color/materialPurple</item>
         <item name="android:textColor">@color/White</item>
         <item name="android:textSize">16sp</item>
-
+        <item name="android:fontFamily">@font/noto_sans</item>
     </style>
 
     <style name="SegoProgressView" parent="Widget.MaterialProgressBar.ProgressBar.Horizontal">

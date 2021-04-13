@@ -50,6 +50,7 @@
                         android:layout_marginStart="8dp"
                         android:text="@string/option_edit_profile"
                         android:textColor="@color/colorPrimary"
+                        android:fontFamily="@font/noto_sans_bold"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toEndOf="@+id/ivEditProfile"
@@ -69,6 +70,7 @@
                         android:text="@string/option_edit_profile_desc"
                         android:textColor="@color/Gray"
                         android:textStyle="bold"
+                        android:fontFamily="@font/noto_sans_bold"
                         app:layout_constraintStart_toEndOf="@+id/ivEditProfile"
                         app:layout_constraintTop_toBottomOf="@+id/tvEditProfile" />
 
@@ -111,6 +113,7 @@
                         android:textColor="@color/colorPrimary"
                         android:textSize="20sp"
                         android:textStyle="bold"
+                        android:fontFamily="@font/noto_sans_bold"
                         app:layout_constraintStart_toEndOf="@+id/ivPassword"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -121,6 +124,7 @@
                         android:layout_marginStart="8dp"
                         android:text="@string/option_password_desc"
                         android:textColor="@color/Gray"
+                        android:fontFamily="@font/noto_sans_bold"
                         android:textStyle="bold"
                         app:layout_constraintStart_toEndOf="@+id/ivPassword"
                         app:layout_constraintTop_toBottomOf="@+id/tvPassword" />
@@ -164,6 +168,7 @@
                         android:textColor="@color/colorPrimary"
                         android:textSize="20sp"
                         android:textStyle="bold"
+                        android:fontFamily="@font/noto_sans_bold"
                         app:layout_constraintStart_toEndOf="@+id/ivAbout"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -174,6 +179,7 @@
                         android:layout_marginStart="8dp"
                         android:text="@string/option_about_desc"
                         android:textColor="@color/Gray"
+                        android:fontFamily="@font/noto_sans_bold"
                         android:textStyle="bold"
                         app:layout_constraintStart_toEndOf="@+id/ivAbout"
                         app:layout_constraintTop_toBottomOf="@+id/tvAbout" />
@@ -218,6 +224,7 @@
                         android:text="@string/option_licenses"
                         android:textColor="@color/colorPrimary"
                         android:textSize="20sp"
+                        android:fontFamily="@font/noto_sans_bold"
                         android:textStyle="bold"
                         app:layout_constraintStart_toEndOf="@+id/ivLicenses"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -230,6 +237,7 @@
                         android:text="@string/option_licenses_desc"
                         android:textColor="@color/Gray"
                         android:textStyle="bold"
+                        android:fontFamily="@font/noto_sans_bold"
                         app:layout_constraintStart_toEndOf="@+id/ivLicenses"
                         app:layout_constraintTop_toBottomOf="@+id/tvLicenses" />
 
@@ -273,6 +281,7 @@
                         android:text="@string/action_sign_out"
                         android:textColor="@color/colorPrimary"
                         android:textSize="20sp"
+                        android:fontFamily="@font/noto_sans_bold"
                         android:textStyle="bold"
                         app:layout_constraintStart_toEndOf="@+id/ivSignOut"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -284,6 +293,7 @@
                         android:layout_marginStart="8dp"
                         android:text="@string/option_sign_out_desc"
                         android:textColor="@color/Gray"
+                        android:fontFamily="@font/noto_sans_bold"
                         android:textStyle="bold"
                         app:layout_constraintStart_toEndOf="@+id/ivSignOut"
                         app:layout_constraintTop_toBottomOf="@+id/tvSignOut" />
