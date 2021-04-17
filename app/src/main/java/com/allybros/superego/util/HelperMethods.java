@@ -1,16 +1,9 @@
 package com.allybros.superego.util;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.allybros.superego.R;
-import com.allybros.superego.request.RequestForGetImageNoCache;
-import com.allybros.superego.request.RequestForGetImageWithCache;
-import com.android.volley.toolbox.ImageLoader;
 
 import java.io.ByteArrayOutputStream;
 

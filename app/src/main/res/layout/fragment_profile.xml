@@ -24,8 +24,6 @@
                 android:background="@color/White"
                 android:paddingBottom="10dp">
 
-
-
                 <!--Renkli kısım-->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayoutProfileTop"
@@ -33,7 +31,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/profile_top_bg"
                     android:elevation="10dp"
-                    android:padding="125dp"
+                    android:padding="100dp"
                     android:translationZ="0dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -52,10 +50,9 @@
                     app:layout_constraintEnd_toEndOf="@+id/constraintLayoutProfileTop"
                     app:layout_constraintTop_toTopOf="@+id/constraintLayoutProfileTop" />
 
-
-
                 <!--Profil Card-->
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clProfileCard"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="18dp"
@@ -73,7 +70,7 @@
                         android:id="@+id/tvUsername"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="83dp"
+                        android:layout_marginTop="65dp"
                         android:text="\@username"
                         android:textColor="@color/Black"
                         android:fontFamily="@font/noto_sans"
@@ -82,95 +79,101 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <ImageView
+                    <LinearLayout
+                        android:id="@+id/llBioDesc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingVertical="6dp"
-                        android:src="@drawable/ic_quote"
-                        app:layout_constraintEnd_toStartOf="@+id/tvUserbio"
-                        app:layout_constraintTop_toBottomOf="@+id/tvUsername"></ImageView>
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvUserbio"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:paddingVertical="10dp"
-                        android:text="Kendinizi tanıtan bir yazı yazın."
-                        android:textSize="12sp"
-                        android:fontFamily="@font/noto_sans"
+                        android:layout_marginHorizontal="4dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvUsername"></androidx.appcompat.widget.AppCompatTextView>
-
+                        app:layout_constraintTop_toBottomOf="@+id/tvUsername">
+                        <ImageView
+                            android:id="@+id/imageView5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_quote"
+                            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tvUsername"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvUserbio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="2dp"
+                            android:fontFamily="@font/noto_sans"
+                            android:layout_gravity="center_vertical"
+                            android:text="Kendinizi tanıtan bir yazı yazın."
+                            android:textSize="14sp"/>
+                    </LinearLayout>
                     <!--Cards area-->
                     <LinearLayout
+                        android:id="@+id/linearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/shape_card"
+                        android:layout_marginTop="4dp"
                         android:weightSum="2"
-                        app:layout_constraintTop_toBottomOf="@+id/tvUserbio">
+                        app:layout_constraintTop_toBottomOf="@+id/llBioDesc">
 
                         <!--Rated area-->
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="0dp"
                             android:layout_height="60dp"
-                            android:layout_marginEnd="0.2dp"
                             android:layout_weight="1"
                             android:background="@drawable/mini_card_bg"
-                            android:gravity="center"
                             android:orientation="vertical">
 
                             <!--Divider-->
                             <View
+                                android:id="@+id/view"
                                 android:layout_width="match_parent"
                                 android:layout_height="1dp"
                                 android:background="#E0E0E0"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
                             <!--Divider-->
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="match_parent"
-                                android:background="#E0E0E0"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent" />
 
-                            <TextView
+                            <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/badgeRated"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="4dp"
                                 android:text="10"
-                                android:textStyle="bold"
-                                app:layout_constraintBottom_toTopOf="@+id/textView8"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"></TextView>
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="4dp"
-                                android:layout_marginBottom="8dp"
-                                android:src="@drawable/ic_baseline_done_24"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toStartOf="@+id/textView8"
-                                app:tint="@color/green3"></ImageView>
-
-                            <TextView
-                                android:id="@+id/textView8"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginBottom="8dp"
-                                android:gravity="center"
+                                android:textSize="18dp"
                                 android:fontFamily="@font/noto_sans"
-                                android:text="Değerlendirme"
-                                android:textColor="@color/green3"
-                                android:textSize="12dp"
-                                app:layout_constraintBottom_toBottomOf="parent"
+                                android:textColor="@color/Black"
+                                android:layout_marginBottom="4dp"
+                                android:layout_marginTop="8dp"
+                                app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"></TextView>
+                                app:layout_constraintStart_toStartOf="parent"/>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:gravity="center"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/badgeRated">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:src="@drawable/ic_baseline_done_24"
+                                    app:tint="@color/green3" />
+
+                                <TextView
+                                    android:id="@+id/textView8"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/noto_sans_bold"
+                                    android:gravity="center_vertical"
+                                    android:text="Değerlendirme"
+                                    android:textColor="@color/green3"
+                                    android:textSize="12dp" />
+
+                            </LinearLayout>
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <!--Credit area-->
@@ -201,36 +204,46 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="4dp"
+                                android:layout_marginTop="8dp"
                                 android:text="10"
-                                android:textStyle="bold"
-                                app:layout_constraintBottom_toTopOf="@+id/textView5"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"></TextView>
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="4dp"
-                                android:layout_marginBottom="8dp"
-                                android:src="@drawable/ic_chamleon"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toStartOf="@+id/textView5"
-                                app:tint="@color/purple"></ImageView>
-
-                            <TextView
-                                android:id="@+id/textView5"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginBottom="8dp"
-                                android:gravity="center"
+                                android:textSize="18dp"
                                 android:fontFamily="@font/noto_sans"
-                                android:text="Credit"
-                                android:textColor="@color/purple"
-                                android:textSize="12dp"
-                                app:layout_constraintBottom_toBottomOf="parent"
+                                android:textColor="@color/Black"
+                                app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"></TextView>
+                                app:layout_constraintStart_toStartOf="parent">
+                            </TextView>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                android:layout_marginTop="4dp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/badgeCredit">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:src="@drawable/ic_chamleon"
+                                    android:layout_marginEnd="4dp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toStartOf="@+id/textView5"
+                                    app:tint="@color/purple" />
+
+                                <TextView
+                                    android:id="@+id/textView5"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="12dp"
+                                    android:fontFamily="@font/noto_sans_bold"
+                                    android:gravity="center_vertical"
+                                    android:text="Credit"
+                                    android:textColor="@color/purple"
+                                    android:textSize="12dp" />
+                            </LinearLayout>
+
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                     </LinearLayout>
@@ -241,10 +254,9 @@
                     android:id="@+id/user_avatar"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
-                    android:layout_marginTop="70dp"
-                    android:elevation="4dp"
+                    android:layout_marginTop="50dp"
                     android:src="@drawable/default_avatar"
-                    android:translationZ="10dp"
+                    android:translationZ="100dp"
                     app:civ_border_width="0dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -255,13 +267,13 @@
                     android:id="@+id/constraintLayoutProfileBottom"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="115dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginBottom="20dp"
                     android:background="@color/White"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/constraintLayoutProfileTop">
+                    app:layout_constraintTop_toBottomOf="@+id/clProfileCard">
 
                     <LinearLayout
                         android:id="@+id/rowButton"
@@ -270,7 +282,6 @@
                         android:layout_marginStart="18dp"
                         android:layout_marginTop="18dp"
                         android:layout_marginEnd="18dp"
-                        android:weightSum="3"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
@@ -278,7 +289,7 @@
 
                         <Button
                             android:id="@+id/btnAddTest"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="12dp"
                             android:layout_weight="1"
@@ -286,9 +297,8 @@
                             android:drawableTop="@drawable/outline_add_white_36"
                             android:elevation="7dp"
                             android:outlineProvider="bounds"
-                            android:paddingTop="12dp"
+                            android:paddingVertical="10dp"
                             android:fontFamily="@font/noto_sans"
-                            android:paddingBottom="12dp"
                             android:stateListAnimator="@null"
                             android:text="@string/action_btn_new_test"
                             android:textAllCaps="false"
@@ -297,16 +307,15 @@
 
                         <Button
                             android:id="@+id/btnShareTest"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/selector_btn_share_test"
                             android:drawableTop="@drawable/outline_link_white_36"
                             android:elevation="7dp"
                             android:outlineProvider="bounds"
                             android:fontFamily="@font/noto_sans"
-                            android:paddingTop="12dp"
-                            android:paddingBottom="12dp"
+                            android:paddingVertical="10dp"
                             android:stateListAnimator="@null"
                             android:text="@string/action_btn_share_test"
                             android:textAllCaps="false"
@@ -314,7 +323,7 @@
 
                         <Button
                             android:id="@+id/btnShareResult"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="12dp"
                             android:layout_weight="1"
@@ -323,8 +332,7 @@
                             android:drawableTop="@drawable/baseline_share_white_36"
                             android:elevation="7dp"
                             android:outlineProvider="bounds"
-                            android:paddingTop="12dp"
-                            android:paddingBottom="12dp"
+                            android:paddingVertical="10dp"
                             android:stateListAnimator="@null"
                             android:text="@string/action_btn_share_results"
                             android:textAllCaps="false"
@@ -376,6 +384,7 @@
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <Button
+                                android:id="@+id/btnInfoShare"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
@@ -385,46 +394,29 @@
                                 android:fontFamily="@font/noto_sans"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/tvProfileInfoCard"></Button>
+                                app:layout_constraintTop_toBottomOf="@+id/tvProfileInfoCard">
+                            </Button>
 
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                     </androidx.cardview.widget.CardView>
 
-                    <TextView
-                        android:id="@+id/tvSupporterConstant"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginTop="24dp"
-                        android:layout_marginEnd="8dp"
-                        android:gravity="left"
-                        android:text="@string/tvSupporter"
-                        android:fontFamily="@font/noto_sans_bold"
-                        android:textSize="22sp"
-                        android:textStyle="bold"
-                        android:visibility="gone"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/clInfoCard" />
-
-
                     <FrameLayout
                         android:id="@+id/ProfileCardAd"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
+                        android:layout_marginStart="18dp"
                         android:layout_marginTop="8dp"
-                        android:layout_marginEnd="12dp"
+                        android:layout_marginEnd="18dp"
                         android:layout_marginBottom="12dp"
                         android:background="@drawable/shape_card"
                         android:elevation="4dp"
-                        android:visibility="gone"
+                        android:visibility="visible"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvSupporterConstant">
+                        app:layout_constraintTop_toBottomOf="@+id/clInfoCard">
 
                         <com.google.android.gms.ads.AdView
                             android:id="@+id/profileBannerAdd"

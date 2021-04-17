@@ -58,7 +58,7 @@ public class ResultsFragment extends Fragment {
     private User currentUser;
     private BroadcastReceiver resultsRefreshReceiver;
     private AdView adResultBanner;
-    private Button btnShowAd;
+    private Button btnShowAd, btnShareTestResult;
     private RewardedAd rewardedAd;
     private SessionManager sessionManager = SessionManager.getInstance();
     //3 states of Result screen represented in an Enum
@@ -246,6 +246,7 @@ public class ResultsFragment extends Fragment {
                 //Get views
                 tvRemainingRates = getView().findViewById(R.id.tvRatedResultPage);
                 btnShowAd = getView().findViewById(R.id.button_get_ego);
+                btnShareTestResult = getView().findViewById(R.id.btnShareTestResult);
 
                 //Populate views
                 remainingRates = 5 - currentUser.getRated();
@@ -280,6 +281,18 @@ public class ResultsFragment extends Fragment {
                                     })
                                     .show();
                             Log.d("EgoRewardAd", "The rewarded ad wasn't loaded yet.");
+                        }
+                    }
+                });
+                btnShareTestResult.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (sessionManager.getUser().hasTest()) {
+                            shareTest();
+                        } else {
+                            Snackbar.make(swipeLayout, R.string.alert_no_test, BaseTransientBottomBar.LENGTH_LONG)
+                                    .setActionTextColor(getResources().getColor(R.color.materialLightPurple))
+                                    .show();
                         }
                     }
                 });
@@ -396,5 +409,19 @@ public class ResultsFragment extends Fragment {
         };
         //Show rewarded ad
         rewardedAd.show(getActivity(), rewardedAdCallback);
+    }
+
+
+    /**
+     * Shows share test dialog
+     */
+    private void shareTest(){
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        String testUrl = String.format("https://insightof.me/%s", sessionManager.getUser().getTestId());
+        String shareBody = getString(R.string.body_share_test, testUrl);
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, R.string.action_btn_share_test);
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+        startActivity(Intent.createChooser(sharingIntent, getString(R.string.action_btn_share_test)));
     }
 }

@@ -56,12 +56,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileFragment extends Fragment {
 
-    private TextView tvUsername, tvUserbio, badgeCredit, tvProfileInfoCard, badgeRated;
-    private Button btnNewTest, btnShareTest, btnShareResults;
+    private TextView tvUsername, tvUserbio, badgeCredit, badgeRated;
+    private Button btnNewTest, btnShareTest, btnShareResults, btnInfoShare;
     private ImageView btnSettings;
     private CircleImageView imageViewAvatar;
     private SwipeRefreshLayout profileSwipeLayout;
-    private RewardedAd rewardedAd;
     private AdView adProfileBanner;
     //API Receivers
     private BroadcastReceiver refreshReceiver;
@@ -89,7 +88,6 @@ public class ProfileFragment extends Fragment {
         initProfileCard();
         initButtons();
         initInfoCard();
-        prepareRewardedAd();
         prepareBannerAd();
         initSwipeLayout();
     }
@@ -198,53 +196,6 @@ public class ProfileFragment extends Fragment {
         }
 
         tvUsername.setText("@"+sessionManager.getUser().getUsername());
-
-        badgeCredit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.SegoAlertDialog);
-                builder.setTitle(Html.fromHtml(getString(R.string.app_name)));
-                builder.setMessage(Html.fromHtml(getString(R.string.info_ads_desc)));
-                builder.setPositiveButton(getString(R.string.action_ok), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        if (rewardedAd.isLoaded()) {
-                            // Check internet connection
-                            ConnectivityManager cm = (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-                            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-                            boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-                            if(isConnected){
-                                showRewardedAd();
-                            }
-                            else {
-                                Snackbar.make(profileSwipeLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
-                                Log.d("CONNECTION", String.valueOf(isConnected));
-                            }
-                        } else {
-                            // Show error dialog
-                            new AlertDialog.Builder(getActivity(), R.style.SegoAlertDialog)
-                                    .setTitle("insightof.me")
-                                    .setMessage(R.string.info_reward_ad_not_loaded)
-                                    .setPositiveButton(getString(R.string.action_ok), new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.dismiss();
-                                        }
-                                    })
-                                    .show();
-                            Log.d("EgoRewardAd", "The rewarded ad wasn't loaded yet.");
-                        }
-                    }
-                });
-                builder.setNegativeButton(getString(R.string.action_cancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                    }
-                });
-                builder.show();
-            }
-        });
-
         badgeCredit.setText(String.valueOf(sessionManager.getUser().getCredit()));
         badgeRated.setText(String.valueOf(sessionManager.getUser().getRated()));
 
@@ -335,15 +286,9 @@ public class ProfileFragment extends Fragment {
      * Set up profile info card
      */
     private void initInfoCard(){
-        tvProfileInfoCard = getView().findViewById(R.id.tvProfileInfoCard);
+        btnInfoShare = getView().findViewById(R.id.btnInfoShare);
 
-        /*if(!sessionManager.getUser().hasTest()){ //User don't have a test
-            tvProfileInfoCard.setText(R.string.info_no_test);
-        }else{//User have test
-            tvProfileInfoCard.setText(R.string.info_share_test);
-        }*/
-
-        tvProfileInfoCard.setOnClickListener(new View.OnClickListener() {
+        btnInfoShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 btnShareResults.performClick();
@@ -433,65 +378,6 @@ public class ProfileFragment extends Fragment {
     }
 
     /**
-     * Initializes and loads rewarded video ad.
-     */
-    private void prepareRewardedAd(){
-        final Context fragmentContext = getActivity();
-        if (fragmentContext==null) return;
-
-        this.rewardedAd = new RewardedAd(fragmentContext, getResources().getString(R.string.admob_ad_interface));
-        final RewardedAdLoadCallback adLoadCallback = new RewardedAdLoadCallback() {
-            @Override
-            public void onRewardedAdLoaded() {
-                // Ad successfully loaded.
-                Log.d("Reward Ad","Ad successfully loaded.");
-                if(sessionManager.getUser().getRated() >= 5){
-                    //User able to use Ego points
-                    badgeCredit.setEnabled(true);
-                }
-            }
-
-            @Override
-            public void onRewardedAdFailedToLoad(int errorCode) {
-                // Ad failed to load.
-                Log.d("Reward Ad","Ad failed to load. Try again");
-                //prepareRewardedAd();
-            }
-        };
-        rewardedAd.loadAd(new AdRequest.Builder().build(), adLoadCallback);
-    }
-
-    /**
-     * Shows rewarded Ad and sets RewardAd callback. Calls reward task user if the user earned.
-     */
-    private void showRewardedAd(){
-        final String rewardCallbackTag = "RewardedAdCallback";
-        //Prepare rewarded ad callback
-        RewardedAdCallback rewardedAdCallback = new RewardedAdCallback() {
-            @Override
-            public void onRewardedAdOpened() {
-                Log.d(rewardCallbackTag,"Ad opened.");
-            }
-            @Override
-            public void onRewardedAdClosed() {
-                Log.d(rewardCallbackTag,"Ad closed.");
-            }
-            @Override
-            public void onUserEarnedReward(@NonNull RewardItem reward) {
-                Log.d(rewardCallbackTag,"User earned reward.");
-                EarnRewardTask.EarnRewardTask(getContext(), sessionManager.getSessionToken());
-                Log.d("Reward",""+reward.getAmount());
-            }
-            @Override
-            public void onRewardedAdFailedToShow(int errorCode) {
-                Log.d(rewardCallbackTag,"Ad failed to display.");
-            }
-        };
-        //Show rewarded ad
-        rewardedAd.show(getActivity(), rewardedAdCallback);
-    }
-
-    /**
      * Shows share result dialog
      */
     private void shareResults(){
@@ -538,7 +424,6 @@ public class ProfileFragment extends Fragment {
             initProfileCard();
             initButtons();
             initInfoCard();
-            prepareRewardedAd();
             prepareBannerAd();
             initSwipeLayout();
         }
