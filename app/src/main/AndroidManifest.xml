@@ -18,7 +18,8 @@
 
         <activity
             android:name="com.allybros.superego.activity.SplashActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -36,6 +37,7 @@
             android:label="@string/activity_label_profile"
             android:launchMode="singleTop"
             android:theme="@style/UserPage.theme"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"/>
 
         <activity
@@ -48,25 +50,29 @@
 
         <activity android:name="com.allybros.superego.activity.SettingsActivity"
             android:theme="@style/AppTheme.TransparentBackground"
-            android:label="@string/activity_label_options"/>
+            android:label="@string/activity_label_options"
+            android:screenOrientation="portrait"/>
 
 
         <activity android:name="com.allybros.superego.activity.ChangePasswordActivity"
             android:label="@string/activity_label_change_password"
             android:theme="@style/AppTheme.TransparentBackground"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name="com.allybros.superego.activity.EditProfileActivity"
             android:parentActivityName=".activity.UserPageActivity"
             android:label="@string/activity_label_edit_profile"
             android:theme="@style/AppTheme.TransparentBackground"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name="com.allybros.superego.activity.WebViewActivity"
             android:parentActivityName=".activity.UserPageActivity"
-            android:theme="@style/AppTheme.TransparentBackground" />
+            android:theme="@style/AppTheme.TransparentBackground"
+            android:screenOrientation="portrait"/>
 
         <!--Facebook-->
         <meta-data android:name="com.facebook.sdk.ApplicationId"
