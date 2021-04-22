@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
+import android.media.Image;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,8 +33,10 @@ import com.allybros.superego.R;
 import com.allybros.superego.activity.UserPageActivity;
 import com.allybros.superego.api.EarnRewardTask;
 import com.allybros.superego.api.LoadProfileTask;
+import com.allybros.superego.api.SocialMediaSignInTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
+import com.allybros.superego.unit.Score;
 import com.allybros.superego.unit.User;
 import com.allybros.superego.ui.ScoresAdapter;
 import com.allybros.superego.util.SessionManager;
@@ -51,6 +55,8 @@ import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
+
 public class ResultsFragment extends Fragment {
     private TextView tvRemainingRates;
     private ListView listViewTraits;
@@ -60,6 +66,8 @@ public class ResultsFragment extends Fragment {
     private AdView adResultBanner;
     private Button btnShowAd, btnShareTestResult;
     private RewardedAd rewardedAd;
+    ScoresAdapter clearHelper;
+    private ImageView ivShareResults;
     private SessionManager sessionManager = SessionManager.getInstance();
     //3 states of Result screen represented in an Enum
     private enum State {
@@ -196,11 +204,17 @@ public class ResultsFragment extends Fragment {
                 listViewTraits = getView().findViewById(R.id.listViewPartialTraits);
                 btnShowAd = getView().findViewById(R.id.button_get_ego);
                 tvRemainingRates = getView().findViewById(R.id.tvRatedResultPage);
+                ivShareResults = getView().findViewById(R.id.ivShareResults);
 
                 //Populate views
                 int remainingRates = 10 - (currentUser.getRated() + currentUser.getCredit());
                 tvRemainingRates.setText(getString(R.string.remaining_credits, remainingRates));
-                listViewTraits.setAdapter( new ScoresAdapter(getActivity(), currentUser.getScores()) );
+                clearHelper = (ScoresAdapter) listViewTraits.getAdapter();
+                if(clearHelper != null ) {
+                    clearHelper.clear();
+                    clearHelper.notifyDataSetChanged();
+                }
+                listViewTraits.setAdapter( new ScoresAdapter(getActivity(), currentUser.getScores(), false, null) );
                 prepareRewardedAd();
                 btnShowAd.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -233,12 +247,28 @@ public class ResultsFragment extends Fragment {
                         }
                     }
                 });
+                ivShareResults.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        shareTest();
+                    }
+                });
                 break;
 
             //All results
             case COMPLETE:
                 listViewTraits = getView().findViewById(R.id.listViewTraits);
-                listViewTraits.setAdapter( new ScoresAdapter(getActivity(), currentUser.getScores()) );
+                clearHelper = (ScoresAdapter) listViewTraits.getAdapter();
+                if(clearHelper != null ) {
+                    clearHelper.clear();
+                    clearHelper.notifyDataSetChanged();
+                }
+                listViewTraits.setAdapter( new ScoresAdapter(getActivity(), currentUser.getScores(), true, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        shareTest();
+                    }
+                }) );
                 break;
 
             //No results
@@ -323,31 +353,6 @@ public class ResultsFragment extends Fragment {
         };
         //TODO: Replace when new API package is developed
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(resultsRefreshReceiver,new IntentFilter(ConstantValues.ACTION_REFRESH_RESULTS));
-    }
-
-    /**
-     *  Detects orientation changing and resets view objects and their controller.
-     * @param newConfig     represents configs that are current situation of phone. Used for detecting orientation config
-     */
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        // Checks the orientation of the screen
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            //Delete old receivers
-            LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(resultsRefreshReceiver);
-            //Reset all view object and their controllers
-            setupReceiver();
-            setupView();
-            prepareBannerAd();
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-            //Delete old receivers
-            LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(resultsRefreshReceiver);
-            //Reset all view object and their controllers
-            setupReceiver();
-            setupView();
-            prepareBannerAd();
-        }
     }
 
     @Override

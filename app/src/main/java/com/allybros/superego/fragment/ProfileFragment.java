@@ -407,29 +407,6 @@ public class ProfileFragment extends Fragment {
     }
 
     /**
-     *  Detects orientation changing and resets view objects and their controller.
-     * @param newConfig     represents configs that are current situation of phone. Used for detecting orientation config
-     */
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        // Checks the orientation of the screen
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE
-            || newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            //Delete old receivers
-            LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(refreshReceiver);
-            LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(rewardReceiver);
-            //Reset all view object and their controllers
-            setupReceivers();
-            initProfileCard();
-            initButtons();
-            initInfoCard();
-            prepareBannerAd();
-            initSwipeLayout();
-        }
-    }
-
-    /**
      * Shows a create test dialog
      */
     private void showDialog(){

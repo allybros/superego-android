@@ -13,7 +13,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.allybros.superego.R;
 import com.allybros.superego.unit.Score;
@@ -34,11 +38,17 @@ public class ScoresAdapter extends ArrayAdapter<Score> {
     private static final String EMOJI_END_POINT = "https://api.allybros.com/twemoji/?name=";
     private ArrayList<Score> scores;
     private AdView adResultBanner;
+    private Boolean isContainTitle;
+    private View.OnClickListener shareListener;
 
-    public ScoresAdapter(Context context, ArrayList<Score> scores) {
+    public ScoresAdapter(Context context, ArrayList<Score> scores, Boolean isContainTitle, @Nullable View.OnClickListener shareListener) {
         super(context, R.layout.scores_list_row, scores);
         this.scores = scores;
-        scores.add(new Score(-2016, 0));
+        this.isContainTitle = isContainTitle;
+        if(shareListener != null) this.shareListener = shareListener;
+        scores.add(new Score(-2016, 0));    //It provide to adding ad row
+
+        if(this.isContainTitle) scores.add(0, new Score(-2016, 0));    //It provide to adding title row
     }
 
     @Override
@@ -53,13 +63,26 @@ public class ScoresAdapter extends ArrayAdapter<Score> {
             }
             else{
                 convertView = inflater.inflate(R.layout.scores_list_row, parent,false);
+                if(isContainTitle && position == 0) {
+                    ConstraintLayout llTraitTitle = convertView.findViewById(R.id.clTraitTitle);
+                    final ImageView ivShareResults = convertView.findViewById(R.id.ivShareResults);
+                    llTraitTitle.setVisibility(View.VISIBLE);
+                    ivShareResults.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            shareListener.onClick(ivShareResults);
+                        }
+                    });
+
+                    return convertView;
+                }
             }
         }
 
         ImageView traitImage = convertView.findViewById(R.id.traitEmojiView);
         TextView traitNameView = convertView.findViewById(R.id.traitNameView);
         FrameLayout traitEmojiContainer = convertView.findViewById(R.id.imageViewContainer);
-
+        ConstraintLayout clTraitRow = convertView.findViewById(R.id.clTraitRow);
         if (traitImage == null || traitNameView == null || traitEmojiContainer == null) return new View(getContext());
 
         Score s = getItem(position);
@@ -80,7 +103,7 @@ public class ScoresAdapter extends ArrayAdapter<Score> {
         int b = random.nextInt(120) + 60;
         Drawable shape = traitEmojiContainer.getBackground();
         shape.setColorFilter(Color.rgb(r, g, b), PorterDuff.Mode.SRC_ATOP);
-
+        clTraitRow.setVisibility(View.VISIBLE);
         return convertView;
     }
 

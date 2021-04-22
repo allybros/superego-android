@@ -22,22 +22,39 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvHeaderPoints"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clTraitTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
                     android:layout_marginTop="24dp"
-                    android:layout_marginEnd="16dp"
-                    android:textSize="32sp"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/noto_sans_bold"
-                    android:textColor="@color/Black"
-                    android:text="Kişilik Özelliklerin"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
-                </androidx.appcompat.widget.AppCompatTextView>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvHeaderPoints"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:fontFamily="@font/noto_sans_bold"
+                        android:text="Kişilik Özelliklerin"
+                        android:textColor="@color/Black"
+                        android:textSize="30sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"></androidx.appcompat.widget.AppCompatTextView>
+
+                    <ImageView
+                        android:id="@+id/ivShareResults"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/baseline_share_24"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"></ImageView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardInfoPartial"
@@ -50,7 +67,7 @@
                     app:cardCornerRadius="11dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvHeaderPoints">
+                    app:layout_constraintTop_toBottomOf="@+id/clTraitTitle">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -121,13 +138,15 @@
                     android:id="@+id/listViewPartialTraits"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
                     android:layout_marginTop="16dp"
+                    android:layout_marginEnd="6dp"
                     android:divider="@null"
                     android:dividerHeight="0dp"
-                    tools:listitem="@layout/scores_list_row"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/cardInfoPartial"
-                    app:layout_constraintVertical_bias="0">
-                </ListView>
+                    tools:listitem="@layout/scores_list_row"></ListView>
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView"
