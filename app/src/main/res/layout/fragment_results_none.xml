@@ -146,85 +146,6 @@ tools:context=".fragment.ResultsFragment" >
 
             </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_credit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="18dp"
-                android:layout_marginTop="18dp"
-                android:layout_marginEnd="18dp"
-                android:elevation="7dp"
-                app:cardCornerRadius="11dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/ego_card_bg"
-                    android:paddingBottom="16dp">
-
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/appCompatTextView2"
-                        android:layout_width="240dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="14dp"
-                        android:layout_marginTop="16dp"
-                        android:gravity="left"
-                        android:lines="2"
-                        android:fontFamily="@font/noto_sans_bold"
-                        android:text="Daha fazla beklemeden tüm sonuçları gör!"
-                        android:textColor="@color/White"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/appCompatTextView"
-                        android:layout_width="200dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="14dp"
-                        android:layout_marginTop="6dp"
-                        android:gravity="left"
-                        android:text="@string/info_partial_rates"
-                        android:textColor="@color/White"
-                        android:textSize="16sp"
-                        android:fontFamily="@font/noto_sans"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/appCompatTextView2" />
-
-                    <Button
-                        android:id="@+id/button_get_ego"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/shape_info_button"
-                        android:paddingHorizontal="30dp"
-                        android:paddingVertical="9dp"
-                        android:text="Ego Kazan"
-                        android:fontFamily="@font/noto_sans"
-                        android:textAllCaps="false"
-                        android:textSize="16sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/appCompatTextView" />
-
-                    <ImageView
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:src="@drawable/ic_ego_logo"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"></ImageView>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-
             <!-- Google Ad -->
             <FrameLayout
                 android:id="@+id/resultCardAd"
@@ -237,7 +158,7 @@ tools:context=".fragment.ResultsFragment" >
                 android:elevation="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/card_credit">
+                app:layout_constraintTop_toBottomOf="@+id/cardView">
 
                 <com.google.android.gms.ads.AdView
                     android:id="@+id/resultBannerAdd"
