@@ -6,8 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.res.Configuration;
-import android.media.Image;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -24,7 +22,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -33,15 +30,11 @@ import com.allybros.superego.R;
 import com.allybros.superego.activity.UserPageActivity;
 import com.allybros.superego.api.EarnRewardTask;
 import com.allybros.superego.api.LoadProfileTask;
-import com.allybros.superego.api.SocialMediaSignInTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
-import com.allybros.superego.unit.Score;
 import com.allybros.superego.unit.User;
 import com.allybros.superego.ui.ScoresAdapter;
 import com.allybros.superego.util.SessionManager;
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -55,7 +48,6 @@ import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.util.ArrayList;
 
 public class ResultsFragment extends Fragment {
     private TextView tvRemainingRates;
@@ -250,7 +242,7 @@ public class ResultsFragment extends Fragment {
                 ivShareResults.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        shareTest();
+                        shareResults();
                     }
                 });
                 break;
@@ -283,37 +275,6 @@ public class ResultsFragment extends Fragment {
                 tvRemainingRates.setText( getString(R.string.remaining_credits, remainingRates) );
                 prepareBannerAd();
                 prepareRewardedAd();
-                btnShowAd.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (rewardedAd.isLoaded()) {
-                            // Check internet connection
-                            ConnectivityManager cm = (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-                            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-                            boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-                            if(isConnected){
-                                showRewardedAd();
-                            }
-                            else {
-                                Snackbar.make(swipeLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
-                                Log.d("CONNECTION", String.valueOf(isConnected));
-                            }
-                        } else {
-                            // Show error dialog
-                            new AlertDialog.Builder(getActivity(), R.style.SegoAlertDialog)
-                                    .setTitle("insightof.me")
-                                    .setMessage(R.string.info_reward_ad_not_loaded)
-                                    .setPositiveButton(getString(R.string.action_ok), new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.dismiss();
-                                        }
-                                    })
-                                    .show();
-                            Log.d("EgoRewardAd", "The rewarded ad wasn't loaded yet.");
-                        }
-                    }
-                });
                 btnShareTestResult.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -428,5 +389,21 @@ public class ResultsFragment extends Fragment {
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, R.string.action_btn_share_test);
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
         startActivity(Intent.createChooser(sharingIntent, getString(R.string.action_btn_share_test)));
+    }
+
+    /**
+     * Shows share result dialog
+     */
+    private void shareResults(){
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+
+        String testResultId = SessionManager.getInstance().getUser().getTestResultId();
+        String testUrl = String.format("https://insightof.me/%s", sessionManager.getUser().getTestId());
+
+        String shareBody = getString(R.string.body_share_results, testResultId+"\n", testUrl);
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, R.string.action_btn_share_results);
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+        startActivity(Intent.createChooser(sharingIntent, getString(R.string.action_btn_share_results)));
     }
 }

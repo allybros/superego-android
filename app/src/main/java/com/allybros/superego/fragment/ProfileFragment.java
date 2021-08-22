@@ -269,7 +269,6 @@ public class ProfileFragment extends Fragment {
                 } else {
                     Snackbar.make(profileSwipeLayout, R.string.alert_no_results, BaseTransientBottomBar.LENGTH_LONG).show();
                 }
-
             }
         });
 
@@ -291,7 +290,7 @@ public class ProfileFragment extends Fragment {
         btnInfoShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnShareResults.performClick();
+                shareTest();
             }
         });
     }
