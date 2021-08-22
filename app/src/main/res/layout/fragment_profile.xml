@@ -56,7 +56,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="18dp"
-                    android:layout_marginTop="140dp"
+                    android:layout_marginTop="125dp"
                     android:layout_marginEnd="18dp"
                     android:background="@drawable/shape_card"
                     android:elevation="4dp"
@@ -70,7 +70,7 @@
                         android:id="@+id/tvUsername"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="65dp"
+                        android:layout_marginTop="80dp"
                         android:text="\@username"
                         android:textColor="@color/Black"
                         android:fontFamily="@font/noto_sans"
@@ -238,7 +238,7 @@
                                     android:layout_marginBottom="12dp"
                                     android:fontFamily="@font/noto_sans_bold"
                                     android:gravity="center_vertical"
-                                    android:text="Credit"
+                                    android:text="Ego"
                                     android:textColor="@color/purple"
                                     android:textSize="12dp" />
                             </LinearLayout>
