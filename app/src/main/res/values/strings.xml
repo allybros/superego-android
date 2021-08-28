@@ -2,6 +2,7 @@
     <!--Constants-->
     <string name="app_name" translatable="false">insightof.me</string>
     <string name="web_root" translatable="false">insightof.me</string>
+    <string name="conditions_link" translatable="false">https://insightof.me/conditions</string>
 
     <!--Labels-->
     <string name="activity_label_profile">Profil</string>
