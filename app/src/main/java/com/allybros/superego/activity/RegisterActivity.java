@@ -178,7 +178,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
-        
+
         tvAgreementRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
