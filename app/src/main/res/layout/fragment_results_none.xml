@@ -165,7 +165,7 @@ tools:context=".fragment.ResultsFragment" >
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:adSize="LARGE_BANNER"
-                    app:adUnitId="ca-app-pub-3940256099942544/6300978111" />
+                    app:adUnitId="@string/admob_profile_banner" />
             </FrameLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
