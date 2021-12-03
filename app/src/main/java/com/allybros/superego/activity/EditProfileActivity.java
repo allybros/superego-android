@@ -46,7 +46,6 @@ public class EditProfileActivity extends AppCompatActivity {
     private MaterialProgressBar progressEditProfile;
     private ConstraintLayout cardFormEditProfile;
     private EditText username,email,information;
-    private SlidrInterface slidr;
     private ImageView ivChangeAvatar, ivBack;
     private CircleImageView settingsImage;
     private ConstraintLayout editProfileLayout;

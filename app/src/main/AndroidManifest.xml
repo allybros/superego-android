@@ -56,7 +56,7 @@
 
         <activity android:name="com.allybros.superego.activity.ChangePasswordActivity"
             android:label="@string/activity_label_change_password"
-            android:theme="@style/AppTheme.TransparentBackground"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait"/>
 
