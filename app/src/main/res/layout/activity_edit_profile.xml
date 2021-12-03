@@ -208,10 +208,11 @@
                 android:id="@+id/ivChangeAvatar"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
-                android:layout_marginStart="223dp"
                 android:layout_marginTop="96dp"
-                android:translationZ="1000dp"
+                android:layout_marginStart="85dp"
                 android:src="@drawable/ic_pencil_purple"
+                android:translationZ="1000dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ivBack" />
 
