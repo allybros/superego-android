@@ -82,7 +82,9 @@
 
     <color name="lightPurple">#FEFAFF</color>
 
-    <color name="deepBlue">#424874</color>
+    <!--Deep Blue-->
+    <color name="deepBlue100">#424874</color>
+    <color name="deepBlue60">#42487499</color>
 
 
 
