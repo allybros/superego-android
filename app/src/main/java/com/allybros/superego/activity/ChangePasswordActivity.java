@@ -9,6 +9,8 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,7 +40,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
     private Button btChangePassword;
     private EditText etOldPassword, etNewPassword, etNewPasswordAgain;
     private ConstraintLayout cardFormChangePassword;
-    private ImageView ivBack;
+    private ImageView ivBack, ivOldPassToggle, ivNewPassToggle, ivNewPassAgainToggle;
 
     private BroadcastReceiver changePasswordReceiver;
     @Override
@@ -157,14 +159,53 @@ public class ChangePasswordActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if(s.toString().isEmpty()){
-                    setError(etNewPasswordAgain, getString(R.string.error_email_empty));
+                    setError(etNewPasswordAgain, getString(R.string.input_error_password_mismatch));
                 } else {
                     clearError(etNewPasswordAgain);
                 }
 
             }
         });
+
+        btChangePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                attemptChangePassword();
+            }
+        });
+
+        ivOldPassToggle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changePasswordVisibility(ivOldPassToggle, etOldPassword);
+            }
+        });
+
+        ivNewPassToggle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changePasswordVisibility(ivNewPassToggle, etNewPassword);
+            }
+        });
+
+        ivNewPassAgainToggle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changePasswordVisibility(ivNewPassAgainToggle, etNewPasswordAgain);
+            }
+        });
     }
+
+    private void changePasswordVisibility(ImageView imageView, EditText editText) {
+        if(editText.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())){
+            imageView.setImageResource(R.drawable.ic_visibility_off);
+            editText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+        } else{
+            imageView.setImageResource(R.drawable.ic_visibility);
+            editText.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        }
+    }
+
 
     private void initializeComponents(){
         btChangePassword = findViewById(R.id.btChangePassword);
@@ -174,12 +215,9 @@ public class ChangePasswordActivity extends AppCompatActivity {
         etNewPasswordAgain = findViewById(R.id.etNewPasswordAgain);
         cardFormChangePassword = findViewById(R.id.cardFormChangePassword);
         ivBack = findViewById(R.id.ivBack);
-        btChangePassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                attemptChangePassword();
-            }
-        });
+        ivOldPassToggle = findViewById(R.id.ivOldPassToggle);
+        ivNewPassToggle = findViewById(R.id.ivNewPassToggle);
+        ivNewPassAgainToggle = findViewById(R.id.ivNewPassAgainToggle);
     }
 
     private void attemptChangePassword(){
