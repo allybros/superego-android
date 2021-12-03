@@ -185,10 +185,6 @@ public class EditProfileActivity extends AppCompatActivity {
 
         if(!isConnected) Snackbar.make(editProfileLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
 
-        //Require for slide behaviour
-        slidr= Slidr.attach(this);
-        slidr.unlock();
-
         ivChangeAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
