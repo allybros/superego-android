@@ -1,2 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+
+    <dimen name="image_result_page_rates_size">90dp</dimen>
+    <dimen name="image_result_page_ego_size">90dp</dimen>
+
+</resources>
