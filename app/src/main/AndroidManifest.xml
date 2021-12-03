@@ -64,7 +64,7 @@
             android:name="com.allybros.superego.activity.EditProfileActivity"
             android:parentActivityName=".activity.UserPageActivity"
             android:label="@string/activity_label_edit_profile"
-            android:theme="@style/AppTheme.TransparentBackground"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait"/>
 

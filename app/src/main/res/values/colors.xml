@@ -13,6 +13,7 @@
     <color name="bgBottomNavigation">#FAFAFA</color>
     <color name="bgNavigationItemActive">#9B51E0</color>
     <color name="bgNavigationItemPassive">#BDBDBD</color>
+    <color name="statusbarPurple">#454278</color>
 
     <color name="fragmentBackground">#f9f9f9</color>
 

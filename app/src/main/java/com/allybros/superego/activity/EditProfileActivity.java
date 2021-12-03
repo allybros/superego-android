@@ -13,6 +13,8 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -42,7 +44,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private TextInputEditText username,email,information;
     private TextInputLayout etUsername_text_input,etEmail_text_input,etInformation_text_input;
     private SlidrInterface slidr;
-    private Button btChangePhoto;
+    private ImageView ivChangeAvatar, ivBack;
     private CircleImageView settingsImage;
     private ConstraintLayout editProfileLayout;
     public static Uri newImagePath=null;
@@ -65,14 +67,15 @@ public class EditProfileActivity extends AppCompatActivity {
         editProfileLayout = findViewById(R.id.editProfileLayout);
         progressEditProfile = findViewById(R.id.progressEditProfile);
         cardFormEditProfile = findViewById(R.id.cardFormEditProfile);
-        btChangePhoto = findViewById(R.id.btChangePhoto);
+        ivChangeAvatar = findViewById(R.id.ivChangeAvatar);
+        ivBack = findViewById(R.id.ivBack);
         username = findViewById(R.id.etUsername);
         email = findViewById(R.id.etEmail);
         information = findViewById(R.id.etInformation);
         etUsername_text_input = findViewById(R.id.textInputUsername);
         etEmail_text_input = findViewById(R.id.textInputEmail);
         etInformation_text_input = findViewById(R.id.etInformation_text_input);
-        settingsImage = findViewById(R.id.imageSettings);
+        settingsImage = findViewById(R.id.ivUserAvatarEditProfile);
         btnSaveProfile = findViewById(R.id.btnSaveProfile);
     }
 
@@ -166,9 +169,6 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private void setupUi(){
 
-        btChangePhoto.bringToFront();
-        btChangePhoto.invalidate();
-
         //Set view components
         email.setText(SessionManager.getInstance().getUser().getEmail());
         username.setText(SessionManager.getInstance().getUser().getUsername());
@@ -189,7 +189,7 @@ public class EditProfileActivity extends AppCompatActivity {
         slidr= Slidr.attach(this);
         slidr.unlock();
 
-        btChangePhoto.setOnClickListener(new View.OnClickListener() {
+        ivChangeAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Check internet connection
@@ -220,6 +220,13 @@ public class EditProfileActivity extends AppCompatActivity {
                     Log.d("CONNECTION", String.valueOf(isConnected));
                     Snackbar.make(editProfileLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
                 }
+            }
+        });
+
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
             }
         });
     }

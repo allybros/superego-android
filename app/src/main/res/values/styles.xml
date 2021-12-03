@@ -27,8 +27,7 @@
     <style name="AppTheme.NoActionBar" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:statusBarColor">@color/statusbarPurple</item>
     </style>
 
     <style name="UserPage.theme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -70,7 +69,7 @@
         <item name="cornerRadius">8dp</item>
         <item name="textAllCaps">false</item>
         <item name="android:padding">10dp</item>
-        <item name="backgroundTint">@color/materialPurple</item>
+        <item name="backgroundTint">@color/segoPurple600</item>
         <item name="android:textColor">@color/White</item>
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">@font/noto_sans</item>
