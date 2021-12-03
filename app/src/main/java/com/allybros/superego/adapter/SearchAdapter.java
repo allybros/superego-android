@@ -1,4 +1,4 @@
-package com.allybros.superego.ui;
+package com.allybros.superego.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,7 +13,6 @@ import androidx.annotation.Nullable;
 import com.allybros.superego.R;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.User;
-import com.allybros.superego.util.HelperMethods;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

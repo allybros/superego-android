@@ -1,4 +1,4 @@
-package com.allybros.superego.ui;
+package com.allybros.superego.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,7 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.allybros.superego.R;
-import com.allybros.superego.unit.Score;
 
 import java.util.ArrayList;
 

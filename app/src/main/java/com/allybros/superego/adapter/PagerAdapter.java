@@ -1,4 +1,4 @@
-package com.allybros.superego.ui;
+package com.allybros.superego.adapter;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;

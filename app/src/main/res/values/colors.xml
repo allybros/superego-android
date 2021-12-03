@@ -6,6 +6,7 @@
     <color name="colorAccent">#FFFFFF</color>
     <color name="Black">#000000</color>
     <color name="Gray">#808080</color>
+    <color name="DarkGray">#42487426</color>
     <color name="White">#ffffff</color>
     <color name="transparent">#00000000</color>
     <color name="red">#FF0202</color>
@@ -80,6 +81,8 @@
     <color name="orange">#FF7700</color>
 
     <color name="lightPurple">#FEFAFF</color>
+
+    <color name="deepBlue">#424874</color>
 
 
 

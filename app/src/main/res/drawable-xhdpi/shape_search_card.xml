@@ -15,20 +15,14 @@
 
     <!--If your shape requires only one solid color-->
     <solid
-        android:color="#FFFFFF" />shape_card
+        android:color="#FFFFFF" />
 
     <!--Use android:dashWidth="2dp" and android:dashGap="2dp"
     to add dashes to your stroke-->
-<!--    <stroke
+    <stroke
         android:width="0.1dp"
-        android:color="#d6d6d6" />-->
+        android:color="@color/DarkGray" />
 
-    <!--If you want to add padding-->
-    <!-- <padding
-         android:left="10dp"
-         android:top="20dp"
-         android:right="40dp"
-         android:bottom="8dp" />-->
 
 
 </shape>

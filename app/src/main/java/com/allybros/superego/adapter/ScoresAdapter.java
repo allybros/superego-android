@@ -1,4 +1,4 @@
-package com.allybros.superego.ui;
+package com.allybros.superego.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -29,7 +28,6 @@ import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 

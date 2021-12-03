@@ -33,7 +33,7 @@ import com.allybros.superego.api.LoadProfileTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.unit.User;
-import com.allybros.superego.ui.ScoresAdapter;
+import com.allybros.superego.adapter.ScoresAdapter;
 import com.allybros.superego.util.SessionManager;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;

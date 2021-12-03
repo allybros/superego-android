@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraintSearchFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fragmentBackground">
+    android:background="@color/White">
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvSearchHeader"
         android:layout_width="match_parent"
@@ -15,7 +16,7 @@
         android:textSize="32sp"
         android:textStyle="bold"
         android:fontFamily="@font/noto_sans_bold"
-        android:textColor="@color/Black"
+        android:textColor="@color/deepBlue"
         android:text="@string/activity_label_search"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,14 +37,13 @@
         android:drawableStart="@drawable/v_magnify"
         android:drawablePadding="12dp"
         android:drawableTint="@color/Gray"
-        android:elevation="4dp"
         android:ems="10"
         android:fontFamily="@font/noto_sans"
         android:hint="@string/hint_searchbar_username"
         android:inputType="textPersonName"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
-        android:textColor="@color/Gray"
+        android:textColor="@color/deepBlue"
         android:textSize="19sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,15 +54,17 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        android:background="@color/fragmentBackground"
+        android:background="@color/White"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etSearchUser"
-        app:layout_constraintVertical_bias="0.0"
+        android:divider="@color/White"
+        tools:listitem="@layout/search_user_row"
         android:isScrollContainer="false"
-        android:focusableInTouchMode="true"/>
+        android:focusableInTouchMode="true"
+        tools:visibility="visible"/>
 
     <!-- User search info -->
     <ImageView
@@ -74,7 +76,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/v_account_search"
-        app:tint="@color/Gray" />
+        app:tint="@color/Gray"
+        tools:visibility="gone"/>
 
     <TextView
         android:id="@+id/tvSearchInfo"
@@ -87,5 +90,6 @@
         android:fontFamily="@font/noto_sans"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivIconSearchInfo" />
+        app:layout_constraintTop_toBottomOf="@+id/ivIconSearchInfo"
+        tools:visibility="gone"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
