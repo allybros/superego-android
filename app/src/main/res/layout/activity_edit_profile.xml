@@ -4,21 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
-
-    <me.zhanghai.android.materialprogressbar.MaterialProgressBar
-        android:id="@+id/progressEditProfile"
-        android:visibility="invisible"
-        android:layout_width="0dp"
-        android:layout_height="3dp"
-        android:indeterminate="true"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:mpb_progressStyle="horizontal"
-        android:indeterminateTint="@color/materialPurple"
-        style="@style/SegoProgressView" />
+    android:layout_height="match_parent">
 
     <View
         android:id="@+id/vRectengle"
@@ -106,72 +92,93 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvOptionsTitle">
 
 
-                <com.google.android.material.textfield.TextInputLayout
+                <TextView
                     android:id="@+id/textInputUsername"
-                    style="@style/SegoInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginHorizontal="20dp"
                     android:layout_marginTop="61dp"
-                    android:hint="@string/hint_change_info_username"
+                    android:textColor="@color/segoPurple600"
+                    android:fontFamily="@font/noto_sans"
+                    android:text="@string/hint_change_info_username"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/etUsername"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/et_background"
+                    android:padding="8dp"
+                    android:inputType="text"
+                    android:fontFamily="@font/noto_sans"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="20dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:startIconDrawable="@drawable/baseline_person_24">
+                    app:layout_constraintTop_toBottomOf="@+id/textInputUsername" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etUsername"
-                        style="@style/SegoEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="text" />
-                </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
+                <TextView
                     android:id="@+id/textInputEmail"
-                    style="@style/SegoInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginTop="12dp"
-                    android:hint="@string/hint_change_info_email"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputUsername"
-                    app:startIconDrawable="@drawable/v_email">
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/segoPurple600"
+                    android:fontFamily="@font/noto_sans"
+                    android:text="@string/hint_change_info_email"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/etUsername" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etEmail"
-                        style="@style/SegoEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="text" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/etInformation_text_input"
-                    style="@style/SegoInputLayout"
+                <EditText
+                    android:id="@+id/etEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginTop="12dp"
-                    android:hint="@string/hint_change_info_personal_information"
-                    app:boxBackgroundColor="@color/transparent"
+                    android:background="@drawable/et_background"
+                    android:padding="8dp"
+                    android:inputType="textEmailAddress"
+                    android:fontFamily="@font/noto_sans"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="20dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputEmail"
-                    app:startIconDrawable="@drawable/v_account_details">
+                    app:layout_constraintTop_toBottomOf="@+id/textInputEmail" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etInformation"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textMultiLine"
-                        android:lines="3"
-                        android:overScrollMode="ifContentScrolls"
-                        android:scrollbarStyle="insideInset"
-                        android:scrollbars="vertical"
-                        android:scrollHorizontally="false"
-                        android:textColor="@color/Gray" />
-                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/etInformation_text_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/segoPurple600"
+                    android:fontFamily="@font/noto_sans"
+                    android:text="@string/hint_change_info_personal_information"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/etEmail"  />
+
+                <EditText
+                    android:id="@+id/etInformation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/et_background"
+                    android:padding="8dp"
+                    android:inputType="textMultiLine"
+                    android:minLines="3"
+                    android:maxLines="3"
+                    android:fontFamily="@font/noto_sans"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/etInformation_text_input" />
 
                 <Button
                     android:id="@+id/btnSaveProfile"
@@ -181,8 +188,7 @@
                     android:layout_marginHorizontal="15dp"
                     android:layout_marginTop="16dp"
                     android:text="@string/action_save"
-                    app:layout_constraintTop_toBottomOf="@+id/etInformation_text_input"
-                    tools:layout_editor_absoluteX="16dp" />
+                    app:layout_constraintTop_toBottomOf="@+id/etInformation" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -222,4 +228,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/brand_grey" />
+
+
+    <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+        android:id="@+id/progressEditProfile"
+        android:visibility="invisible"
+        android:layout_width="0dp"
+        android:layout_height="0.5dp"
+        android:indeterminate="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:mpb_progressStyle="horizontal"
+        android:indeterminateTint="@color/White"
+        style="@style/SegoProgressView" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,10 +10,14 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,8 +45,7 @@ import static com.allybros.superego.util.HelperMethods.imageToString;
 public class EditProfileActivity extends AppCompatActivity {
     private MaterialProgressBar progressEditProfile;
     private ConstraintLayout cardFormEditProfile;
-    private TextInputEditText username,email,information;
-    private TextInputLayout etUsername_text_input,etEmail_text_input,etInformation_text_input;
+    private EditText username,email,information;
     private SlidrInterface slidr;
     private ImageView ivChangeAvatar, ivBack;
     private CircleImageView settingsImage;
@@ -61,6 +64,7 @@ public class EditProfileActivity extends AppCompatActivity {
         initializeComponents();
         setupReceivers();
         setupUi();
+        setupTextWatchers();
     }
 
     private void initializeComponents(){
@@ -72,9 +76,6 @@ public class EditProfileActivity extends AppCompatActivity {
         username = findViewById(R.id.etUsername);
         email = findViewById(R.id.etEmail);
         information = findViewById(R.id.etInformation);
-        etUsername_text_input = findViewById(R.id.textInputUsername);
-        etEmail_text_input = findViewById(R.id.textInputEmail);
-        etInformation_text_input = findViewById(R.id.etInformation_text_input);
         settingsImage = findViewById(R.id.ivUserAvatarEditProfile);
         btnSaveProfile = findViewById(R.id.btnSaveProfile);
     }
@@ -227,6 +228,54 @@ public class EditProfileActivity extends AppCompatActivity {
         });
     }
 
+
+
+    private void setupTextWatchers() {
+        username.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                //this method is empty
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //this method is empty
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.toString().isEmpty()){
+                    setError(username, getString(R.string.error_username_empty));
+                } else {
+                    clearError(username);
+                }
+            }
+        });
+
+        email.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                //this method is empty
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //this method is empty
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.toString().isEmpty()){
+                    setError(email, getString(R.string.error_email_empty));
+                } else {
+                    clearError(email);
+                }
+
+            }
+        });
+
+    }
+
     //Opens intent that provide selecting image from local storage
     private void selectImage(){
        Intent intent = new Intent();
@@ -282,19 +331,30 @@ public class EditProfileActivity extends AppCompatActivity {
      * Validate user information and send request to the API
      */
     private void saveProfile(){
-        // Moved menu item option here
-        etEmail_text_input.setErrorEnabled(false);
-        etInformation_text_input.setErrorEnabled(false);
-        etUsername_text_input.setErrorEnabled(false);
+        clearError(username);
+        clearError(email);
 
-        if(username.getText().toString().isEmpty()) etUsername_text_input.setError(getString(R.string.input_error_field_required));
-        if(email.getText().toString().isEmpty()) etEmail_text_input.setError(getString(R.string.input_error_field_required));
+        if(username.getText().toString().isEmpty()){
+            setError(username, getString(R.string.error_username_empty));
+        }
+        if(email.getText().toString().isEmpty()){
+            setError(email, getString(R.string.error_email_empty));
+        }
 
         if(!username.getText().toString().isEmpty()
                 && !email.getText().toString().isEmpty() ){
             setProgressVisibility(true);
             ChangeInfoTask.changeInfoTask(getApplicationContext(),username.getText().toString(),email.getText().toString(),information.getText().toString(), SessionManager.getInstance().getSessionToken());
         }
+    }
+
+    private void setError(EditText editText, String errorMessage) {
+        editText.setHint(errorMessage);
+        editText.setBackground(getDrawable(R.drawable.et_error_background));
+    }
+
+    private void clearError(EditText editText) {
+        editText.setBackground(getDrawable(R.drawable.et_background));
     }
 
     @Override

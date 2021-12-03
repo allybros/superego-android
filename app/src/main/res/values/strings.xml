@@ -65,7 +65,7 @@
 
     <string name="hint_change_info_username">Kullanıcı Adı</string>
     <string name="hint_change_info_email">E-posta</string>
-    <string name="hint_change_info_personal_information">Kişisel Bilgiler</string>
+    <string name="hint_change_info_personal_information">Hakkında</string>
 
 
     <string name="hint_register_uid">Kullanıcı Adı</string>
