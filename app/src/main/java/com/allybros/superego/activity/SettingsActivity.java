@@ -48,7 +48,6 @@ public class SettingsActivity extends AppCompatActivity {
     private ConstraintLayout optionAbout;
     private ConstraintLayout optionLicenses;
     private ConstraintLayout optionSignOut;
-    private SlidrInterface slidr;
     private LoginButton logoutFacebook;
     private BroadcastReceiver logoutReceiver;
 
@@ -58,8 +57,6 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         ActionBar appBar = getSupportActionBar();
         if (appBar != null) appBar.setDisplayHomeAsUpEnabled(true);
-        slidr = Slidr.attach(this);
-        slidr.unlock();
         setOptions();
     }
 

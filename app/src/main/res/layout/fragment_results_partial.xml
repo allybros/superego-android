@@ -33,15 +33,18 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvHeaderPoints"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
+                        android:layout_marginEnd="4dp"
                         android:fontFamily="@font/noto_sans_bold"
-                        android:text="Kişilik Özelliklerin"
+                        android:text="@string/header_result_page_title"
                         android:textColor="@color/Black"
                         android:textSize="30sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/ivShareResults"
+                        app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"></androidx.appcompat.widget.AppCompatTextView>
 
@@ -93,21 +96,25 @@
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/textView4"
-                            android:layout_width="200dp"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="14dp"
                             android:layout_marginTop="6dp"
-                            android:gravity="left"
+                            android:ellipsize="end"
                             android:fontFamily="@font/noto_sans"
+                            android:padding="10dp"
                             android:text="@string/info_partial_rates"
                             android:textColor="@color/White"
                             android:textSize="16sp"
+                            app:layout_constraintEnd_toStartOf="@+id/imageView8"
+                            app:layout_constraintHorizontal_bias="0"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/tvRemainingRatesPartial" />
 
                         <ImageView
-                            android:layout_width="120dp"
-                            android:layout_height="120dp"
+                            android:id="@+id/imageView8"
+                            android:layout_width="@dimen/image_result_page_rates_size"
+                            android:layout_height="@dimen/image_result_page_rates_size"
                             android:layout_marginEnd="14dp"
                             android:src="@drawable/ic_rates"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -127,7 +134,7 @@
                             android:background="@drawable/shape_info_button"
                             android:paddingHorizontal="30dp"
                             android:paddingVertical="9dp"
-                            android:text="Testi Paylaş"
+                            android:text="@string/action_btn_share_test"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/textView4">
                         </Button>
@@ -207,7 +214,7 @@
                             android:layout_marginTop="16dp"
                             android:gravity="left"
                             android:lines="2"
-                            android:text="Daha fazla beklemeden tüm sonuçları gör!"
+                            android:text="@string/info_result_ad_text"
                             android:textColor="@color/White"
                             android:textSize="20sp"
                             android:fontFamily="@font/noto_sans_bold"
@@ -217,15 +224,18 @@
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/appCompatTextView"
-                            android:layout_width="200dp"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="14dp"
                             android:layout_marginTop="6dp"
-                            android:gravity="left"
+                            android:layout_marginEnd="36dp"
                             android:fontFamily="@font/noto_sans"
+                            android:ellipsize="end"
                             android:text="@string/info_partial_rates"
                             android:textColor="@color/White"
                             android:textSize="16sp"
+                            app:layout_constraintEnd_toStartOf="@+id/imageView9"
+                            app:layout_constraintHorizontal_bias="0.0"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/appCompatTextView2" />
 
@@ -238,7 +248,7 @@
                             android:background="@drawable/shape_info_button"
                             android:paddingHorizontal="30dp"
                             android:paddingVertical="9dp"
-                            android:text="Ego Kazan"
+                            android:text="@string/action_get_ego"
                             android:fontFamily="@font/noto_sans"
                             android:textAllCaps="false"
                             android:textSize="16sp"
@@ -246,8 +256,9 @@
                             app:layout_constraintTop_toBottomOf="@+id/appCompatTextView" />
 
                         <ImageView
-                            android:layout_width="120dp"
-                            android:layout_height="120dp"
+                            android:id="@+id/imageView9"
+                            android:layout_width="@dimen/image_result_page_ego_size"
+                            android:layout_height="@dimen/image_result_page_ego_size"
                             android:layout_marginTop="16dp"
                             android:layout_marginEnd="16dp"
                             android:src="@drawable/ic_ego_logo"

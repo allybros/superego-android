@@ -242,7 +242,7 @@ public class ResultsFragment extends Fragment {
                 ivShareResults.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        shareResults();
+                        shareTest();
                     }
                 });
                 break;
@@ -258,7 +258,7 @@ public class ResultsFragment extends Fragment {
                 listViewTraits.setAdapter( new ScoresAdapter(getActivity(), currentUser.getScores(), true, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        shareTest();
+                        shareResults();
                     }
                 }) );
                 break;

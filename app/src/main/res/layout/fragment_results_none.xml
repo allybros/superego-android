@@ -31,7 +31,7 @@ tools:context=".fragment.ResultsFragment" >
                 android:layout_marginEnd="16dp"
                 android:textSize="32sp"
                 android:textStyle="bold"
-                android:text="Kişilik Özelliklerin"
+                android:text="@string/header_result_page_title"
                 android:textColor="@color/Black"
                 android:fontFamily="@font/noto_sans_bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -76,26 +76,30 @@ tools:context=".fragment.ResultsFragment" >
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/textView4"
-                        android:layout_width="200dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="14dp"
                         android:layout_marginTop="6dp"
-                        android:gravity="left"
                         android:fontFamily="@font/noto_sans"
+                        android:gravity="left"
                         android:text="@string/info_partial_rates"
                         android:textColor="@color/White"
                         android:textSize="16sp"
+                        app:layout_constraintEnd_toStartOf="@+id/imageView6"
+                        app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tvRemainingRatesPartial" />
 
                     <ImageView
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
+                        android:id="@+id/imageView6"
+                        android:layout_width="@dimen/image_result_page_rates_size"
+                        android:layout_height="@dimen/image_result_page_rates_size"
                         android:layout_marginEnd="14dp"
                         android:src="@drawable/ic_rates"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"></ImageView>
+                        app:layout_constraintTop_toTopOf="parent">
+                    </ImageView>
 
 
                     <Button
@@ -110,9 +114,10 @@ tools:context=".fragment.ResultsFragment" >
                         android:background="@drawable/shape_info_button"
                         android:paddingHorizontal="30dp"
                         android:paddingVertical="9dp"
-                        android:text="Testi Paylaş"
+                        android:text="@string/action_btn_share_test"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView4"></Button>
+                        app:layout_constraintTop_toBottomOf="@+id/textView4">
+                    </Button>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>

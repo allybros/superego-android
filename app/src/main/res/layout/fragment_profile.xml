@@ -151,7 +151,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
-                                android:gravity="center"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@+id/badgeRated">
@@ -159,7 +158,7 @@
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:gravity="center_vertical"
+                                    android:paddingTop="1dp"
                                     android:src="@drawable/ic_baseline_done_24"
                                     app:tint="@color/green3" />
 
@@ -168,8 +167,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/noto_sans_bold"
-                                    android:gravity="center_vertical"
-                                    android:text="Değerlendirme"
+                                    android:text="@string/rated"
                                     android:textColor="@color/green3"
                                     android:textSize="12dp" />
 
@@ -238,7 +236,7 @@
                                     android:layout_marginBottom="12dp"
                                     android:fontFamily="@font/noto_sans_bold"
                                     android:gravity="center_vertical"
-                                    android:text="Ego"
+                                    android:text="@string/credit"
                                     android:textColor="@color/purple"
                                     android:textSize="12dp" />
                             </LinearLayout>
@@ -373,7 +371,7 @@
                                 android:focusable="true"
                                 android:gravity="center"
                                 android:lineHeight="25dp"
-                                android:text="Arkadaşlarının seni değerlendirmesi için kişilik testini arkadaşların ile paylaş."
+                                android:text="@string/info_profile_card"
                                 android:textColor="@color/White"
                                 android:textSize="18dp"
                                 android:textStyle="bold"
@@ -389,7 +387,7 @@
                                 android:layout_marginTop="8dp"
                                 android:background="@drawable/shape_info_button"
                                 android:paddingHorizontal="50dp"
-                                android:text="Testi Paylaş"
+                                android:text="@string/action_btn_share_test"
                                 android:fontFamily="@font/noto_sans"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"

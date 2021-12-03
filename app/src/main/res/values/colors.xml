@@ -52,6 +52,7 @@
     <color name="peachDark">#E47B7B</color>
 
     <!-- Sego Palette -->
+    <color name="segoPurple600">#553C8B</color>
     <color name="segoPurple500">#800080</color>
     <color name="segoPurple400">#9933CC</color>
     <color name="segoPurple300">#843FC5</color>

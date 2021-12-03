@@ -106,4 +106,10 @@
     <string name="action_get_ego_points">Get Ego Points Now</string>
     <string name="tvAboutConstant">About me:</string>
     <string name="tvSupporter">Ad:</string>
+    <string name="header_result_page_title">The Personality Traits</string>
+    <string name="info_profile_card">Share the personality test with your friends so they can rate you.</string>
+    <string name="info_result_ad_text">See all the results without waiting any longer!</string>
+    <string name="action_get_ego">Get Ego</string>
+    <string name="info_change_password">Set a secure password that you will use to log into your insightof.me account.</string>
+    <string name="action_btn_change_avatar">Change</string>
 </resources>

@@ -49,7 +49,7 @@
 
 
         <activity android:name="com.allybros.superego.activity.SettingsActivity"
-            android:theme="@style/AppTheme.TransparentBackground"
+            android:theme="@style/AppTheme.NoActionBar"
             android:label="@string/activity_label_options"
             android:screenOrientation="portrait"/>
 

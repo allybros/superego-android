@@ -16,7 +16,7 @@
         android:textStyle="bold"
         android:fontFamily="@font/noto_sans_bold"
         android:textColor="@color/Black"
-        android:text="Arkadaşlarını Bul"
+        android:text="@string/activity_label_search"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
