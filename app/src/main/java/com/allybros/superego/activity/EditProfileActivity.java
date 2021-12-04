@@ -47,6 +47,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private ConstraintLayout cardFormEditProfile;
     private EditText username,email,information;
     private ImageView ivChangeAvatar, ivBack;
+    private TextView tvOptionsTitle;
     private CircleImageView settingsImage;
     private ConstraintLayout editProfileLayout;
     public static Uri newImagePath=null;
@@ -72,6 +73,7 @@ public class EditProfileActivity extends AppCompatActivity {
         cardFormEditProfile = findViewById(R.id.cardFormEditProfile);
         ivChangeAvatar = findViewById(R.id.ivChangeAvatar);
         ivBack = findViewById(R.id.ivBack);
+        tvOptionsTitle = findViewById(R.id.tvOptionsTitle);
         username = findViewById(R.id.etUsername);
         email = findViewById(R.id.etEmail);
         information = findViewById(R.id.etInformation);
@@ -222,6 +224,13 @@ public class EditProfileActivity extends AppCompatActivity {
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
+        tvOptionsTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 onBackPressed();
             }
         });

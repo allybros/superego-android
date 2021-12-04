@@ -8,32 +8,11 @@
     <View
         android:id="@+id/vRectengle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/top_bg"
+        android:layout_height="277dp"
+        android:background="@drawable/background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <View
-        android:id="@+id/vElips"
-        android:layout_width="match_parent"
-        android:layout_height="86dp"
-        android:layout_marginTop="191dp"
-        android:background="@drawable/elips_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <View
-        android:id="@+id/vRectengle2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="234dp"
-        android:background="@drawable/setting_bg"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
 
     <ScrollView
         android:layout_width="match_parent"
@@ -69,6 +48,7 @@
                 android:fontFamily="@font/noto_sans"
                 android:text="@string/activity_label_options"
                 android:textColor="@color/White"
+                android:textStyle="bold"
                 android:textSize="24sp"
                 app:layout_constraintStart_toEndOf="@+id/ivBack"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -95,8 +75,10 @@
                 android:layout_toEndOf="@+id/ivUserAvatar"
                 android:fontFamily="@font/noto_sans"
                 android:text="\@username"
+                android:textStyle="bold"
                 android:textColor="@color/White"
                 android:textSize="20sp"
+                android:textFontWeight="600"
                 app:layout_constraintStart_toEndOf="@+id/ivUserAvatar"
                 app:layout_constraintTop_toBottomOf="@+id/ivBack" />
 
@@ -135,9 +117,9 @@
                             android:layout_marginTop="19dp"
                             android:fontFamily="@font/noto_sans_bold"
                             android:text="@string/option_edit_profile"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/segoPurple600"
                             android:textSize="20sp"
-                            android:textStyle="bold"
+                            android:textFontWeight="600"
                             app:layout_constraintStart_toEndOf="@+id/ivEditProfile"
                             app:layout_constraintTop_toTopOf="parent" />
                         <com.facebook.login.widget.LoginButton
@@ -154,7 +136,7 @@
                             android:layout_height="36dp"
                             android:layout_marginTop="16dp"
                             android:background="@drawable/setting_buttons_bg"
-                            android:padding="9dp"
+                            android:padding="6dp"
                             android:src="@drawable/ic_pencil_purple"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -183,21 +165,21 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
-                            android:layout_marginTop="19dp"
+                            android:layout_marginTop="11dp"
                             android:fontFamily="@font/noto_sans_bold"
                             android:text="@string/option_password"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/segoPurple600"
                             android:textSize="20sp"
-                            android:textStyle="bold"
+                            android:textFontWeight="600"
                             app:layout_constraintStart_toEndOf="@+id/ivPassword"
                             app:layout_constraintTop_toTopOf="parent" />
                         <ImageView
                             android:id="@+id/ivPassword"
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="8dp"
                             android:background="@drawable/setting_buttons_bg"
-                            android:padding="9dp"
+                            android:padding="6dp"
                             android:src="@drawable/ic_key_purple"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -226,12 +208,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
-                            android:layout_marginTop="19dp"
+                            android:layout_marginTop="11dp"
                             android:fontFamily="@font/noto_sans_bold"
                             android:text="@string/option_about"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/segoPurple600"
                             android:textSize="20sp"
-                            android:textStyle="bold"
+                            android:textFontWeight="600"
                             app:layout_constraintStart_toEndOf="@+id/ivAbout"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -239,9 +221,9 @@
                             android:id="@+id/ivAbout"
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="8dp"
                             android:background="@drawable/setting_buttons_bg"
-                            android:padding="9dp"
+                            android:padding="6dp"
                             android:src="@drawable/ic_info_purple"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -270,12 +252,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
-                            android:layout_marginTop="19dp"
+                            android:layout_marginTop="11dp"
                             android:fontFamily="@font/noto_sans_bold"
                             android:text="@string/option_licenses"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/segoPurple600"
                             android:textSize="20sp"
-                            android:textStyle="bold"
+                            android:textFontWeight="600"
                             app:layout_constraintStart_toEndOf="@+id/ivLicenses"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -283,9 +265,9 @@
                             android:id="@+id/ivLicenses"
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="8dp"
                             android:background="@drawable/setting_buttons_bg"
-                            android:padding="9dp"
+                            android:padding="6dp"
                             android:src="@drawable/ic_balance_purple"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -314,12 +296,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
-                            android:layout_marginTop="19dp"
+                            android:layout_marginTop="11dp"
                             android:fontFamily="@font/noto_sans_bold"
                             android:text="@string/action_sign_out"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/segoPurple600"
                             android:textSize="20sp"
-                            android:textStyle="bold"
+                            android:textFontWeight="600"
                             app:layout_constraintStart_toEndOf="@+id/ivSignOut"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -327,9 +309,9 @@
                             android:id="@+id/ivSignOut"
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="8dp"
                             android:background="@drawable/setting_buttons_bg"
-                            android:padding="9dp"
+                            android:padding="6dp"
                             android:src="@drawable/ic_logout_purple"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -346,6 +328,7 @@
         android:layout_height="30dp"
         android:layout_marginStart="125dp"
         android:layout_marginEnd="126dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

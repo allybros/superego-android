@@ -6,14 +6,15 @@
     android:viewportWidth="360"
     android:viewportHeight="212">
     <group>
-        <clip-path android:pathData="M0 0H360V212H0V0Z" />
+        <clip-path
+            android:pathData="M0 0H360V212H0V0Z" />
         <group
-            android:translateX="0.045"
-            android:translateY="1.955"
+            android:translateX="0.327"
+            android:translateY="1"
             android:pivotX="180"
             android:pivotY="106"
-            android:scaleX="1.819"
-            android:scaleY="5.245"
+            android:scaleX="0.694"
+            android:scaleY="2"
             android:rotation="-90">
             <path
                 android:pathData="M0 0V212H360V0">
@@ -25,10 +26,10 @@
                         android:endX="270"
                         android:endY="106">
                         <item
-                            android:color="#3D99BE"
+                            android:color="#4673A5"
                             android:offset="0" />
                         <item
-                            android:color="#56317A"
+                            android:color="#504B8B"
                             android:offset="1" />
                     </gradient>
                 </aapt:attr>
