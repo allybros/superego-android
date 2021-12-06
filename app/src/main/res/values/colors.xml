@@ -20,12 +20,12 @@
     <color name="fragmentBackground">#f9f9f9</color>
 
     <!--Brand Buttons Color-->
-    <color name="google">#FF0219</color>
-    <color name="facebook">#4167B2</color>
+    <color name="google">#c84361</color>
+    <color name="facebook">#556fb5</color>
 
     <!-- Material Palette -->
     <color name="materialPurple">#9C27B0</color>
-    <color name="materialLightPurple">#BA68C8</color>
+    <color name="materialLightPurple">#BA68C8</color>"
     <color name="materialPurpleOverlay">#C09C27B0</color>
     <color name="materialDeepPurple">#7557AC</color>
     <color name="materialLightBlue">#2A71AC</color>
@@ -72,6 +72,8 @@
     <color name="blue1">#A2C7FF</color>
     <color name="blue2">#639FFF</color>
     <color name="rippleColor">#14FFFFFF</color>
+    <color name="darkBlue">#2d2846</color>
+
 
     <color name="green">#00FF04</color>
     <color name="green1">#06CF09</color>

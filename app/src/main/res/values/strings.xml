@@ -92,6 +92,9 @@
     <string name="action_create_test">Test oluştur</string>
     <string name="action_get_ego_points">Şimdi Ego Puanlarını Al</string>
     <string name="action_get_ego">Ego kazan</string>
+    <string name="action_login_via_google">Google ile Giriş Yap</string>
+    <string name="action_login_via_facebook">Facebook ile Giriş Yap</string>
+    <string name="action_create_new_account" ><font color='#674D9F'>Hesap Oluştur</font></string>
 
     <!--Contents:
     Contents fills text fills or something like that-->
@@ -117,7 +120,7 @@
     <string name="info_search">insightof.me\' de kayıtlı arkadaşlarını bulmak için kullanıcı adıyla arama yap.</string>
     <string name="default_bio_search">insightof.me kullanıcısı.</string>
 
-    <string name="login_text_header">Karakter Özelliklerini\nÖğren</string>
+    <string name="login_text_header">Karakter Özelliklerini Öğren</string>
     <string name="login_text_sub">Arkadaşlarına sorarak gerçek kişilik\nözelliklerini öğren</string>
 
     <string name="option_edit_profile">Profili Düzenle</string>
@@ -131,8 +134,8 @@
     <string name="option_sign_out_desc">Geçerli oturumunu sonlandır.</string>
     <string name="with_version_from" translatable="false">v.0.7 From Ally Bros Corporation</string>
 
-    <string name="call_or_connect_via">ya da bağlan;</string>
-    <string name="desc_call_register">Hesabın Yok Mu? | <font color='#2A71AC'>Yeni Hesap Oluştur</font></string>
+    <string name="call_or_connect_via">Ya Da</string>
+    <string name="desc_call_register">Bir Hesabın Yok Mu?</string>
 
     <!--TODO: Bunların kullanımı için kategori ismi oluşturulmalı-->
     <string name="rated">Değerlendirme</string>
@@ -150,6 +153,5 @@
     <string name="alert_test_not_exist">Henüz test oluşturmadın</string>
     <string name="tvAboutConstant">Hakkımda:</string>
     <string name="tvSupporter">Sponsor:</string>
-
 
 </resources>

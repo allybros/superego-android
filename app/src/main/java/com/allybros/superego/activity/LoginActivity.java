@@ -7,11 +7,16 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.Html;
+import android.text.TextWatcher;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -23,8 +28,6 @@ import com.allybros.superego.api.LoginTask;
 import com.allybros.superego.api.SocialMediaSignInTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -39,8 +42,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Arrays;
 
@@ -48,13 +49,11 @@ import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 
 public class LoginActivity extends AppCompatActivity {
     private MaterialButton btLogin;
-    private TextInputEditText etUid;
-    private TextInputEditText etPassword;
+    private EditText etUid, etPassword;
     private TextView tvRegister;
-    public TextInputLayout passwordTextInput, usernameTextInput;
     private Button btSignInFacebook, btSignInGoogle;
-    private LinearLayout cardFormLogin;
     private MaterialProgressBar progressView;
+    private ImageView ivPassword;
 
     static LoginButton btHiddenFacebook;
     GoogleSignInClient mGoogleSignInClient;
@@ -72,7 +71,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initializeComponents(){
-        usernameTextInput = findViewById(R.id.inputLayoutLoginUid);
         btLogin = findViewById(R.id.btLogin);
         btHiddenFacebook = findViewById(R.id.btHiddenFacebook);
         btSignInGoogle = findViewById(R.id.btSignInGoogle);
@@ -80,9 +78,8 @@ public class LoginActivity extends AppCompatActivity {
         tvRegister = findViewById(R.id.tvRegister);
         etUid = findViewById(R.id.etLoginUid);
         etPassword = findViewById(R.id.etLoginPassword);
-        passwordTextInput = findViewById(R.id.inputLayoutLoginPassword);
-        cardFormLogin = findViewById(R.id.cardFormLogin);
         progressView = findViewById(R.id.progressViewLogin);
+        ivPassword = findViewById(R.id.ivPassword);
     }
 
     private void setupReceivers(){
@@ -97,11 +94,8 @@ public class LoginActivity extends AppCompatActivity {
 
                     case ErrorCodes.SYSFAIL:
                     case ErrorCodes.CAPTCHA_REQUIRED:
-                        usernameTextInput.setError(" ");
-                        passwordTextInput.setError(getString(R.string.error_login_failed));
-                        YoYo.with(Techniques.Shake)
-                                .duration(400)
-                                .playOn(findViewById(R.id.cardFormLogin));
+                        setError(etUid, " ");
+                        setError(etPassword, getString(R.string.error_login_failed));
                         break;
 
                     case ErrorCodes.SUSPEND_SESSION:
@@ -204,14 +198,14 @@ public class LoginActivity extends AppCompatActivity {
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            passwordTextInput.setErrorEnabled(false);
-            usernameTextInput.setErrorEnabled(false);
+            clearError(etPassword);
+            clearError(etUid);
 
             if(etUid.getText().toString().isEmpty()){
-                usernameTextInput.setError(getString(R.string.error_username_empty));
+                setError(etUid, getString(R.string.error_username_empty));
             }
             if(etPassword.getText().toString().isEmpty()){
-                passwordTextInput.setError(getString(R.string.error_password_empty));
+                setError(etPassword,getString(R.string.error_password_empty));
             }
             if(!etPassword.getText().toString().isEmpty() && !etUid.getText().toString().isEmpty()){
                 setProgress(true);
@@ -228,6 +222,35 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+
+        etPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                //this method is empty
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //this method is empty
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.toString().isEmpty()){
+                    setError(etPassword, getString(R.string.error_password_empty));
+                } else {
+                    clearError(etPassword);
+                }
+
+            }
+        });
+
+        ivPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changePasswordVisibility(ivPassword, etPassword);
+            }
+        });
 
         //Set Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -335,16 +358,14 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void setProgress(boolean visible) {
         if (visible) {
-            passwordTextInput.setEnabled(false);
-            usernameTextInput.setEnabled(false);
+            etPassword.setEnabled(false);
+            etUid.setEnabled(false);
             btLogin.setEnabled(false);
-            cardFormLogin.setAlpha(0.8f);
             progressView.setVisibility(View.VISIBLE);
         } else {
-            passwordTextInput.setEnabled(true);
-            usernameTextInput.setEnabled(true);
+            etPassword.setEnabled(true);
+            etUid.setEnabled(true);
             btLogin.setEnabled(true);
-            cardFormLogin.setAlpha(1f);
             progressView.setVisibility(View.GONE);
         }
     }
@@ -355,6 +376,25 @@ public class LoginActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(loginReceiver);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(loginSocialMediaReceiver);
         super.onDestroy();
+    }
+
+    private void setError(EditText editText, String errorMessage) {
+        editText.setHint(errorMessage);
+        editText.setBackground(getDrawable(R.drawable.et_error_background));
+    }
+
+    private void clearError(EditText editText) {
+        editText.setBackground(getDrawable(R.drawable.et_background));
+    }
+
+    private void changePasswordVisibility(ImageView imageView, EditText editText) {
+        if(editText.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())){
+            imageView.setImageResource(R.drawable.ic_visibility_off);
+            editText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+        } else{
+            imageView.setImageResource(R.drawable.ic_visibility);
+            editText.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        }
     }
 
 }
