@@ -297,4 +297,8 @@ public class ChangePasswordActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void onBackPressed(View view) {
+        onBackPressed();
+    }
 }

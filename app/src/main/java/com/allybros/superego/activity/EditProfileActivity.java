@@ -220,20 +220,6 @@ public class EditProfileActivity extends AppCompatActivity {
                 }
             }
         });
-
-        ivBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
-
-        tvOptionsTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
     }
 
 
@@ -372,5 +358,9 @@ public class EditProfileActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(EditProfileActivity.this).unregisterReceiver(updateInformationReceiver);
         Log.d("SettingsDestroy","RUN");
         super.onDestroy();
+    }
+
+    public void onBackPressed(View view) {
+        onBackPressed();
     }
 }

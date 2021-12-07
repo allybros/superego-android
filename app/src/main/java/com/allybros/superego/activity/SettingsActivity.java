@@ -271,7 +271,9 @@ public class SettingsActivity extends AppCompatActivity {
         builder.setView(dialogView).show();
     }
 
-
+    public void onBackPressed(View view) {
+        onBackPressed();
+    }
 
     @Override
     protected void onDestroy() {

@@ -34,6 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="22dp"
                 android:layout_marginTop="23dp"
+                android:onClick="onBackPressed"
                 android:src="@drawable/ic_arrow_back_white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -46,8 +47,10 @@
                 android:layout_marginTop="18dp"
                 android:layout_toEndOf="@+id/ivBack"
                 android:fontFamily="@font/noto_sans"
+                android:onClick="onBackPressed"
                 android:text="@string/activity_label_options"
                 android:textColor="@color/White"
+                android:textFontWeight="700"
                 android:textStyle="bold"
                 android:textSize="24sp"
                 app:layout_constraintStart_toEndOf="@+id/ivBack"
