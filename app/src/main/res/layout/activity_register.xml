@@ -62,7 +62,7 @@
                 android:id="@+id/etRegisterUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="2dp"
                 android:textSize="13sp"
                 android:background="@drawable/et_background"
                 android:fontFamily="@font/noto_sans"
@@ -74,6 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/noto_sans"
+                android:layout_marginTop="8dp"
                 android:text="@string/hint_register_email"
                 android:textColor="@color/White"
                 android:textFontWeight="500"
@@ -83,7 +84,7 @@
                 android:id="@+id/etRegisterMail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="2dp"
                 android:textSize="13sp"
                 android:background="@drawable/et_background"
                 android:fontFamily="@font/noto_sans"
@@ -96,6 +97,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/hint_register_password"
+                android:layout_marginTop="8dp"
                 android:textColor="@color/White"
                 android:textFontWeight="500"
                 android:textSize="12sp" />
@@ -105,7 +107,7 @@
                 android:id="@+id/rlOldPassword"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="2dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/layoutOldPassword">
@@ -149,8 +151,8 @@
 
                 <CheckBox
                     android:id="@+id/checkboxAgreement"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/selector_check_box"
                     android:button="@color/White"
@@ -160,7 +162,7 @@
 
                 <TextView
                     android:id="@+id/tvAgreementRegister"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:fontFamily="@font/noto_sans"
@@ -243,35 +245,94 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/llConnectCall">
 
-            <Button
-                android:id="@+id/btSignInGoogle"
-                style="@style/SegoBtn"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/google"
-                android:drawableLeft="@drawable/brand_google"
-                android:gravity="center"
-                android:text="@string/action_login_via_google"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/btSignInFacebook"
-                app:layout_constraintTop_toBottomOf="@+id/cardFormLogin" />
+                android:layout_height="wrap_content">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/btSignInGoogle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingHorizontal="24dp"
+                    android:background="@drawable/selector_google_button"
+                    android:clickable="true"
+                    android:focusable="true">
 
-            <Button
-                android:id="@+id/btSignInFacebook"
-                style="@style/SegoBtn"
+                    <TextView
+                        android:id="@+id/tvEditProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="11dp"
+                        android:fontFamily="@font/noto_sans_bold"
+                        android:text="@string/action_login_via_google"
+                        android:textColor="@color/White"
+                        android:textFontWeight="500"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/imageView4"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="4dp"
+                        android:src="@drawable/brand_google"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/tvEditProfile"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </FrameLayout>
+
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/facebook"
-                android:drawableLeft="@drawable/brand_facebook"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:text="@string/action_login_via_facebook"/>
+                android:layout_marginTop="10dp">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/btSignInFacebook"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingHorizontal="24dp"
+                    android:background="@drawable/selector_facebook_button"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="11dp"
+                        android:fontFamily="@font/noto_sans_bold"
+                        android:text="@string/action_login_via_facebook"
+                        android:textColor="@color/White"
+                        android:textFontWeight="500"
+                        android:layout_marginStart="17dp"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/imageView7"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="4dp"
+                        android:src="@drawable/brand_facebook"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/textView2"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </FrameLayout>
+
 
         </LinearLayout>
-
-
-
 
         <me.zhanghai.android.materialprogressbar.MaterialProgressBar
             android:id="@+id/progressViewRegister"
@@ -288,9 +349,24 @@
             app:mpb_progressStyle="circular"
             app:mpb_progressTint="@color/materialPurple"
             android:indeterminateTint="@color/materialPurple"
-            style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal"
-            />
+            style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal" />
 
+
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/btHiddenFacebook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@+id/btHiddenGoogle"
+            app:layout_constraintTop_toBottomOf="@+id/cardFormLogin" />
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/btHiddenGoogle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/cardFormLogin"
+            tools:ignore="MissingConstraints" />
 
         <TextView
             android:layout_width="match_parent"

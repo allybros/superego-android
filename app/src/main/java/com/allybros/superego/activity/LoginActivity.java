@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.R;
@@ -51,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
     private MaterialButton btLogin;
     private EditText etUid, etPassword;
     private TextView tvRegister;
-    private Button btSignInFacebook, btSignInGoogle;
+    private ConstraintLayout btSignInFacebook, btSignInGoogle;
     private MaterialProgressBar progressView;
     private ImageView ivPassword;
 

@@ -2,6 +2,7 @@ package com.allybros.superego.activity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
@@ -23,16 +24,33 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.R;
 import com.allybros.superego.api.LoginTask;
 import com.allybros.superego.api.RegisterTask;
+import com.allybros.superego.api.SocialMediaSignInTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.util.HelperMethods;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.Arrays;
 
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 
@@ -40,6 +58,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private EditText etRegisterUsername,etRegisterMail,etRegisterPassword;
     private Button btnRegister;
+    private ConstraintLayout btSignInFacebook, btSignInGoogle;
     private CheckBox checkBoxAgreement;
     private LinearLayout cardFormRegister;
     private MaterialProgressBar progressView;
@@ -50,6 +69,11 @@ public class RegisterActivity extends AppCompatActivity {
     private String emailInput;
     private String passwordInput;
     private ImageView ivPassword;
+
+    static LoginButton btHiddenFacebook;
+    GoogleSignInClient mGoogleSignInClient;
+    CallbackManager callbackManager;
+    private static final int RC_SIGN_IN = 0;    // It require to come back from Google Sign in intent
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +86,9 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void initializeComponents(){
         btnRegister = findViewById(R.id.btSignUp);
+        btHiddenFacebook = findViewById(R.id.btHiddenFacebook);
+        btSignInGoogle = findViewById(R.id.btSignInGoogle);
+        btSignInFacebook = findViewById(R.id.btSignInFacebook);
         etRegisterPassword = findViewById(R.id.etRegisterPassword);
         etRegisterMail = findViewById(R.id.etRegisterMail);
         etRegisterUsername = findViewById(R.id.etRegisterUsername);
@@ -150,9 +177,7 @@ public class RegisterActivity extends AppCompatActivity {
                 clearError(etRegisterMail);
                 clearError(etRegisterPassword);
 
-                checkBoxAgreement.setError(null);
-                HelperMethods.setMargins(tvAgreementRegister,0,0,0,0);
-
+                checkBoxAgreement.setBackground(getDrawable(R.drawable.selector_check_box));
 
                 usernameInput = etRegisterUsername.getText().toString();
                 emailInput = etRegisterMail.getText().toString();
@@ -174,8 +199,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
                 if (!conditions){
-                    checkBoxAgreement.setError(getResources().getString(R.string.error_conditions_not_accepted));
-                    HelperMethods.setMargins(tvAgreementRegister,20,0,0,0);
+                    checkBoxAgreement.setBackground(getDrawable(R.drawable.checkbox_error));
                 }
 
                 if (!usernameInput.isEmpty()
@@ -232,6 +256,64 @@ public class RegisterActivity extends AppCompatActivity {
                 changePasswordVisibility(ivPassword, etRegisterPassword);
             }
         });
+
+        checkBoxAgreement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkBoxAgreement.setBackground(getDrawable(R.drawable.selector_check_box));
+            }
+        });
+
+        //Set Google Sign In
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.GOOGLE_CLIENT_ID))
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(getApplicationContext(), gso);
+
+        btSignInGoogle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+                startActivityForResult(signInIntent, RC_SIGN_IN);
+            }
+        });
+
+        //Set Facebook Sign In
+        btSignInFacebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btHiddenFacebook.callOnClick();
+            }
+        });
+        callbackManager = CallbackManager.Factory.create();
+        btHiddenFacebook.setPermissions(Arrays.asList("email","public_profile"));
+
+        callbackManager = CallbackManager.Factory.create();
+
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        // App code
+                        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+                        Log.d("Facebook","B"+accessToken.getToken());
+                        SocialMediaSignInTask.loginTask(getApplicationContext(),accessToken.getToken(),"facebook");
+
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        // App code
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                        // App code
+                    }
+                });
+
+
     }
 
     /**
@@ -294,5 +376,54 @@ public class RegisterActivity extends AppCompatActivity {
         Intent intent=new Intent(getApplicationContext(), LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    /**
+     * Provides that cacth the results that come back from Google an Facebook sign in
+     * @param data is a variable that comes back from the intent. It includes data that is needed.
+     * @param requestCode is a variable that defines what intent come back.
+     * @param resultCode  is a variable that defines intent result.
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode,resultCode,data);
+        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            // The Task returned from this call is always completed, no need to attach
+            // a listener.
+            setProgress(true);
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
+        }
+    }
+
+    /**
+     * Sends request to Ally Bros Api for signing in with Google
+     * @param completedTask that has provided from GoogleSignInApi. It has result of google sign in task.
+     */
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            // Signed in successfully, show authenticated UI.
+            Log.w("GoogleSignInSuccess", account.getDisplayName()+account.getEmail()+account.getPhotoUrl()+account.getIdToken());
+            SocialMediaSignInTask.loginTask(getApplicationContext(),account.getIdToken(),"google");
+        } catch (ApiException e) {
+            // The ApiException status code indicates the detailed failure reason.
+            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+            Log.w("GoogleSignInError", "signInResult:failed code=" + e.getStatusCode());
+            setProgress(false);
+            // Show error dialog
+            new AlertDialog.Builder(RegisterActivity.this, R.style.SegoAlertDialog)
+                    .setTitle("insightof.me")
+                    .setMessage(R.string.error_google_signin)
+                    .setPositiveButton(getString(R.string.action_ok), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .show();
+        }
     }
 }
