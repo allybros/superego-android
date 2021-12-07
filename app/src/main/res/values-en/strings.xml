@@ -57,7 +57,7 @@
     <string name="action_btn_share_results">Share Results</string>
     <string name="action_login">Log In</string>
     <string name="action_register">Sign Up</string>
-    <string name="action_agreement_link">I\'ve read and agree the <font color="#2A71AC"><a href="https://insightof.me/conditions">terms of use</a></font></string>
+    <string name="action_agreement_link"><font color="#ffffff" weight="300">I've read and agree the</font> <font color="#2d2846" weight="500"><a href="https://insightof.me/conditions">terms of use</a></font></string>
     <string name="action_sign_out">Sign Out</string>
     <string name="action_save">Save</string>
     <string name="option_edit_profile">Edit Profile</string>
@@ -115,4 +115,5 @@
     <string name="action_login_via_google">Login with Google</string>
     <string name="action_login_via_facebook">Login with Facebook</string>
     <string name="action_create_new_account"><font color="#2A71AC">Create Account</font></string>
+    <string name="desc_call_sign_in">Have an Account?</string>
 </resources>
