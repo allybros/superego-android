@@ -86,7 +86,7 @@
     <string name="action_btn_change_avatar">Değiştir</string>
     <string name="action_login">Giriş Yap</string>
     <string name="action_register">Kayıt Ol</string>
-    <string name="action_agreement_link"><font color="#2d2846" weight="500"><a  href="https://insightof.me/conditions">Kullanım koşulları</a></font><font color="#ffffff" weight="300">'nı okudum ve kabul ediyorum.</font></string>
+    <string name="action_agreement_link"><font color="#2d2846" fontWeight="500"><a  href="https://insightof.me/conditions">Kullanım koşulları</a></font><font color="#ffffff" fontWeight="300">\'nı okudum ve kabul ediyorum.</font></string>
     <string name="action_sign_out">Oturumu Kapat</string>
     <string name="action_save">Kaydet</string>
     <string name="action_create_test">Test oluştur</string>

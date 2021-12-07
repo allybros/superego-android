@@ -57,7 +57,7 @@
     <string name="action_btn_share_results">Share Results</string>
     <string name="action_login">Log In</string>
     <string name="action_register">Sign Up</string>
-    <string name="action_agreement_link"><font color="#ffffff" weight="300">I've read and agree the</font> <font color="#2d2846" weight="500"><a href="https://insightof.me/conditions">terms of use</a></font></string>
+    <string name="action_agreement_link"><font color="#ffffff" fontWeight="300">I\'ve read and agree the</font> <font color="#2d2846" fontWeight="500"><a href="https://insightof.me/conditions">terms of use</a></font></string>
     <string name="action_sign_out">Sign Out</string>
     <string name="action_save">Save</string>
     <string name="option_edit_profile">Edit Profile</string>

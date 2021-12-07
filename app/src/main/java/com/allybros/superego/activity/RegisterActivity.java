@@ -5,12 +5,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.Html;
+import android.text.TextWatcher;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -31,19 +38,18 @@ import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private TextInputEditText etRegisterUsername,etRegisterMail,etRegisterPassword;
-    private TextInputLayout inputLayoutUsername, inputLayoutEmail, inputLayoutPassword;
+    private EditText etRegisterUsername,etRegisterMail,etRegisterPassword;
     private Button btnRegister;
     private CheckBox checkBoxAgreement;
     private LinearLayout cardFormRegister;
     private MaterialProgressBar progressView;
     private BroadcastReceiver registerReceiver;
     private BroadcastReceiver autoLoginReceiver;
-    private TextView tvAgreementRegister;
-
+    private TextView tvAgreementRegister, tvSignIn;
     private String usernameInput;
     private String emailInput;
     private String passwordInput;
+    private ImageView ivPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,14 +65,12 @@ public class RegisterActivity extends AppCompatActivity {
         etRegisterPassword = findViewById(R.id.etRegisterPassword);
         etRegisterMail = findViewById(R.id.etRegisterMail);
         etRegisterUsername = findViewById(R.id.etRegisterUsername);
-        inputLayoutUsername = findViewById(R.id.inputLayoutRegisterUsername);
-        inputLayoutEmail = findViewById(R.id.inputLayoutRegisterEmail);
-        inputLayoutPassword = findViewById(R.id.inputLayoutRegisterPassword);
         checkBoxAgreement = findViewById(R.id.checkboxAgreement);
         cardFormRegister = findViewById(R.id.cardFormRegister);
         progressView = findViewById(R.id.progressViewRegister);
         tvAgreementRegister = findViewById(R.id.tvAgreementRegister);
-
+        ivPassword = findViewById(R.id.ivPassword);
+        tvSignIn = findViewById(R.id.tvSignIn);
     }
 
     private void setupReceivers(){
@@ -92,23 +96,23 @@ public class RegisterActivity extends AppCompatActivity {
                         break;
 
                     case ErrorCodes.USERNAME_NOT_LEGAL:
-                        inputLayoutUsername.setError(getString(R.string.error_username_not_legal));
+                        setError(etRegisterUsername, getString(R.string.error_username_not_legal));
                         break;
 
                     case ErrorCodes.USERNAME_ALREADY_EXIST:
-                        inputLayoutUsername.setError(getString(R.string.error_username_taken));
+                        setError(etRegisterUsername, getString(R.string.error_username_taken));
                         break;
 
                     case ErrorCodes.EMAIL_ALREADY_EXIST:
-                        inputLayoutEmail.setError(getString(R.string.error_email_already_exist));
+                        setError(etRegisterMail, getString(R.string.error_email_already_exist));
                         break;
 
                     case ErrorCodes.EMAIL_NOT_LEGAL:
-                        inputLayoutEmail.setError(getString(R.string.error_email_not_legal));
+                        setError(etRegisterMail, getString(R.string.error_email_not_legal));
                         break;
 
                     case ErrorCodes.PASSWORD_NOT_LEGAL:
-                        inputLayoutPassword.setError(getString(R.string.error_password_not_legal));
+                        setError(etRegisterPassword, getString(R.string.error_password_not_legal));
                         break;
                 }
             }
@@ -142,9 +146,10 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputLayoutUsername.setErrorEnabled(false);
-                inputLayoutEmail.setErrorEnabled(false);
-                inputLayoutPassword.setErrorEnabled(false);
+                clearError(etRegisterUsername);
+                clearError(etRegisterMail);
+                clearError(etRegisterPassword);
+
                 checkBoxAgreement.setError(null);
                 HelperMethods.setMargins(tvAgreementRegister,0,0,0,0);
 
@@ -156,11 +161,17 @@ public class RegisterActivity extends AppCompatActivity {
 
 
                 //Validate fields
-                if (usernameInput.isEmpty()) inputLayoutUsername.setError(getResources().getString(R.string.error_username_empty));
+                if (usernameInput.isEmpty()){
+                    setError(etRegisterUsername, getResources().getString(R.string.error_username_empty));
+                }
 
-                if (emailInput.isEmpty()) inputLayoutEmail.setError(getResources().getString(R.string.error_email_empty));
+                if (emailInput.isEmpty()){
+                    setError(etRegisterMail, getResources().getString(R.string.error_email_empty));
+                }
 
-                if (passwordInput.isEmpty()) inputLayoutPassword.setError(getResources().getString(R.string.error_password_empty));
+                if (passwordInput.isEmpty()){
+                    setError(etRegisterPassword, getResources().getString(R.string.error_password_empty));
+                }
 
                 if (!conditions){
                     checkBoxAgreement.setError(getResources().getString(R.string.error_conditions_not_accepted));
@@ -188,6 +199,39 @@ public class RegisterActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            tvSignIn.setText(Html.fromHtml(getResources().getString(R.string.action_login)), TextView.BufferType.SPANNABLE);
+        }
+
+        etRegisterPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                //this method is empty
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //this method is empty
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.toString().isEmpty()){
+                    setError(etRegisterPassword, getString(R.string.error_password_empty));
+                } else {
+                    clearError(etRegisterPassword);
+                }
+
+            }
+        });
+
+        ivPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changePasswordVisibility(ivPassword, etRegisterPassword);
+            }
+        });
     }
 
     /**
@@ -198,9 +242,9 @@ public class RegisterActivity extends AppCompatActivity {
     private void setProgress(boolean visible){
         if (visible) {
             // Disable form elements
-            inputLayoutUsername.setEnabled(false);
-            inputLayoutEmail.setEnabled(false);
-            inputLayoutPassword.setEnabled(false);
+            etRegisterUsername.setEnabled(false);
+            etRegisterMail.setEnabled(false);
+            etRegisterPassword.setEnabled(false);
             checkBoxAgreement.setEnabled(false);
             btnRegister.setEnabled(false);
 
@@ -209,9 +253,9 @@ public class RegisterActivity extends AppCompatActivity {
 
         } else {
             //Enable form elements
-            inputLayoutUsername.setEnabled(true);
-            inputLayoutEmail.setEnabled(true);
-            inputLayoutPassword.setEnabled(true);
+            etRegisterUsername.setEnabled(true);
+            etRegisterMail.setEnabled(true);
+            etRegisterPassword.setEnabled(true);
             checkBoxAgreement.setEnabled(true);
             btnRegister.setEnabled(true);
 
@@ -222,7 +266,33 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        Intent intent=new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void setError(EditText editText, String errorMessage) {
+        editText.setHint(errorMessage);
+        editText.setBackground(getDrawable(R.drawable.et_error_background));
+    }
+
+    private void clearError(EditText editText) {
+        editText.setBackground(getDrawable(R.drawable.et_background));
+    }
+
+    private void changePasswordVisibility(ImageView imageView, EditText editText) {
+        if(editText.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())){
+            imageView.setImageResource(R.drawable.ic_visibility_off);
+            editText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+        } else{
+            imageView.setImageResource(R.drawable.ic_visibility);
+            editText.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        }
+    }
+
+    public void onSignInButtonClicked(View view) {
+        Intent intent=new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(intent);
         finish();
     }
 }

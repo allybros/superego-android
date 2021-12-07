@@ -214,13 +214,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        tvRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            Intent intent=new Intent(getApplicationContext(), RegisterActivity.class);
-            startActivity(intent);
-            }
-        });
 
 
         etPassword.addTextChangedListener(new TextWatcher() {
@@ -397,4 +390,9 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    public void onRegisterButtonClicked(View view) {
+        Intent intent=new Intent(getApplicationContext(), RegisterActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

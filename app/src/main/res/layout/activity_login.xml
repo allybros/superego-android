@@ -271,6 +271,10 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="@color/darkBlue"
+            android:textSize="12sp"
+            android:onClick="onRegisterButtonClicked"
+            android:fontFamily="@font/noto_sans"
+            android:textFontWeight="400"
             android:text="@string/desc_call_register"
             app:layout_constraintBottom_toTopOf="@+id/tvRegister" />
 
@@ -280,6 +284,10 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:gravity="center"
+            android:textFontWeight="500"
+            android:textSize="12sp"
+            android:onClick="onRegisterButtonClicked"
+            android:fontFamily="@font/noto_sans"
             android:text="@string/action_create_new_account"
             android:textColor="#674d9f"
             app:layout_constraintBottom_toBottomOf="parent" />
