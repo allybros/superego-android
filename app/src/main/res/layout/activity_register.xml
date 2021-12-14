@@ -233,7 +233,6 @@
 
         </LinearLayout>
 
-
         <LinearLayout
             android:id="@+id/socialButtons"
             android:layout_width="match_parent"
@@ -369,15 +368,16 @@
             tools:ignore="MissingConstraints" />
 
         <TextView
+            android:id="@+id/textView7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textColor="#2d2846"
-            android:textSize="12sp"
-            android:onClick="onSignInButtonClicked"
             android:fontFamily="@font/noto_sans"
-            android:textFontWeight="400"
+            android:gravity="center"
+            android:onClick="onSignInButtonClicked"
             android:text="@string/desc_call_sign_in"
+            android:textColor="#2d2846"
+            android:textFontWeight="400"
+            android:textSize="12sp"
             app:layout_constraintBottom_toTopOf="@+id/tvSignIn" />
 
         <TextView

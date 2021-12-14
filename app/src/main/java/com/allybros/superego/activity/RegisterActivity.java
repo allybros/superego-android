@@ -68,7 +68,6 @@ public class RegisterActivity extends AppCompatActivity {
     private String usernameInput;
     private String emailInput;
     private String passwordInput;
-    private ImageView ivPassword;
 
     static LoginButton btHiddenFacebook;
     GoogleSignInClient mGoogleSignInClient;
@@ -96,7 +95,6 @@ public class RegisterActivity extends AppCompatActivity {
         cardFormRegister = findViewById(R.id.cardFormRegister);
         progressView = findViewById(R.id.progressViewRegister);
         tvAgreementRegister = findViewById(R.id.tvAgreementRegister);
-        ivPassword = findViewById(R.id.ivPassword);
         tvSignIn = findViewById(R.id.tvSignIn);
     }
 
@@ -250,13 +248,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        ivPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changePasswordVisibility(ivPassword, etRegisterPassword);
-            }
-        });
-
         checkBoxAgreement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -351,25 +342,6 @@ public class RegisterActivity extends AppCompatActivity {
         Intent intent=new Intent(getApplicationContext(), LoginActivity.class);
         startActivity(intent);
         finish();
-    }
-
-    private void setError(EditText editText, String errorMessage) {
-        editText.setHint(errorMessage);
-        editText.setBackground(getDrawable(R.drawable.et_error_background));
-    }
-
-    private void clearError(EditText editText) {
-        editText.setBackground(getDrawable(R.drawable.et_background));
-    }
-
-    private void changePasswordVisibility(ImageView imageView, EditText editText) {
-        if(editText.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())){
-            imageView.setImageResource(R.drawable.ic_visibility_off);
-            editText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-        } else{
-            imageView.setImageResource(R.drawable.ic_visibility);
-            editText.setTransformationMethod(PasswordTransformationMethod.getInstance());
-        }
     }
 
     public void onSignInButtonClicked(View view) {
