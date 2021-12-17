@@ -52,7 +52,7 @@
                 android:id="@+id/etRegisterUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/hint_register_uid"
+                app:sego_header_text="@string/hint_register_uid"
                 app:sego_header_text_color="@color/White"
                 app:sego_input_text_color="@color/Black"
                 tools:layout_height="60dp"/>
@@ -62,7 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@string/hint_register_email"
+                app:sego_header_text="@string/hint_register_email"
                 app:sego_header_text_color="@color/White"
                 app:sego_input_text_color="@color/Black"
                 tools:layout_height="60dp"/>
@@ -72,7 +72,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@string/hint_register_password"
+                app:sego_header_text="@string/hint_register_password"
                 app:sego_header_text_color="@color/White"
                 app:sego_input_text_color="@color/Black"
                 app:sego_is_password_input="true"
