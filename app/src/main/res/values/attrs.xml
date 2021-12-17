@@ -3,6 +3,12 @@
     <declare-styleable name="SegoEditText">
         <attr name="sego_is_password_input" format="boolean"/>
 
+        <attr name="sego_header_text" format="string"/>
+        <attr name="sego_header_text_color" format="color"/>
+        <attr name="sego_header_text_size" format="dimension"/>
+
+        <attr name="sego_input_text_color" format="color"/>
+        <attr name="sego_input_text_size" format="reference"/>
     </declare-styleable>
 
 </resources>

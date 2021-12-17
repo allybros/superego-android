@@ -29,6 +29,7 @@ import com.allybros.superego.api.LoginTask;
 import com.allybros.superego.api.SocialMediaSignInTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
+import com.allybros.superego.widget.SegoEditText;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -50,11 +51,10 @@ import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 
 public class LoginActivity extends AppCompatActivity {
     private MaterialButton btLogin;
-    private EditText etUid, etPassword;
+    private SegoEditText etPassword, etUid;
     private TextView tvRegister;
     private ConstraintLayout btSignInFacebook, btSignInGoogle;
     private MaterialProgressBar progressView;
-    private ImageView ivPassword;
 
     static LoginButton btHiddenFacebook;
     GoogleSignInClient mGoogleSignInClient;
@@ -78,9 +78,8 @@ public class LoginActivity extends AppCompatActivity {
         btSignInFacebook = findViewById(R.id.btSignInFacebook);
         tvRegister = findViewById(R.id.tvRegister);
         etUid = findViewById(R.id.etLoginUid);
-        etPassword = findViewById(R.id.etLoginPassword);
+        etPassword = findViewById(R.id.etPassword);
         progressView = findViewById(R.id.progressViewLogin);
-        ivPassword = findViewById(R.id.ivPassword);
     }
 
     private void setupReceivers(){
@@ -95,8 +94,8 @@ public class LoginActivity extends AppCompatActivity {
 
                     case ErrorCodes.SYSFAIL:
                     case ErrorCodes.CAPTCHA_REQUIRED:
-                        setError(etUid, " ");
-                        setError(etPassword, getString(R.string.error_login_failed));
+                        etUid.setError(" ");
+                        etPassword.setError(getString(R.string.error_login_failed));
                         break;
 
                     case ErrorCodes.SUSPEND_SESSION:
@@ -199,16 +198,17 @@ public class LoginActivity extends AppCompatActivity {
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            clearError(etPassword);
-            clearError(etUid);
+            etPassword.clearError();
 
-            if(etUid.getText().toString().isEmpty()){
-                setError(etUid, getString(R.string.error_username_empty));
+                etUid.clearError();
+
+            if(etUid.getText().isEmpty()){
+                etUid.setError(getString(R.string.error_username_empty));
             }
-            if(etPassword.getText().toString().isEmpty()){
-                setError(etPassword,getString(R.string.error_password_empty));
+            if(etPassword.getText().isEmpty()){
+                etPassword.setError(getString(R.string.error_password_empty));
             }
-            if(!etPassword.getText().toString().isEmpty() && !etUid.getText().toString().isEmpty()){
+            if(!etPassword.getText().isEmpty() && !etUid.getText().toString().isEmpty()){
                 setProgress(true);
                 LoginTask.loginTask(getApplicationContext(), etUid.getText().toString(),etPassword.getText().toString());
             }
@@ -231,18 +231,11 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if(s.toString().isEmpty()){
-                    setError(etPassword, getString(R.string.error_password_empty));
+                    etPassword.setError(getString(R.string.error_password_empty));
                 } else {
-                    clearError(etPassword);
+                    etPassword.clearError();
                 }
 
-            }
-        });
-
-        ivPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changePasswordVisibility(ivPassword, etPassword);
             }
         });
 
@@ -281,7 +274,6 @@ public class LoginActivity extends AppCompatActivity {
                         AccessToken accessToken = AccessToken.getCurrentAccessToken();
                         Log.d("Facebook","B"+accessToken.getToken());
                         SocialMediaSignInTask.loginTask(getApplicationContext(),accessToken.getToken(),"facebook");
-
                     }
 
                     @Override
@@ -370,25 +362,6 @@ public class LoginActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(loginReceiver);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(loginSocialMediaReceiver);
         super.onDestroy();
-    }
-
-    private void setError(EditText editText, String errorMessage) {
-        editText.setHint(errorMessage);
-        editText.setBackground(getDrawable(R.drawable.et_error_background));
-    }
-
-    private void clearError(EditText editText) {
-        editText.setBackground(getDrawable(R.drawable.et_background));
-    }
-
-    private void changePasswordVisibility(ImageView imageView, EditText editText) {
-        if(editText.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())){
-            imageView.setImageResource(R.drawable.ic_visibility_off);
-            editText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-        } else{
-            imageView.setImageResource(R.drawable.ic_visibility);
-            editText.setTransformationMethod(PasswordTransformationMethod.getInstance());
-        }
     }
 
     public void onRegisterButtonClicked(View view) {

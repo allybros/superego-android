@@ -72,84 +72,25 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvLoginHeader">
 
-            <TextView
-                android:id="@+id/tvLoginUidLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/noto_sans"
-                android:text="@string/hint_login_uid"
-                android:textColor="@color/White"
-                android:textSize="12sp"
-                android:textFontWeight="500"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <EditText
+            <com.allybros.superego.widget.SegoEditText
                 android:id="@+id/etLoginUid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:textSize="13sp"
-                android:background="@drawable/et_background"
-                android:fontFamily="@font/noto_sans"
-                android:inputType="text"
-                android:padding="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textInputUsername" />
+                app:sego_header_text="@string/hint_login_uid"
+                app:sego_header_text_color="@color/White"
+                app:sego_input_text_color="@color/Black"
+                tools:layout_height="60dp"/>
 
-
-            <TextView
-                android:id="@+id/tvLoginPasswordLabel"
+            <com.allybros.superego.widget.SegoEditText
+                android:id="@+id/etPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:textFontWeight="500"
-                android:textSize="12sp"
-                android:text="@string/hint_login_password"
-                android:textColor="@color/White"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <!--TODO: Change these input area with component-->
-            <RelativeLayout
-                android:id="@+id/rlOldPassword"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="3dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/layoutOldPassword">
-
-                <EditText
-                    android:id="@+id/etLoginPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:background="@drawable/et_background"
-                    android:fontFamily="@font/noto_sans"
-                    android:inputType="textPassword"
-                    android:paddingStart="8dp"
-                    android:textSize="13sp"
-                    android:paddingTop="8dp"
-                    android:paddingEnd="48dp"
-                    android:paddingBottom="8dp"
-                    android:singleLine="true" />
-
-                <ImageView
-                    android:id="@+id/ivPassword"
-                    android:layout_width="20dp"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerInParent="true"
-                    android:layout_marginEnd="16dp"
-                    android:src="@drawable/ic_visibility" />
-            </RelativeLayout>
+                app:sego_header_text="@string/hint_login_password"
+                app:sego_header_text_color="@color/White"
+                app:sego_input_text_color="@color/Black"
+                app:sego_is_password_input="true"
+                tools:layout_height="60dp"/>
 
             <!-- Login Button -->
             <com.google.android.material.button.MaterialButton

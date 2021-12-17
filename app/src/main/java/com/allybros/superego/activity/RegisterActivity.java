@@ -34,6 +34,7 @@ import com.allybros.superego.api.SocialMediaSignInTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.util.HelperMethods;
+import com.allybros.superego.widget.SegoEditText;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -56,7 +57,7 @@ import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText etRegisterUsername,etRegisterMail,etRegisterPassword;
+    private SegoEditText etRegisterUsername,etRegisterMail,etRegisterPassword;
     private Button btnRegister;
     private ConstraintLayout btSignInFacebook, btSignInGoogle;
     private CheckBox checkBoxAgreement;
@@ -121,23 +122,23 @@ public class RegisterActivity extends AppCompatActivity {
                         break;
 
                     case ErrorCodes.USERNAME_NOT_LEGAL:
-                        setError(etRegisterUsername, getString(R.string.error_username_not_legal));
+                        etRegisterUsername.setError(getString(R.string.error_username_not_legal));
                         break;
 
                     case ErrorCodes.USERNAME_ALREADY_EXIST:
-                        setError(etRegisterUsername, getString(R.string.error_username_taken));
+                        etRegisterUsername.setError(getString(R.string.error_username_taken));
                         break;
 
                     case ErrorCodes.EMAIL_ALREADY_EXIST:
-                        setError(etRegisterMail, getString(R.string.error_email_already_exist));
+                        etRegisterMail.setError(getString(R.string.error_email_already_exist));
                         break;
 
                     case ErrorCodes.EMAIL_NOT_LEGAL:
-                        setError(etRegisterMail, getString(R.string.error_email_not_legal));
+                        etRegisterMail.setError(getString(R.string.error_email_not_legal));
                         break;
 
                     case ErrorCodes.PASSWORD_NOT_LEGAL:
-                        setError(etRegisterPassword, getString(R.string.error_password_not_legal));
+                        etRegisterPassword.setError(getString(R.string.error_password_not_legal));
                         break;
                 }
             }
@@ -171,29 +172,29 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clearError(etRegisterUsername);
-                clearError(etRegisterMail);
-                clearError(etRegisterPassword);
+                etRegisterUsername.clearError();
+                etRegisterMail.clearError();
+                etRegisterPassword.clearError();
 
                 checkBoxAgreement.setBackground(getDrawable(R.drawable.selector_check_box));
 
-                usernameInput = etRegisterUsername.getText().toString();
-                emailInput = etRegisterMail.getText().toString();
-                passwordInput = etRegisterPassword.getText().toString();
+                usernameInput = etRegisterUsername.getText();
+                emailInput = etRegisterMail.getText();
+                passwordInput = etRegisterPassword.getText();
                 boolean conditions = checkBoxAgreement.isChecked();
 
 
                 //Validate fields
                 if (usernameInput.isEmpty()){
-                    setError(etRegisterUsername, getResources().getString(R.string.error_username_empty));
+                    etRegisterUsername.setError(getResources().getString(R.string.error_username_empty));
                 }
 
                 if (emailInput.isEmpty()){
-                    setError(etRegisterMail, getResources().getString(R.string.error_email_empty));
+                    etRegisterMail.setError(getResources().getString(R.string.error_email_empty));
                 }
 
                 if (passwordInput.isEmpty()){
-                    setError(etRegisterPassword, getResources().getString(R.string.error_password_empty));
+                    etRegisterPassword.setError(getResources().getString(R.string.error_password_empty));
                 }
 
                 if (!conditions){
@@ -240,9 +241,9 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if(s.toString().isEmpty()){
-                    setError(etRegisterPassword, getString(R.string.error_password_empty));
+                    etRegisterPassword.setError(getString(R.string.error_password_empty));
                 } else {
-                    clearError(etRegisterPassword);
+                    etRegisterPassword.clearError();
                 }
 
             }
@@ -290,7 +291,6 @@ public class RegisterActivity extends AppCompatActivity {
                         AccessToken accessToken = AccessToken.getCurrentAccessToken();
                         Log.d("Facebook","B"+accessToken.getToken());
                         SocialMediaSignInTask.loginTask(getApplicationContext(),accessToken.getToken(),"facebook");
-
                     }
 
                     @Override
