@@ -10,13 +10,17 @@
         <attr name="sego_input_text_color" format="color"/>
         <attr name="sego_input_text_size" format="dimension"/>
     </declare-styleable>
-
     <declare-styleable name="SegoMenuButton">
         <attr name="sego_start_icon" format="reference"/>
         <attr name="sego_label_text" format="string"/>
         <attr name="sego_button_background" format="reference"/>
         <attr name="sego_label_color" format="color"/>
         <attr name="sego_bottom_divider" format="boolean"/>
+    </declare-styleable>
+    <declare-styleable name="SegoCheckBox">
+        <attr name="sego_box_drawable" format="reference"/>
+        <attr name="sego_box_error_drawable" format="reference"/>
+        <attr name="sego_checkbox_text" format="string"/>
     </declare-styleable>
 
 </resources>
