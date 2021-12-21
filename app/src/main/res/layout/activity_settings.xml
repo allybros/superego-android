@@ -99,227 +99,47 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ivUserAvatar">
-                <FrameLayout
+                <com.allybros.superego.widget.SegoMenuButton
+                    android:id="@+id/cardBtnEditProfile"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/cardBtnEditProfile"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:paddingHorizontal="24dp"
-                        android:paddingBottom="8dp"
-                        android:background="@drawable/selector_card"
-                        android:clickable="true"
-                        android:focusable="true">
-
-                        <TextView
-                            android:id="@+id/tvEditProfile"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="19dp"
-                            android:fontFamily="@font/noto_sans_bold"
-                            android:text="@string/option_edit_profile"
-                            android:textColor="@color/segoPurple600"
-                            android:textSize="20sp"
-                            android:textFontWeight="600"
-                            app:layout_constraintStart_toEndOf="@+id/ivEditProfile"
-                            app:layout_constraintTop_toTopOf="parent" />
-                        <com.facebook.login.widget.LoginButton
-                            android:id="@+id/logoutFacebook"
-                            android:visibility="gone"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            tools:ignore="MissingConstraints">
-                        </com.facebook.login.widget.LoginButton>
-
-                        <ImageView
-                            android:id="@+id/ivEditProfile"
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_marginTop="16dp"
-                            android:background="@drawable/setting_buttons_bg"
-                            android:padding="6dp"
-                            android:src="@drawable/ic_pencil_purple"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </FrameLayout>
-                <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="1dp"
-                    android:layout_marginHorizontal="20dp"
-                    android:background="@drawable/divider" />
-                <FrameLayout
+                    android:layout_height="wrap_content"
+                    app:sego_start_icon="@drawable/ic_pencil_purple"
+                    app:sego_label_text="@string/option_edit_profile"
+                    app:sego_bottom_divider="true"
+                    tools:layout_height="60dp"/>
+                <com.allybros.superego.widget.SegoMenuButton
+                    android:id="@+id/cardBtnPassword"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/cardBtnPassword"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:paddingHorizontal="24dp"
-                        android:paddingBottom="8dp"
-                        android:background="@drawable/selector_card"
-                        android:clickable="true"
-                        android:focusable="true">
-
-                        <TextView
-                            android:id="@+id/tvPassword"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="11dp"
-                            android:fontFamily="@font/noto_sans_bold"
-                            android:text="@string/option_password"
-                            android:textColor="@color/segoPurple600"
-                            android:textSize="20sp"
-                            android:textFontWeight="600"
-                            app:layout_constraintStart_toEndOf="@+id/ivPassword"
-                            app:layout_constraintTop_toTopOf="parent" />
-                        <ImageView
-                            android:id="@+id/ivPassword"
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_marginTop="8dp"
-                            android:background="@drawable/setting_buttons_bg"
-                            android:padding="6dp"
-                            android:src="@drawable/ic_key_purple"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </FrameLayout>
-                <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="1dp"
-                    android:layout_marginHorizontal="20dp"
-                    android:background="@drawable/divider" />
-                <FrameLayout
+                    android:layout_height="wrap_content"
+                    app:sego_start_icon="@drawable/ic_key_purple"
+                    app:sego_label_text="@string/option_password"
+                    app:sego_bottom_divider="true"
+                    tools:layout_height="60dp"/>
+                <com.allybros.superego.widget.SegoMenuButton
+                    android:id="@+id/cardBtnAbout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/cardBtnAbout"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:paddingHorizontal="24dp"
-                        android:paddingBottom="8dp"
-                        android:background="@drawable/selector_card"
-                        android:clickable="true"
-                        android:focusable="true">
-
-                        <TextView
-                            android:id="@+id/tvAbout"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="11dp"
-                            android:fontFamily="@font/noto_sans_bold"
-                            android:text="@string/option_about"
-                            android:textColor="@color/segoPurple600"
-                            android:textSize="20sp"
-                            android:textFontWeight="600"
-                            app:layout_constraintStart_toEndOf="@+id/ivAbout"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <ImageView
-                            android:id="@+id/ivAbout"
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_marginTop="8dp"
-                            android:background="@drawable/setting_buttons_bg"
-                            android:padding="6dp"
-                            android:src="@drawable/ic_info_purple"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </FrameLayout>
-                <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="1dp"
-                    android:layout_marginHorizontal="20dp"
-                    android:background="@drawable/divider" />
-                <FrameLayout
+                    android:layout_height="wrap_content"
+                    app:sego_start_icon="@drawable/ic_info_purple"
+                    app:sego_label_text="@string/option_about"
+                    app:sego_bottom_divider="true"
+                    tools:layout_height="60dp"/>
+                <com.allybros.superego.widget.SegoMenuButton
+                    android:id="@+id/cardBtnLicenses"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/cardBtnLicenses"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:paddingHorizontal="24dp"
-                        android:paddingBottom="8dp"
-                        android:background="@drawable/selector_card"
-                        android:clickable="true"
-                        android:focusable="true">
-
-                        <TextView
-                            android:id="@+id/tvLicenses"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="11dp"
-                            android:fontFamily="@font/noto_sans_bold"
-                            android:text="@string/option_licenses"
-                            android:textColor="@color/segoPurple600"
-                            android:textSize="20sp"
-                            android:textFontWeight="600"
-                            app:layout_constraintStart_toEndOf="@+id/ivLicenses"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <ImageView
-                            android:id="@+id/ivLicenses"
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_marginTop="8dp"
-                            android:background="@drawable/setting_buttons_bg"
-                            android:padding="6dp"
-                            android:src="@drawable/ic_balance_purple"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </FrameLayout>
-                <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="1dp"
-                    android:layout_marginHorizontal="20dp"
-                    android:background="@drawable/divider" />
-                <FrameLayout
+                    android:layout_height="wrap_content"
+                    app:sego_start_icon="@drawable/ic_balance_purple"
+                    app:sego_label_text="@string/option_licenses"
+                    app:sego_bottom_divider="true"
+                    tools:layout_height="60dp"/>
+                <com.allybros.superego.widget.SegoMenuButton
+                    android:id="@+id/cardBtnSingOut"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/cardBtnSingOut"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:paddingHorizontal="24dp"
-                        android:paddingBottom="16dp"
-                        android:background="@drawable/selector_card"
-                        android:clickable="true"
-                        android:focusable="true">
-
-                        <TextView
-                            android:id="@+id/tvSignOut"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="11dp"
-                            android:fontFamily="@font/noto_sans_bold"
-                            android:text="@string/action_sign_out"
-                            android:textColor="@color/segoPurple600"
-                            android:textSize="20sp"
-                            android:textFontWeight="600"
-                            app:layout_constraintStart_toEndOf="@+id/ivSignOut"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <ImageView
-                            android:id="@+id/ivSignOut"
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_marginTop="8dp"
-                            android:background="@drawable/setting_buttons_bg"
-                            android:padding="6dp"
-                            android:src="@drawable/ic_logout_purple"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </FrameLayout>
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="9dp"
+                    app:sego_start_icon="@drawable/ic_logout_purple"
+                    app:sego_label_text="@string/action_sign_out"
+                    app:sego_bottom_divider="false"
+                    tools:layout_height="60dp"/>
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
@@ -336,5 +156,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/brand_grey" />
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/logoutFacebook"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
+    </com.facebook.login.widget.LoginButton>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

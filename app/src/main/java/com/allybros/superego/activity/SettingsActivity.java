@@ -19,7 +19,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.R;
@@ -27,6 +26,7 @@ import com.allybros.superego.adapter.LicensesAdapter;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.util.SessionManager;
+import com.allybros.superego.widget.SegoMenuButton;
 import com.facebook.CallbackManager;
 import com.facebook.login.LoginManager;
 import com.facebook.login.widget.LoginButton;
@@ -44,11 +44,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    private ConstraintLayout optionEditProfile;
-    private ConstraintLayout optionChangePassword;
-    private ConstraintLayout optionAbout;
-    private ConstraintLayout optionLicenses;
-    private ConstraintLayout optionSignOut;
+    private SegoMenuButton optionEditProfile, optionChangePassword,optionAbout,optionLicenses, optionSignOut;
     private LoginButton logoutFacebook;
     private BroadcastReceiver logoutReceiver;
     private TextView tvUsername;

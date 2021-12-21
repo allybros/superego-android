@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="24dp"
+            android:paddingBottom="8dp"
+            android:background="@drawable/selector_card"
+            android:clickable="true"
+            android:focusable="true">
+            <TextView
+                android:id="@+id/tvButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="19dp"
+                android:fontFamily="@font/noto_sans_bold"
+                android:text="@string/option_edit_profile"
+                android:textColor="@color/segoPurple600"
+                android:textSize="20sp"
+                android:textFontWeight="600"
+                app:layout_constraintStart_toEndOf="@+id/ivButton"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/ivButton"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/setting_buttons_bg"
+                android:padding="6dp"
+                android:src="@drawable/ic_pencil_purple"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+
+    <View
+        android:id="@+id/vBottomDivider"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="20dp"
+        android:visibility="gone"
+        android:background="@drawable/divider" />
+</LinearLayout>
