@@ -78,15 +78,41 @@
                 app:sego_is_password_input="true"
                 tools:layout_height="60dp"/>
 
-            <com.allybros.superego.widget.SegoCheckBox
-                android:id="@+id/checkboxAgreement"
+            <!--Input Agreement -->
+            <LinearLayout
+                android:id="@+id/layoutAgreement"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="11dp"
-                app:sego_box_drawable="@drawable/selector_check_box"
-                app:sego_box_error_drawable="@drawable/checkbox_error"
-                app:sego_checkbox_text="@string/action_agreement_link" />
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/checkboxAgreement"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/selector_check_box"
+                    android:button="@color/White"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvAgreementRegister"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/noto_sans"
+                    android:layout_marginStart="5dp"
+                    android:textSize="11sp"
+                    android:text="@string/action_agreement_link"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/checkboxAgreement"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </LinearLayout>
 
             <Button
                 android:id="@+id/btSignUp"

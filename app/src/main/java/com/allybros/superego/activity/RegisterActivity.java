@@ -34,7 +34,6 @@ import com.allybros.superego.api.SocialMediaSignInTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.util.HelperMethods;
-import com.allybros.superego.widget.SegoCheckBox;
 import com.allybros.superego.widget.SegoEditText;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -61,7 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
     private SegoEditText etRegisterUsername,etRegisterMail,etRegisterPassword;
     private Button btnRegister;
     private ConstraintLayout btSignInFacebook, btSignInGoogle;
-    private SegoCheckBox checkBoxAgreement;
+    private CheckBox checkBoxAgreement;
     private LinearLayout cardFormRegister;
     private MaterialProgressBar progressView;
     private BroadcastReceiver registerReceiver;
@@ -96,7 +95,7 @@ public class RegisterActivity extends AppCompatActivity {
         checkBoxAgreement = findViewById(R.id.checkboxAgreement);
         cardFormRegister = findViewById(R.id.cardFormRegister);
         progressView = findViewById(R.id.progressViewRegister);
-        tvAgreementRegister = checkBoxAgreement.getLabelTextView();
+        tvAgreementRegister = findViewById(R.id.tvAgreementRegister);
         tvSignIn = findViewById(R.id.tvSignIn);
     }
 
@@ -177,7 +176,7 @@ public class RegisterActivity extends AppCompatActivity {
                 etRegisterMail.clearError();
                 etRegisterPassword.clearError();
 
-                checkBoxAgreement.clearError();
+                checkBoxAgreement.setBackground(getDrawable(R.drawable.selector_check_box));
 
                 usernameInput = etRegisterUsername.getText();
                 emailInput = etRegisterMail.getText();
@@ -199,7 +198,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
                 if (!conditions){
-                    checkBoxAgreement.setError();
+                    checkBoxAgreement.setBackground(getDrawable(R.drawable.checkbox_error));
                 }
 
                 if (!usernameInput.isEmpty()
@@ -253,7 +252,7 @@ public class RegisterActivity extends AppCompatActivity {
         checkBoxAgreement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkBoxAgreement.clearError();
+                checkBoxAgreement.setBackground(getDrawable(R.drawable.selector_check_box));
             }
         });
 
