@@ -19,4 +19,15 @@
         <attr name="sego_bottom_divider" format="boolean"/>
     </declare-styleable>
 
+    <declare-styleable name="SegoProgressBar">
+        <attr name="sego_progress_start_percent" format="integer"/>
+        <attr name="sego_progress_end_percent" format="integer"/>
+        <attr name="sego_progress_start_label" format="string"/>
+        <attr name="sego_progress_end_label" format="string"/>
+        <attr name="sego_progress_header_label" format="string"/>
+        <attr name="sego_progress_bar_container_background" format="reference"/>
+        <attr name="sego_progress_bar_background" format="reference"/>
+        <attr name="sego_progress_progress_background" format="reference"/>
+    </declare-styleable>
+
 </resources>

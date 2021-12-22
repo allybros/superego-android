@@ -5,6 +5,9 @@ import android.util.Base64;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
+
 import java.io.ByteArrayOutputStream;
 
 /**
@@ -40,5 +43,32 @@ public class HelperMethods {
             p.setMargins(l, t, r, b);
             v.requestLayout();
         }
+    }
+
+    /**
+     * Change view constraint to new parameters
+     * @param container
+     * @param view
+     * @param endView
+     * @param startSide
+     * @param endSide
+     * @param margin
+     */
+    public static void setConstraintConnection(ConstraintLayout container,
+                                               View view,
+                                               View endView,
+                                               int startSide,
+                                               int endSide,
+                                               int margin){
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(container);
+        constraintSet.connect(
+                view.getId(),
+                startSide,
+                endView.getId(),
+                endSide,
+                margin
+        );
+        constraintSet.applyTo(container);
     }
 }

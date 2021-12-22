@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clContainer"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:id="@+id/vProgressBarBackground"
+        android:layout_width="242dp"
+        android:layout_height="16dp"
+        android:background="@drawable/shape_sego_progress_bar_background"
+        android:layout_marginTop="6dp"
+        app:layout_constraintEnd_toStartOf="@+id/tvEndPercent"
+        app:layout_constraintStart_toEndOf="@+id/tvStartPercent"
+        app:layout_constraintTop_toBottomOf="@+id/tvHeaderLabel" />
+
+    <View
+        android:id="@+id/vProgressBackground"
+        android:layout_width="50dp"
+        android:layout_height="16dp"
+        android:background="@drawable/shape_sego_progress_background"
+        android:layout_marginTop="6dp"
+        app:layout_constraintEnd_toEndOf="@+id/vProgressBarBackground"
+        app:layout_constraintStart_toStartOf="@+id/vProgressBarBackground"
+        app:layout_constraintTop_toBottomOf="@+id/tvHeaderLabel" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvHeaderLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Yeniliğe"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvStartLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvStartPercent"
+        tools:text="Açık" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvEndLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvEndPercent"
+        tools:text="Kapalı" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvStartPercent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvHeaderLabel"
+        tools:text="%44" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvEndPercent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvHeaderLabel"
+        tools:text="%56" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

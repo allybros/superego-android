@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
+import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.allybros.superego.R;
@@ -35,12 +36,12 @@ public class SegoMenuButton extends LinearLayout {
         init();
     }
 
-    public SegoMenuButton(Context context, AttributeSet attrs) {
+    public SegoMenuButton(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         initArgs(context, attrs);
     }
 
-    public SegoMenuButton(Context context, AttributeSet attrs, int defStyleAttr) {
+    public SegoMenuButton(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initArgs(context, attrs);
     }
