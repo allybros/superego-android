@@ -3,12 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/clContainer"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/sego_progress_container_background"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <!--TODO: Edit fonts and spaces from zeplin-->
     <View
-        android:id="@+id/vProgressBarBackground"
-        android:layout_width="242dp"
+        android:id="@+id/vProgressBar"
+        android:layout_width="250dp"
         android:layout_height="16dp"
         android:background="@drawable/shape_sego_progress_bar_background"
         android:layout_marginTop="6dp"
@@ -17,28 +19,27 @@
         app:layout_constraintTop_toBottomOf="@+id/tvHeaderLabel" />
 
     <View
-        android:id="@+id/vProgressBackground"
-        android:layout_width="50dp"
+        android:id="@+id/vProgress"
+        android:layout_width="125dp"
         android:layout_height="16dp"
         android:background="@drawable/shape_sego_progress_background"
         android:layout_marginTop="6dp"
-        app:layout_constraintEnd_toEndOf="@+id/vProgressBarBackground"
-        app:layout_constraintStart_toStartOf="@+id/vProgressBarBackground"
         app:layout_constraintTop_toBottomOf="@+id/tvHeaderLabel" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvHeaderLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/vProgressBar"
+        app:layout_constraintStart_toStartOf="@+id/vProgressBar"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Yeniliğe"/>
+        tools:text="Yeniliğe" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvStartLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvStartPercent"
         tools:text="Açık" />
@@ -47,6 +48,7 @@
         android:id="@+id/tvEndLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvEndPercent"
         tools:text="Kapalı" />
@@ -55,6 +57,7 @@
         android:id="@+id/tvStartPercent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvHeaderLabel"
         tools:text="%44" />

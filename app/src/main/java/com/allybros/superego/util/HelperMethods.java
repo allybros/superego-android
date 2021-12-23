@@ -49,25 +49,22 @@ public class HelperMethods {
      * Change view constraint to new parameters
      * @param container
      * @param view
-     * @param endView
-     * @param startSide
-     * @param endSide
-     * @param margin
+     * @param view1
+     * @param connectSide
+     * @param connectSide1
      */
     public static void setConstraintConnection(ConstraintLayout container,
                                                View view,
-                                               View endView,
-                                               int startSide,
-                                               int endSide,
-                                               int margin){
+                                               View view1,
+                                               int connectSide,
+                                               int connectSide1){
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(container);
         constraintSet.connect(
                 view.getId(),
-                startSide,
-                endView.getId(),
-                endSide,
-                margin
+                connectSide,
+                view1.getId(),
+                connectSide1
         );
         constraintSet.applyTo(container);
     }

@@ -55,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView tvRegister;
     private ConstraintLayout btSignInFacebook, btSignInGoogle;
     private MaterialProgressBar progressView;
+    private Button btHi;
 
     static LoginButton btHiddenFacebook;
     GoogleSignInClient mGoogleSignInClient;
@@ -80,6 +81,8 @@ public class LoginActivity extends AppCompatActivity {
         etUid = findViewById(R.id.etLoginUid);
         etPassword = findViewById(R.id.etPassword);
         progressView = findViewById(R.id.progressViewLogin);
+        btHi = findViewById(R.id.btHi);
+
     }
 
     private void setupReceivers(){
@@ -251,6 +254,13 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent signInIntent = mGoogleSignInClient.getSignInIntent();
                 startActivityForResult(signInIntent, RC_SIGN_IN);
+            }
+        });
+
+        btHi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), PlayGroundActivity.class));
             }
         });
 

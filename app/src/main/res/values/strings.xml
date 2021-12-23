@@ -72,7 +72,7 @@
     <string name="hint_register_email">E-Posta</string>
     <string name="hint_register_password">Parola</string>
 
-   <!--Actions:
+    <!--Actions:
     Actions shows on the buttons or forwarder-->
     <string name="action_yes">Evet</string>
     <string name="action_no">Hayır</string>
