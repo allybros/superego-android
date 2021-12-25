@@ -46,20 +46,46 @@ public class HelperMethods {
     }
 
     /**
-     * Change view constraint to new parameters
+     * Change view horizontal constraint to new parameters
      * @param container
      * @param view
      * @param view1
      * @param connectSide
      * @param connectSide1
      */
-    public static void setConstraintConnection(ConstraintLayout container,
-                                               View view,
-                                               View view1,
-                                               int connectSide,
-                                               int connectSide1){
+    public static void setConstraintConnectionHorizontal(ConstraintLayout container,
+                                                         View view,
+                                                         View view1,
+                                                         int connectSide,
+                                                         int connectSide1){
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(container);
+        constraintSet.removeFromHorizontalChain(view.getId());
+        constraintSet.connect(
+                view.getId(),
+                connectSide,
+                view1.getId(),
+                connectSide1
+        );
+        constraintSet.applyTo(container);
+    }
+
+    /**
+     * Change view vertical constraint to new parameters
+     * @param container
+     * @param view
+     * @param view1
+     * @param connectSide
+     * @param connectSide1
+     */
+    public static void setConstraintConnectionVertical(ConstraintLayout container,
+                                                         View view,
+                                                         View view1,
+                                                         int connectSide,
+                                                         int connectSide1){
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(container);
+        constraintSet.removeFromVerticalChain(view.getId());
         constraintSet.connect(
                 view.getId(),
                 connectSide,

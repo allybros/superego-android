@@ -16,8 +16,12 @@
             android:id="@+id/btHi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Hi"
-            app:layout_constraintTop_toBottomOf="@+id/tvLoginHeader" />
+            android:text="Enter to progress bar test"
+            android:layout_marginHorizontal="35dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/socialButtons" />
+
         <ImageView
             android:id="@+id/brandLogo"
             android:layout_width="208.125dp"

@@ -26,7 +26,6 @@ public class SegoProgressBar extends ConstraintLayout {
     private Drawable progressBarBackground = getResources().getDrawable(R.drawable.shape_sego_progress_bar_background);
     private Drawable progressBackground = getResources().getDrawable(R.drawable.shape_sego_progress_background);;
     private Drawable containerBackground = getResources().getDrawable(R.drawable.sego_progress_container_background);
-
     private ConstraintLayout clContainer;
     private View vProgressBar;
     private View vProgress;
@@ -112,6 +111,7 @@ public class SegoProgressBar extends ConstraintLayout {
         if(getLayoutTransition() == null){
             setLayoutTransition(new LayoutTransition());
         }
+        validatePercents(startPercent, endPercent);
         setHeaderLabel(headerLabel);
         setStartLabel(startLabel);
         setEndLabel(endLabel);
@@ -125,7 +125,7 @@ public class SegoProgressBar extends ConstraintLayout {
 
     private void setProgressView(int startPercent, int endPercent) {
         if(startPercent > endPercent){
-            HelperMethods.setConstraintConnection(
+            HelperMethods.setConstraintConnectionHorizontal(
                     clContainer,
                     vProgress,
                     vProgressBar,
@@ -134,7 +134,7 @@ public class SegoProgressBar extends ConstraintLayout {
             );
             setProgressWidth(startPercent);
         } else {
-            HelperMethods.setConstraintConnection(
+            HelperMethods.setConstraintConnectionHorizontal(
                     clContainer,
                     vProgress,
                     vProgressBar,
@@ -176,11 +176,11 @@ public class SegoProgressBar extends ConstraintLayout {
     }
 
     private void setEndPercent(int endPercent) {
-        tvEndPercent.setText("%\n"+endPercent);
+        tvEndPercent.setText("%"+endPercent);
     }
 
     private void setStartPercent(int startPercent) {
-        tvStartPercent.setText("%\n"+startPercent);
+        tvStartPercent.setText("%"+startPercent);
     }
 
     private void setEndLabel(String endLabel) {
@@ -193,5 +193,22 @@ public class SegoProgressBar extends ConstraintLayout {
 
     private void setHeaderLabel(String headerLabel) {
         tvHeaderLabel.setText(headerLabel);
+    }
+
+    public void setNewPercent(int newStartPercent, int newEndPercent){
+        validatePercents(newStartPercent, newEndPercent);
+        setStartPercent(startPercent);
+        setEndPercent(endPercent);
+        setProgressView(startPercent, endPercent);
+    }
+
+    private void validatePercents(int startPercent, int endPercent) {
+        if(startPercent+endPercent != 100){
+            this.startPercent = 50;
+            this.endPercent = 50;
+        } else {
+            this.startPercent = startPercent;
+            this.endPercent = endPercent;
+        }
     }
 }
