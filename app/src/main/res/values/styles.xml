@@ -7,6 +7,7 @@
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
         <item name="android:textColorPrimary">@color/White</item>
         <item name="android:actionBarSize">52dp</item>
+        <item name="colorControlActivated">@color/segoPurple600</item>
     </style>
 
     <style name="SegoAlertDialog" parent="Theme.MaterialComponents.Light.Dialog.Alert">
@@ -28,6 +29,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:statusBarColor">@color/statusbarPurple</item>
+        <item name="colorControlActivated">@color/segoPurple600</item>
     </style>
 
     <style name="UserPage.theme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -36,6 +38,7 @@
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
         <item name="android:textColorPrimary">@color/White</item>
         <item name="android:actionBarSize">52dp</item>
+        <item name="colorControlActivated">@color/segoPurple600</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Light" >
@@ -51,6 +54,7 @@
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
         <item name="android:textColorPrimary">@color/White</item>
         <item name="android:actionBarSize">52dp</item>
+        <item name="colorControlActivated">@color/segoPurple600</item>
     </style>
 
     <style name="SegoInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">

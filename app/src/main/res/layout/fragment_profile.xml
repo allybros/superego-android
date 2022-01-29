@@ -2,7 +2,6 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/fragmentBackground"
@@ -20,24 +19,20 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayoutProfileContainer"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@color/White"
                 android:paddingBottom="10dp">
 
                 <!--Renkli kısım-->
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayoutProfileTop"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/profile_top_bg"
-                    android:elevation="10dp"
-                    android:padding="100dp"
+                <View
+                    android:id="@+id/vProfileTop"
+                    android:layout_width="match_parent"
+                    android:layout_height="277dp"
+                    android:background="@drawable/background"
                     android:translationZ="0dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/btnSettings"
@@ -47,8 +42,8 @@
                     android:layout_marginEnd="8dp"
                     android:background="@drawable/ic_baseline_settings_36"
                     android:translationZ="12dp"
-                    app:layout_constraintEnd_toEndOf="@+id/constraintLayoutProfileTop"
-                    app:layout_constraintTop_toTopOf="@+id/constraintLayoutProfileTop" />
+                    app:layout_constraintEnd_toEndOf="@+id/vProfileTop"
+                    app:layout_constraintTop_toTopOf="@+id/vProfileTop" />
 
                 <!--Profil Card-->
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -56,7 +51,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="18dp"
-                    android:layout_marginTop="125dp"
+                    android:layout_marginTop="81dp"
                     android:layout_marginEnd="18dp"
                     android:background="@drawable/shape_card"
                     android:elevation="4dp"
@@ -70,79 +65,59 @@
                         android:id="@+id/tvUsername"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="80dp"
+                        android:layout_marginTop="75dp"
                         android:text="\@username"
-                        android:textColor="@color/Black"
+                        android:textColor="@color/deepBlue100"
                         android:fontFamily="@font/noto_sans"
+                        android:textFontWeight="600"
                         android:textSize="20sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <LinearLayout
-                        android:id="@+id/llBioDesc"
-                        android:layout_width="wrap_content"
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvUserbio"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="4dp"
-                        android:paddingHorizontal="20dp"
+                        android:fontFamily="@font/noto_sans"
+                        android:layout_gravity="center_vertical"
+                        android:text="Kendinizi tanıtan bir yazı yazın."
+                        android:textSize="12sp"
+                        android:textFontWeight="400"
+                        android:layout_marginHorizontal="24dp"
+                        android:gravity="center"
+                        android:layout_marginTop="8dp"
+                        android:textColor="@color/deepBlue100"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvUsername">
-                        <ImageView
-                            android:id="@+id/imageView5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_quote"
-                            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/tvUsername"/>
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvUserbio"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="2dp"
-                            android:fontFamily="@font/noto_sans"
-                            android:layout_gravity="center_vertical"
-                            android:text="Kendinizi tanıtan bir yazı yazın."
-                            android:textSize="14sp"/>
-                    </LinearLayout>
+                        app:layout_constraintTop_toBottomOf="@+id/tvUsername"/>
                     <!--Cards area-->
                     <LinearLayout
                         android:id="@+id/linearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/shape_card"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="12.5dp"
+                        android:paddingBottom="12.5dp"
                         android:weightSum="2"
-                        app:layout_constraintTop_toBottomOf="@+id/llBioDesc">
+                        app:layout_constraintTop_toBottomOf="@+id/tvUserbio">
 
                         <!--Rated area-->
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="0dp"
-                            android:layout_height="60dp"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/mini_card_bg"
                             android:orientation="vertical">
-
-                            <!--Divider-->
-                            <View
-                                android:id="@+id/view"
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:background="#E0E0E0"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-                            <!--Divider-->
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/badgeRated"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="10"
-                                android:textSize="18dp"
+                                android:textSize="14sp"
                                 android:fontFamily="@font/noto_sans"
-                                android:textColor="@color/Black"
-                                android:layout_marginTop="8dp"
+                                android:textColor="@color/deepBlue100"
                                 app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"/>
@@ -150,14 +125,13 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="2dp"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@+id/badgeRated">
 
                                 <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="12dp"
+                                    android:layout_height="12dp"
                                     android:paddingTop="1dp"
                                     android:src="@drawable/ic_baseline_done_24"
                                     app:tint="@color/green3" />
@@ -167,45 +141,39 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/noto_sans_bold"
+                                    android:textFontWeight="800"
                                     android:text="@string/rated"
                                     android:textColor="@color/green3"
-                                    android:textSize="12dp" />
+                                    android:textSize="10sp" />
 
                             </LinearLayout>
+
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="0dp"
+                                android:background="#E0E0E0"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <!--Credit area-->
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="0dp"
-                            android:layout_height="60dp"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/mini_card_bg"
                             android:gravity="center"
                             android:orientation="vertical">
-
-                            <!--Divider-->
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:background="#E0E0E0"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-                            <!--Divider-->
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="match_parent"
-                                android:background="#E0E0E0"
-                                app:layout_constraintStart_toStartOf="parent" />
-
                             <TextView
                                 android:id="@+id/badgeCredit"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
                                 android:text="10"
-                                android:textSize="18dp"
+                                android:textSize="14sp"
                                 android:fontFamily="@font/noto_sans"
-                                android:textColor="@color/Black"
+                                android:textColor="@color/deepBlue100"
                                 app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent">
@@ -215,30 +183,29 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                android:layout_marginTop="2dp"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@+id/badgeCredit">
 
                                 <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="12dp"
+                                    android:layout_height="12dp"
                                     android:gravity="center_vertical"
-                                    android:src="@drawable/ic_chamleon"
+                                    android:src="@drawable/ic_baseline_done_24"
                                     android:layout_marginEnd="4dp"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toStartOf="@+id/textView5"
-                                    app:tint="@color/purple" />
+                                    app:tint="@color/segoPurple700" />
 
                                 <TextView
                                     android:id="@+id/textView5"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginBottom="12dp"
                                     android:fontFamily="@font/noto_sans_bold"
                                     android:gravity="center_vertical"
+                                    android:textFontWeight="800"
                                     android:text="@string/credit"
-                                    android:textColor="@color/purple"
-                                    android:textSize="12dp" />
+                                    android:textColor="@color/segoPurple700"
+                                    android:textSize="10sp" />
                             </LinearLayout>
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -249,9 +216,9 @@
                 <!--Profil Fotografı-->
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/user_avatar"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_marginTop="50dp"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:layout_marginTop="16dp"
                     android:src="@drawable/default_avatar"
                     android:translationZ="100dp"
                     app:civ_border_width="0dp"
@@ -272,6 +239,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/clProfileCard">
 
+<!--                    TODO: Butonaların tasarımından devam edebilirsin-->
                     <LinearLayout
                         android:id="@+id/rowButton"
                         android:layout_width="match_parent"
@@ -279,27 +247,28 @@
                         android:layout_marginStart="18dp"
                         android:layout_marginTop="18dp"
                         android:layout_marginEnd="18dp"
+                        android:clipToPadding="false"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
 
-                        <Button
-                            android:id="@+id/btnAddTest"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="12dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/v_selector_btn_new_test"
-                            android:drawableTop="@drawable/outline_add_white_36"
-                            android:elevation="7dp"
-                            android:outlineProvider="bounds"
-                            android:paddingVertical="10dp"
-                            android:fontFamily="@font/noto_sans"
-                            android:stateListAnimator="@null"
-                            android:text="@string/action_btn_new_test"
-                            android:textAllCaps="false"
-                            android:translationZ="2dp" />
+<!--                        <Button-->
+<!--                            android:id="@+id/btnAddTest"-->
+<!--                            android:layout_width="0dp"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginEnd="12dp"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:background="@drawable/v_selector_btn_new_test"-->
+<!--                            android:drawableTop="@drawable/outline_add_white_36"-->
+<!--                            android:elevation="7dp"-->
+<!--                            android:outlineProvider="bounds"-->
+<!--                            android:paddingVertical="10dp"-->
+<!--                            android:fontFamily="@font/noto_sans"-->
+<!--                            android:stateListAnimator="@null"-->
+<!--                            android:text="@string/action_btn_new_test"-->
+<!--                            android:textAllCaps="false"-->
+<!--                            android:translationZ="2dp" />-->
 
 
                         <Button
@@ -308,11 +277,13 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/selector_btn_share_test"
-                            android:drawableTop="@drawable/outline_link_white_36"
-                            android:elevation="7dp"
+                            android:drawableStart="@drawable/outline_link_white_36"
+                            android:drawableTint="@color/segoPurple800"
                             android:outlineProvider="bounds"
                             android:fontFamily="@font/noto_sans"
                             android:paddingVertical="10dp"
+                            android:textColor="@color/segoPurple800"
+                            android:textFontWeight="600"
                             android:stateListAnimator="@null"
                             android:text="@string/action_btn_share_test"
                             android:textAllCaps="false"
@@ -326,9 +297,10 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/noto_sans"
                             android:background="@drawable/selector_btn_share_result"
-                            android:drawableTop="@drawable/baseline_share_white_36"
-                            android:elevation="7dp"
-                            android:outlineProvider="bounds"
+                            android:drawableStart="@drawable/baseline_share_white_36"
+                            android:drawableTint="@color/segoPurple800"
+                            android:textColor="@color/segoPurple800"
+                            android:textFontWeight="600"
                             android:paddingVertical="10dp"
                             android:stateListAnimator="@null"
                             android:text="@string/action_btn_share_results"

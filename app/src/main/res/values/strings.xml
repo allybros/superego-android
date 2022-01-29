@@ -81,8 +81,8 @@
     <string name="action_cancel">İptal</string>
     <string name="action_try_again">Tekrar Dene</string>
     <string name="action_btn_new_test">Test Oluştur</string>
-    <string name="action_btn_share_test">Testi Paylaş</string>
-    <string name="action_btn_share_results">Sonuç Paylaş</string>
+    <string name="action_btn_share_test">Testini Paylaş</string>
+    <string name="action_btn_share_results">Sonucunu Paylaş</string>
     <string name="action_btn_change_avatar">Değiştir</string>
     <string name="action_login">Giriş Yap</string>
     <string name="action_register">Kayıt Ol</string>
