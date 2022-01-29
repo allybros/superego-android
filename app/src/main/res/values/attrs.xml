@@ -26,8 +26,8 @@
         <attr name="sego_progress_end_label" format="string"/>
         <attr name="sego_progress_header_label" format="string"/>
         <attr name="sego_progress_bar_container_background" format="reference"/>
-        <attr name="sego_progress_bar_background" format="reference"/>
-        <attr name="sego_progress_progress_background" format="reference"/>
+        <attr name="sego_progress_bar_color" format="color"/>
+        <attr name="sego_progress_color" format="color"/>
     </declare-styleable>
 
 </resources>

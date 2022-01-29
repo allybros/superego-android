@@ -90,7 +90,13 @@
     <color name="deepBlue100">#424874</color>
     <color name="deepBlue60">#42487499</color>
 
-
-
+    <!-- Progress colors -->
+    <color name="progressGreen">#70af85</color>
+    <color name="progressOrange">#f1ae89</color>
+    <color name="progressBlue">#94b3fd</color>
+    <color name="progressRed">#df7599</color>
+    <color name="progressPurple">#bfa2db</color>
+    <color name="progressPassive">#ececec</color>
+    <color name="progressSmallPercentTextColor">#99424874</color>
 
 </resources>

@@ -1,17 +1,26 @@
 package com.allybros.superego.widget;
 
 import android.animation.LayoutTransition;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.VectorDrawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
+import android.widget.ImageView;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.core.content.ContextCompat;
 
 import com.allybros.superego.R;
 import com.allybros.superego.util.HelperMethods;
@@ -23,12 +32,14 @@ public class SegoProgressBar extends ConstraintLayout {
     private String endLabel = "endLabel";
     private int startPercent = 1;
     private int endPercent = 1;
-    private Drawable progressBarBackground = getResources().getDrawable(R.drawable.shape_sego_progress_bar_background);
-    private Drawable progressBackground = getResources().getDrawable(R.drawable.shape_sego_progress_background);;
     private Drawable containerBackground = getResources().getDrawable(R.drawable.sego_progress_container_background);
+    @ColorInt
+    private int progressColor = getResources().getColor(R.color.progressGreen);
+    @ColorInt
+    private int progressPassiveColor = getResources().getColor(R.color.progressPassive);
     private ConstraintLayout clContainer;
-    private View vProgressBar;
-    private View vProgress;
+    private ImageView ivProgressBar;
+    private ImageView ivProgress;
     private AppCompatTextView tvHeaderLabel;
     private AppCompatTextView tvStartLabel;
     private AppCompatTextView tvEndLabel;
@@ -60,8 +71,8 @@ public class SegoProgressBar extends ConstraintLayout {
     private void init() {
         LayoutInflater.from(getContext()).inflate(R.layout.widget_sego_progress, this, true);
         clContainer = findViewById(R.id.clContainer);
-        vProgress = findViewById(R.id.vProgress);
-        vProgressBar = findViewById(R.id.vProgressBar);
+        ivProgress = findViewById(R.id.ivProgress);
+        ivProgressBar = findViewById(R.id.ivProgressBar);
         tvEndPercent = findViewById(R.id.tvEndPercent);
         tvStartPercent = findViewById(R.id.tvStartPercent);
         tvStartLabel = findViewById(R.id.tvStartLabel);
@@ -93,11 +104,11 @@ public class SegoProgressBar extends ConstraintLayout {
                 case R.styleable.SegoProgressBar_sego_progress_end_percent:
                     endPercent = array.getInt(attr, 0);
                     break;
-                case R.styleable.SegoProgressBar_sego_progress_bar_background:
-                    progressBarBackground = array.getDrawable(attr);
+                case R.styleable.SegoProgressBar_sego_progress_bar_color:
+                    progressPassiveColor = array.getColor(attr, getResources().getColor(R.color.progressPassive));
                     break;
-                case R.styleable.SegoProgressBar_sego_progress_progress_background:
-                    progressBackground = array.getDrawable(attr);
+                case R.styleable.SegoProgressBar_sego_progress_color:
+                    progressColor = array.getColor(attr, getResources().getColor(R.color.progressGreen));
                     break;
                 case R.styleable.SegoProgressBar_sego_progress_bar_container_background:
                     containerBackground = array.getDrawable(attr);
@@ -117,18 +128,37 @@ public class SegoProgressBar extends ConstraintLayout {
         setEndLabel(endLabel);
         setStartPercent(startPercent);
         setEndPercent(endPercent);
-        setProgressBarBackground(progressBarBackground);
-        setProgressBackground(progressBackground);
+        setProgressBarColor(progressPassiveColor);
+        setProgressColor(progressColor);
         setContainerBackground(containerBackground);
         setProgressView(startPercent, endPercent);
+        setProgressViewColors(startPercent, endPercent);
+
+    }
+
+    private void setProgressViewColors(int startPercent, int endPercent) {
+        if(startPercent > endPercent){
+            tvStartPercent.setTextColor(progressColor);
+            tvStartLabel.setTextColor(progressColor);
+
+            tvEndPercent.setTextColor(getResources().getColor(R.color.progressSmallPercentTextColor));
+            tvEndLabel.setTextColor(getResources().getColor(R.color.progressSmallPercentTextColor));
+        } else {
+            tvEndPercent.setTextColor(progressColor);
+            tvEndLabel.setTextColor(progressColor);
+
+            tvStartPercent.setTextColor(getResources().getColor(R.color.progressSmallPercentTextColor));
+            tvStartLabel.setTextColor(getResources().getColor(R.color.progressSmallPercentTextColor));
+        }
+        tvHeaderLabel.setTextColor(progressColor);
     }
 
     private void setProgressView(int startPercent, int endPercent) {
         if(startPercent > endPercent){
             HelperMethods.setConstraintConnectionHorizontal(
                     clContainer,
-                    vProgress,
-                    vProgressBar,
+                    ivProgress,
+                    ivProgressBar,
                     ConstraintSet.START,
                     ConstraintSet.START
             );
@@ -136,8 +166,8 @@ public class SegoProgressBar extends ConstraintLayout {
         } else {
             HelperMethods.setConstraintConnectionHorizontal(
                     clContainer,
-                    vProgress,
-                    vProgressBar,
+                    ivProgress,
+                    ivProgressBar,
                     ConstraintSet.END,
                     ConstraintSet.END
             );
@@ -146,9 +176,9 @@ public class SegoProgressBar extends ConstraintLayout {
     }
 
     private void setProgressWidth(int percent) {
-        int vProgressWidth = vProgressBar.getLayoutParams().width;
-        vProgress.getLayoutParams().width = (int) Math.round((percent*vProgressWidth)/100);
-        vProgress.requestLayout();
+        int vProgressWidth = ivProgressBar.getLayoutParams().width;
+        ivProgress.getLayoutParams().width = Math.round((percent*vProgressWidth)/100);
+        ivProgress.requestLayout();
     }
 
     /**
@@ -161,18 +191,21 @@ public class SegoProgressBar extends ConstraintLayout {
 
     /**
      * Sets progress background with drawable
-     * @param progressBackground
+     * @param progressColor
      */
-    private void setProgressBackground(Drawable progressBackground) {
-        vProgress.setBackground(progressBackground);
+    @SuppressLint("ResourceType")
+    private void setProgressColor(@ColorInt int progressColor) {
+        Drawable background = ivProgress.getBackground();
+        background.setTint(progressColor);
     }
 
     /**
      * Sets progress bar background with drawable
-     * @param progressBarBackground
+     * @param progressBarColor
      */
-    private void setProgressBarBackground(Drawable progressBarBackground) {
-        vProgressBar.setBackground(progressBarBackground);
+    private void setProgressBarColor(@ColorInt int progressBarColor) {
+        Drawable background = ivProgressBar.getBackground();
+        background.setTint(progressBarColor);
     }
 
     private void setEndPercent(int endPercent) {
@@ -200,6 +233,7 @@ public class SegoProgressBar extends ConstraintLayout {
         setStartPercent(startPercent);
         setEndPercent(endPercent);
         setProgressView(startPercent, endPercent);
+        setProgressViewColors(startPercent, endPercent);
     }
 
     private void validatePercents(int startPercent, int endPercent) {

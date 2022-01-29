@@ -7,8 +7,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <View
-        android:id="@+id/vProgressBar"
+    <ImageView
+        android:id="@+id/ivProgressBar"
         android:layout_width="250dp"
         android:layout_height="16dp"
         android:background="@drawable/shape_sego_progress_bar_background"
@@ -17,8 +17,8 @@
         app:layout_constraintStart_toEndOf="@+id/tvStartPercent"
         app:layout_constraintTop_toBottomOf="@+id/tvHeaderLabel" />
 
-    <View
-        android:id="@+id/vProgress"
+    <ImageView
+        android:id="@+id/ivProgress"
         android:layout_width="125dp"
         android:layout_height="16dp"
         android:background="@drawable/shape_sego_progress_background"
@@ -34,8 +34,8 @@
         android:textFontWeight="600"
         android:textSize="12sp"
         android:textColor="#70af85"
-        app:layout_constraintEnd_toEndOf="@+id/vProgressBar"
-        app:layout_constraintStart_toStartOf="@+id/vProgressBar"
+        app:layout_constraintEnd_toEndOf="@+id/ivProgressBar"
+        app:layout_constraintStart_toStartOf="@+id/ivProgressBar"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Yeniliğe" />
 
@@ -49,7 +49,7 @@
         android:textFontWeight="600"
         android:textSize="12sp"
         android:textColor="#99424874"
-        app:layout_constraintEnd_toStartOf="@+id/vProgressBar"
+        app:layout_constraintEnd_toStartOf="@+id/ivProgressBar"
         app:layout_constraintTop_toBottomOf="@+id/tvStartPercent"
         tools:text="Açık" />
 
@@ -60,8 +60,8 @@
         android:fontFamily="@font/noto_sans"
         android:textFontWeight="600"
         android:textSize="12sp"
-        android:textColor="#70af85"
-        app:layout_constraintStart_toEndOf="@id/vProgressBar"
+        android:textColor="@color/progressPassive"
+        app:layout_constraintStart_toEndOf="@id/ivProgressBar"
         app:layout_constraintTop_toBottomOf="@+id/tvEndPercent"
         tools:text="Kapalı" />
 
@@ -75,7 +75,7 @@
         android:textFontWeight="600"
         android:textSize="12sp"
         android:textColor="#99424874"
-        app:layout_constraintEnd_toStartOf="@+id/vProgressBar"
+        app:layout_constraintEnd_toStartOf="@+id/ivProgressBar"
         app:layout_constraintTop_toBottomOf="@+id/tvHeaderLabel"
         tools:text="%44" />
 
@@ -89,8 +89,8 @@
         android:layout_marginEnd="12dp"
         android:layout_marginStart="6dp"
         android:layout_marginTop="6dp"
-        android:textColor="#70af85"
-        app:layout_constraintStart_toEndOf="@id/vProgressBar"
+        android:textColor="@color/progressPassive"
+        app:layout_constraintStart_toEndOf="@id/ivProgressBar"
         app:layout_constraintTop_toBottomOf="@+id/tvHeaderLabel"
         tools:text="%56" />
 
