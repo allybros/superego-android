@@ -2,6 +2,7 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/fragmentBackground"
@@ -239,7 +240,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/clProfileCard">
 
-<!--                    TODO: Butonaların tasarımından devam edebilirsin-->
                     <LinearLayout
                         android:id="@+id/rowButton"
                         android:layout_width="match_parent"
@@ -280,14 +280,14 @@
                             android:drawableStart="@drawable/outline_link_white_36"
                             android:drawableTint="@color/segoPurple800"
                             android:outlineProvider="bounds"
+                            android:paddingHorizontal="24dp"
                             android:fontFamily="@font/noto_sans"
                             android:paddingVertical="10dp"
                             android:textColor="@color/segoPurple800"
                             android:textFontWeight="600"
                             android:stateListAnimator="@null"
                             android:text="@string/action_btn_share_test"
-                            android:textAllCaps="false"
-                            android:translationZ="2dp" />
+                            android:textAllCaps="false" />
 
                         <Button
                             android:id="@+id/btnShareResult"
@@ -301,74 +301,187 @@
                             android:drawableTint="@color/segoPurple800"
                             android:textColor="@color/segoPurple800"
                             android:textFontWeight="600"
+                            android:paddingHorizontal="16dp"
                             android:paddingVertical="10dp"
                             android:stateListAnimator="@null"
                             android:text="@string/action_btn_share_results"
-                            android:textAllCaps="false"
-                            android:translationZ="2dp" />
+                            android:textAllCaps="false" />
                     </LinearLayout>
 
+                    <TextView
+                        android:id="@+id/textView9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="@font/noto_sans"
+                        android:gravity="center_horizontal"
+                        android:text="Kişilik Tipi"
+                        android:textColor="@color/deepBlue100"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/rowButton" />
 
+<!--                    Empty Card-->
                     <androidx.cardview.widget.CardView
                         android:id="@+id/clInfoCard"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="18dp"
-                        android:layout_marginTop="18dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="12dp"
                         android:layout_marginEnd="18dp"
                         android:elevation="4dp"
                         app:cardCornerRadius="11dp"
+                        tools:visibility="visible"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/rowButton">
+                        app:layout_constraintTop_toBottomOf="@+id/textView9">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/infocard_bg"
+                            android:background="@color/White"
                             android:paddingBottom="10dp">
+
+                            <ImageView
+                                android:id="@+id/imageView5"
+                                android:layout_width="145dp"
+                                android:layout_height="145dp"
+                                android:layout_marginTop="12dp"
+                                android:layout_marginEnd="12sp"
+                                android:src="@drawable/ic_rates"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
                             <TextView
                                 android:id="@+id/tvProfileInfoCard"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
                                 android:layout_marginStart="14dp"
-                                android:layout_marginTop="22dp"
-                                android:layout_marginEnd="14dp"
-                                android:layout_marginBottom="44dp"
-                                android:clickable="true"
-                                android:elevation="4dp"
-                                android:enabled="true"
-                                android:fontFamily="@font/noto_sans_bold"
-                                android:focusable="true"
-                                android:gravity="center"
-                                android:lineHeight="25dp"
+                                android:layout_marginTop="12dp"
+                                android:layout_marginEnd="10dp"
+                                android:fontFamily="@font/noto_sans"
                                 android:text="@string/info_profile_card"
-                                android:textColor="@color/White"
-                                android:textSize="18dp"
-                                android:textStyle="bold"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
+                                android:textColor="@color/deepBlue100"
+                                android:textSize="12sp"
+                                app:layout_constraintBottom_toTopOf="@+id/btnInfoShare"
+                                app:layout_constraintEnd_toStartOf="@+id/imageView5"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <Button
                                 android:id="@+id/btnInfoShare"
+                                android:layout_width="0dp"
+                                android:layout_height="32dp"
+                                android:layout_marginStart="12dp"
+                                android:layout_marginBottom="12dp"
+                                android:background="@drawable/shape_info_button"
+                                android:backgroundTint="@color/orange"
+                                android:fontFamily="@font/noto_sans"
+                                android:paddingHorizontal="22dp"
+                                android:paddingVertical="7dp"
+                                android:text="@string/action_btn_share_test"
+                                android:textAllCaps="false"
+                                android:textFontWeight="600"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.cardview.widget.CardView>
+
+<!--                    Trait Card-->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/clTraitCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="18dp"
+                        android:elevation="4dp"
+                        app:cardCornerRadius="11dp"
+                        tools:visibility="invisible"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView9">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/White"
+                            android:paddingBottom="10dp">
+
+                            <ImageView
+                                android:id="@+id/ivTraitImage"
+                                android:layout_width="145dp"
+                                android:layout_height="145dp"
+                                android:layout_marginTop="12dp"
+                                android:layout_marginEnd="12sp"
+                                android:src="@drawable/ic_rates"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/tvTraitNameShort"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:background="@drawable/shape_info_button"
-                                android:paddingHorizontal="50dp"
-                                android:text="@string/action_btn_share_test"
+                                android:layout_marginStart="12dp"
+                                android:layout_marginTop="4dp"
                                 android:fontFamily="@font/noto_sans"
-                                app:layout_constraintEnd_toEndOf="parent"
+                                android:textColor="#424874"
+                                android:textFontWeight="600"
+                                android:textSize="14sp"
+                                android:textStyle="normal"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/tvProfileInfoCard">
-                            </Button>
+                                app:layout_constraintTop_toBottomOf="@+id/tvTraitName"
+                                android:text="INTP" />
 
+                            <TextView
+                                android:id="@+id/tvTraitName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="12dp"
+                                android:layout_marginTop="12dp"
+                                android:fontFamily="@font/noto_sans"
+                                android:textColor="#6cbe84"
+                                android:textSize="20sp"
+                                android:textStyle="bold"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                android:text="Mimar" />
 
+                            <TextView
+                                android:id="@+id/tvTraitText"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="14dp"
+                                android:layout_marginTop="4dp"
+                                android:layout_marginEnd="10dp"
+                                android:fontFamily="@font/noto_sans"
+                                android:text="Mimar kişilik tipinin açıklaması burada yer alacaktır. Şu an da o açıklamayı yazıyorum."
+                                android:textColor="@color/deepBlue100"
+                                android:textSize="12sp"
+                                app:layout_constraintBottom_toTopOf="@+id/btTraitLink"
+                                app:layout_constraintEnd_toStartOf="@+id/ivTraitImage"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/tvTraitNameShort" />
+
+                            <Button
+                                android:id="@+id/btTraitLink"
+                                android:layout_width="wrap_content"
+                                android:layout_height="32dp"
+                                android:layout_marginStart="12dp"
+                                android:layout_marginTop="13dp"
+                                android:background="@drawable/shape_info_button"
+                                android:backgroundTint="@color/green4"
+                                android:fontFamily="@font/noto_sans"
+                                android:paddingHorizontal="22dp"
+                                android:paddingVertical="7dp"
+                                android:text="@string/action_read_more"
+                                android:textAllCaps="false"
+                                android:textFontWeight="600"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/tvTraitText" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
-
                     </androidx.cardview.widget.CardView>
 
                     <FrameLayout
@@ -376,7 +489,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="18dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="16dp"
                         android:layout_marginEnd="18dp"
                         android:layout_marginBottom="12dp"
                         android:background="@drawable/shape_card"

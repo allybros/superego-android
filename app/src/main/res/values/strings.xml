@@ -95,6 +95,8 @@
     <string name="action_login_via_google">Google ile Giriş Yap</string>
     <string name="action_login_via_facebook">Facebook ile Giriş Yap</string>
     <string name="action_create_new_account" ><font color='#674D9F'>Hesap Oluştur</font></string>
+    <string name="action_read_more" >Daha Fazla</string>
+
 
     <!--Contents:
     Contents fills text fills or something like that-->
@@ -112,7 +114,6 @@
     <string name="info_partial_rates">En çok öne çıkan özelliğini tespit edebilmek için en az beş arkadaşının daha değerlendirmesine ihtiyacımız var.</string>
     <string name="info_title_waiting_rates">Değerlendirilmelerin Bekleniyor…</string>
     <string name="info_result_ad_text">Daha fazla beklemeden tüm sonuçları gör!</string>
-    <string name="info_profile_card">Arkadaşlarının seni değerlendirmesi için kişilik testini arkadaşların ile paylaş.</string>
     <string name="info_change_password">insightof.me hesabına giriş yapmak için kullanacağın güvenli bir parola belirle.</string>
     <string name="header_register">Arkadaşlarının gözünden\nkendini gör.</string>
     <string name="header_result_page_title">Kişilik Özelliklerin</string>
@@ -154,5 +155,6 @@
     <string name="alert_test_not_exist">Henüz test oluşturmadın</string>
     <string name="tvAboutConstant">Hakkımda:</string>
     <string name="tvSupporter">Sponsor:</string>
+    <string name="info_profile_card">Kişilik tipinin ne olduğunu öğrenebilmen için testini daha fazla arkadaşınla paylaşmalısın.</string>
 
 </resources>
