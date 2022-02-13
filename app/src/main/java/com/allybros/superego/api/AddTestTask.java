@@ -9,7 +9,6 @@ import com.allybros.superego.activity.WebViewActivity;
 import com.allybros.superego.activity.LoginActivity;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.util.SessionManager;
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -47,7 +46,7 @@ public class AddTestTask extends Activity {
             }
         }) {
             @Override
-            protected Map<String,String> getParams() throws AuthFailureError {
+            protected Map<String,String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
 
                 params.put("session-token", SessionManager.getInstance().getSessionToken());

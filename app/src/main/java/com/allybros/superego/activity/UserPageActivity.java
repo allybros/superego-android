@@ -17,9 +17,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.allybros.superego.R;
-import com.allybros.superego.fragment.ProfileFragment;
-import com.allybros.superego.fragment.ResultsFragment;
-import com.allybros.superego.fragment.SearchFragment;
+import com.allybros.superego.activity.settings.SettingsActivity;
+import com.allybros.superego.fragment.profile.ProfileFragment;
+import com.allybros.superego.fragment.result.ResultsFragment;
+import com.allybros.superego.fragment.search.SearchFragment;
 import com.allybros.superego.adapter.PagerAdapter;
 import com.allybros.superego.util.InputMethodWatcher;
 import com.allybros.superego.util.SessionManager;

@@ -1,4 +1,4 @@
-package com.allybros.superego.activity;
+package com.allybros.superego.activity.settings;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -22,6 +22,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.R;
+import com.allybros.superego.activity.ChangePasswordActivity;
+import com.allybros.superego.activity.editprofile.EditProfileActivity;
+import com.allybros.superego.activity.SplashActivity;
 import com.allybros.superego.adapter.LicensesAdapter;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;

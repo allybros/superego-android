@@ -47,7 +47,7 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.SettingsActivity"
+            android:name=".activity.settings.SettingsActivity"
             android:label="@string/activity_label_options"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -58,7 +58,7 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.EditProfileActivity"
+            android:name=".activity.editprofile.EditProfileActivity"
             android:label="@string/activity_label_edit_profile"
             android:parentActivityName=".activity.UserPageActivity"
             android:screenOrientation="portrait"
