@@ -1,4 +1,7 @@
 package com.allybros.superego.activity.settings
 
-class SettingsVM {
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+
+class SettingsVM(application: Application) : AndroidViewModel(application) {
 }
