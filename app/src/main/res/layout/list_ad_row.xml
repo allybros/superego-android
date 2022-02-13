@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Google Ad -->
-<FrameLayout android:id="@+id/resultCardAd"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="12dp"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/resultBannerAdd"
+    <FrameLayout
+        android:id="@+id/resultCardAd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:adSize="LARGE_BANNER"
-        app:adUnitId="@string/admob_profile_banner" />
+        android:padding="12dp">
 
-</FrameLayout>
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/resultBannerAdd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:adSize="LARGE_BANNER"
+            app:adUnitId="@string/admob_profile_banner" />
+
+    </FrameLayout>
+</layout>

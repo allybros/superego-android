@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/result_frame_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/fragmentBackground"
-    tools:context=".fragment.result.ResultsFragment">
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeLayout"
+    xmlns:tools="http://schemas.android.com/tools">
+    <FrameLayout
+        android:id="@+id/result_frame_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ListView
-            android:id="@+id/listViewTraits"
+        android:layout_height="match_parent"
+        android:background="@color/fragmentBackground"
+        tools:context=".fragment.result.ResultsFragment">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginTop="15dp"
-            android:divider="@null"
-            android:dividerHeight="0dp"
-            android:layout_below="@+id/tvHeaderPoints"
-            tools:listitem="@layout/scores_list_row">
-        </ListView>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-</FrameLayout>
+            android:layout_height="match_parent">
+
+            <ListView
+                android:id="@+id/listViewTraits"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginTop="15dp"
+                android:divider="@null"
+                android:dividerHeight="0dp"
+                android:layout_below="@+id/tvHeaderPoints"
+                tools:listitem="@layout/scores_list_row"></ListView>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </FrameLayout>
+</layout>

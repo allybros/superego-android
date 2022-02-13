@@ -1,32 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingTop="4dp"
-    android:paddingBottom="4dp">
-
-    <TextView
-        android:id="@+id/licenseLibName"
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/materialDeepPurple"
-        android:textSize="18sp"
-        android:fontFamily="@font/noto_sans_bold"
-        android:textStyle="bold"
-        android:text="licenseLibName" />
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp">
 
-    <TextView
-        android:id="@+id/licenseName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/noto_sans"
-        android:text="licenseName" />
+        <TextView
+            android:id="@+id/licenseLibName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/materialDeepPurple"
+            android:textSize="18sp"
+            android:fontFamily="@font/noto_sans_bold"
+            android:textStyle="bold"
+            android:text="licenseLibName" />
 
-    <TextView
-        android:id="@+id/licenseLibURL"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/noto_sans"
-        android:textColor="@color/materialLightBlue"
-        android:text="licenseLibURL" />
-</LinearLayout>
+        <TextView
+            android:id="@+id/licenseName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/noto_sans"
+            android:text="licenseName" />
+
+        <TextView
+            android:id="@+id/licenseLibURL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/noto_sans"
+            android:textColor="@color/materialLightBlue"
+            android:text="licenseLibURL" />
+    </LinearLayout>
+</layout>
