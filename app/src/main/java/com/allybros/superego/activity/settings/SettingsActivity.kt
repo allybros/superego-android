@@ -3,14 +3,12 @@ package com.allybros.superego.activity.settings
 import android.content.*
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
-import com.allybros.superego.widget.SegoMenuButton
-import com.facebook.login.widget.LoginButton
 import android.widget.TextView
 import android.os.Bundle
 import android.util.Log
 import com.allybros.superego.R
 import com.allybros.superego.activity.editprofile.EditProfileActivity
-import com.allybros.superego.activity.ChangePasswordActivity
+import com.allybros.superego.activity.changepassword.ChangePasswordActivity
 import com.squareup.picasso.Picasso
 import com.allybros.superego.unit.ConstantValues
 import com.allybros.superego.unit.ErrorCodes
@@ -21,19 +19,15 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.facebook.CallbackManager
 import com.facebook.login.LoginManager
-import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.ImageView
 import android.widget.ListView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import com.allybros.superego.adapter.LicensesAdapter
-import com.allybros.superego.databinding.ActivityEditProfileBinding
 import com.allybros.superego.databinding.ActivitySettingsBinding
 import com.allybros.superego.util.SessionManager
-import de.hdodenhof.circleimageview.CircleImageView
 import java.util.*
 
 class SettingsActivity : AppCompatActivity() {
