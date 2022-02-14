@@ -1,4 +1,4 @@
-package com.allybros.superego.activity;
+package com.allybros.superego.activity.register;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -24,6 +24,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.R;
+import com.allybros.superego.activity.splash.SplashActivity;
 import com.allybros.superego.activity.login.LoginActivity;
 import com.allybros.superego.api.LoginTask;
 import com.allybros.superego.api.RegisterTask;

@@ -12,7 +12,7 @@ import com.allybros.superego.unit.ConstantValues
 import com.allybros.superego.unit.ErrorCodes
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.BaseTransientBottomBar
-import com.allybros.superego.activity.UserPageActivity
+import com.allybros.superego.activity.userpage.UserPageActivity
 import com.allybros.superego.activity.login.LoginActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import android.annotation.SuppressLint
@@ -30,7 +30,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.AdListener
-import com.allybros.superego.activity.WebViewActivity
+import com.allybros.superego.activity.webview.WebViewActivity
 import com.allybros.superego.util.SessionManager
 import com.google.android.gms.ads.AdRequest
 import de.hdodenhof.circleimageview.CircleImageView

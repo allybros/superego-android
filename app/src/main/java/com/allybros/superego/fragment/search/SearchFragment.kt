@@ -10,7 +10,7 @@ import android.widget.AdapterView.OnItemClickListener
 import android.annotation.SuppressLint
 import com.allybros.superego.unit.ConstantValues
 import android.content.Intent
-import com.allybros.superego.activity.WebViewActivity
+import com.allybros.superego.activity.webview.WebViewActivity
 import android.text.TextWatcher
 import android.net.ConnectivityManager
 import com.google.android.material.snackbar.Snackbar

@@ -12,7 +12,7 @@ import com.allybros.superego.activity.changepassword.ChangePasswordActivity
 import com.squareup.picasso.Picasso
 import com.allybros.superego.unit.ConstantValues
 import com.allybros.superego.unit.ErrorCodes
-import com.allybros.superego.activity.SplashActivity
+import com.allybros.superego.activity.splash.SplashActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions

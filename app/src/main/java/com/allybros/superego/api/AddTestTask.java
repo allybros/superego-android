@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
-import com.allybros.superego.activity.WebViewActivity;
+import com.allybros.superego.activity.webview.WebViewActivity;
 import com.allybros.superego.activity.login.LoginActivity;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.util.SessionManager;

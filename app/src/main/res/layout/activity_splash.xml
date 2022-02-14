@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/ic_launcher_background"
         android:gravity="center"
-        tools:context="com.allybros.superego.activity.SplashActivity">
+        tools:context="com.allybros.superego.activity.splash.SplashActivity">
 
         <ImageView
             android:layout_width="180dp"

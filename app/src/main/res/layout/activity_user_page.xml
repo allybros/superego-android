@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/White"
-        tools:context="com.allybros.superego.activity.UserPageActivity"
+        tools:context="com.allybros.superego.activity.userpage.UserPageActivity"
         android:orientation="vertical">
 
         <me.zhanghai.android.materialprogressbar.MaterialProgressBar

@@ -8,7 +8,7 @@ import com.facebook.CallbackManager
 import android.os.Bundle
 import com.allybros.superego.R
 import com.allybros.superego.unit.ErrorCodes
-import com.allybros.superego.activity.SplashActivity
+import com.allybros.superego.activity.splash.SplashActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.allybros.superego.unit.ConstantValues
 import android.os.Build
@@ -23,7 +23,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.allybros.superego.activity.PlayGroundActivity
+import com.allybros.superego.activity.playground.PlayGroundActivity
 import com.facebook.login.LoginManager
 import com.facebook.FacebookCallback
 import com.facebook.login.LoginResult
@@ -32,7 +32,7 @@ import com.allybros.superego.api.SocialMediaSignInTask
 import com.facebook.FacebookException
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException
-import com.allybros.superego.activity.RegisterActivity
+import com.allybros.superego.activity.register.RegisterActivity
 import com.allybros.superego.databinding.ActivityLoginBinding
 import com.google.android.gms.tasks.Task
 import java.util.*
@@ -49,7 +49,6 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
-
         setupReceivers()
         setupUi()
     }

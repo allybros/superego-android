@@ -1,4 +1,4 @@
-package com.allybros.superego.activity;
+package com.allybros.superego.activity.splash;
 
 
 import android.content.BroadcastReceiver;
@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.R;
+import com.allybros.superego.activity.userpage.UserPageActivity;
 import com.allybros.superego.activity.login.LoginActivity;
 import com.allybros.superego.api.LoadProfileTask;
 import com.allybros.superego.api.LoginTask;

@@ -18,7 +18,7 @@ import com.allybros.superego.api.LoadProfileTask
 import com.allybros.superego.unit.ConstantValues
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.BaseTransientBottomBar
-import com.allybros.superego.activity.UserPageActivity
+import com.allybros.superego.activity.userpage.UserPageActivity
 import com.allybros.superego.unit.ErrorCodes
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import android.view.View

@@ -1,4 +1,4 @@
-package com.allybros.superego.activity;
+package com.allybros.superego.activity.userpage;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
