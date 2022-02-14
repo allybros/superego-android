@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/login_background"
         android:gravity="center"
-        tools:context="com.allybros.superego.activity.LoginActivity">
+        tools:context="com.allybros.superego.activity.login.LoginActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

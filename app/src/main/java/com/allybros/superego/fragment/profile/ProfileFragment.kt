@@ -13,7 +13,7 @@ import com.allybros.superego.unit.ErrorCodes
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.allybros.superego.activity.UserPageActivity
-import com.allybros.superego.activity.LoginActivity
+import com.allybros.superego.activity.login.LoginActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import android.annotation.SuppressLint
 import android.app.Dialog

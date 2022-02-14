@@ -1,8 +1,6 @@
 package com.allybros.superego.activity.changepassword
 
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
-import me.zhanghai.android.materialprogressbar.MaterialProgressBar
 import android.widget.EditText
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -20,19 +18,15 @@ import android.text.Editable
 import android.text.method.PasswordTransformationMethod
 import android.text.method.HideReturnsTransformationMethod
 import android.net.ConnectivityManager
-import android.net.NetworkInfo
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
 import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import com.allybros.superego.activity.editprofile.EditProfileVM
 import com.allybros.superego.api.PasswordChangeTask
 import com.allybros.superego.databinding.ActivityChangePasswordBinding
-import com.allybros.superego.databinding.ActivityEditProfileBinding
 import com.allybros.superego.util.SessionManager
 
 class ChangePasswordActivity : AppCompatActivity() {

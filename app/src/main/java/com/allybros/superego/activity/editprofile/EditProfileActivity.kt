@@ -25,14 +25,10 @@ import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.allybros.superego.api.ImageChangeTask
 import com.allybros.superego.util.HelperMethods
-import com.allybros.superego.api.ChangeInfoTask
 import com.allybros.superego.util.SessionManager
-import de.hdodenhof.circleimageview.CircleImageView
 import java.io.IOException
-import androidx.lifecycle.ViewModelProviders
 import com.allybros.superego.databinding.ActivityEditProfileBinding
 import com.allybros.superego.unit.EditProfileRequest
 
