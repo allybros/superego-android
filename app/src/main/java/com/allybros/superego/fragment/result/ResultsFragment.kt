@@ -32,12 +32,12 @@ import com.allybros.superego.unit.User
 import com.allybros.superego.util.SessionManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.rewarded.RewardItem
-
+//TODO Implement databinding and viewmodel
 class ResultsFragment : Fragment() {
     private var tvRemainingRates: TextView? = null
     private var listViewTraits: ListView? = null
     private var swipeLayout: SwipeRefreshLayout? = null
-    private val currentUser: User
+    private val currentUser: User = SessionManager.getInstance().user
     private var resultsRefreshReceiver: BroadcastReceiver? = null
     private var adResultBanner: AdView? = null
     private var btnShowAd: Button? = null
@@ -84,13 +84,16 @@ class ResultsFragment : Fragment() {
         setupView()
     }
 
-    private val state: State
-        private get() = if (currentUser.scores.size >= 6) State.COMPLETE else if (currentUser.scores.size >= 1) State.PARTIAL else State.NONE
+    private val state: State get() = when {
+            currentUser.scores.size >= 6 -> State.COMPLETE
+            currentUser.scores.size >= 1 -> State.PARTIAL
+            else -> State.NONE
+        }
 
     private fun prepareBannerAd() {
         // Initialize mobile ads
         MobileAds.initialize(activity) { Log.d("MobileAds", "Initialized.") }
-        adResultBanner = view!!.findViewById(R.id.resultBannerAdd)
+        adResultBanner = requireView().findViewById(R.id.resultBannerAdd)
         val adTag = "ad_result_banner"
         // Load ad
         val adRequest = AdRequest.Builder().build()
@@ -133,10 +136,10 @@ class ResultsFragment : Fragment() {
     @SuppressLint("StringFormatMatches")
     private fun setupView() {
         //Setup refresher
-        swipeLayout = view!!.findViewById(R.id.swipeLayout)
+        swipeLayout = requireView().findViewById(R.id.swipeLayout)
         if (swipeLayout != null) swipeLayout!!.setOnRefreshListener {
             // Check internet connection
-            val cm = context!!.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val cm = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             val activeNetwork = cm.activeNetworkInfo
             val isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting
             if (isConnected) {
@@ -160,26 +163,26 @@ class ResultsFragment : Fragment() {
         when (state) {
             State.PARTIAL -> {
                 //Get views
-                listViewTraits = view!!.findViewById(R.id.listViewPartialTraits)
-                btnShowAd = view!!.findViewById(R.id.button_get_ego)
-                tvRemainingRates = view!!.findViewById(R.id.tvRatedResultPage)
-                ivShareResults = view!!.findViewById(R.id.ivShareResults)
+                listViewTraits = requireView().findViewById(R.id.listViewPartialTraits)
+                btnShowAd = requireView().findViewById(R.id.button_get_ego)
+                tvRemainingRates = requireView().findViewById(R.id.tvRatedResultPage)
+                ivShareResults = requireView().findViewById(R.id.ivShareResults)
 
                 //Populate views
 
-                tvRemainingRates?.setText(getString(R.string.remaining_credits, remainingRates))
-                clearHelper = listViewTraits?.getAdapter() as ScoresAdapter
+                tvRemainingRates?.text = getString(R.string.remaining_credits, remainingRates)
+                clearHelper = listViewTraits?.adapter as ScoresAdapter
                 if (clearHelper != null) {
                     clearHelper!!.clear()
                     clearHelper!!.notifyDataSetChanged()
                 }
-                listViewTraits?.setAdapter(ScoresAdapter(activity, currentUser.scores, false, null))
+                listViewTraits?.adapter = ScoresAdapter(activity, currentUser.scores, false, null)
                 prepareRewardedAd()
                 btnShowAd?.setOnClickListener(View.OnClickListener {
                     if (rewardedAd!!.isLoaded) {
                         // Check internet connection
                         val cm =
-                            context!!.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+                            requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
                         val activeNetwork = cm.activeNetworkInfo
                         val isConnected =
                             activeNetwork != null && activeNetwork.isConnectedOrConnecting
@@ -195,7 +198,7 @@ class ResultsFragment : Fragment() {
                         }
                     } else {
                         // Show error dialog
-                        AlertDialog.Builder(activity!!, R.style.SegoAlertDialog)
+                        AlertDialog.Builder(requireActivity(), R.style.SegoAlertDialog)
                             .setTitle("insightof.me")
                             .setMessage(R.string.info_reward_ad_not_loaded)
                             .setPositiveButton(getString(R.string.action_ok)) { dialog, which -> dialog.dismiss() }
@@ -203,34 +206,33 @@ class ResultsFragment : Fragment() {
                         Log.d("EgoRewardAd", "The rewarded ad wasn't loaded yet.")
                     }
                 })
-                ivShareResults?.setOnClickListener(View.OnClickListener { shareTest() })
+                ivShareResults?.setOnClickListener { shareTest() }
             }
             State.COMPLETE -> {
-                listViewTraits = view!!.findViewById(R.id.listViewTraits)
-                clearHelper = listViewTraits?.getAdapter() as ScoresAdapter
+                listViewTraits = requireView().findViewById(R.id.listViewTraits)
+                clearHelper = listViewTraits?.adapter as ScoresAdapter
                 if (clearHelper != null) {
                     clearHelper!!.clear()
                     clearHelper!!.notifyDataSetChanged()
                 }
-                listViewTraits?.setAdapter(
-                    ScoresAdapter(
-                        activity,
-                        currentUser.scores,
-                        true
-                    ) { shareResults() })
+                listViewTraits?.adapter = ScoresAdapter(
+                    activity,
+                    currentUser.scores,
+                    true
+                ) { shareResults() }
             }
             else -> {
                 //Get views
-                tvRemainingRates = view!!.findViewById(R.id.tvRatedResultPage)
-                btnShowAd = view!!.findViewById(R.id.button_get_ego)
-                btnShareTestResult = view!!.findViewById(R.id.btnShareTestResult)
+                tvRemainingRates = requireView().findViewById(R.id.tvRatedResultPage)
+                btnShowAd = requireView().findViewById(R.id.button_get_ego)
+                btnShareTestResult = requireView().findViewById(R.id.btnShareTestResult)
 
                 //Populate views
                 remainingRates = 5 - currentUser.rated
-                tvRemainingRates?.setText(getString(R.string.remaining_credits, remainingRates))
+                tvRemainingRates?.text = getString(R.string.remaining_credits, remainingRates)
                 prepareBannerAd()
                 prepareRewardedAd()
-                btnShareTestResult?.setOnClickListener(View.OnClickListener {
+                btnShareTestResult?.setOnClickListener {
                     if (sessionManager.user.hasTest()) {
                         shareTest()
                     } else {
@@ -242,7 +244,7 @@ class ResultsFragment : Fragment() {
                             .setActionTextColor(resources.getColor(R.color.materialLightPurple))
                             .show()
                     }
-                })
+                }
             }
         }
     }
@@ -264,21 +266,21 @@ class ResultsFragment : Fragment() {
                     swipeLayout!!.isRefreshing = false //Last
                     Toast.makeText(
                         getContext(),
-                        getContext()!!.getString(R.string.error_no_connection),
+                        requireContext().getString(R.string.error_no_connection),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
             }
         }
         //TODO: Replace when new API package is developed
-        LocalBroadcastManager.getInstance(context!!).registerReceiver(
+        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(
             resultsRefreshReceiver!!,
             IntentFilter(ConstantValues.ACTION_REFRESH_RESULTS)
         )
     }
 
     override fun onDestroy() {
-        LocalBroadcastManager.getInstance(context!!).unregisterReceiver(resultsRefreshReceiver!!)
+        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(resultsRefreshReceiver!!)
         super.onDestroy()
     }
 
@@ -374,7 +376,4 @@ class ResultsFragment : Fragment() {
         )
     }
 
-    init {
-        currentUser = SessionManager.getInstance().user
-    }
 }

@@ -1,6 +1,5 @@
 package com.allybros.superego.fragment.search
 
-import androidx.constraintlayout.widget.ConstraintLayout
 import android.content.BroadcastReceiver
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -28,9 +27,11 @@ import android.content.IntentFilter
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import com.allybros.superego.databinding.FragmentSearchBinding
 import com.allybros.superego.unit.User
-import com.allybros.superego.util.SessionManager
 import java.util.*
 
 /**
@@ -38,48 +39,41 @@ import java.util.*
  * @author umutalacam
  */
 class SearchFragment : Fragment() {
-    private var etSearchUser: EditText? = null
-    private var listViewSearchResults: ListView? = null
-    private var ivIconSearchInfo: ImageView? = null
-    private var tvSearchInfo: TextView? = null
-    private var tvSearchHeader: TextView? = null
-    private var constraintSearchFragment: ConstraintLayout? = null
-    private val sessionManager = SessionManager.getInstance()
     private val searchResponseReceiver: BroadcastReceiver
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    
+    lateinit var binding: FragmentSearchBinding
+    val viewModel: SearchVM by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_search, container, false)
+    ): View {
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_search,
+            container,
+            false
+        )
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        etSearchUser = view!!.findViewById(R.id.etSearchUser)
-        listViewSearchResults = view!!.findViewById(R.id.listViewSearchResults)
-        ivIconSearchInfo = view!!.findViewById(R.id.ivIconSearchInfo)
-        tvSearchInfo = view!!.findViewById(R.id.tvSearchInfo)
-        constraintSearchFragment = view!!.findViewById(R.id.constraintSearchFragment)
-        tvSearchHeader = view!!.findViewById(R.id.tvSearchHeader)
-        listViewSearchResults?.onItemClickListener = OnItemClickListener { adapterView, view, i, l ->
+        binding.listViewSearchResults.onItemClickListener = OnItemClickListener { adapterView, _, i, _ ->
             val u = adapterView.getItemAtPosition(i) as User
             // Set web activity title
             val belirtmeHali = "" + turkceBelirtmeHalEkiBulucu(u.username)
             @SuppressLint("StringFormatMatches") val webActivityTitle =
-                context!!.getString(R.string.activity_label_rate_user, u.username, belirtmeHali)
+                requireContext().getString(R.string.activity_label_rate_user, u.username, belirtmeHali)
             val testUrl = ConstantValues.RATE_URL + u.testId
             val intent = Intent(context, WebViewActivity::class.java)
             intent.putExtra("url", testUrl)
             intent.putExtra("title", webActivityTitle)
             intent.putExtra("slidr", false)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            context!!.startActivity(intent)
+            requireContext().startActivity(intent)
         }
-        etSearchUser?.addTextChangedListener(object : TextWatcher {
+        binding.etSearchUser.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
                 // Check internet connection
@@ -92,7 +86,7 @@ class SearchFragment : Fragment() {
                 } else {
                     Log.d("CONNECTION", isConnected.toString())
                     Snackbar.make(
-                        constraintSearchFragment!!,
+                        binding.constraintSearchFragment,
                         R.string.error_no_connection,
                         BaseTransientBottomBar.LENGTH_LONG
                     ).show()
@@ -101,10 +95,10 @@ class SearchFragment : Fragment() {
 
             override fun afterTextChanged(editable: Editable) {}
         })
-        tvSearchHeader?.setOnClickListener(View.OnClickListener {
+        binding.tvSearchHeader.setOnClickListener(View.OnClickListener {
             YoYo.with(Techniques.Hinge).duration(2000)
                 .onEnd { Toast.makeText(context, "Tebrikler :) ", Toast.LENGTH_LONG).show() }
-                .playOn(tvSearchHeader)
+                .playOn(binding.tvSearchHeader)
         })
     }
 
@@ -119,31 +113,31 @@ class SearchFragment : Fragment() {
     private fun populateResults(users: ArrayList<User>) {
         //Prevent from null pointers
         val parent = activity ?: return
-        if (tvSearchInfo!!.visibility == View.INVISIBLE) {
+        if (binding.tvSearchInfo.visibility == View.INVISIBLE) {
             if (users.size == 0) {
                 //Show info if not visible
-                YoYo.with(Techniques.FadeIn).duration(300).playOn(ivIconSearchInfo)
-                YoYo.with(Techniques.FadeIn).duration(300).playOn(tvSearchInfo)
-                ivIconSearchInfo!!.visibility = View.VISIBLE
-                tvSearchInfo!!.visibility = View.VISIBLE
+                YoYo.with(Techniques.FadeIn).duration(300).playOn(binding.ivIconSearchInfo)
+                YoYo.with(Techniques.FadeIn).duration(300).playOn(binding.tvSearchInfo)
+                binding.ivIconSearchInfo.visibility = View.VISIBLE
+                binding.tvSearchInfo.visibility = View.VISIBLE
                 // Hide list
-                YoYo.with(Techniques.FadeOut).duration(300).playOn(listViewSearchResults)
-                listViewSearchResults!!.visibility = View.INVISIBLE
+                YoYo.with(Techniques.FadeOut).duration(300).playOn(binding.listViewSearchResults)
+                binding.listViewSearchResults.visibility = View.INVISIBLE
             }
         } else {
             if (users.size > 0) {
                 // Result set is not empty, hide search info
-                YoYo.with(Techniques.FadeOut).duration(200).playOn(ivIconSearchInfo)
-                YoYo.with(Techniques.FadeOut).duration(200).playOn(tvSearchInfo)
-                ivIconSearchInfo!!.visibility = View.INVISIBLE
-                tvSearchInfo!!.visibility = View.INVISIBLE
+                YoYo.with(Techniques.FadeOut).duration(200).playOn(binding.ivIconSearchInfo)
+                YoYo.with(Techniques.FadeOut).duration(200).playOn(binding.tvSearchInfo)
+                binding.ivIconSearchInfo.visibility = View.INVISIBLE
+                binding.tvSearchInfo.visibility = View.INVISIBLE
                 //Show list
-                YoYo.with(Techniques.FadeIn).duration(300).playOn(listViewSearchResults)
-                listViewSearchResults!!.visibility = View.VISIBLE
+                YoYo.with(Techniques.FadeIn).duration(300).playOn(binding.listViewSearchResults)
+                binding.listViewSearchResults.visibility = View.VISIBLE
             }
         }
         val adapter = SearchAdapter(parent.applicationContext, users)
-        listViewSearchResults!!.adapter = adapter
+        binding.listViewSearchResults.adapter = adapter
     }
 
     /**
@@ -188,7 +182,7 @@ class SearchFragment : Fragment() {
             override fun onReceive(context: Context, intent: Intent) {
                 val query = intent.getStringExtra("query")
                 val resultResponse = intent.getStringExtra("result")
-                if (etSearchUser != null && query != etSearchUser!!.text.toString()) {
+                if (query != binding.etSearchUser.text.toString()) {
                     Log.d("Search Receiver", "Late response, skipping results")
                     return
                 }
@@ -215,7 +209,7 @@ class SearchFragment : Fragment() {
         }
 
         //TODO: Replace when the API is updated
-        LocalBroadcastManager.getInstance(context!!)
+        LocalBroadcastManager.getInstance(requireContext())
             .registerReceiver(searchResponseReceiver, IntentFilter(ConstantValues.ACTION_SEARCH))
     }
 }

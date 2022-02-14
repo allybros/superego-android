@@ -1,8 +1,5 @@
 package com.allybros.superego.fragment.profile
 
-import android.widget.TextView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.google.android.gms.ads.AdView
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -20,34 +17,25 @@ import android.app.Dialog
 import android.content.*
 import com.squareup.picasso.Picasso
 import com.allybros.superego.activity.settings.SettingsActivity
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import android.net.ConnectivityManager
 import android.util.Log
 import android.view.View
 import android.widget.Button
-import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.AdListener
 import com.allybros.superego.activity.webview.WebViewActivity
+import com.allybros.superego.databinding.FragmentProfileBinding
 import com.allybros.superego.util.SessionManager
 import com.google.android.gms.ads.AdRequest
-import de.hdodenhof.circleimageview.CircleImageView
+
+import androidx.databinding.DataBindingUtil
+
 
 class ProfileFragment : Fragment() {
-    private var tvUsername: TextView? = null
-    private var tvUserbio: TextView? = null
-    private var badgeCredit: TextView? = null
-    private var badgeRated: TextView? = null
-    private var btnShareTest: Button? = null
-    private var btnShareResults: Button? = null
-    private var btnInfoShare //btnNewTest TODO Add share button in Designs
-            : Button? = null
-    private var btnSettings: ImageView? = null
-    private var imageViewAvatar: CircleImageView? = null
-    private var profileSwipeLayout: SwipeRefreshLayout? = null
-    private var adProfileBanner: AdView? = null
+    //btnNewTest : Button? = null TODO Add share button in Designs
 
     //API Receivers
     private var refreshReceiver: BroadcastReceiver? = null
@@ -55,15 +43,21 @@ class ProfileFragment : Fragment() {
 
     //Current session
     private val sessionManager = SessionManager.getInstance()
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+
+    lateinit var binding: FragmentProfileBinding
+    val viewModel: ProfileVM by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+    ): View {
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_profile,
+            container,
+            false
+        )
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -82,7 +76,7 @@ class ProfileFragment : Fragment() {
     fun reloadProfile() {
         // Call API task
         LoadProfileTask.loadProfileTask(
-            activity!!.applicationContext,
+            requireActivity().applicationContext,
             sessionManager.sessionToken,
             ConstantValues.ACTION_REFRESH_PROFILE
         )
@@ -99,7 +93,7 @@ class ProfileFragment : Fragment() {
                 Log.d("receiver", "Got message: $status")
                 when (status) {
                     ErrorCodes.SYSFAIL -> Snackbar.make(
-                        profileSwipeLayout!!,
+                        binding.profileSwipeLayout,
                         R.string.error_no_connection,
                         BaseTransientBottomBar.LENGTH_LONG
                     ).show()
@@ -113,7 +107,7 @@ class ProfileFragment : Fragment() {
                 // Disable progress view
                 val upa = activity as UserPageActivity?
                 upa?.setProgressVisibility(false)
-                profileSwipeLayout!!.isRefreshing = false
+                binding.profileSwipeLayout.isRefreshing = false
             }
         }
         rewardReceiver = object : BroadcastReceiver() {
@@ -156,32 +150,25 @@ class ProfileFragment : Fragment() {
         }
 
         //Registers Receivers
-        LocalBroadcastManager.getInstance(context!!)
+        LocalBroadcastManager.getInstance(requireContext())
             .registerReceiver(refreshReceiver!!, IntentFilter(ConstantValues.ACTION_REFRESH_PROFILE))
-        LocalBroadcastManager.getInstance(context!!)
+        LocalBroadcastManager.getInstance(requireContext())
             .registerReceiver(rewardReceiver!!, IntentFilter(ConstantValues.ACTION_EARNED_REWARD))
     }
 
     @SuppressLint("DefaultLocale")
     private fun initProfileCard() {
-        //Set profile card components
-        imageViewAvatar = view!!.findViewById(R.id.user_avatar)
-        tvUserbio = view!!.findViewById(R.id.tvUserbio)
-        tvUsername = view!!.findViewById(R.id.tvUsername)
-        badgeCredit = view!!.findViewById(R.id.badgeCredit)
-        badgeRated = view!!.findViewById(R.id.badgeRated)
-
         //Populate views
-        if (sessionManager.user.userBio != null && !sessionManager.user.userBio.isEmpty()) {
-            tvUserbio?.setText(sessionManager.user.userBio)
+        if (sessionManager.user.userBio != null && sessionManager.user.userBio.isNotEmpty()) {
+            binding.tvUserbio.text = sessionManager.user.userBio
         } else {
-            tvUserbio?.setText(R.string.default_bio_profile)
+            binding.tvUserbio.setText(R.string.default_bio_profile)
         }
-        tvUsername?.setText("@" + sessionManager.user.username)
-        badgeCredit?.setText(sessionManager.user.credit.toString())
-        badgeRated?.setText(sessionManager.user.rated.toString())
+        binding.tvUsername.text = "@ $sessionManager.user.username"
+        binding.badgeCredit.text = sessionManager.user.credit.toString()
+        binding.badgeRated.text = sessionManager.user.rated.toString()
         Picasso.get().load(ConstantValues.AVATAR_URL + sessionManager.user.image)
-            .into(imageViewAvatar)
+            .into(binding.userAvatar)
     }
 
     /**
@@ -190,16 +177,14 @@ class ProfileFragment : Fragment() {
     private fun initButtons() {
         //Initialize toolbar buttons
 //        btnNewTest = getView().findViewById(R.id.btnAddTest); //TODO Add share button in Designs
-        btnShareTest = view!!.findViewById(R.id.btnShareTest)
-        btnShareResults = view!!.findViewById(R.id.btnShareResult)
-        btnSettings = view!!.findViewById(R.id.btnSettings)
+
         if (!sessionManager.user.hasResults()) {
-            btnShareResults?.setAlpha(0.6f)
+            binding.btnShareResult.alpha = 0.6f
         }
 
         //Shows alert dialog for creating test
         if (!sessionManager.user.hasTest()) {
-            btnShareTest?.setAlpha(0.6f)
+            binding.btnShareTest.alpha = 0.6f
             showDialog()
         }
 
@@ -222,7 +207,7 @@ class ProfileFragment : Fragment() {
 //                }
 //            }
 //        });
-        btnShareTest?.setOnClickListener(View.OnClickListener {
+        binding.btnShareTest.setOnClickListener {
             if (sessionManager.user.hasTest()) {
                 shareTest()
             } else {
@@ -235,35 +220,34 @@ class ProfileFragment : Fragment() {
 //                       }).setActionTextColor(getResources().getColor(R.color.materialLightPurple))
 //                       .show();
                 Snackbar.make(
-                    profileSwipeLayout!!,
+                    binding.profileSwipeLayout,
                     R.string.alert_no_test,
                     BaseTransientBottomBar.LENGTH_LONG
                 ).show()
             }
-        })
-        btnShareResults?.setOnClickListener(View.OnClickListener {
+        }
+        binding.btnShareResult.setOnClickListener {
             if (sessionManager.user.hasResults()) {
                 shareResults()
             } else {
                 Snackbar.make(
-                    profileSwipeLayout!!,
+                    binding.profileSwipeLayout,
                     R.string.alert_no_results,
                     BaseTransientBottomBar.LENGTH_LONG
                 ).show()
             }
-        })
-        btnSettings?.setOnClickListener(View.OnClickListener {
+        }
+        binding.btnSettings.setOnClickListener {
             val intent = Intent(context, SettingsActivity::class.java)
             startActivity(intent)
-        })
+        }
     }
 
     /**
      * Set up profile info card
      */
     private fun initInfoCard() {
-        btnInfoShare = view!!.findViewById(R.id.btnInfoShare)
-        btnInfoShare?.setOnClickListener(View.OnClickListener { shareTest() })
+        binding.btnInfoShare.setOnClickListener { shareTest() }
     }
 
     /**
@@ -271,9 +255,8 @@ class ProfileFragment : Fragment() {
      */
     private fun initSwipeLayout() {
         //Setup refresh layout
-        profileSwipeLayout = view!!.findViewById(R.id.profileSwipeLayout)
-        profileSwipeLayout?.setOnRefreshListener(OnRefreshListener { // Check internet connection
-            val cm = context!!.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        binding.profileSwipeLayout.setOnRefreshListener { // Check internet connection
+            val cm = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             val activeNetwork = cm.activeNetworkInfo
             val isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting
             if (isConnected) {
@@ -285,13 +268,13 @@ class ProfileFragment : Fragment() {
             } else {
                 Log.d("CONNECTION", isConnected.toString())
                 Snackbar.make(
-                    profileSwipeLayout!!,
+                    binding.profileSwipeLayout,
                     R.string.error_no_connection,
                     BaseTransientBottomBar.LENGTH_LONG
                 ).show()
-                profileSwipeLayout?.isRefreshing = false
+                binding.profileSwipeLayout.isRefreshing = false
             }
-        })
+        }
     }
 
     /**
@@ -300,13 +283,12 @@ class ProfileFragment : Fragment() {
     private fun prepareBannerAd() {
         // Initialize mobile ads
         MobileAds.initialize(activity) { Log.d("MobileAds", "Initialized.") }
-        adProfileBanner = view!!.findViewById(R.id.profileBannerAdd)
         val adTag = "ad_profile_banner"
         // Load ad
         val adRequest = AdRequest.Builder().build()
-        adProfileBanner?.loadAd(adRequest)
+        binding.profileBannerAdd.loadAd(adRequest)
         // Set ad listener
-        adProfileBanner?.adListener = object : AdListener() {
+        binding.profileBannerAdd.adListener = object : AdListener() {
             override fun onAdLoaded() {
                 Log.d(adTag, "Profile banner ad loaded.")
             }
@@ -385,7 +367,7 @@ class ProfileFragment : Fragment() {
      * Shows a create test dialog
      */
     private fun showDialog() {
-        val dialog = Dialog(context!!, R.style.SegoAlertDialog)
+        val dialog = Dialog(requireContext(), R.style.SegoAlertDialog)
         dialog.setContentView(R.layout.dialog_create_test)
         val dialogButton = dialog.findViewById<View>(R.id.dialog_button_create_test) as Button
         dialogButton.setOnClickListener {
@@ -399,13 +381,13 @@ class ProfileFragment : Fragment() {
     }
 
     override fun onDestroy() {
-        LocalBroadcastManager.getInstance(context!!).unregisterReceiver(refreshReceiver!!)
-        LocalBroadcastManager.getInstance(context!!).unregisterReceiver(rewardReceiver!!)
+        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(refreshReceiver!!)
+        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(rewardReceiver!!)
         super.onDestroy()
     }
 
     override fun onResume() {
         super.onResume()
-        if (sessionManager.user.avatar != null) imageViewAvatar!!.setImageBitmap(sessionManager.user.avatar)
+        if (sessionManager.user.avatar != null) binding.userAvatar.setImageBitmap(sessionManager.user.avatar)
     }
 }
