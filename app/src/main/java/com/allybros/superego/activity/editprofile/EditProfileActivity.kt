@@ -47,6 +47,7 @@ class EditProfileActivity : AppCompatActivity() {
         observeEvents()
         setupReceivers()
         setupUi()
+        setListeners()
         setupTextWatchers()
     }
 
@@ -161,6 +162,9 @@ class EditProfileActivity : AppCompatActivity() {
             R.string.error_no_connection,
             BaseTransientBottomBar.LENGTH_LONG
         ).show()
+    }
+
+    private fun setListeners(){
         binding.ivChangeAvatar.setOnClickListener { // Check internet connection
             val cm = applicationContext.getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
             val activeNetwork = cm.activeNetworkInfo
@@ -176,6 +180,8 @@ class EditProfileActivity : AppCompatActivity() {
                 ).show()
             }
         }
+
+
         binding.btnSaveProfile.setOnClickListener { // Check internet connection
             val cm = applicationContext.getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
             val activeNetwork = cm.activeNetworkInfo
@@ -191,8 +197,10 @@ class EditProfileActivity : AppCompatActivity() {
                 ).show()
             }
         }
-    }
 
+        binding.ivBack.setOnClickListener { onBackPressed() }
+        binding.tvOptionsTitle.setOnClickListener { onBackPressed() }
+    }
     private fun setupTextWatchers() {
         binding.etUsername.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {

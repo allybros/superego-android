@@ -1,39 +1,47 @@
-package com.allybros.superego.fragment.result
+package com.allybros.superego.fragment.result.partial
 
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.rewarded.RewardedAd
-import com.allybros.superego.adapter.ScoresAdapter
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import com.allybros.superego.R
 import android.annotation.SuppressLint
-import android.content.*
-import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.AdListener
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.net.ConnectivityManager
+import android.os.Bundle
 import android.util.Log
-import com.allybros.superego.api.LoadProfileTask
-import com.allybros.superego.unit.ConstantValues
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.snackbar.BaseTransientBottomBar
-import com.allybros.superego.activity.userpage.UserPageActivity
-import com.allybros.superego.unit.ErrorCodes
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
-import com.google.android.gms.ads.rewarded.RewardedAdCallback
+import androidx.fragment.app.viewModels
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.allybros.superego.R
+import com.allybros.superego.activity.userpage.UserPageActivity
+import com.allybros.superego.adapter.ScoresAdapter
 import com.allybros.superego.api.EarnRewardTask
+import com.allybros.superego.api.LoadProfileTask
+import com.allybros.superego.databinding.FragmentResultsPartialBinding
+import com.allybros.superego.unit.ConstantValues
+import com.allybros.superego.unit.ErrorCodes
+import com.allybros.superego.unit.State
 import com.allybros.superego.unit.User
 import com.allybros.superego.util.SessionManager
+import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.rewarded.RewardItem
+import com.google.android.gms.ads.rewarded.RewardedAd
+import com.google.android.gms.ads.rewarded.RewardedAdCallback
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
+
 //TODO Implement databinding and viewmodel
-class ResultsFragment : Fragment() {
+class ResultPartialFragment : Fragment() {
     private var tvRemainingRates: TextView? = null
     private var listViewTraits: ListView? = null
     private var swipeLayout: SwipeRefreshLayout? = null
@@ -47,34 +55,21 @@ class ResultsFragment : Fragment() {
     private var ivShareResults: ImageView? = null
     private val sessionManager = SessionManager.getInstance()
 
-    //3 states of Result screen represented in an Enum
-    private enum class State {
-        NONE, PARTIAL, COMPLETE
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    lateinit var binding: FragmentResultsPartialBinding
+    val viewModel: ResultPartialVM by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        //Check state then inflate required layout
-        return when (state) {
-            State.PARTIAL -> inflater.inflate(
-                R.layout.fragment_results_partial,
-                container,
-                false
-            )
-            State.COMPLETE -> inflater.inflate(
-                R.layout.fragment_results_complete,
-                container,
-                false
-            )
-            else -> inflater.inflate(R.layout.fragment_results_none, container, false)
-        }
+    ): View {
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_results_partial,
+            container,
+            false
+        )
+        return binding.root
     }
 
     @SuppressLint("StringFormatMatches")
@@ -84,7 +79,8 @@ class ResultsFragment : Fragment() {
         setupView()
     }
 
-    private val state: State get() = when {
+    private val state: State
+        get() = when {
             currentUser.scores.size >= 6 -> State.COMPLETE
             currentUser.scores.size >= 1 -> State.PARTIAL
             else -> State.NONE
@@ -99,7 +95,7 @@ class ResultsFragment : Fragment() {
         val adRequest = AdRequest.Builder().build()
         adResultBanner?.loadAd(adRequest)
         // Set ad listener
-        adResultBanner?.setAdListener(object : AdListener() {
+        adResultBanner?.adListener = object : AdListener() {
             override fun onAdLoaded() {
                 Log.d(adTag, "Result banner ad loaded.")
             }
@@ -129,7 +125,7 @@ class ResultsFragment : Fragment() {
                 // to the app after tapping on an ad.
                 Log.d(adTag, "User returned from ad.")
             }
-        })
+        }
     }
 
     //Set up view objects
@@ -210,16 +206,16 @@ class ResultsFragment : Fragment() {
             }
             State.COMPLETE -> {
                 listViewTraits = requireView().findViewById(R.id.listViewTraits)
-                clearHelper = listViewTraits?.adapter as ScoresAdapter
-                if (clearHelper != null) {
-                    clearHelper!!.clear()
-                    clearHelper!!.notifyDataSetChanged()
-                }
                 listViewTraits?.adapter = ScoresAdapter(
                     activity,
                     currentUser.scores,
                     true
                 ) { shareResults() }
+                clearHelper = listViewTraits?.adapter as ScoresAdapter
+                if (clearHelper != null) {
+                    clearHelper!!.clear()
+                    clearHelper!!.notifyDataSetChanged()
+                }
             }
             else -> {
                 //Get views
@@ -375,5 +371,4 @@ class ResultsFragment : Fragment() {
             )
         )
     }
-
 }

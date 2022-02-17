@@ -37,7 +37,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="24dp"
-                    android:onClick="onBackPressed"
                     android:src="@drawable/ic_arrow_back_white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -48,7 +47,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="18dp"
                     android:layout_toEndOf="@+id/ivBack"
-                    android:onClick="onBackPressed"
                     android:fontFamily="@font/noto_sans"
                     android:textFontWeight="700"
                     android:textStyle="bold"

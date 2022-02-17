@@ -100,6 +100,10 @@ class SearchFragment : Fragment() {
                 .onEnd { Toast.makeText(context, "Tebrikler :) ", Toast.LENGTH_LONG).show() }
                 .playOn(binding.tvSearchHeader)
         })
+
+        //TODO: Replace when the API is updated
+        LocalBroadcastManager.getInstance(requireContext())
+            .registerReceiver(searchResponseReceiver, IntentFilter(ConstantValues.ACTION_SEARCH))
     }
 
     private fun performSearch(query: String) {
@@ -207,9 +211,5 @@ class SearchFragment : Fragment() {
                 }
             }
         }
-
-        //TODO: Replace when the API is updated
-        LocalBroadcastManager.getInstance(requireContext())
-            .registerReceiver(searchResponseReceiver, IntentFilter(ConstantValues.ACTION_SEARCH))
     }
 }

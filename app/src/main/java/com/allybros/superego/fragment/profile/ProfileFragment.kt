@@ -30,9 +30,7 @@ import com.allybros.superego.activity.webview.WebViewActivity
 import com.allybros.superego.databinding.FragmentProfileBinding
 import com.allybros.superego.util.SessionManager
 import com.google.android.gms.ads.AdRequest
-
 import androidx.databinding.DataBindingUtil
-
 
 class ProfileFragment : Fragment() {
     //btnNewTest : Button? = null TODO Add share button in Designs
@@ -164,7 +162,7 @@ class ProfileFragment : Fragment() {
         } else {
             binding.tvUserbio.setText(R.string.default_bio_profile)
         }
-        binding.tvUsername.text = "@ $sessionManager.user.username"
+        binding.tvUsername.text = "@" + sessionManager.user.username
         binding.badgeCredit.text = sessionManager.user.credit.toString()
         binding.badgeRated.text = sessionManager.user.rated.toString()
         Picasso.get().load(ConstantValues.AVATAR_URL + sessionManager.user.image)

@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.allybros.superego.fragment.profile.ProfileFragment
-import com.allybros.superego.fragment.result.ResultsFragment
 import com.allybros.superego.fragment.search.SearchFragment
 import com.allybros.superego.util.InputMethodWatcher
 import android.os.Bundle
@@ -24,16 +23,21 @@ import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import com.allybros.superego.activity.settings.SettingsActivity
 import com.allybros.superego.adapter.PagerAdapter
 import com.allybros.superego.databinding.ActivityUserPageBinding
+import com.allybros.superego.fragment.result.complate.ResultComplateFragment
+import com.allybros.superego.fragment.result.none.ResultNoneFragment
+import com.allybros.superego.fragment.result.partial.ResultPartialFragment
+import com.allybros.superego.unit.State
 import com.allybros.superego.util.SessionManager
 import java.util.ArrayList
 
 class UserPageActivity : AppCompatActivity() {
     private val navigationItems = ArrayList<BottomNavigationItemView>()
     private var profileFragment: ProfileFragment? = null
-    private var resultsFragment: ResultsFragment? = null
+    private var resultsFragment: Fragment? = null
     private var searchFragment: SearchFragment? = null
 
     private var inputMethodWatcher: InputMethodWatcher? = null
@@ -109,13 +113,25 @@ class UserPageActivity : AppCompatActivity() {
     private fun setViewPagerAdapter() {
         val adapter = PagerAdapter(supportFragmentManager)
         profileFragment = ProfileFragment()
-        resultsFragment = ResultsFragment()
+        resultsFragment = getResultFragment()
         searchFragment = SearchFragment()
         adapter.addFrag(profileFragment, resources.getString(R.string.activity_label_profile))
         adapter.addFrag(resultsFragment, resources.getString(R.string.activity_label_results))
         adapter.addFrag(searchFragment, resources.getString(R.string.activity_label_search))
         binding.mainViewPager.adapter = adapter
     }
+
+    private fun getResultFragment(): Fragment {
+        return when (viewModel.state) {
+            State.PARTIAL ->
+                ResultPartialFragment()
+            State.COMPLETE ->
+                ResultComplateFragment()
+            else ->
+                ResultNoneFragment()
+        }
+    }
+
 
     /**
      * Initialize bottom navigation bar
