@@ -388,6 +388,5 @@ class ProfileFragment : Fragment() {
         LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(refreshReceiver!!)
         LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(rewardReceiver!!)
         binding.unbind()
-
     }
 }

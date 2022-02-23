@@ -40,7 +40,6 @@ import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 
-//TODO Implement databinding and viewmodel
 class ResultNoneFragment : Fragment() {
     private var tvRemainingRates: TextView? = null
     private var listViewTraits: ListView? = null
@@ -371,5 +370,10 @@ class ResultNoneFragment : Fragment() {
                 getString(R.string.action_btn_share_results)
             )
         )
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.unbind()
     }
 }

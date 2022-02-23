@@ -212,4 +212,9 @@ class SearchFragment : Fragment() {
             }
         }
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.unbind()
+    }
 }
