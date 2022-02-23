@@ -378,14 +378,16 @@ class ProfileFragment : Fragment() {
         dialog.show()
     }
 
-    override fun onDestroy() {
-        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(refreshReceiver!!)
-        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(rewardReceiver!!)
-        super.onDestroy()
-    }
-
     override fun onResume() {
         super.onResume()
         if (sessionManager.user.avatar != null) binding.userAvatar.setImageBitmap(sessionManager.user.avatar)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(refreshReceiver!!)
+        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(rewardReceiver!!)
+        binding.unbind()
+
     }
 }

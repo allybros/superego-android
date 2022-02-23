@@ -115,9 +115,9 @@ class UserPageActivity : AppCompatActivity() {
         profileFragment = ProfileFragment()
         resultsFragment = getResultFragment()
         searchFragment = SearchFragment()
-        adapter.addFrag(profileFragment, resources.getString(R.string.activity_label_profile))
-        adapter.addFrag(resultsFragment, resources.getString(R.string.activity_label_results))
-        adapter.addFrag(searchFragment, resources.getString(R.string.activity_label_search))
+        adapter.addFrag(profileFragment!!, resources.getString(R.string.activity_label_profile))
+        adapter.addFrag(resultsFragment!!, resources.getString(R.string.activity_label_results))
+        adapter.addFrag(searchFragment!!, resources.getString(R.string.activity_label_search))
         binding.mainViewPager.adapter = adapter
     }
 
