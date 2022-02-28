@@ -3,19 +3,14 @@ package com.allybros.superego.api;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.allybros.superego.R;
-import com.allybros.superego.activity.SplashActivity;
-import com.allybros.superego.activity.UserPageActivity;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.unit.Score;
 import com.allybros.superego.unit.User;
 import com.allybros.superego.util.SessionManager;
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -30,7 +25,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 /**
  * Class includes the function of getting information from API
  * @author 0rcun

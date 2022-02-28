@@ -1,242 +1,241 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/editProfileLayout"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <View
-        android:id="@+id/vRectengle"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/editProfileLayout"
         android:layout_width="match_parent"
-        android:layout_height="277dp"
-        android:background="@drawable/background"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent">
 
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:background="@color/transparent">
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <View
+            android:id="@+id/vRectengle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/ivBack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="24dp"
-                android:onClick="onBackPressed"
-                android:src="@drawable/ic_arrow_back_white"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tvOptionsTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                android:layout_toEndOf="@+id/ivBack"
-                android:onClick="onBackPressed"
-                android:fontFamily="@font/noto_sans"
-                android:textFontWeight="700"
-                android:textStyle="bold"
-                android:text="@string/option_edit_profile"
-                android:textColor="@color/White"
-                android:textSize="24sp"
-                app:layout_constraintStart_toEndOf="@+id/ivBack"
-                app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="277dp"
+            android:background="@drawable/background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/imageView2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:background="@color/transparent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cardFormEditProfile"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="66dp"
-                android:layout_marginEnd="20dp"
-                android:background="@drawable/settings_list_bg"
-                android:elevation="8dp"
-                android:orientation="vertical"
-                android:paddingBottom="12dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvOptionsTitle">
+                android:layout_height="wrap_content">
 
-
-                <TextView
-                    android:id="@+id/textInputUsername"
-                    android:layout_width="match_parent"
+                <ImageView
+                    android:id="@+id/ivBack"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="20dp"
-                    android:layout_marginTop="61dp"
-                    android:textColor="@color/segoPurple600"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="@string/hint_change_info_username"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:src="@drawable/ic_arrow_back_white"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <EditText
-                    android:id="@+id/etUsername"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/et_background"
-                    android:padding="8dp"
-                    android:inputType="text"
-                    android:fontFamily="@font/noto_sans"
-                    android:layout_marginStart="20dp"
-                    android:textSize="13sp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginEnd="20dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputUsername" />
-
-
                 <TextView
-                    android:id="@+id/textInputEmail"
+                    android:id="@+id/tvOptionsTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:layout_toEndOf="@+id/ivBack"
+                    android:fontFamily="@font/noto_sans"
+                    android:textFontWeight="700"
+                    android:textStyle="bold"
+                    android:text="@string/option_edit_profile"
+                    android:textColor="@color/White"
+                    android:textSize="24sp"
+                    app:layout_constraintStart_toEndOf="@+id/ivBack"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cardFormEditProfile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
-                    android:layout_marginTop="8dp"
-                    android:textColor="@color/segoPurple600"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="@string/hint_change_info_email"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/etUsername" />
-
-                <EditText
-                    android:id="@+id/etEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/et_background"
-                    android:padding="8dp"
-                    android:inputType="textEmailAddress"
-                    android:fontFamily="@font/noto_sans"
-                    android:textSize="13sp"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="2dp"
+                    android:layout_marginTop="66dp"
                     android:layout_marginEnd="20dp"
+                    android:background="@drawable/settings_list_bg"
+                    android:elevation="8dp"
+                    android:orientation="vertical"
+                    android:paddingBottom="12dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputEmail" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvOptionsTitle">
 
 
-                <TextView
-                    android:id="@+id/etInformation_text_input"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="20dp"
-                    android:layout_marginTop="8dp"
-                    android:textColor="@color/segoPurple600"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="@string/hint_change_info_personal_information"
-                    app:layout_constraintStart_toStartOf="parent"
+                    <TextView
+                        android:id="@+id/tvUsername"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginTop="61dp"
+                        android:textColor="@color/segoPurple600"
+                        android:fontFamily="@font/noto_sans"
+                        android:text="@string/hint_change_info_username"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:id="@+id/etUsername"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/et_background"
+                        android:padding="8dp"
+                        android:inputType="text"
+                        android:fontFamily="@font/noto_sans"
+                        android:layout_marginStart="20dp"
+                        android:textSize="13sp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="20dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvUsername" />
+
+
+                    <TextView
+                        android:id="@+id/tvEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginTop="8dp"
+                        android:textColor="@color/segoPurple600"
+                        android:fontFamily="@font/noto_sans"
+                        android:text="@string/hint_change_info_email"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/etUsername" />
+
+                    <EditText
+                        android:id="@+id/etEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/et_background"
+                        android:padding="8dp"
+                        android:inputType="textEmailAddress"
+                        android:fontFamily="@font/noto_sans"
+                        android:textSize="13sp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="20dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvEmail" />
+
+
+                    <TextView
+                        android:id="@+id/tvBio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginTop="8dp"
+                        android:textColor="@color/segoPurple600"
+                        android:fontFamily="@font/noto_sans"
+                        android:text="@string/hint_change_info_personal_information"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/etEmail" />
+
+                    <EditText
+                        android:id="@+id/etBio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/et_background"
+                        android:padding="8dp"
+                        android:inputType="textMultiLine"
+                        android:minLines="3"
+                        android:maxLines="3"
+                        android:gravity="left"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/noto_sans"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="20dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvBio" />
+
+                    <Button
+                        android:id="@+id/btnSaveProfile"
+                        style="@style/SegoBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="16dp"
+                        android:textFontWeight="600"
+                        android:layout_marginEnd="20dp"
+                        android:text="@string/action_save"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/etBio" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/ivUserAvatarEditProfile"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_marginTop="27dp"
+                    android:translationZ="52dp"
+                    android:elevation="0dp"
+                    android:src="@drawable/default_avatar"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/etEmail"  />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ivBack" />
 
-                <EditText
-                    android:id="@+id/etInformation"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/et_background"
-                    android:padding="8dp"
-                    android:inputType="textMultiLine"
-                    android:minLines="3"
-                    android:maxLines="3"
-                    android:gravity="left"
-                    android:textSize="13sp"
-                    android:fontFamily="@font/noto_sans"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginEnd="20dp"
+                <ImageView
+                    android:id="@+id/ivChangeAvatar"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="96dp"
+                    android:layout_marginStart="85dp"
+                    android:src="@drawable/ic_pencil_purple"
+                    android:translationZ="1000dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/etInformation_text_input" />
-
-                <Button
-                    android:id="@+id/btnSaveProfile"
-                    style="@style/SegoBtn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="16dp"
-                    android:textFontWeight="600"
-                    android:layout_marginEnd="20dp"
-                    android:text="@string/action_save"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/etInformation" />
-
+                    app:layout_constraintTop_toBottomOf="@+id/ivBack" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/ivUserAvatarEditProfile"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:layout_marginTop="27dp"
-                android:translationZ="52dp"
-                android:elevation="0dp"
-                android:src="@drawable/default_avatar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ivBack" />
-
-            <ImageView
-                android:id="@+id/ivChangeAvatar"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginTop="96dp"
-                android:layout_marginStart="85dp"
-                android:src="@drawable/ic_pencil_purple"
-                android:translationZ="1000dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ivBack" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="100dp"
-        android:layout_height="30dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginStart="125dp"
-        android:layout_marginEnd="126dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/brand_grey" />
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="125dp"
+            android:layout_marginEnd="126dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/brand_grey" />
 
 
-    <me.zhanghai.android.materialprogressbar.MaterialProgressBar
-        android:id="@+id/progressEditProfile"
-        android:visibility="invisible"
-        android:layout_width="0dp"
-        android:layout_height="0.5dp"
-        android:indeterminate="true"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:mpb_progressStyle="horizontal"
-        android:indeterminateTint="@color/White"
-        style="@style/SegoProgressView" />
+        <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+            android:id="@+id/progressEditProfile"
+            android:visibility="invisible"
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:indeterminate="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:mpb_progressStyle="horizontal"
+            android:indeterminateTint="@color/White"
+            style="@style/SegoProgressView" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

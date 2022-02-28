@@ -1,52 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/White"
-    tools:context="com.allybros.superego.activity.UserPageActivity"
-    android:orientation="vertical">
-
-    <me.zhanghai.android.materialprogressbar.MaterialProgressBar
-        android:id="@+id/progressUserPage"
-        android:visibility="invisible"
-        android:layout_width="0dp"
-        android:layout_height="3dp"
-        android:indeterminate="true"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:mpb_progressStyle="horizontal"
-        android:indeterminateTint="@color/materialPurple"
-        style="@style/SegoProgressView"
-        />
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/mainViewPager"
+    xmlns:tools="http://schemas.android.com/tools">
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/navigation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.285" />
+        android:layout_height="match_parent"
+        android:background="@color/White"
+        tools:context="com.allybros.superego.activity.userpage.UserPageActivity"
+        android:orientation="vertical">
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        app:itemTextAppearanceActive="@style/Sego.BottomNavigaton.TextApperance.Active"
-        app:itemTextAppearanceInactive="@style/Sego.BottomNavigaton.TextApperance.Inactive"
-        android:background="@color/bgBottomNavigation"
-        android:foreground="?attr/selectableItemBackground"
-        app:itemBackground="@color/bgBottomNavigation"
-        app:itemIconTint="@color/bgNavigationItemPassive"
-        app:itemTextColor="@color/bgNavigationItemPassive"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/bottom_navigator" />
+        <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+            android:id="@+id/progressUserPage"
+            android:visibility="invisible"
+            android:layout_width="0dp"
+            android:layout_height="3dp"
+            android:indeterminate="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:mpb_progressStyle="horizontal"
+            android:indeterminateTint="@color/materialPurple"
+            style="@style/SegoProgressView" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/mainViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/navigation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.285" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:itemTextAppearanceActive="@style/Sego.BottomNavigaton.TextApperance.Active"
+            app:itemTextAppearanceInactive="@style/Sego.BottomNavigaton.TextApperance.Inactive"
+            android:background="@color/bgBottomNavigation"
+            android:foreground="?attr/selectableItemBackground"
+            app:itemBackground="@color/bgBottomNavigation"
+            app:itemIconTint="@color/bgNavigationItemPassive"
+            app:itemTextColor="@color/bgNavigationItemPassive"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:menu="@menu/bottom_navigator" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

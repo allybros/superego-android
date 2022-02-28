@@ -1,99 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/clContainer"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@drawable/sego_progress_container_background"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-
-    <ImageView
-        android:id="@+id/ivProgressBar"
-        android:layout_width="250dp"
-        android:layout_height="16dp"
-        android:background="@drawable/shape_sego_progress_bar_background"
-        android:layout_marginTop="6dp"
-        app:layout_constraintEnd_toStartOf="@+id/tvEndPercent"
-        app:layout_constraintStart_toEndOf="@+id/tvStartPercent"
-        app:layout_constraintTop_toBottomOf="@+id/tvHeaderLabel" />
-
-    <ImageView
-        android:id="@+id/ivProgress"
-        android:layout_width="125dp"
-        android:layout_height="16dp"
-        android:background="@drawable/shape_sego_progress_background"
-        android:layout_marginTop="6dp"
-        app:layout_constraintTop_toBottomOf="@+id/tvHeaderLabel"
-        tools:ignore="MissingConstraints" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvHeaderLabel"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clContainer"
+        android:background="@drawable/sego_progress_container_background"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/noto_sans"
-        android:textFontWeight="600"
-        android:textSize="12sp"
-        android:textColor="#70af85"
-        app:layout_constraintEnd_toEndOf="@+id/ivProgressBar"
-        app:layout_constraintStart_toStartOf="@+id/ivProgressBar"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Yeniliğe" />
+        android:layout_height="wrap_content">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvStartLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="6dp"
-        android:fontFamily="@font/noto_sans"
-        android:textFontWeight="600"
-        android:textSize="12sp"
-        android:textColor="#99424874"
-        app:layout_constraintEnd_toStartOf="@+id/ivProgressBar"
-        app:layout_constraintTop_toBottomOf="@+id/tvStartPercent"
-        tools:text="Açık" />
+        <ImageView
+            android:id="@+id/ivProgressBar"
+            android:layout_width="250dp"
+            android:layout_height="16dp"
+            android:background="@drawable/shape_sego_progress_bar_background"
+            android:layout_marginTop="6dp"
+            app:layout_constraintEnd_toStartOf="@+id/tvEndPercent"
+            app:layout_constraintStart_toEndOf="@+id/tvStartPercent"
+            app:layout_constraintTop_toBottomOf="@+id/tvHeaderLabel" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvEndLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/noto_sans"
-        android:textFontWeight="600"
-        android:textSize="12sp"
-        android:textColor="@color/progressPassive"
-        app:layout_constraintStart_toEndOf="@id/ivProgressBar"
-        app:layout_constraintTop_toBottomOf="@+id/tvEndPercent"
-        tools:text="Kapalı" />
+        <ImageView
+            android:id="@+id/ivProgress"
+            android:layout_width="125dp"
+            android:layout_height="16dp"
+            android:background="@drawable/shape_sego_progress_background"
+            android:layout_marginTop="6dp"
+            app:layout_constraintTop_toBottomOf="@+id/tvHeaderLabel"
+            tools:ignore="MissingConstraints" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvStartPercent"
-        android:layout_width="wrap_content"
-        android:layout_height="16dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginEnd="6dp"
-        android:fontFamily="@font/noto_sans"
-        android:textFontWeight="600"
-        android:textSize="12sp"
-        android:textColor="#99424874"
-        app:layout_constraintEnd_toStartOf="@+id/ivProgressBar"
-        app:layout_constraintTop_toBottomOf="@+id/tvHeaderLabel"
-        tools:text="%44" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvHeaderLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/noto_sans"
+            android:textFontWeight="600"
+            android:textSize="12sp"
+            android:textColor="#70af85"
+            app:layout_constraintEnd_toEndOf="@+id/ivProgressBar"
+            app:layout_constraintStart_toStartOf="@+id/ivProgressBar"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Yeniliğe" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvEndPercent"
-        android:layout_width="wrap_content"
-        android:layout_height="16dp"
-        android:fontFamily="@font/noto_sans"
-        android:textFontWeight="600"
-        android:textSize="12sp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="6dp"
-        android:textColor="@color/progressPassive"
-        app:layout_constraintStart_toEndOf="@id/ivProgressBar"
-        app:layout_constraintTop_toBottomOf="@+id/tvHeaderLabel"
-        tools:text="%56" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvStartLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="6dp"
+            android:fontFamily="@font/noto_sans"
+            android:textFontWeight="600"
+            android:textSize="12sp"
+            android:textColor="#99424874"
+            app:layout_constraintEnd_toStartOf="@+id/ivProgressBar"
+            app:layout_constraintTop_toBottomOf="@+id/tvStartPercent"
+            tools:text="Açık" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvEndLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/noto_sans"
+            android:textFontWeight="600"
+            android:textSize="12sp"
+            android:textColor="@color/progressPassive"
+            app:layout_constraintStart_toEndOf="@id/ivProgressBar"
+            app:layout_constraintTop_toBottomOf="@+id/tvEndPercent"
+            tools:text="Kapalı" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvStartPercent"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="6dp"
+            android:fontFamily="@font/noto_sans"
+            android:textFontWeight="600"
+            android:textSize="12sp"
+            android:textColor="#99424874"
+            app:layout_constraintEnd_toStartOf="@+id/ivProgressBar"
+            app:layout_constraintTop_toBottomOf="@+id/tvHeaderLabel"
+            tools:text="%44" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvEndPercent"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            android:fontFamily="@font/noto_sans"
+            android:textFontWeight="600"
+            android:textSize="12sp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="6dp"
+            android:textColor="@color/progressPassive"
+            app:layout_constraintStart_toEndOf="@id/ivProgressBar"
+            app:layout_constraintTop_toBottomOf="@+id/tvHeaderLabel"
+            tools:text="%56" />
 
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,96 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constraintSearchFragment"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/White">
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvSearchHeader"
+    xmlns:tools="http://schemas.android.com/tools">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintSearchFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        android:fontFamily="@font/noto_sans_bold"
-        android:textColor="@color/deepBlue100"
-        android:text="@string/activity_label_search"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-    </androidx.appcompat.widget.AppCompatTextView>
+        android:layout_height="match_parent"
+        android:background="@color/White">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSearchHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/noto_sans_bold"
+            android:textColor="@color/deepBlue100"
+            android:text="@string/activity_label_search"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></androidx.appcompat.widget.AppCompatTextView>
 
 
-    <EditText
-        android:id="@+id/etSearchUser"
-        style="@android:style/Widget.EditText"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="12dp"
-        android:background="@drawable/shape_search_card"
-        android:cursorVisible="true"
-        android:drawableStart="@drawable/v_magnify"
-        android:drawablePadding="4dp"
-        android:drawableTint="@color/purpleGray"
-        android:ems="10"
-        android:fontFamily="@font/noto_sans"
-        android:hint="@string/hint_searchbar_username"
-        android:inputType="textPersonName"
-        android:paddingStart="14dp"
-        android:paddingEnd="8dp"
-        android:textColor="@color/deepBlue100"
-        android:textColorHint="@color/purpleGray"
-        android:textSize="19sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSearchHeader" />
+        <EditText
+            android:id="@+id/etSearchUser"
+            style="@android:style/Widget.EditText"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/shape_search_card"
+            android:cursorVisible="true"
+            android:drawableStart="@drawable/v_magnify"
+            android:drawablePadding="4dp"
+            android:drawableTint="@color/purpleGray"
+            android:ems="10"
+            android:fontFamily="@font/noto_sans"
+            android:hint="@string/hint_searchbar_username"
+            android:inputType="textPersonName"
+            android:paddingStart="14dp"
+            android:paddingEnd="8dp"
+            android:textColor="@color/deepBlue100"
+            android:textColorHint="@color/purpleGray"
+            android:textSize="19sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvSearchHeader" />
 
-    <ListView
-        android:id="@+id/listViewSearchResults"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/White"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etSearchUser"
-        android:divider="@color/White"
-        tools:listitem="@layout/search_user_row"
-        android:isScrollContainer="false"
-        android:focusableInTouchMode="true"
-        tools:visibility="visible"/>
+        <ListView
+            android:id="@+id/listViewSearchResults"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/White"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etSearchUser"
+            android:divider="@color/White"
+            tools:listitem="@layout/search_user_row"
+            android:isScrollContainer="false"
+            android:focusableInTouchMode="true"
+            tools:visibility="visible" />
 
-    <!-- User search info -->
-    <ImageView
-        android:id="@+id/ivIconSearchInfo"
-        android:layout_width="80dp"
-        android:layout_height="81dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/v_account_search"
-        app:tint="@color/purpleGray"
-        tools:visibility="gone"/>
+        <!-- User search info -->
+        <ImageView
+            android:id="@+id/ivIconSearchInfo"
+            android:layout_width="80dp"
+            android:layout_height="81dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/v_account_search"
+            app:tint="@color/purpleGray"
+            tools:visibility="gone" />
 
-    <TextView
-        android:id="@+id/tvSearchInfo"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/info_search"
-        android:textSize="16sp"
-        android:textColor="@color/purpleGray"
-        android:fontFamily="@font/noto_sans"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivIconSearchInfo"
-        tools:visibility="gone"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tvSearchInfo"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/info_search"
+            android:textSize="16sp"
+            android:textColor="@color/purpleGray"
+            android:fontFamily="@font/noto_sans"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivIconSearchInfo"
+            tools:visibility="gone" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

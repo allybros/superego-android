@@ -1,514 +1,518 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/fragmentBackground"
-    android:fillViewport="true"
-    android:scrollbars="vertical">
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/profileSwipeLayout"
+    xmlns:tools="http://schemas.android.com/tools">
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/White">
-        <ScrollView
+        android:background="@color/fragmentBackground"
+        android:fillViewport="true"
+        android:scrollbars="vertical">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/profileSwipeLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/White">
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayoutProfileContainer"
+
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/White"
-                android:paddingBottom="10dp">
+                android:layout_height="match_parent"
+                android:background="@color/White">
 
-                <!--Renkli kısım-->
-                <View
-                    android:id="@+id/vProfileTop"
-                    android:layout_width="match_parent"
-                    android:layout_height="277dp"
-                    android:background="@drawable/background"
-                    android:translationZ="0dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/btnSettings"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:background="@drawable/ic_baseline_settings_36"
-                    android:translationZ="12dp"
-                    app:layout_constraintEnd_toEndOf="@+id/vProfileTop"
-                    app:layout_constraintTop_toTopOf="@+id/vProfileTop" />
-
-                <!--Profil Card-->
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/clProfileCard"
+                    android:id="@+id/constraintLayoutProfileContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="18dp"
-                    android:layout_marginTop="81dp"
-                    android:layout_marginEnd="18dp"
-                    android:background="@drawable/shape_card"
-                    android:elevation="4dp"
-                    android:translationZ="7dp"
-                    app:layout_constraintEnd_toStartOf="parent"
-                    app:layout_constraintStart_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/constraintLayoutProfileContainer">
+                    android:background="@color/White"
+                    android:paddingBottom="10dp">
 
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvUsername"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="75dp"
-                        android:text="\@username"
-                        android:textColor="@color/deepBlue100"
-                        android:fontFamily="@font/noto_sans"
-                        android:textFontWeight="600"
-                        android:textSize="20sp"
+                    <!--Renkli kısım-->
+                    <View
+                        android:id="@+id/vProfileTop"
+                        android:layout_width="match_parent"
+                        android:layout_height="277dp"
+                        android:background="@drawable/background"
+                        android:translationZ="0dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvUserbio"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/noto_sans"
-                        android:layout_gravity="center_vertical"
-                        android:text="Kendinizi tanıtan bir yazı yazın."
-                        android:textSize="12sp"
-                        android:textFontWeight="400"
-                        android:layout_marginHorizontal="24dp"
-                        android:gravity="center"
+                    <ImageView
+                        android:id="@+id/btnSettings"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:layout_marginTop="8dp"
-                        android:textColor="@color/deepBlue100"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvUsername"/>
-                    <!--Cards area-->
-                    <LinearLayout
-                        android:id="@+id/linearLayout"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/ic_baseline_settings_36"
+                        android:translationZ="12dp"
+                        app:layout_constraintEnd_toEndOf="@+id/vProfileTop"
+                        app:layout_constraintTop_toTopOf="@+id/vProfileTop" />
+
+                    <!--Profil Card-->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clProfileCard"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="18dp"
+                        android:layout_marginTop="81dp"
+                        android:layout_marginEnd="18dp"
                         android:background="@drawable/shape_card"
-                        android:layout_marginTop="12.5dp"
-                        android:paddingBottom="12.5dp"
-                        android:weightSum="2"
-                        app:layout_constraintTop_toBottomOf="@+id/tvUserbio">
+                        android:elevation="4dp"
+                        android:translationZ="7dp"
+                        app:layout_constraintEnd_toStartOf="parent"
+                        app:layout_constraintStart_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/constraintLayoutProfileContainer">
 
-                        <!--Rated area-->
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="0dp"
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvUsername"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/mini_card_bg"
-                            android:orientation="vertical">
+                            android:layout_marginTop="75dp"
+                            android:text="\@username"
+                            android:textColor="@color/deepBlue100"
+                            android:fontFamily="@font/noto_sans"
+                            android:textFontWeight="600"
+                            android:textSize="20sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/badgeRated"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="10"
-                                android:textSize="14sp"
-                                android:fontFamily="@font/noto_sans"
-                                android:textColor="@color/deepBlue100"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"/>
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/badgeRated">
-
-                                <ImageView
-                                    android:layout_width="12dp"
-                                    android:layout_height="12dp"
-                                    android:paddingTop="1dp"
-                                    android:src="@drawable/ic_baseline_done_24"
-                                    app:tint="@color/green3" />
-
-                                <TextView
-                                    android:id="@+id/textView8"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/noto_sans_bold"
-                                    android:textFontWeight="800"
-                                    android:text="@string/rated"
-                                    android:textColor="@color/green3"
-                                    android:textSize="10sp" />
-
-                            </LinearLayout>
-
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="0dp"
-                                android:background="#E0E0E0"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-                        <!--Credit area-->
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="0dp"
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvUserbio"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/mini_card_bg"
+                            android:fontFamily="@font/noto_sans"
+                            android:layout_gravity="center_vertical"
+                            android:text="Kendinizi tanıtan bir yazı yazın."
+                            android:textSize="12sp"
+                            android:textFontWeight="400"
+                            android:layout_marginHorizontal="24dp"
                             android:gravity="center"
-                            android:orientation="vertical">
-                            <TextView
-                                android:id="@+id/badgeCredit"
-                                android:layout_width="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:textColor="@color/deepBlue100"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tvUsername" />
+                        <!--Cards area-->
+                        <LinearLayout
+                            android:id="@+id/linearLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/shape_card"
+                            android:layout_marginTop="12.5dp"
+                            android:paddingBottom="12.5dp"
+                            android:weightSum="2"
+                            app:layout_constraintTop_toBottomOf="@+id/tvUserbio">
+
+                            <!--Rated area-->
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:text="10"
-                                android:textSize="14sp"
-                                android:fontFamily="@font/noto_sans"
-                                android:textColor="@color/deepBlue100"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent">
-                            </TextView>
+                                android:layout_weight="1"
+                                android:background="@drawable/mini_card_bg"
+                                android:orientation="vertical">
 
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/badgeCredit">
-
-                                <ImageView
-                                    android:layout_width="12dp"
-                                    android:layout_height="12dp"
-                                    android:gravity="center_vertical"
-                                    android:src="@drawable/ic_baseline_done_24"
-                                    android:layout_marginEnd="4dp"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toStartOf="@+id/textView5"
-                                    app:tint="@color/segoPurple700" />
-
-                                <TextView
-                                    android:id="@+id/textView5"
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/badgeRated"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/noto_sans_bold"
-                                    android:gravity="center_vertical"
-                                    android:textFontWeight="800"
-                                    android:text="@string/credit"
-                                    android:textColor="@color/segoPurple700"
-                                    android:textSize="10sp" />
-                            </LinearLayout>
+                                    android:text="10"
+                                    android:textSize="14sp"
+                                    android:fontFamily="@font/noto_sans"
+                                    android:textColor="@color/deepBlue100"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent" />
 
-                        </androidx.constraintlayout.widget.ConstraintLayout>
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/badgeRated">
 
-                    </LinearLayout>
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                                    <ImageView
+                                        android:layout_width="12dp"
+                                        android:layout_height="12dp"
+                                        android:paddingTop="1dp"
+                                        android:src="@drawable/ic_baseline_done_24"
+                                        app:tint="@color/green3" />
 
-                <!--Profil Fotografı-->
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/user_avatar"
-                    android:layout_width="130dp"
-                    android:layout_height="130dp"
-                    android:layout_marginTop="16dp"
-                    android:src="@drawable/default_avatar"
-                    android:translationZ="100dp"
-                    app:civ_border_width="0dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                                    <TextView
+                                        android:id="@+id/textView8"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/noto_sans_bold"
+                                        android:textFontWeight="800"
+                                        android:text="@string/rated"
+                                        android:textColor="@color/green3"
+                                        android:textSize="10sp" />
 
-                <!--Alt kısım-->
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayoutProfileBottom"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="20dp"
-                    android:background="@color/White"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/clProfileCard">
+                                </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/rowButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="18dp"
-                        android:layout_marginTop="18dp"
-                        android:layout_marginEnd="18dp"
-                        android:clipToPadding="false"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                                <View
+                                    android:layout_width="1dp"
+                                    android:layout_height="0dp"
+                                    android:background="#E0E0E0"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
 
+                            </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--                        <Button-->
-<!--                            android:id="@+id/btnAddTest"-->
-<!--                            android:layout_width="0dp"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginEnd="12dp"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:background="@drawable/v_selector_btn_new_test"-->
-<!--                            android:drawableTop="@drawable/outline_add_white_36"-->
-<!--                            android:elevation="7dp"-->
-<!--                            android:outlineProvider="bounds"-->
-<!--                            android:paddingVertical="10dp"-->
-<!--                            android:fontFamily="@font/noto_sans"-->
-<!--                            android:stateListAnimator="@null"-->
-<!--                            android:text="@string/action_btn_new_test"-->
-<!--                            android:textAllCaps="false"-->
-<!--                            android:translationZ="2dp" />-->
+                            <!--Credit area-->
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="@drawable/mini_card_bg"
+                                android:gravity="center"
+                                android:orientation="vertical">
 
+                                <TextView
+                                    android:id="@+id/badgeCredit"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="10"
+                                    android:textSize="14sp"
+                                    android:fontFamily="@font/noto_sans"
+                                    android:textColor="@color/deepBlue100"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"></TextView>
 
-                        <Button
-                            android:id="@+id/btnShareTest"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/selector_btn_share_test"
-                            android:drawableStart="@drawable/outline_link_white_36"
-                            android:drawableTint="@color/segoPurple800"
-                            android:outlineProvider="bounds"
-                            android:paddingHorizontal="24dp"
-                            android:fontFamily="@font/noto_sans"
-                            android:paddingVertical="10dp"
-                            android:textColor="@color/segoPurple800"
-                            android:textFontWeight="600"
-                            android:stateListAnimator="@null"
-                            android:text="@string/action_btn_share_test"
-                            android:textAllCaps="false" />
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/badgeCredit">
 
-                        <Button
-                            android:id="@+id/btnShareResult"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/noto_sans"
-                            android:background="@drawable/selector_btn_share_result"
-                            android:drawableStart="@drawable/baseline_share_white_36"
-                            android:drawableTint="@color/segoPurple800"
-                            android:textColor="@color/segoPurple800"
-                            android:textFontWeight="600"
-                            android:paddingHorizontal="16dp"
-                            android:paddingVertical="10dp"
-                            android:stateListAnimator="@null"
-                            android:text="@string/action_btn_share_results"
-                            android:textAllCaps="false" />
-                    </LinearLayout>
+                                    <ImageView
+                                        android:layout_width="12dp"
+                                        android:layout_height="12dp"
+                                        android:gravity="center_vertical"
+                                        android:src="@drawable/ic_baseline_done_24"
+                                        android:layout_marginEnd="4dp"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintEnd_toStartOf="@+id/textView5"
+                                        app:tint="@color/segoPurple700" />
 
-                    <TextView
-                        android:id="@+id/textView9"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
+                                    <TextView
+                                        android:id="@+id/textView5"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/noto_sans_bold"
+                                        android:gravity="center_vertical"
+                                        android:textFontWeight="800"
+                                        android:text="@string/credit"
+                                        android:textColor="@color/segoPurple700"
+                                        android:textSize="10sp" />
+                                </LinearLayout>
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </LinearLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!--Profil Fotografı-->
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/user_avatar"
+                        android:layout_width="130dp"
+                        android:layout_height="130dp"
                         android:layout_marginTop="16dp"
-                        android:fontFamily="@font/noto_sans"
-                        android:gravity="center_horizontal"
-                        android:text="Kişilik Tipi"
-                        android:textColor="@color/deepBlue100"
-                        android:textSize="22sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/rowButton" />
-
-<!--                    Empty Card-->
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/clInfoCard"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginEnd="18dp"
-                        android:elevation="4dp"
-                        app:cardCornerRadius="11dp"
-                        tools:visibility="visible"
+                        android:src="@drawable/default_avatar"
+                        android:translationZ="100dp"
+                        app:civ_border_width="0dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView9">
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@color/White"
-                            android:paddingBottom="10dp">
-
-                            <ImageView
-                                android:id="@+id/imageView5"
-                                android:layout_width="145dp"
-                                android:layout_height="145dp"
-                                android:layout_marginTop="12dp"
-                                android:layout_marginEnd="12sp"
-                                android:src="@drawable/ic_rates"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <TextView
-                                android:id="@+id/tvProfileInfoCard"
-                                android:layout_width="0dp"
-                                android:layout_height="0dp"
-                                android:layout_marginStart="14dp"
-                                android:layout_marginTop="12dp"
-                                android:layout_marginEnd="10dp"
-                                android:fontFamily="@font/noto_sans"
-                                android:text="@string/info_profile_card"
-                                android:textColor="@color/deepBlue100"
-                                android:textSize="12sp"
-                                app:layout_constraintBottom_toTopOf="@+id/btnInfoShare"
-                                app:layout_constraintEnd_toStartOf="@+id/imageView5"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <Button
-                                android:id="@+id/btnInfoShare"
-                                android:layout_width="0dp"
-                                android:layout_height="32dp"
-                                android:layout_marginStart="12dp"
-                                android:layout_marginBottom="12dp"
-                                android:background="@drawable/shape_info_button"
-                                android:backgroundTint="@color/orange"
-                                android:fontFamily="@font/noto_sans"
-                                android:paddingHorizontal="22dp"
-                                android:paddingVertical="7dp"
-                                android:text="@string/action_btn_share_test"
-                                android:textAllCaps="false"
-                                android:textFontWeight="600"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-                    </androidx.cardview.widget.CardView>
-
-<!--                    Trait Card-->
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/clTraitCard"
+                    <!--Alt kısım-->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraintLayoutProfileBottom"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginEnd="18dp"
-                        android:elevation="4dp"
-                        app:cardCornerRadius="11dp"
-                        tools:visibility="invisible"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView9">
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@color/White"
-                            android:paddingBottom="10dp">
-
-                            <ImageView
-                                android:id="@+id/ivTraitImage"
-                                android:layout_width="145dp"
-                                android:layout_height="145dp"
-                                android:layout_marginTop="12dp"
-                                android:layout_marginEnd="12sp"
-                                android:src="@drawable/ic_rates"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <TextView
-                                android:id="@+id/tvTraitNameShort"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="12dp"
-                                android:layout_marginTop="4dp"
-                                android:fontFamily="@font/noto_sans"
-                                android:textColor="#424874"
-                                android:textFontWeight="600"
-                                android:textSize="14sp"
-                                android:textStyle="normal"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/tvTraitName"
-                                android:text="INTP" />
-
-                            <TextView
-                                android:id="@+id/tvTraitName"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="12dp"
-                                android:layout_marginTop="12dp"
-                                android:fontFamily="@font/noto_sans"
-                                android:textColor="#6cbe84"
-                                android:textSize="20sp"
-                                android:textStyle="bold"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                android:text="Mimar" />
-
-                            <TextView
-                                android:id="@+id/tvTraitText"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="14dp"
-                                android:layout_marginTop="4dp"
-                                android:layout_marginEnd="10dp"
-                                android:fontFamily="@font/noto_sans"
-                                android:text="Mimar kişilik tipinin açıklaması burada yer alacaktır. Şu an da o açıklamayı yazıyorum."
-                                android:textColor="@color/deepBlue100"
-                                android:textSize="12sp"
-                                app:layout_constraintBottom_toTopOf="@+id/btTraitLink"
-                                app:layout_constraintEnd_toStartOf="@+id/ivTraitImage"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/tvTraitNameShort" />
-
-                            <Button
-                                android:id="@+id/btTraitLink"
-                                android:layout_width="wrap_content"
-                                android:layout_height="32dp"
-                                android:layout_marginStart="12dp"
-                                android:layout_marginTop="13dp"
-                                android:background="@drawable/shape_info_button"
-                                android:backgroundTint="@color/green4"
-                                android:fontFamily="@font/noto_sans"
-                                android:paddingHorizontal="22dp"
-                                android:paddingVertical="7dp"
-                                android:text="@string/action_read_more"
-                                android:textAllCaps="false"
-                                android:textFontWeight="600"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/tvTraitText" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-                    </androidx.cardview.widget.CardView>
-
-                    <FrameLayout
-                        android:id="@+id/ProfileCardAd"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="18dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginEnd="18dp"
-                        android:layout_marginBottom="12dp"
-                        android:background="@drawable/shape_card"
-                        android:elevation="4dp"
-                        android:visibility="visible"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="20dp"
+                        android:background="@color/White"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/clInfoCard">
+                        app:layout_constraintTop_toBottomOf="@+id/clProfileCard">
 
-                        <com.google.android.gms.ads.AdView
-                            android:id="@+id/profileBannerAdd"
+                        <LinearLayout
+                            android:id="@+id/rowButton"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:adSize="LARGE_BANNER"
-                            app:adUnitId="@string/admob_profile_banner" />
-                    </FrameLayout>
+                            android:layout_marginStart="18dp"
+                            android:layout_marginTop="18dp"
+                            android:layout_marginEnd="18dp"
+                            android:clipToPadding="false"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+
+                            <!--                        <Button-->
+                            <!--                            android:id="@+id/btnAddTest"-->
+                            <!--                            android:layout_width="0dp"-->
+                            <!--                            android:layout_height="wrap_content"-->
+                            <!--                            android:layout_marginEnd="12dp"-->
+                            <!--                            android:layout_weight="1"-->
+                            <!--                            android:background="@drawable/v_selector_btn_new_test"-->
+                            <!--                            android:drawableTop="@drawable/outline_add_white_36"-->
+                            <!--                            android:elevation="7dp"-->
+                            <!--                            android:outlineProvider="bounds"-->
+                            <!--                            android:paddingVertical="10dp"-->
+                            <!--                            android:fontFamily="@font/noto_sans"-->
+                            <!--                            android:stateListAnimator="@null"-->
+                            <!--                            android:text="@string/action_btn_new_test"-->
+                            <!--                            android:textAllCaps="false"-->
+                            <!--                            android:translationZ="2dp" />-->
+
+
+                            <Button
+                                android:id="@+id/btnShareTest"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="@drawable/selector_btn_share_test"
+                                android:drawableStart="@drawable/outline_link_white_36"
+                                android:drawableTint="@color/segoPurple800"
+                                android:outlineProvider="bounds"
+                                android:paddingHorizontal="24dp"
+                                android:fontFamily="@font/noto_sans"
+                                android:paddingVertical="10dp"
+                                android:textColor="@color/segoPurple800"
+                                android:textFontWeight="600"
+                                android:stateListAnimator="@null"
+                                android:text="@string/action_btn_share_test"
+                                android:textAllCaps="false" />
+
+                            <Button
+                                android:id="@+id/btnShareResult"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="12dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/noto_sans"
+                                android:background="@drawable/selector_btn_share_result"
+                                android:drawableStart="@drawable/baseline_share_white_36"
+                                android:drawableTint="@color/segoPurple800"
+                                android:textColor="@color/segoPurple800"
+                                android:textFontWeight="600"
+                                android:paddingHorizontal="16dp"
+                                android:paddingVertical="10dp"
+                                android:stateListAnimator="@null"
+                                android:text="@string/action_btn_share_results"
+                                android:textAllCaps="false" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/textView9"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            android:fontFamily="@font/noto_sans"
+                            android:gravity="center_horizontal"
+                            android:text="Kişilik Tipi"
+                            android:textColor="@color/deepBlue100"
+                            android:textSize="22sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/rowButton" />
+
+                        <!--                    Empty Card-->
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/clInfoCard"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="12dp"
+                            android:layout_marginEnd="18dp"
+                            android:elevation="4dp"
+                            app:cardCornerRadius="11dp"
+                            tools:visibility="visible"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView9">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/White"
+                                android:paddingBottom="10dp">
+
+                                <ImageView
+                                    android:id="@+id/imageView5"
+                                    android:layout_width="145dp"
+                                    android:layout_height="145dp"
+                                    android:layout_marginTop="12dp"
+                                    android:layout_marginEnd="12sp"
+                                    android:src="@drawable/ic_rates"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/tvProfileInfoCard"
+                                    android:layout_width="0dp"
+                                    android:layout_height="0dp"
+                                    android:layout_marginStart="14dp"
+                                    android:layout_marginTop="12dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:fontFamily="@font/noto_sans"
+                                    android:text="@string/info_profile_card"
+                                    android:textColor="@color/deepBlue100"
+                                    android:textSize="12sp"
+                                    app:layout_constraintBottom_toTopOf="@+id/btnInfoShare"
+                                    app:layout_constraintEnd_toStartOf="@+id/imageView5"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <Button
+                                    android:id="@+id/btnInfoShare"
+                                    android:layout_width="0dp"
+                                    android:layout_height="32dp"
+                                    android:layout_marginStart="12dp"
+                                    android:layout_marginBottom="12dp"
+                                    android:background="@drawable/shape_info_button"
+                                    android:backgroundTint="@color/orange"
+                                    android:fontFamily="@font/noto_sans"
+                                    android:paddingHorizontal="22dp"
+                                    android:paddingVertical="7dp"
+                                    android:text="@string/action_btn_share_test"
+                                    android:textAllCaps="false"
+                                    android:textFontWeight="600"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <!--                    Trait Card-->
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/clTraitCard"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="12dp"
+                            android:layout_marginEnd="18dp"
+                            android:elevation="4dp"
+                            app:cardCornerRadius="11dp"
+                            tools:visibility="invisible"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView9">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/White"
+                                android:paddingBottom="10dp">
+
+                                <ImageView
+                                    android:id="@+id/ivTraitImage"
+                                    android:layout_width="145dp"
+                                    android:layout_height="145dp"
+                                    android:layout_marginTop="12dp"
+                                    android:layout_marginEnd="12sp"
+                                    android:src="@drawable/ic_rates"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/tvTraitNameShort"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="12dp"
+                                    android:layout_marginTop="4dp"
+                                    android:fontFamily="@font/noto_sans"
+                                    android:textColor="#424874"
+                                    android:textFontWeight="600"
+                                    android:textSize="14sp"
+                                    android:textStyle="normal"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/tvTraitName"
+                                    android:text="INTP" />
+
+                                <TextView
+                                    android:id="@+id/tvTraitName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="12dp"
+                                    android:layout_marginTop="12dp"
+                                    android:fontFamily="@font/noto_sans"
+                                    android:textColor="#6cbe84"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    android:text="Mimar" />
+
+                                <TextView
+                                    android:id="@+id/tvTraitText"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="14dp"
+                                    android:layout_marginTop="4dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:fontFamily="@font/noto_sans"
+                                    android:text="Mimar kişilik tipinin açıklaması burada yer alacaktır. Şu an da o açıklamayı yazıyorum."
+                                    android:textColor="@color/deepBlue100"
+                                    android:textSize="12sp"
+                                    app:layout_constraintBottom_toTopOf="@+id/btTraitLink"
+                                    app:layout_constraintEnd_toStartOf="@+id/ivTraitImage"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/tvTraitNameShort" />
+
+                                <Button
+                                    android:id="@+id/btTraitLink"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="32dp"
+                                    android:layout_marginStart="12dp"
+                                    android:layout_marginTop="13dp"
+                                    android:background="@drawable/shape_info_button"
+                                    android:backgroundTint="@color/green4"
+                                    android:fontFamily="@font/noto_sans"
+                                    android:paddingHorizontal="22dp"
+                                    android:paddingVertical="7dp"
+                                    android:text="@string/action_read_more"
+                                    android:textAllCaps="false"
+                                    android:textFontWeight="600"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/tvTraitText" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <FrameLayout
+                            android:id="@+id/ProfileCardAd"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="18dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="18dp"
+                            android:layout_marginBottom="12dp"
+                            android:background="@drawable/shape_card"
+                            android:elevation="4dp"
+                            android:visibility="visible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/clInfoCard">
+
+                            <com.google.android.gms.ads.AdView
+                                android:id="@+id/profileBannerAdd"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:adSize="LARGE_BANNER"
+                                app:adUnitId="@string/admob_profile_banner" />
+                        </FrameLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </ScrollView>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-</FrameLayout>
+            </ScrollView>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </FrameLayout>
+</layout>

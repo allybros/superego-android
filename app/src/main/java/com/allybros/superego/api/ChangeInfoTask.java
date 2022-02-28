@@ -43,24 +43,16 @@ public class ChangeInfoTask extends Activity {
         StringRequest jsonRequest=new StringRequest(Request.Method.POST, ConstantValues.UPDATE_INFORMATION, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("sego-Response",response.toString());
+                Log.d("sego-Response", response);
                 try {
                     JSONObject jsonObj=new JSONObject(response);
                     int status = jsonObj.getInt("status");
 
-                    switch (status){
-
-                        case ErrorCodes.SUCCESS:
-                            updateLocal(new_uid,new_email,new_information);
-                            intent.putExtra("status", status);
-                            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-                            break;
-
-                        default:
-                            intent.putExtra("status", status);
-                            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-                            break;
+                    if (status == ErrorCodes.SUCCESS) {
+                        updateLocal(new_uid, new_email, new_information);
                     }
+                    intent.putExtra("status", status);
+                    LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
