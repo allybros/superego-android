@@ -1,18 +1,20 @@
 package com.allybros.superego.retrofit
 
 import com.allybros.superego.unit.EditProfileRequest
-import com.allybros.superego.unit.StatusResponse
+import com.allybros.superego.unit.SegoResponse
+import com.allybros.superego.unit.UploadImageRequest
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST
-import retrofit2.http.GET
-import retrofit2.http.Query
 
 
 interface SegoAPI {
 
-    @POST("/edit-profile.php")
-    fun editProfile(@Body request: EditProfileRequest): Call<StatusResponse>
+    @POST("edit-profile.php")
+    fun editProfile(@Body request: EditProfileRequest): Call<SegoResponse>
+
+    @POST("upload.php")
+    fun uploadImage(@Body request: UploadImageRequest): Call<SegoResponse>
 
 
 

@@ -1,58 +1,53 @@
 package com.allybros.superego.activity.editprofile
 
-import androidx.appcompat.app.AppCompatActivity
 import android.widget.EditText
-import android.content.BroadcastReceiver
-import android.os.Bundle
 import com.allybros.superego.R
 import android.content.Intent
 import com.allybros.superego.unit.ErrorCodes
 import com.google.android.material.snackbar.Snackbar
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import android.content.IntentFilter
 import com.allybros.superego.unit.ConstantValues
 import android.net.ConnectivityManager
 import com.squareup.picasso.Picasso
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import android.text.TextWatcher
 import android.text.Editable
-import android.content.Context
 import android.net.Uri
+import android.os.Bundle
+import android.os.PersistableBundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
-import com.allybros.superego.api.ImageChangeTask
+import com.allybros.superego.base.SegoActivity
 import com.allybros.superego.util.HelperMethods
 import com.allybros.superego.util.SessionManager
 import java.io.IOException
 import com.allybros.superego.databinding.ActivityEditProfileBinding
 import com.allybros.superego.unit.EditProfileRequest
+import com.allybros.superego.unit.UploadImageRequest
 
-
-class EditProfileActivity : AppCompatActivity() {
-    private var updateImageReceiver: BroadcastReceiver? = null
+class EditProfileActivity : SegoActivity<EditProfileVM, ActivityEditProfileBinding>() {
     private val IMG_REQUEST = 1 //Needs for image selection from local storage
-
-    private val viewModel: EditProfileVM by viewModels()
-    lateinit var binding: ActivityEditProfileBinding
+    private var newImagePath: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_edit_profile)
-
         observeEvents()
-        setupReceivers()
         setupUi()
         setListeners()
         setupTextWatchers()
     }
 
+    override fun getSegoViewModel(): EditProfileVM {
+        val viewModel by viewModels<EditProfileVM>()
+        return viewModel
+    }
+
+    override fun getLayout(): Int = R.layout.activity_edit_profile
+
     private fun observeEvents(){
-        viewModel.responseLiveData?.observe(this, Observer {
+        getViewModel().editProfileResponseLiveData.observe(this, {
             setProgressVisibility(false)
             when (it?.status) {
                 ErrorCodes.SESSION_EXPIRED -> Snackbar.make(
@@ -92,54 +87,43 @@ class EditProfileActivity : AppCompatActivity() {
                 ).show()
             }
         })
-    }
 
-    private fun setupReceivers() {
-        /**
-         * Catches broadcasts of api/ImageChangeTask class
-         */
-        updateImageReceiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context, intent: Intent) {
-                val status = intent.getIntExtra("status", 0)
-                Log.d("receiver", "Got message: $status")
-                setProgressVisibility(false)
-                binding.ivUserAvatarEditProfile.visibility = View.VISIBLE
-                when (status) {
-                    ErrorCodes.SUCCESS -> Snackbar.make(
-                        binding.editProfileLayout,
-                        applicationContext.getString(R.string.message_process_succeed),
-                        Snackbar.LENGTH_LONG
-                    ).show()
-                    ErrorCodes.SYSFAIL -> Snackbar.make(
-                        binding.editProfileLayout,
-                        applicationContext.getString(R.string.error_no_connection),
-                        Snackbar.LENGTH_LONG
-                    ).show()
-                    ErrorCodes.INVALID_FILE_EXTENSION -> Snackbar.make(
-                        binding.editProfileLayout,
-                        applicationContext.getString(R.string.error_invalid_file_type),
-                        Snackbar.LENGTH_LONG
-                    ).show()
-                    ErrorCodes.INVALID_FILE_TYPE -> Snackbar.make(
-                        binding.editProfileLayout,
-                        applicationContext.getString(R.string.error_invalid_file_type),
-                        Snackbar.LENGTH_LONG
-                    ).show()
-                    ErrorCodes.INVALID_FILE_SIZE -> Snackbar.make(
-                        binding.editProfileLayout,
-                        applicationContext.getString(R.string.error_invalid_file_size),
-                        Snackbar.LENGTH_LONG
-                    ).show()
-                    ErrorCodes.FILE_WRITE_ERROR -> Snackbar.make(
-                        binding.editProfileLayout,
-                        applicationContext.getString(R.string.error_no_connection),
-                        Snackbar.LENGTH_LONG
-                    ).show()
-                }
+        getViewModel().editProfileResponseLiveData.observe(this, {
+            setProgressVisibility(false)
+            binding.ivUserAvatarEditProfile.visibility = View.VISIBLE
+            when (it.status) {
+                ErrorCodes.SUCCESS -> Snackbar.make(
+                    binding.editProfileLayout,
+                    applicationContext.getString(R.string.message_process_succeed),
+                    Snackbar.LENGTH_LONG
+                ).show()
+                ErrorCodes.SYSFAIL -> Snackbar.make(
+                    binding.editProfileLayout,
+                    applicationContext.getString(R.string.error_no_connection),
+                    Snackbar.LENGTH_LONG
+                ).show()
+                ErrorCodes.INVALID_FILE_EXTENSION -> Snackbar.make(
+                    binding.editProfileLayout,
+                    applicationContext.getString(R.string.error_invalid_file_type),
+                    Snackbar.LENGTH_LONG
+                ).show()
+                ErrorCodes.INVALID_FILE_TYPE -> Snackbar.make(
+                    binding.editProfileLayout,
+                    applicationContext.getString(R.string.error_invalid_file_type),
+                    Snackbar.LENGTH_LONG
+                ).show()
+                ErrorCodes.INVALID_FILE_SIZE -> Snackbar.make(
+                    binding.editProfileLayout,
+                    applicationContext.getString(R.string.error_invalid_file_size),
+                    Snackbar.LENGTH_LONG
+                ).show()
+                ErrorCodes.FILE_WRITE_ERROR -> Snackbar.make(
+                    binding.editProfileLayout,
+                    applicationContext.getString(R.string.error_no_connection),
+                    Snackbar.LENGTH_LONG
+                ).show()
             }
-        }
-        LocalBroadcastManager.getInstance(applicationContext)
-            .registerReceiver(updateImageReceiver!!, IntentFilter(ConstantValues.ACTION_UPDATE_IMAGE))
+        })
     }
 
     private fun setupUi() {
@@ -260,10 +244,10 @@ class EditProfileActivity : AppCompatActivity() {
                     binding.ivUserAvatarEditProfile.setImageBitmap(SessionManager.getInstance().user.avatar)
                     binding.ivUserAvatarEditProfile.visibility = View.INVISIBLE
                     setProgressVisibility(true)
-                    ImageChangeTask.imageChangeTask(
-                        HelperMethods.imageToString(SessionManager.getInstance().user.avatar),
-                        applicationContext
-                    )
+                    getViewModel().uploadImage(UploadImageRequest(
+                        SessionManager.getInstance().sessionToken,
+                        HelperMethods.imageToString(SessionManager.getInstance().user.avatar)
+                    ))
                 } else {
                     Snackbar.make(
                         binding.editProfileLayout,
@@ -307,15 +291,8 @@ class EditProfileActivity : AppCompatActivity() {
         }
         if (binding.etUsername.text.toString().isNotEmpty() && binding.etEmail.text.toString().isNotEmpty()) {
             setProgressVisibility(true)
-//            ChangeInfoTask.changeInfoTask(
-//                applicationContext,
-//                username!!.text.toString(),
-//                email!!.text.toString(),
-//                information!!.text.toString(),
-//                SessionManager.getInstance().sessionToken
-//            )
 
-            viewModel.editProfile(EditProfileRequest(
+            getViewModel().editProfile(EditProfileRequest(
                 sessionToken =SessionManager.getInstance().sessionToken,
                 newUsername = binding.etUsername.text.toString(),
                 newEmail = binding.etEmail.text.toString(),
@@ -337,17 +314,5 @@ class EditProfileActivity : AppCompatActivity() {
             applicationContext,
             R.drawable.et_background
         )
-    }
-
-    public override fun onDestroy() {
-        //Delete receivers
-        LocalBroadcastManager.getInstance(this@EditProfileActivity).unregisterReceiver(
-            updateImageReceiver!!
-        )
-        super.onDestroy()
-    }
-
-    companion object {
-        var newImagePath: Uri? = null
     }
 }

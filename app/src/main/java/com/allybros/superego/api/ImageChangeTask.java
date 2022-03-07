@@ -9,7 +9,6 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
-import com.allybros.superego.request.RequestForUploadImage;
 import com.allybros.superego.util.SessionManager;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -35,10 +34,11 @@ public class ImageChangeTask {
      * @param image     that is to be changed image
      * @param context   required to build request and send Broadcast
      */
-    public static void   imageChangeTask(final String image, final Context context){
+    public static void imageChangeTask(final String image, final Context context){
         final Intent intent = new Intent(ConstantValues.ACTION_UPDATE_IMAGE);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, ConstantValues.UPLOAD_IMAGE, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,
+                ConstantValues.UPLOAD_IMAGE, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("sego-FileUpload",response.toString());
@@ -107,6 +107,6 @@ public class ImageChangeTask {
             }
         };
 
-        RequestForUploadImage.getInstance(context).addToRequestQue(stringRequest);
+        //RequestForUploadImage.getInstance(context).addToRequestQue(stringRequest);
     }
 }

@@ -1,19 +1,37 @@
 package com.allybros.superego.activity.editprofile
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.allybros.superego.retrofit.ServiceRepository
+import com.allybros.superego.base.SegoVM
 import com.allybros.superego.unit.EditProfileRequest
-import com.allybros.superego.unit.StatusResponse
+import com.allybros.superego.unit.SegoResponse
+import com.allybros.superego.unit.UploadImageRequest
+import com.allybros.superego.util.SegoCallback
+import retrofit2.Call
+import retrofit2.Response
 
 
-class EditProfileVM(application: Application) : AndroidViewModel(application) {
+class EditProfileVM(application: Application) : SegoVM(application) {
 
-    private val serviceRepository: ServiceRepository = ServiceRepository()
-    val responseLiveData: MutableLiveData<StatusResponse?>? = serviceRepository.responseLiveData
+    private val segoRepository = EditProfileRepository()
+    val editProfileResponseLiveData: MutableLiveData<SegoResponse> = MutableLiveData<SegoResponse>()
+    val uploadImageResponseLiveData: MutableLiveData<SegoResponse> = MutableLiveData<SegoResponse>()
+
 
     fun editProfile(request: EditProfileRequest){
-        serviceRepository.editProfile(request)
+        segoRepository.editProfile(request, object : SegoCallback() {
+            override fun onResponse(call: Call<SegoResponse>, response: Response<SegoResponse>) {
+                editProfileResponseLiveData.postValue(response.body())
+            }
+        })
+    }
+
+    fun uploadImage(request: UploadImageRequest){
+        segoRepository.uploadImage(request, object : SegoCallback() {
+            override fun onResponse(call: Call<SegoResponse>, response: Response<SegoResponse>) {
+                uploadImageResponseLiveData.postValue(response.body())
+            }
+        })
     }
 }
