@@ -111,7 +111,7 @@
     <string name="info_waiting_card_title">Tüm Sonuçlarını Hemen Gör</string>
     <string name="info_waiting_card_bottom">Arkadaşlarının değerlendirmelerini beklemek istemiyorsan, reklam izleyerek Ego puanı kazanabilir ve beklemeden tüm sonuçlarını görüntüleyebilirsin.</string>
     <string name="info_share_test">Arkadaşlarının seni değerlendirebilmeleri için testini arkadaşların ile paylaşmalısın. Değerlendirme sayın arttıkça daha detaylı sonuçlar görebileceksin.</string>
-    <string name="info_partial_rates">En çok öne çıkan özelliğini tespit edebilmek için en az beş arkadaşının daha değerlendirmesine ihtiyacımız var.</string>
+    <string name="info_partial_rates">Öne çıkan kişilik özelliklerini bulabilmemiz için daha fazla değerlendirmeye ihtiyacın var.</string>
     <string name="info_title_waiting_rates">Değerlendirilmelerin Bekleniyor…</string>
     <string name="info_result_ad_text">Daha fazla beklemeden tüm sonuçları gör!</string>
     <string name="info_change_password">insightof.me hesabına giriş yapmak için kullanacağın güvenli bir parola belirle.</string>

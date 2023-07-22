@@ -75,7 +75,7 @@
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/waiting_card_bg"
+                            android:background="@drawable/bg_waiting_card"
                             android:paddingBottom="16dp">
 
                             <androidx.appcompat.widget.AppCompatTextView
