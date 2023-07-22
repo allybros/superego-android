@@ -33,7 +33,7 @@ public class SessionManager {
         SessionManager.getInstance().setSessionToken(pref.getString("session_token", ""));
         SessionManager.getInstance().setUserId(pref.getString("uid",""));
         SessionManager.getInstance().setPassword(pref.getString("password",""));
-        Log.d("Session Read",SessionManager.getInstance().getSessionToken());
+//        Log.d("Session Read",SessionManager.getInstance().getSessionToken());
     }
 
     /**

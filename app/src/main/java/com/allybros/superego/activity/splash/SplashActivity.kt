@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.allybros.superego.R
 import android.net.ConnectivityManager
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
@@ -184,7 +185,7 @@ class SplashActivity : AppCompatActivity() {
         val jsonRequest = StringRequest(
             Request.Method.GET,
             ConstantValues.ALL_TRAITS, { response ->
-                // Log.d("getAllTraits",response.toString());
+                Log.d("getAllTraits",response.toString());
                 try {
                     val jsonObject = JSONObject(response)
                     for (i in 0 until jsonObject.getJSONArray("o").length()) {

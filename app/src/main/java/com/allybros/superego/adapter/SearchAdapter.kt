@@ -35,7 +35,7 @@ class SearchAdapter(context: Context, users: List<User?>?) :
         }
         tvSearchUsername.text = u.username
         tvSearchUserbio.text = bioSum
-        Picasso.get().load(ConstantValues.AVATAR_URL + u.avatarName).into(ivSearchUserAvatar)
+        Picasso.get().load(u.avatarName).into(ivSearchUserAvatar)
         return view
     }
 }

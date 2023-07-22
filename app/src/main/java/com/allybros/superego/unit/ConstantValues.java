@@ -9,7 +9,9 @@ public class ConstantValues {
     //Links
 
 //    public static final String API_ROOT =  "https://api.insightof.me/";
-    public static final String API_ROOT = "https://api.allybros.com/superego/";
+
+//    public static final String API_ROOT = "https://api.allybros.com/superego/";
+    public static final String API_ROOT = "http://10.0.2.2:8080/";
     public static final String AVATAR_URL = API_ROOT + "images.php?get=";
 
 

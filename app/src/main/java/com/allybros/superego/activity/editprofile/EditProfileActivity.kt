@@ -139,7 +139,7 @@ class EditProfileActivity : SegoActivity<EditProfileVM, ActivityEditProfileBindi
         val activeNetwork = cm.activeNetworkInfo
         val isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting
         //Load image
-        val URL = ConstantValues.AVATAR_URL + SessionManager.getInstance().user.image
+        val URL = SessionManager.getInstance().user.image
         Picasso.get().load(URL).into(binding.ivUserAvatarEditProfile)
         if (!isConnected) Snackbar.make(
             binding.editProfileLayout,

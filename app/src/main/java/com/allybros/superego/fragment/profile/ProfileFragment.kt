@@ -165,7 +165,7 @@ class ProfileFragment : Fragment() {
         binding.tvUsername.text = "@" + sessionManager.user.username
         binding.badgeCredit.text = sessionManager.user.credit.toString()
         binding.badgeRated.text = sessionManager.user.rated.toString()
-        Picasso.get().load(ConstantValues.AVATAR_URL + sessionManager.user.image)
+        Picasso.get().load(sessionManager.user.image)
             .into(binding.userAvatar)
     }
 

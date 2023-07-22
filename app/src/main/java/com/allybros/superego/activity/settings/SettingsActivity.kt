@@ -61,7 +61,7 @@ class SettingsActivity : AppCompatActivity() {
         binding.ivBack.setOnClickListener { onBackPressed() }
         val username = "@" + SessionManager.getInstance().user.username
         binding.tvUsername.text = username
-        Picasso.get().load(ConstantValues.AVATAR_URL + SessionManager.getInstance().user.image)
+        Picasso.get().load(SessionManager.getInstance().user.image)
             .into(binding.ivUserAvatar)
     }
 

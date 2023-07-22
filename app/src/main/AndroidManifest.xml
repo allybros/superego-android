@@ -20,8 +20,9 @@
             android:exported="false" />
         <activity
             android:name=".activity.splash.SplashActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:screenOrientation="fullSensor"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,44 +31,44 @@
         </activity>
         <activity
             android:name=".activity.login.LoginActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.userpage.UserPageActivity"
             android:label="@string/activity_label_profile"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:theme="@style/UserPage.theme"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activity.register.RegisterActivity"
             android:label="@string/activity_label_register"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.settings.SettingsActivity"
             android:label="@string/activity_label_options"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.changepassword.ChangePasswordActivity"
             android:label="@string/activity_label_change_password"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.editprofile.EditProfileActivity"
             android:label="@string/activity_label_edit_profile"
             android:parentActivityName=".activity.userpage.UserPageActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.webview.WebViewActivity"
             android:parentActivityName=".activity.userpage.UserPageActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:theme="@style/AppTheme.TransparentBackground" /> <!-- Facebook -->
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
