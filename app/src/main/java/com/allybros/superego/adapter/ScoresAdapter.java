@@ -1,5 +1,7 @@
 package com.allybros.superego.adapter;
 
+import static com.allybros.superego.unit.ConstantValues.EMOJI_END_POINT;
+
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
@@ -19,6 +21,7 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.allybros.superego.R;
+import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.Score;
 import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou;
 import com.google.android.gms.ads.AdListener;
@@ -33,7 +36,6 @@ import java.util.Random;
 
 public class ScoresAdapter extends ArrayAdapter<Score> {
     //CDN URL for emojis
-    private static final String EMOJI_END_POINT = "https://api.allybros.com/twemoji/?name=";
     private ArrayList<Score> scores;
     private AdView adResultBanner;
     private Boolean isContainTitle;
@@ -59,7 +61,7 @@ public class ScoresAdapter extends ArrayAdapter<Score> {
                 prepareBannerAd();
                 return convertView;
             }
-            else{
+            else {
                 convertView = inflater.inflate(R.layout.scores_list_row, parent,false);
                 if(isContainTitle && position == 0) {
                     ConstraintLayout llTraitTitle = convertView.findViewById(R.id.clTraitTitle);

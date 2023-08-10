@@ -1,20 +1,29 @@
 package com.allybros.superego.fragment;
 
+import static com.allybros.superego.unit.ConstantValues.EMOJI_END_POINT;
+
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +31,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -32,9 +42,11 @@ import com.allybros.superego.api.EarnRewardTask;
 import com.allybros.superego.api.LoadProfileTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
+import com.allybros.superego.unit.Score;
 import com.allybros.superego.unit.User;
 import com.allybros.superego.adapter.ScoresAdapter;
 import com.allybros.superego.util.SessionManager;
+import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -48,6 +60,9 @@ import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 
 public class ResultsFragment extends Fragment {
     private TextView tvRemainingRates;
@@ -60,6 +75,8 @@ public class ResultsFragment extends Fragment {
     private RewardedAd rewardedAd;
     ScoresAdapter clearHelper;
     private ImageView ivShareResults;
+
+    private LinearLayout llScoresContainer;
     private SessionManager sessionManager = SessionManager.getInstance();
     //3 states of Result screen represented in an Enum
     private enum State {
@@ -193,7 +210,7 @@ public class ResultsFragment extends Fragment {
             //One result
             case PARTIAL:
                 //Get views
-                listViewTraits = getView().findViewById(R.id.listViewPartialTraits);
+                llScoresContainer = getView().findViewById(R.id.llScoresContainer);
                 btnShowAd = getView().findViewById(R.id.button_get_ego);
                 tvRemainingRates = getView().findViewById(R.id.tvRatedResultPage);
                 ivShareResults = getView().findViewById(R.id.ivShareResults);
@@ -201,13 +218,10 @@ public class ResultsFragment extends Fragment {
                 //Populate views
                 int remainingRates = 10 - (currentUser.getRated() + currentUser.getCredit());
                 tvRemainingRates.setText(getString(R.string.remaining_credits, remainingRates));
-                clearHelper = (ScoresAdapter) listViewTraits.getAdapter();
-                if(clearHelper != null ) {
-                    clearHelper.clear();
-                    clearHelper.notifyDataSetChanged();
-                }
-                listViewTraits.setAdapter( new ScoresAdapter(getActivity(), currentUser.getScores(), false, null) );
+
+                fillScores(llScoresContainer, currentUser.getScores());
                 prepareRewardedAd();
+                prepareBannerAd();
                 btnShowAd.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -290,6 +304,45 @@ public class ResultsFragment extends Fragment {
                 break;
         }
     }
+
+    /**
+     * It fills scores container
+     * @param llScoresContainer
+     * @param scores
+     */
+    private void fillScores(LinearLayout llScoresContainer, ArrayList<Score> scores) {
+        for (Score score: scores) {
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            View score_row = inflater.inflate(R.layout.scores_list_row, null);
+
+            ImageView traitImage = score_row.findViewById(R.id.traitEmojiView);
+            TextView traitNameView = score_row.findViewById(R.id.traitNameView);
+            FrameLayout traitEmojiContainer = score_row.findViewById(R.id.imageViewContainer);
+            ConstraintLayout clTraitRow = score_row.findViewById(R.id.clTraitRow);
+
+            if (score != null){
+                //Set name
+                traitNameView.setText(score.getTraitName());
+                //Load emoji
+                Uri myUrl = Uri.parse(EMOJI_END_POINT + score.getEmojiName());
+                GlideToVectorYou.justLoadImage((Activity) getContext(), myUrl , traitImage);
+            }
+
+            //Set emoji container background
+            Random random = new Random(System.currentTimeMillis());
+            // Not too dark or bright. Keep in an interval.
+            int r = random.nextInt(120) + 60;
+            int g = random.nextInt(120) + 60;
+            int b = random.nextInt(120) + 60;
+            Drawable shape = traitEmojiContainer.getBackground();
+            shape.setColorFilter(Color.rgb(r, g, b), PorterDuff.Mode.SRC_ATOP);
+            clTraitRow.setVisibility(View.VISIBLE);
+
+            llScoresContainer.addView(score_row);
+        }
+    }
+
+
 
     //Set up refresh receiver
     private void setupReceiver(){
