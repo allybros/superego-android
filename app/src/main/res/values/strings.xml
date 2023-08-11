@@ -116,7 +116,7 @@
     <string name="info_result_ad_text">Daha fazla beklemeden tüm sonuçları gör!</string>
     <string name="info_change_password">insightof.me hesabına giriş yapmak için kullanacağın güvenli bir parola belirle.</string>
     <string name="header_register">Arkadaşlarının gözünden\nkendini gör.</string>
-    <string name="header_result_page_title">Kişilik Özelliklerin</string>
+    <string name="header_result_page_title">Karakter Özelliklerin</string>
 
     <string name="info_search">insightof.me\' de kayıtlı arkadaşlarını bulmak için kullanıcı adıyla arama yap.</string>
     <string name="default_bio_search">insightof.me kullanıcısı.</string>
@@ -156,5 +156,6 @@
     <string name="tvAboutConstant">Hakkımda:</string>
     <string name="tvSupporter">Sponsor:</string>
     <string name="info_profile_card">Kişilik tipinin ne olduğunu öğrenebilmen için testini daha fazla arkadaşınla paylaşmalısın.</string>
+    <string name="header_result_page_personality_title">Kişilik Tipin</string>
 
 </resources>

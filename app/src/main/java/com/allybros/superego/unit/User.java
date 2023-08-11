@@ -12,9 +12,11 @@ public class User {
     private int userType, rated, credit;
     private String image,testId, testResultId,username,userBio,email, avatarName;
     private ArrayList<Score> scores;
+    private Ocean ocean;
+    private Personality personality;
     private Bitmap avatar;      //Görsel öğeler için kullanılıyor.
 
-    public User(int userType, int rated, int credit, String image, String testId, String testResultId, String username, String userBio, String email, ArrayList<Score> scores) {
+    public User(int userType, int rated, int credit, String image, String testId, String testResultId, String username, String userBio, String email, ArrayList<Score> scores, Ocean ocean, Personality personality) {
         this.userType = userType;
         this.rated = rated;
         this.credit = credit;
@@ -137,5 +139,24 @@ public class User {
 
     public boolean hasResults(){
         return this.getScores().size() > 0;
+    }
+    public void setAvatarName(String avatarName) {
+        this.avatarName = avatarName;
+    }
+
+    public Ocean getOcean() {
+        return ocean;
+    }
+
+    public void setOcean(Ocean ocean) {
+        this.ocean = ocean;
+    }
+
+    public Personality getPersonality() {
+        return personality;
+    }
+
+    public void setPersonality(Personality personality) {
+        this.personality = personality;
     }
 }

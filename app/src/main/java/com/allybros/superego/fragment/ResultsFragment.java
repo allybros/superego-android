@@ -263,18 +263,8 @@ public class ResultsFragment extends Fragment {
 
             //All results
             case COMPLETE:
-                listViewTraits = getView().findViewById(R.id.listViewTraits);
-                clearHelper = (ScoresAdapter) listViewTraits.getAdapter();
-                if(clearHelper != null ) {
-                    clearHelper.clear();
-                    clearHelper.notifyDataSetChanged();
-                }
-                listViewTraits.setAdapter( new ScoresAdapter(getActivity(), currentUser.getScores(), true, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        shareResults();
-                    }
-                }) );
+                llScoresContainer = getView().findViewById(R.id.llScoresContainer);
+                fillScores(llScoresContainer, currentUser.getScores());
                 break;
 
             //No results

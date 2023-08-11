@@ -3,5 +3,6 @@
 
     <dimen name="image_result_page_rates_size">90dp</dimen>
     <dimen name="image_result_page_ego_size">90dp</dimen>
+    <dimen name="image_result_page_personality_size">120dp</dimen>
 
 </resources>

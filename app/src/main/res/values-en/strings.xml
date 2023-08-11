@@ -106,7 +106,7 @@
     <string name="action_get_ego_points">Get Ego Points Now</string>
     <string name="tvAboutConstant">About me:</string>
     <string name="tvSupporter">Ad:</string>
-    <string name="header_result_page_title">The Personality Traits</string>
+    <string name="header_result_page_title">The Character Traits</string>
     <string name="info_profile_card">Share the personality test with your more friends so you can see your personal traits.</string>
     <string name="info_result_ad_text">See all the results without waiting any longer!</string>
     <string name="action_get_ego">Get Ego</string>
@@ -117,4 +117,5 @@
     <string name="action_create_new_account"><font color="#2A71AC">Create Account</font></string>
     <string name="desc_call_sign_in">Have an Account?</string>
     <string name="action_read_more">Read More</string>
+    <string name="header_result_page_personality_title">The Personality Type</string>
 </resources>
