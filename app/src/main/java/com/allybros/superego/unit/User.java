@@ -30,6 +30,8 @@ public class User {
         else this.userBio = userBio;
         this.email = email;
         this.scores = scores;
+        this.personality = personality;
+        this.ocean = ocean;
     }
 
     public User(String testId, String username, String userBio, String avatarName) {

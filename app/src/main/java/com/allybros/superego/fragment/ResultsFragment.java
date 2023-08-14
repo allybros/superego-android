@@ -12,6 +12,7 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -42,10 +43,12 @@ import com.allybros.superego.api.EarnRewardTask;
 import com.allybros.superego.api.LoadProfileTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
+import com.allybros.superego.unit.Ocean;
 import com.allybros.superego.unit.Score;
 import com.allybros.superego.unit.User;
 import com.allybros.superego.adapter.ScoresAdapter;
 import com.allybros.superego.util.SessionManager;
+import com.allybros.superego.widget.SegoProgressBar;
 import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -59,6 +62,9 @@ import com.google.android.gms.ads.rewarded.RewardedAdCallback;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -264,7 +270,24 @@ public class ResultsFragment extends Fragment {
             //All results
             case COMPLETE:
                 llScoresContainer = getView().findViewById(R.id.llScoresContainer);
+                TextView tvPersonalityTitle = getView().findViewById(R.id.tvPersonalityTitle);
+                TextView tvPersonalityType = getView().findViewById(R.id.tvPersonalityType);
+                TextView tvPersonalityDescription = getView().findViewById(R.id.tvPersonalityDescription);
+                ImageView ivPersonality = getView().findViewById(R.id.ivPersonality);
+
+                tvPersonalityTitle.setText(currentUser.getPersonality().getTitle());
+                tvPersonalityTitle.setTextColor(Color.parseColor(currentUser.getPersonality().getPrimary_color()));
+
+                tvPersonalityType.setText(currentUser.getPersonality().getType());
+                tvPersonalityType.setTextColor(Color.parseColor(currentUser.getPersonality().getSecondary_color()));
+
+                tvPersonalityDescription.setText(currentUser.getPersonality().getDescription());
+                tvPersonalityDescription.setTextColor(Color.parseColor(currentUser.getPersonality().getSecondary_color()));
+
+                Picasso.get().load(currentUser.getPersonality().getImg_url()).into(ivPersonality);
+
                 fillScores(llScoresContainer, currentUser.getScores());
+                fillOcean(currentUser.getOcean());
                 break;
 
             //No results
@@ -273,6 +296,7 @@ public class ResultsFragment extends Fragment {
                 tvRemainingRates = getView().findViewById(R.id.tvRatedResultPage);
                 btnShowAd = getView().findViewById(R.id.button_get_ego);
                 btnShareTestResult = getView().findViewById(R.id.btnShareTestResult);
+                ivPersonality = getView().findViewById(R.id.ivPersonality);
 
                 //Populate views
                 remainingRates = 5 - currentUser.getRated();
@@ -293,6 +317,28 @@ public class ResultsFragment extends Fragment {
                 });
                 break;
         }
+    }
+
+    private void fillOcean(Ocean ocean) {
+        SegoProgressBar segoProgressO = getView().findViewById(R.id.segoProgressO);
+        SegoProgressBar segoProgressC = getView().findViewById(R.id.segoProgressC);
+        SegoProgressBar segoProgressE = getView().findViewById(R.id.segoProgressE);
+        SegoProgressBar segoProgressA = getView().findViewById(R.id.segoProgressA);
+        SegoProgressBar segoProgressN = getView().findViewById(R.id.segoProgressN);
+
+        setSegoProgress(segoProgressO, getLeftPercent(ocean.getO()));
+        setSegoProgress(segoProgressC, getLeftPercent(ocean.getC()));
+        setSegoProgress(segoProgressE, getLeftPercent(ocean.getE()));
+        setSegoProgress(segoProgressA, getLeftPercent(ocean.getA()));
+        setSegoProgress(segoProgressN, getLeftPercent(ocean.getN()));
+    }
+
+    private void setSegoProgress(SegoProgressBar segoProgress, int leftPercent) {
+        segoProgress.setNewPercent(leftPercent, Math.abs(100-leftPercent));
+    }
+
+    private int getLeftPercent(double number){
+        return (int) Math.round(((number + 1)/2)*100);
     }
 
     /**

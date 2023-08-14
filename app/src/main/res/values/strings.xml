@@ -117,6 +117,22 @@
     <string name="info_change_password">insightof.me hesabına giriş yapmak için kullanacağın güvenli bir parola belirle.</string>
     <string name="header_register">Arkadaşlarının gözünden\nkendini gör.</string>
     <string name="header_result_page_title">Karakter Özelliklerin</string>
+    <string name="label_openness">Yeniliğe</string>
+    <string name="label_openness_left">Açık</string>
+    <string name="label_openness_right">Kapalı</string>
+    <string name="label_conscientiousness">Görev Bilinci</string>
+    <string name="label_conscientiousness_left">Yüksek</string>
+    <string name="label_conscientiousness_right">Düşük</string>
+    <string name="label_extraversion">Tutumu</string>
+    <string name="label_extraversion_left">Dışa Dönük</string>
+    <string name="label_extraversion_right">İçe Dönük</string>
+    <string name="label_agreeableness">Çevreye</string>
+    <string name="label_agreeableness_left">Uyumlu</string>
+    <string name="label_agreeableness_right">Uyumsuz</string>
+    <string name="label_neuroticism">Duyguları</string>
+    <string name="label_neuroticism_left">Çalkantılı</string>
+    <string name="label_neuroticism_right">Dengeli</string>
+
 
     <string name="info_search">insightof.me\' de kayıtlı arkadaşlarını bulmak için kullanıcı adıyla arama yap.</string>
     <string name="default_bio_search">insightof.me kullanıcısı.</string>
