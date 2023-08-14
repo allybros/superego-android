@@ -30,8 +30,7 @@
         android:id="@+id/tvHeaderLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/noto_sans"
-        android:textFontWeight="600"
+        android:fontFamily="@font/noto_sans_bold"
         android:textSize="12sp"
         android:textColor="#70af85"
         app:layout_constraintEnd_toEndOf="@+id/ivProgressBar"
@@ -40,16 +39,26 @@
         tools:text="Yeniliğe" />
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvStartPercent"
+        android:layout_width="wrap_content"
+        android:layout_height="16dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="6dp"
+        android:fontFamily="@font/noto_sans_bold"
+        android:textColor="#99424874"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@id/ivProgressBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvHeaderLabel"
+        tools:text="%44" />
+
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvStartLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="6dp"
-        android:fontFamily="@font/noto_sans"
-        android:textFontWeight="600"
-        android:textSize="12sp"
+        android:fontFamily="@font/noto_sans_bold"
         android:textColor="#99424874"
-        app:layout_constraintEnd_toStartOf="@+id/ivProgressBar"
+        android:textSize="12sp"
         app:layout_constraintTop_toBottomOf="@+id/tvStartPercent"
         tools:text="Açık" />
 
@@ -57,34 +66,19 @@
         android:id="@+id/tvEndLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/noto_sans"
-        android:textFontWeight="600"
-        android:textSize="12sp"
+        android:fontFamily="@font/noto_sans_bold"
         android:textColor="@color/progressPassive"
-        app:layout_constraintStart_toEndOf="@id/ivProgressBar"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvEndPercent"
         tools:text="Kapalı" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvStartPercent"
-        android:layout_width="wrap_content"
-        android:layout_height="16dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginEnd="6dp"
-        android:fontFamily="@font/noto_sans"
-        android:textFontWeight="600"
-        android:textSize="12sp"
-        android:textColor="#99424874"
-        app:layout_constraintEnd_toStartOf="@+id/ivProgressBar"
-        app:layout_constraintTop_toBottomOf="@+id/tvHeaderLabel"
-        tools:text="%44" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvEndPercent"
         android:layout_width="wrap_content"
         android:layout_height="16dp"
-        android:fontFamily="@font/noto_sans"
-        android:textFontWeight="600"
+        android:fontFamily="@font/noto_sans_bold"
         android:textSize="12sp"
         android:layout_marginEnd="12dp"
         android:layout_marginStart="6dp"
