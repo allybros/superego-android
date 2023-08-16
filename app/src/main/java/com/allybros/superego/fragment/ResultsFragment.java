@@ -12,7 +12,6 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -39,6 +38,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.allybros.superego.R;
 import com.allybros.superego.activity.UserPageActivity;
+import com.allybros.superego.activity.WebViewActivity;
 import com.allybros.superego.api.EarnRewardTask;
 import com.allybros.superego.api.LoadProfileTask;
 import com.allybros.superego.unit.ConstantValues;
@@ -64,8 +64,6 @@ import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -77,7 +75,7 @@ public class ResultsFragment extends Fragment {
     private User currentUser;
     private BroadcastReceiver resultsRefreshReceiver;
     private AdView adResultBanner;
-    private Button btnShowAd, btnShareTestResult;
+    private Button btnShowAd, btnShareTestResult, btnCreateTest;
     private RewardedAd rewardedAd;
     ScoresAdapter clearHelper;
     private ImageView ivShareResults;
@@ -86,7 +84,7 @@ public class ResultsFragment extends Fragment {
     private SessionManager sessionManager = SessionManager.getInstance();
     //3 states of Result screen represented in an Enum
     private enum State {
-        NONE, PARTIAL, COMPLETE
+        NONE, NONE_TEST, PARTIAL, COMPLETE
     }
 
     public ResultsFragment() {
@@ -106,8 +104,10 @@ public class ResultsFragment extends Fragment {
                 return inflater.inflate(R.layout.fragment_results_partial, container, false);
             case COMPLETE:
                 return inflater.inflate(R.layout.fragment_results_complete, container, false);
+            case NONE:
+                return inflater.inflate(R.layout.fragment_result_none_no_test, container, false);
             default:
-                return inflater.inflate(R.layout.fragment_results_none, container, false);
+                return inflater.inflate(R.layout.fragment_results_none_test, container, false);
         }
     }
 
@@ -125,7 +125,12 @@ public class ResultsFragment extends Fragment {
         else if (currentUser.getScores().size() >= 1)
             return State.PARTIAL;
         else
+        if (currentUser.getTestId().isEmpty()) {
             return State.NONE;
+        } else {
+            return State.NONE_TEST;
+        }
+
     }
 
     private void prepareBannerAd(){
@@ -291,36 +296,43 @@ public class ResultsFragment extends Fragment {
                 break;
 
             //No results
-            default:
-                //No test
-                if (currentUser.getTestId().isEmpty()) {
+            case NONE_TEST:
+                //The test is exist
+                tvRemainingRates = getView().findViewById(R.id.tvRatedResultPage);
+                btnShowAd = getView().findViewById(R.id.button_get_ego);
+                btnShareTestResult = getView().findViewById(R.id.btnShareTestResult);
 
-                } else {
-                    //The test is exist
-                    tvRemainingRates = getView().findViewById(R.id.tvRatedResultPage);
-                    btnShowAd = getView().findViewById(R.id.button_get_ego);
-                    btnShareTestResult = getView().findViewById(R.id.btnShareTestResult);
-                    ivPersonality = getView().findViewById(R.id.ivPersonality);
-
-                    //Populate views
-                    remainingRates = 5 - currentUser.getRated();
-                    tvRemainingRates.setText( getString(R.string.remaining_credits, remainingRates) );
-                    prepareBannerAd();
-                    prepareRewardedAd();
-                    btnShareTestResult.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (sessionManager.getUser().hasTest()) {
-                                shareTest();
-                            } else {
-                                Snackbar.make(swipeLayout, R.string.alert_no_test, BaseTransientBottomBar.LENGTH_LONG)
-                                        .setActionTextColor(getResources().getColor(R.color.materialLightPurple))
-                                        .show();
-                            }
+                //Populate views
+                remainingRates = 5 - currentUser.getRated();
+                tvRemainingRates.setText( getString(R.string.remaining_credits, remainingRates) );
+                prepareBannerAd();
+                btnShareTestResult.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (sessionManager.getUser().hasTest()) {
+                            shareTest();
+                        } else {
+                            Snackbar.make(swipeLayout, R.string.alert_no_test, BaseTransientBottomBar.LENGTH_LONG)
+                                    .setActionTextColor(getResources().getColor(R.color.materialLightPurple))
+                                    .show();
                         }
-                    });
-                }
+                    }
+                });
                 break;
+            case NONE:
+                //No test
+                btnShowAd = getView().findViewById(R.id.button_get_ego);
+                btnCreateTest = getView().findViewById(R.id.btnCreateTest);
+
+                prepareBannerAd();
+                btnCreateTest.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        createTest();
+                    }
+                });
+                break;
+
         }
     }
 
@@ -499,5 +511,25 @@ public class ResultsFragment extends Fragment {
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, R.string.action_btn_share_results);
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
         startActivity(Intent.createChooser(sharingIntent, getString(R.string.action_btn_share_results)));
+    }
+
+    /**
+     * Opens create test page
+     */
+    private void createTest(){
+         //Check internet connection
+        ConnectivityManager cm = (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+        if(isConnected){
+            Intent addTestIntent = new Intent(getContext(), WebViewActivity.class);
+            addTestIntent.putExtra("url", ConstantValues.CREATE_TEST);
+            addTestIntent.putExtra("title", getString(R.string.activity_label_new_test));
+            startActivity(addTestIntent);
+        }
+        else {
+            Snackbar.make(swipeLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
+            Log.d("CONNECTION", String.valueOf(isConnected));
+        }
     }
 }

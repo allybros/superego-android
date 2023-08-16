@@ -60,17 +60,18 @@ tools:context=".fragment.ResultsFragment" >
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvRemainingRatesPartial"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
                         android:layout_marginTop="12dp"
-                        android:gravity="start"
-                        android:lines="2"
+                        android:layout_marginEnd="12dp"
                         android:fontFamily="@font/noto_sans_bold"
+                        android:gravity="start"
                         android:text="@string/info_title_waiting_rates"
                         android:textColor="@color/White"
                         android:textSize="18sp"
                         android:textStyle="bold"
+                        app:layout_constraintEnd_toStartOf="@+id/imageView6"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
