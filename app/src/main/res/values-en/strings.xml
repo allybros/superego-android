@@ -133,4 +133,6 @@
     <string name="desc_call_sign_in">Have an Account?</string>
     <string name="action_read_more">Read More</string>
     <string name="header_result_page_personality_title">The Personality Type</string>
+    <string name="info_no_test_result">Create your personality test and share it with your friends to learn personality traits.</string>
+    <string name="info_title_no_test_result">Create Test</string>
 </resources>

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/result_frame_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fragmentBackground"
+    tools:context=".fragment.ResultsFragment" >
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayoutResult"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvHeaderPoints"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:textSize="32sp"
+                    android:textStyle="bold"
+                    android:text="@string/header_result_page_title"
+                    android:textColor="@color/deepBlue100"
+                    android:fontFamily="@font/noto_sans_bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+                </androidx.appcompat.widget.AppCompatTextView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardInfoPartial"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="16dp"
+                    android:elevation="7dp"
+                    app:cardCornerRadius="11dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvHeaderPoints">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_no_tets_banner"
+                        android:paddingBottom="16dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvRemainingRatesPartial"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginTop="12dp"
+                            android:layout_marginEnd="12dp"
+                            android:fontFamily="@font/noto_sans_bold"
+                            android:gravity="start"
+                            android:text="@string/info_title_no_test_result"
+                            android:textColor="@color/White"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toStartOf="@+id/imageView6"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/textView4"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="12dp"
+                            android:fontFamily="@font/noto_sans"
+                            android:gravity="left"
+                            android:text="@string/info_no_test_result"
+                            android:textColor="@color/White"
+                            android:textSize="12sp"
+                            app:layout_constraintEnd_toStartOf="@+id/imageView6"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tvRemainingRatesPartial" />
+
+                        <ImageView
+                            android:id="@+id/imageView6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="14dp"
+                            android:src="@drawable/ic_no_result_no_test"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                        <Button
+                            android:id="@+id/btnCreateTest"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginTop="10dp"
+                            android:textSize="12sp"
+                            android:textAllCaps="false"
+                            android:fontFamily="@font/noto_sans_bold"
+                            android:background="@drawable/shape_info_button"
+                            android:paddingHorizontal="30dp"
+                            android:paddingVertical="9dp"
+                            android:text="@string/action_create_test"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Google Ad -->
+                <FrameLayout
+                    android:id="@+id/resultCardAd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@color/transparent"
+                    android:elevation="4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardInfoPartial">
+
+                    <com.google.android.gms.ads.AdView
+                        android:id="@+id/resultBannerAdd"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:adSize="LARGE_BANNER"
+                        app:adUnitId="@string/admob_profile_banner" />
+                </FrameLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</FrameLayout>
+
