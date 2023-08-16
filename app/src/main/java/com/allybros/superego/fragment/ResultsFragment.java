@@ -292,29 +292,34 @@ public class ResultsFragment extends Fragment {
 
             //No results
             default:
-                //Get views
-                tvRemainingRates = getView().findViewById(R.id.tvRatedResultPage);
-                btnShowAd = getView().findViewById(R.id.button_get_ego);
-                btnShareTestResult = getView().findViewById(R.id.btnShareTestResult);
-                ivPersonality = getView().findViewById(R.id.ivPersonality);
+                //No test
+                if (currentUser.getTestId().isEmpty()) {
 
-                //Populate views
-                remainingRates = 5 - currentUser.getRated();
-                tvRemainingRates.setText( getString(R.string.remaining_credits, remainingRates) );
-                prepareBannerAd();
-                prepareRewardedAd();
-                btnShareTestResult.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (sessionManager.getUser().hasTest()) {
-                            shareTest();
-                        } else {
-                            Snackbar.make(swipeLayout, R.string.alert_no_test, BaseTransientBottomBar.LENGTH_LONG)
-                                    .setActionTextColor(getResources().getColor(R.color.materialLightPurple))
-                                    .show();
+                } else {
+                    //The test is exist
+                    tvRemainingRates = getView().findViewById(R.id.tvRatedResultPage);
+                    btnShowAd = getView().findViewById(R.id.button_get_ego);
+                    btnShareTestResult = getView().findViewById(R.id.btnShareTestResult);
+                    ivPersonality = getView().findViewById(R.id.ivPersonality);
+
+                    //Populate views
+                    remainingRates = 5 - currentUser.getRated();
+                    tvRemainingRates.setText( getString(R.string.remaining_credits, remainingRates) );
+                    prepareBannerAd();
+                    prepareRewardedAd();
+                    btnShareTestResult.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (sessionManager.getUser().hasTest()) {
+                                shareTest();
+                            } else {
+                                Snackbar.make(swipeLayout, R.string.alert_no_test, BaseTransientBottomBar.LENGTH_LONG)
+                                        .setActionTextColor(getResources().getColor(R.color.materialLightPurple))
+                                        .show();
+                            }
                         }
-                    }
-                });
+                    });
+                }
                 break;
         }
     }
