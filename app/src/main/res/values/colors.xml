@@ -6,6 +6,7 @@
     <color name="colorAccent">#FFFFFF</color>
     <color name="Black">#000000</color>
     <color name="Gray">#808080</color>
+    <color name="Gray100">#99000000</color>
     <color name="DarkGray">#42487426</color>
     <color name="White">#ffffff</color>
     <color name="transparent">#00000000</color>
