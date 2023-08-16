@@ -99,7 +99,7 @@
     <string name="label_neuroticism_right">Equanimity</string>
     <string name="info_search">Search your friends by username.</string>
     <string name="info_title_waiting_rates">Waiting Your Rates...</string>
-    <string name="info_partial_rates">We need at least five other friends to evaluate her in order to identify her/him most prominent feature.</string>
+    <string name="info_partial_rates">We need at least five friends to evaluate her/him in order to identify her/him most prominent feature.</string>
     <string name="body_share_test">How do you see me? Rate my personality by hiding your identity. %1$s</string>
     <string name="body_share_results">My traits, according to my friends; %1$sYou can rate me now; %2$s</string>
     <string name="info_ads_desc">You can get Ego points by watching ads. The number of rates you need to reveal your traits will decrease when you earn Ego points.</string>
