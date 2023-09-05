@@ -97,6 +97,7 @@
     <string name="label_neuroticism">Neuroticism</string>
     <string name="label_neuroticism_left">Dysregulation</string>
     <string name="label_neuroticism_right">Equanimity</string>
+    <string name="info_create_test_title">Create New Test</string>
     <string name="info_search">Search your friends by username.</string>
     <string name="info_title_waiting_rates">Waiting Your Rates...</string>
     <string name="info_partial_rates">We need at least five friends to evaluate her/him in order to identify her/him most prominent feature.</string>
@@ -132,7 +133,9 @@
     <string name="action_create_new_account"><font color="#2A71AC">Create Account</font></string>
     <string name="desc_call_sign_in">Have an Account?</string>
     <string name="action_read_more">Read More</string>
-    <string name="header_result_page_personality_title">The Personality Type</string>
+    <string name="header_result_page_personality_title">Your Personality</string>
     <string name="info_no_test_result">Create your personality test and share it with your friends to learn personality traits.</string>
     <string name="info_title_no_test_result">Create Test</string>
+    <string name="info_create_test_description">Do you want to create a test? Click now!</string>
+    <string name="info_personality_type_title">The Personality Type</string>
 </resources>

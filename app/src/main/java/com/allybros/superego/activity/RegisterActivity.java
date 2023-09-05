@@ -11,14 +11,10 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -33,7 +29,6 @@ import com.allybros.superego.api.RegisterTask;
 import com.allybros.superego.api.SocialMediaSignInTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
-import com.allybros.superego.util.HelperMethods;
 import com.allybros.superego.widget.SegoEditText;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -48,8 +43,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Arrays;
 
@@ -80,8 +73,8 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         initializeComponents();
-        setupReceivers();
-        setupUi();
+        setupReceivers(this);
+        setupUi(this);
     }
 
     private void initializeComponents(){
@@ -99,7 +92,7 @@ public class RegisterActivity extends AppCompatActivity {
         tvSignIn = findViewById(R.id.tvSignIn);
     }
 
-    private void setupReceivers(){
+    private void setupReceivers(final RegisterActivity activity){
         /* Catches broadcasts of api/RegisterTask class */
         registerReceiver = new BroadcastReceiver() {
             @Override
@@ -122,23 +115,23 @@ public class RegisterActivity extends AppCompatActivity {
                         break;
 
                     case ErrorCodes.USERNAME_NOT_LEGAL:
-                        etRegisterUsername.setError(getString(R.string.error_username_not_legal));
+                        etRegisterUsername.setError(getString(R.string.error_username_not_legal), activity);
                         break;
 
                     case ErrorCodes.USERNAME_ALREADY_EXIST:
-                        etRegisterUsername.setError(getString(R.string.error_username_taken));
+                        etRegisterUsername.setError(getString(R.string.error_username_taken), activity);
                         break;
 
                     case ErrorCodes.EMAIL_ALREADY_EXIST:
-                        etRegisterMail.setError(getString(R.string.error_email_already_exist));
+                        etRegisterMail.setError(getString(R.string.error_email_already_exist), activity);
                         break;
 
                     case ErrorCodes.EMAIL_NOT_LEGAL:
-                        etRegisterMail.setError(getString(R.string.error_email_not_legal));
+                        etRegisterMail.setError(getString(R.string.error_email_not_legal), activity);
                         break;
 
                     case ErrorCodes.PASSWORD_NOT_LEGAL:
-                        etRegisterPassword.setError(getString(R.string.error_password_not_legal));
+                        etRegisterPassword.setError(getString(R.string.error_password_not_legal), activity);
                         break;
                 }
             }
@@ -167,7 +160,7 @@ public class RegisterActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(autoLoginReceiver, new IntentFilter(ConstantValues.ACTION_LOGIN));
     }
 
-    private void setupUi(){
+    private void setupUi(final RegisterActivity activity){
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,15 +179,15 @@ public class RegisterActivity extends AppCompatActivity {
 
                 //Validate fields
                 if (usernameInput.isEmpty()){
-                    etRegisterUsername.setError(getResources().getString(R.string.error_username_empty));
+                    etRegisterUsername.setError(getResources().getString(R.string.error_username_empty), activity);
                 }
 
                 if (emailInput.isEmpty()){
-                    etRegisterMail.setError(getResources().getString(R.string.error_email_empty));
+                    etRegisterMail.setError(getResources().getString(R.string.error_email_empty), activity);
                 }
 
                 if (passwordInput.isEmpty()){
-                    etRegisterPassword.setError(getResources().getString(R.string.error_password_empty));
+                    etRegisterPassword.setError(getResources().getString(R.string.error_password_empty), activity);
                 }
 
                 if (!conditions){
@@ -241,7 +234,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if(s.toString().isEmpty()){
-                    etRegisterPassword.setError(getString(R.string.error_password_empty));
+                    etRegisterPassword.setError(getString(R.string.error_password_empty), activity);
                 } else {
                     etRegisterPassword.clearError();
                 }

@@ -5,7 +5,7 @@
     android:id="@+id/result_frame_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fragmentBackground"
+    android:background="@color/White"
     tools:context=".fragment.ResultsFragment" >
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -108,12 +108,12 @@
                             android:layout_marginStart="12dp"
                             android:layout_marginTop="10dp"
                             android:background="@drawable/shape_info_button"
-                            android:paddingHorizontal="30dp"
+                            android:paddingHorizontal="42dp"
                             android:paddingVertical="9dp"
                             android:text="@string/action_get_ego"
-                            android:fontFamily="@font/noto_sans"
+                            android:fontFamily="@font/noto_sans_bold"
                             android:textAllCaps="false"
-                            android:textSize="16sp"
+                            android:textSize="14sp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/appCompatTextView" />
 

@@ -10,13 +10,8 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -55,7 +50,6 @@ public class LoginActivity extends AppCompatActivity {
     private TextView tvRegister;
     private ConstraintLayout btSignInFacebook, btSignInGoogle;
     private MaterialProgressBar progressView;
-    private Button btHi;
 
     static LoginButton btHiddenFacebook;
     GoogleSignInClient mGoogleSignInClient;
@@ -68,8 +62,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initializeComponents();
-        setupReceivers();
-        setupUi();
+        setupReceivers(this);
+        setupUi(this);
     }
 
     private void initializeComponents(){
@@ -81,11 +75,9 @@ public class LoginActivity extends AppCompatActivity {
         etUid = findViewById(R.id.etLoginUid);
         etPassword = findViewById(R.id.etPassword);
         progressView = findViewById(R.id.progressViewLogin);
-        btHi = findViewById(R.id.btHi);
-
     }
 
-    private void setupReceivers(){
+    private void setupReceivers(final LoginActivity activity){
         /* Catches broadcasts of api/LoginTask class */
         loginReceiver = new BroadcastReceiver() {
             @Override
@@ -97,8 +89,8 @@ public class LoginActivity extends AppCompatActivity {
 
                     case ErrorCodes.SYSFAIL:
                     case ErrorCodes.CAPTCHA_REQUIRED:
-                        etUid.setError(" ");
-                        etPassword.setError(getString(R.string.error_login_failed));
+                        etUid.setError(" ", activity);
+                        etPassword.setError(getString(R.string.error_login_failed), activity);
                         break;
 
                     case ErrorCodes.SUSPEND_SESSION:
@@ -192,7 +184,7 @@ public class LoginActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(loginSocialMediaReceiver, new IntentFilter(ConstantValues.ACTION_SOCIAL_MEDIA_LOGIN));
     }
 
-    private void setupUi(){
+    private void setupUi(final LoginActivity activity){
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             tvRegister.setText(Html.fromHtml(getResources().getString(R.string.desc_call_register)), TextView.BufferType.SPANNABLE);
@@ -206,10 +198,10 @@ public class LoginActivity extends AppCompatActivity {
                 etUid.clearError();
 
             if(etUid.getText().isEmpty()){
-                etUid.setError(getString(R.string.error_username_empty));
+                etUid.setError(getString(R.string.error_username_empty), activity);
             }
             if(etPassword.getText().isEmpty()){
-                etPassword.setError(getString(R.string.error_password_empty));
+                etPassword.setError(getString(R.string.error_password_empty), activity);
             }
             if(!etPassword.getText().isEmpty() && !etUid.getText().toString().isEmpty()){
                 setProgress(true);
@@ -234,7 +226,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if(s.toString().isEmpty()){
-                    etPassword.setError(getString(R.string.error_password_empty));
+                    etPassword.setError(getString(R.string.error_password_empty), activity);
                 } else {
                     etPassword.clearError();
                 }
@@ -254,13 +246,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent signInIntent = mGoogleSignInClient.getSignInIntent();
                 startActivityForResult(signInIntent, RC_SIGN_IN);
-            }
-        });
-
-        btHi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), PlayGroundActivity.class));
             }
         });
 

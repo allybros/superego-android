@@ -115,48 +115,11 @@ public class ScoresAdapter extends ArrayAdapter<Score> {
                 Log.d("MobileAds", "Initialized.");
             }
         });
-        final String adTag = "ad_result_banner";
         // Load ad
         AdRequest adRequest = new AdRequest.Builder().build();
         adResultBanner.loadAd(adRequest);
         // Set ad listener
-        adResultBanner.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-                Log.d(adTag,"Result banner ad loaded.");
-            }
-
-            @Override
-            public void onAdFailedToLoad(int errorCode) {
-                Log.d(adTag,"Result banner ad couldn't be loaded");
-            }
-
-            @Override
-            public void onAdOpened() {
-                // Code to be executed when an ad opens an overlay that
-                // covers the screen.
-                Log.d(adTag,"Result banner ad opened.");
-            }
-
-            @Override
-            public void onAdClicked() {
-                // Code to be executed when the user clicks on an ad.
-                Log.d(adTag,"Result banner ad clicked.");
-            }
-
-            @Override
-            public void onAdLeftApplication() {
-                // Code to be executed when the user has left the app.
-                Log.d(adTag,"User left application");
-            }
-
-            @Override
-            public void onAdClosed() {
-                // Code to be executed when the user is about to return
-                // to the app after tapping on an ad.
-                Log.d(adTag,"User returned from ad.");
-            }
-        });
+        adResultBanner.setAdListener(new AdListener() {});
     }
 
     @Override

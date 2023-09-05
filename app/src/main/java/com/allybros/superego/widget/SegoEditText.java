@@ -1,6 +1,7 @@
 package com.allybros.superego.widget;
 
 import android.animation.LayoutTransition;
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.text.InputType;
@@ -16,7 +17,6 @@ import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.Dimension;
-import androidx.appcompat.widget.AppCompatEditText;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
@@ -162,7 +162,9 @@ public class SegoEditText extends ConstraintLayout {
         }
     }
 
-    public void setError(String errorMessage) {
+    public void setError(String errorMessage, Activity activity) {
+        Bubble bubble = new Bubble(errorMessage, activity, null, null, null, null);
+        bubble.showBubble(et);
         et.setHint(errorMessage);
         et.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.et_error_background));
     }

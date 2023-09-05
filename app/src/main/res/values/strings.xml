@@ -89,7 +89,7 @@
     <string name="action_agreement_link"><font color="#2d2846" fontWeight="500"><a  href="https://insightof.me/conditions">Kullanım koşulları</a></font><font color="#ffffff" fontWeight="300">\'nı okudum ve kabul ediyorum.</font></string>
     <string name="action_sign_out">Oturumu Kapat</string>
     <string name="action_save">Kaydet</string>
-    <string name="action_create_test">Test oluştur</string>
+    <string name="action_create_test">Test Oluştur</string>
     <string name="action_get_ego_points">Şimdi Ego Puanlarını Al</string>
     <string name="action_get_ego">Ego kazan</string>
     <string name="action_login_via_google">Google ile Giriş Yap</string>
@@ -134,6 +134,9 @@
     <string name="label_neuroticism">Duyguları</string>
     <string name="label_neuroticism_left">Çalkantılı</string>
     <string name="label_neuroticism_right">Dengeli</string>
+    <string name="info_create_test_title">Yeni Test Oluştur</string>
+    <string name="info_personality_type_title">Kişilik Tipi</string>
+    <string name="info_create_test_description">Test mi oluşturmak istiyorsun? Hemen tıkla!</string>
 
 
     <string name="info_search">insightof.me\' de kayıtlı arkadaşlarını bulmak için kullanıcı adıyla arama yap.</string>

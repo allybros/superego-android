@@ -98,4 +98,9 @@
         <item name="fontFamily">@font/noto_sans</item>
     </style>
 
+    <style name="BubbleAnimation">
+        <item name="android:windowEnterAnimation">@anim/fade_in_anim</item>
+        <item name="android:windowExitAnimation">@anim/fade_out_anim</item>
+    </style>
+
 </resources>

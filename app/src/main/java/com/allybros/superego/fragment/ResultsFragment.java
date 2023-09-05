@@ -1,6 +1,7 @@
 package com.allybros.superego.fragment;
 
 import static com.allybros.superego.unit.ConstantValues.EMOJI_END_POINT;
+import static com.allybros.superego.unit.ConstantValues.WEB_URL;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -53,13 +54,19 @@ import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.OnPaidEventListener;
+import com.google.android.gms.ads.OnUserEarnedRewardListener;
+import com.google.android.gms.ads.ResponseInfo;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.ads.rewarded.OnAdMetadataChangedListener;
 import com.google.android.gms.ads.rewarded.RewardItem;
 import com.google.android.gms.ads.rewarded.RewardedAd;
-import com.google.android.gms.ads.rewarded.RewardedAdCallback;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
+import com.google.android.gms.ads.rewarded.ServerSideVerificationOptions;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
@@ -77,11 +84,14 @@ public class ResultsFragment extends Fragment {
     private AdView adResultBanner;
     private Button btnShowAd, btnShareTestResult, btnCreateTest;
     private RewardedAd rewardedAd;
+
     ScoresAdapter clearHelper;
+
     private ImageView ivShareResults;
 
     private LinearLayout llScoresContainer;
     private SessionManager sessionManager = SessionManager.getInstance();
+
     //3 states of Result screen represented in an Enum
     private enum State {
         NONE, NONE_TEST, PARTIAL, COMPLETE
@@ -105,9 +115,9 @@ public class ResultsFragment extends Fragment {
             case COMPLETE:
                 return inflater.inflate(R.layout.fragment_results_complete, container, false);
             case NONE:
-                return inflater.inflate(R.layout.fragment_result_none_no_test, container, false);
-            default:
                 return inflater.inflate(R.layout.fragment_results_none_test, container, false);
+            default:
+                return inflater.inflate(R.layout.fragment_result_none_no_test, container, false);
         }
     }
 
@@ -119,13 +129,12 @@ public class ResultsFragment extends Fragment {
         setupView();
     }
 
-    private State getState(){
+    private State getState() {
         if (currentUser.getScores().size() >= 6)
             return State.COMPLETE;
         else if (currentUser.getScores().size() >= 1)
             return State.PARTIAL;
-        else
-        if (currentUser.getTestId().isEmpty()) {
+        else if (sessionManager.getUser().getTestId() != null && !sessionManager.getUser().getTestId().isEmpty()) {
             return State.NONE;
         } else {
             return State.NONE_TEST;
@@ -133,7 +142,7 @@ public class ResultsFragment extends Fragment {
 
     }
 
-    private void prepareBannerAd(){
+    private void prepareBannerAd() {
         // Initialize mobile ads
         MobileAds.initialize(getActivity(), new OnInitializationCompleteListener() {
             @Override
@@ -150,47 +159,35 @@ public class ResultsFragment extends Fragment {
         adResultBanner.setAdListener(new AdListener() {
             @Override
             public void onAdLoaded() {
-                Log.d(adTag,"Result banner ad loaded.");
-            }
-
-            @Override
-            public void onAdFailedToLoad(int errorCode) {
-                Log.d(adTag,"Result banner ad couldn't be loaded");
+                Log.d(adTag, "Result banner ad loaded.");
             }
 
             @Override
             public void onAdOpened() {
                 // Code to be executed when an ad opens an overlay that
                 // covers the screen.
-                Log.d(adTag,"Result banner ad opened.");
+                Log.d(adTag, "Result banner ad opened.");
             }
 
             @Override
             public void onAdClicked() {
                 // Code to be executed when the user clicks on an ad.
-                Log.d(adTag,"Result banner ad clicked.");
-            }
-
-            @Override
-            public void onAdLeftApplication() {
-                // Code to be executed when the user has left the app.
-                Log.d(adTag,"User left application");
+                Log.d(adTag, "Result banner ad clicked.");
             }
 
             @Override
             public void onAdClosed() {
                 // Code to be executed when the user is about to return
                 // to the app after tapping on an ad.
-                Log.d(adTag,"User returned from ad.");
+                Log.d(adTag, "User returned from ad.");
             }
         });
     }
 
 
-
     //Set up view objects
     @SuppressLint("StringFormatMatches")
-    private void setupView(){
+    private void setupView() {
         //Setup refresher
         swipeLayout = getView().findViewById(R.id.swipeLayout);
         if (swipeLayout != null)
@@ -198,16 +195,15 @@ public class ResultsFragment extends Fragment {
                 @Override
                 public void onRefresh() {
                     // Check internet connection
-                    ConnectivityManager cm = (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                    ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
                     NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
                     boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-                    if(isConnected){
+                    if (isConnected) {
                         //Start load task
                         LoadProfileTask.loadProfileTask(getContext(),
                                 SessionManager.getInstance().getSessionToken(),
                                 ConstantValues.ACTION_REFRESH_RESULTS);
-                    }
-                    else {
+                    } else {
                         Snackbar.make(swipeLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
                         Log.d("CONNECTION", String.valueOf(isConnected));
                         swipeLayout.setRefreshing(false);
@@ -224,7 +220,6 @@ public class ResultsFragment extends Fragment {
                 llScoresContainer = getView().findViewById(R.id.llScoresContainer);
                 btnShowAd = getView().findViewById(R.id.button_get_ego);
                 tvRemainingRates = getView().findViewById(R.id.tvRatedResultPage);
-                ivShareResults = getView().findViewById(R.id.ivShareResults);
 
                 //Populate views
                 int remainingRates = 10 - (currentUser.getRated() + currentUser.getCredit());
@@ -236,15 +231,14 @@ public class ResultsFragment extends Fragment {
                 btnShowAd.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (rewardedAd.isLoaded()) {
+                        if (rewardedAd != null) {
                             // Check internet connection
-                            ConnectivityManager cm = (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                            ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
                             NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
                             boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-                            if(isConnected){
+                            if (isConnected) {
                                 showRewardedAd();
-                            }
-                            else {
+                            } else {
                                 Snackbar.make(swipeLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
                                 Log.d("CONNECTION", String.valueOf(isConnected));
                             }
@@ -264,12 +258,6 @@ public class ResultsFragment extends Fragment {
                         }
                     }
                 });
-                ivShareResults.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        shareTest();
-                    }
-                });
                 break;
 
             //All results
@@ -287,7 +275,6 @@ public class ResultsFragment extends Fragment {
                 tvPersonalityType.setTextColor(Color.parseColor(currentUser.getPersonality().getSecondary_color()));
 
                 tvPersonalityDescription.setText(currentUser.getPersonality().getDescription());
-                tvPersonalityDescription.setTextColor(Color.parseColor(currentUser.getPersonality().getSecondary_color()));
 
                 Picasso.get().load(currentUser.getPersonality().getImg_url()).into(ivPersonality);
 
@@ -297,6 +284,19 @@ public class ResultsFragment extends Fragment {
 
             //No results
             case NONE_TEST:
+                //No test
+                btnShowAd = getView().findViewById(R.id.button_get_ego);
+                btnCreateTest = getView().findViewById(R.id.btnCreateTest);
+
+                prepareBannerAd();
+                btnCreateTest.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        createTest();
+                    }
+                });
+                break;
+            case NONE:
                 //The test is exist
                 tvRemainingRates = getView().findViewById(R.id.tvRatedResultPage);
                 btnShowAd = getView().findViewById(R.id.button_get_ego);
@@ -304,7 +304,7 @@ public class ResultsFragment extends Fragment {
 
                 //Populate views
                 remainingRates = 5 - currentUser.getRated();
-                tvRemainingRates.setText( getString(R.string.remaining_credits, remainingRates) );
+                tvRemainingRates.setText(getString(R.string.remaining_credits, remainingRates));
                 prepareBannerAd();
                 btnShareTestResult.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -316,19 +316,6 @@ public class ResultsFragment extends Fragment {
                                     .setActionTextColor(getResources().getColor(R.color.materialLightPurple))
                                     .show();
                         }
-                    }
-                });
-                break;
-            case NONE:
-                //No test
-                btnShowAd = getView().findViewById(R.id.button_get_ego);
-                btnCreateTest = getView().findViewById(R.id.btnCreateTest);
-
-                prepareBannerAd();
-                btnCreateTest.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        createTest();
                     }
                 });
                 break;
@@ -351,20 +338,21 @@ public class ResultsFragment extends Fragment {
     }
 
     private void setSegoProgress(SegoProgressBar segoProgress, int leftPercent) {
-        segoProgress.setNewPercent(leftPercent, Math.abs(100-leftPercent));
+        segoProgress.setNewPercent(leftPercent, Math.abs(100 - leftPercent));
     }
 
-    private int getLeftPercent(double number){
-        return (int) Math.round(((number + 1)/2)*100);
+    private int getLeftPercent(double number) {
+        return (int) Math.round(((number + 1) / 2) * 100);
     }
 
     /**
      * It fills scores container
+     *
      * @param llScoresContainer
      * @param scores
      */
     private void fillScores(LinearLayout llScoresContainer, ArrayList<Score> scores) {
-        for (Score score: scores) {
+        for (Score score : scores) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             View score_row = inflater.inflate(R.layout.scores_list_row, null);
 
@@ -373,12 +361,12 @@ public class ResultsFragment extends Fragment {
             FrameLayout traitEmojiContainer = score_row.findViewById(R.id.imageViewContainer);
             ConstraintLayout clTraitRow = score_row.findViewById(R.id.clTraitRow);
 
-            if (score != null){
+            if (score != null) {
                 //Set name
                 traitNameView.setText(score.getTraitName());
                 //Load emoji
                 Uri myUrl = Uri.parse(EMOJI_END_POINT + score.getEmojiName());
-                GlideToVectorYou.justLoadImage((Activity) getContext(), myUrl , traitImage);
+                GlideToVectorYou.justLoadImage((Activity) getContext(), myUrl, traitImage);
             }
 
             //Set emoji container background
@@ -396,13 +384,12 @@ public class ResultsFragment extends Fragment {
     }
 
 
-
     //Set up refresh receiver
-    private void setupReceiver(){
+    private void setupReceiver() {
         resultsRefreshReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                int status = intent.getIntExtra("status",0);
+                int status = intent.getIntExtra("status", 0);
                 swipeLayout.setRefreshing(false);
 
                 //Update fragments
@@ -419,7 +406,7 @@ public class ResultsFragment extends Fragment {
             }
         };
         //TODO: Replace when new API package is developed
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(resultsRefreshReceiver,new IntentFilter(ConstantValues.ACTION_REFRESH_RESULTS));
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(resultsRefreshReceiver, new IntentFilter(ConstantValues.ACTION_REFRESH_RESULTS));
     }
 
     @Override
@@ -431,66 +418,56 @@ public class ResultsFragment extends Fragment {
     /**
      * Initializes and loads rewarded video ad.
      */
-    private void prepareRewardedAd(){
+    private void prepareRewardedAd() {
         final Context fragmentContext = getActivity();
-        if (fragmentContext==null) return;
+        if (fragmentContext == null) return;
+        RewardedAd.load(
+            fragmentContext,
+            getResources().getString(R.string.admob_ad_interface),
+            new AdRequest.Builder().build(),
+            new RewardedAdLoadCallback() {
+                @Override
+                public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                    super.onAdFailedToLoad(loadAdError);
+                    Log.d("Reward Ad", "Ad failed to load. Try again");
+                    rewardedAd = null;
+                }
 
-        this.rewardedAd = new RewardedAd(fragmentContext, getResources().getString(R.string.admob_ad_interface));
-        final RewardedAdLoadCallback adLoadCallback = new RewardedAdLoadCallback() {
-            @Override
-            public void onRewardedAdLoaded() {
-                // Ad successfully loaded.
-                Log.d("Reward Ad","Ad successfully loaded.");
+                @Override
+                public void onAdLoaded(@NonNull RewardedAd ad) {
+                    super.onAdLoaded(rewardedAd);
+                    Log.d("Reward Ad", "Ad successfully loaded.");
+                    rewardedAd = ad;
+                }
             }
-
-            @Override
-            public void onRewardedAdFailedToLoad(int errorCode) {
-                // Ad failed to load.
-                Log.d("Reward Ad","Ad failed to load. Try again");
-                //prepareRewardedAd();
-            }
-        };
-        rewardedAd.loadAd(new AdRequest.Builder().build(), adLoadCallback);
+        );
     }
 
     /**
      * Shows rewarded Ad and sets RewardAd callback. Calls reward task user if the user earned.
      */
-    private void showRewardedAd(){
+    private void showRewardedAd() {
         final String rewardCallbackTag = "RewardedAdCallback";
+        final Activity fragmentContext = getActivity();
+        if (fragmentContext == null) return;
         //Prepare rewarded ad callback
-        RewardedAdCallback rewardedAdCallback = new RewardedAdCallback() {
+        rewardedAd.show(fragmentContext, new OnUserEarnedRewardListener() {
             @Override
-            public void onRewardedAdOpened() {
-                Log.d(rewardCallbackTag,"Ad opened.");
-            }
-            @Override
-            public void onRewardedAdClosed() {
-                Log.d(rewardCallbackTag,"Ad closed.");
-            }
-            @Override
-            public void onUserEarnedReward(@NonNull RewardItem reward) {
-                Log.d(rewardCallbackTag,"User earned reward.");
+            public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
+                Log.d(rewardCallbackTag, "User earned reward.");
                 EarnRewardTask.EarnRewardTask(getContext(), sessionManager.getSessionToken());
-                Log.d("Reward",""+reward.getAmount());
             }
-            @Override
-            public void onRewardedAdFailedToShow(int errorCode) {
-                Log.d(rewardCallbackTag,"Ad failed to display.");
-            }
-        };
-        //Show rewarded ad
-        rewardedAd.show(getActivity(), rewardedAdCallback);
+        });
     }
 
 
     /**
      * Shows share test dialog
      */
-    private void shareTest(){
+    private void shareTest() {
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
-        String testUrl = String.format("https://insightof.me/%s", sessionManager.getUser().getTestId());
+        String testUrl = String.format(WEB_URL + "%s", sessionManager.getUser().getTestId());
         String shareBody = getString(R.string.body_share_test, testUrl);
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, R.string.action_btn_share_test);
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
@@ -500,14 +477,14 @@ public class ResultsFragment extends Fragment {
     /**
      * Shows share result dialog
      */
-    private void shareResults(){
+    private void shareResults() {
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
 
         String testResultId = SessionManager.getInstance().getUser().getTestResultId();
-        String testUrl = String.format("https://insightof.me/%s", sessionManager.getUser().getTestId());
+        String testUrl = String.format(WEB_URL + "%s", sessionManager.getUser().getTestId());
 
-        String shareBody = getString(R.string.body_share_results, testResultId+"\n", testUrl);
+        String shareBody = getString(R.string.body_share_results, WEB_URL + "result/" + testResultId + "\n", testUrl);
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, R.string.action_btn_share_results);
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
         startActivity(Intent.createChooser(sharingIntent, getString(R.string.action_btn_share_results)));
@@ -516,18 +493,17 @@ public class ResultsFragment extends Fragment {
     /**
      * Opens create test page
      */
-    private void createTest(){
-         //Check internet connection
-        ConnectivityManager cm = (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+    private void createTest() {
+        //Check internet connection
+        ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-        if(isConnected){
+        if (isConnected) {
             Intent addTestIntent = new Intent(getContext(), WebViewActivity.class);
             addTestIntent.putExtra("url", ConstantValues.CREATE_TEST);
             addTestIntent.putExtra("title", getString(R.string.activity_label_new_test));
             startActivity(addTestIntent);
-        }
-        else {
+        } else {
             Snackbar.make(swipeLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
             Log.d("CONNECTION", String.valueOf(isConnected));
         }

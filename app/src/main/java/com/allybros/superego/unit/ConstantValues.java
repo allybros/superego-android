@@ -7,9 +7,11 @@ public class ConstantValues {
     public static final int MAX_FILE_SIZE = 33177600;
 
     //Links
+    public static final String API_ROOT = "https://dev.allybros.com/superego-api/";
+    public static final String WEB_URL = "https://dev.allybros.com/superego-web/";
 
-//    public static final String API_ROOT =  "https://api.insightof.me/";
-    public static final String API_ROOT = " https://dev.allybros.com/superego-api/";
+    public static final String TWEMOJI_URL = "https://dev.allybros.com/twemoji";
+
     public static final String AVATAR_URL = API_ROOT + "images.php?get=";
 
 
@@ -25,11 +27,11 @@ public class ConstantValues {
     public static final String SEARCH_URL = API_ROOT +  "search.php?q=";
     public static final String PARAM_TEST = API_ROOT +  "param_test.php";
     public static final String PASSWORD_CHANGE = API_ROOT +  "reset-password.php";
-    public static final String CREATE_TEST = "https://insightof.me/create.php";
-    public static final String RATE_URL = "https://insightof.me/rate.php?embed=true&test=";
+    public static final String CREATE_TEST = WEB_URL + "new-test";
+    public static final String RATE_URL =  WEB_URL + "rate.php?embed=true&test=";
     public static final String LOGOUT_URL = API_ROOT + "logout.php";
 
-    public static final String EMOJI_END_POINT = API_ROOT + "twemoji/?name=";
+    public static final String EMOJI_END_POINT = TWEMOJI_URL + "?name=";
 
     //Broadcast-Reciever actions
     public static final String ACTION_UPDATE_INFORMATION ="update-info-status-share";

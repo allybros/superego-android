@@ -7,6 +7,8 @@
     android:layout_height="match_parent"
     android:background="@color/fragmentBackground"
     android:fillViewport="true"
+    android:clipToPadding="false"
+    android:clipChildren="false"
     android:scrollbars="vertical">
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/profileSwipeLayout"
@@ -21,8 +23,7 @@
                 android:id="@+id/constraintLayoutProfileContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/White"
-                android:paddingBottom="10dp">
+                android:background="@color/White">
 
                 <!--Renkli kısım-->
                 <View
@@ -51,9 +52,9 @@
                     android:id="@+id/clProfileCard"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="18dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="81dp"
-                    android:layout_marginEnd="18dp"
+                    android:layout_marginEnd="16dp"
                     android:background="@drawable/shape_card"
                     android:elevation="4dp"
                     android:translationZ="7dp"
@@ -93,125 +94,106 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tvUsername"/>
                     <!--Cards area-->
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/linearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/shape_card"
-                        android:layout_marginTop="12.5dp"
-                        android:paddingBottom="12.5dp"
-                        android:weightSum="2"
+                        android:layout_marginTop="17dp"
+                        android:paddingBottom="6dp"
                         app:layout_constraintTop_toBottomOf="@+id/tvUserbio">
 
                         <!--Rated area-->
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="0dp"
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/badgeRated"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/noto_sans"
+                        android:textColor="@color/deepBlue100"
+                        android:textSize="14sp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/view"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:text="10" />
+
+                        <ImageView
+                            android:layout_width="14dp"
+                            android:layout_height="18dp"
+                            android:layout_marginEnd="4dp"
+                            android:gravity="center_vertical"
+                            android:src="@drawable/ic_check_24"
+                            app:layout_constraintEnd_toStartOf="@+id/textView8"
+                            app:layout_constraintTop_toBottomOf="@+id/badgeRated"
+                            app:tint="@color/green3" />
+
+                        <TextView
+                            android:id="@+id/textView8"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/mini_card_bg"
-                            android:orientation="vertical">
+                            android:fontFamily="@font/noto_sans_bold"
+                            android:gravity="center_vertical"
+                            android:text="@string/rated"
+                            android:textColor="@color/green3"
+                            android:textFontWeight="800"
+                            android:textSize="12sp"
+                            app:layout_constraintEnd_toStartOf="@+id/view"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/badgeRated" />
 
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/badgeRated"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="10"
-                                android:textSize="14sp"
-                                android:fontFamily="@font/noto_sans"
-                                android:textColor="@color/deepBlue100"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"/>
+                        <View
+                            android:id="@+id/view"
+                            android:layout_width="1dp"
+                            android:layout_height="0dp"
+                            android:background="@color/transparent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/badgeRated">
-
-                                <ImageView
-                                    android:layout_width="12dp"
-                                    android:layout_height="12dp"
-                                    android:paddingTop="1dp"
-                                    android:src="@drawable/ic_baseline_done_24"
-                                    app:tint="@color/green3" />
-
-                                <TextView
-                                    android:id="@+id/textView8"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/noto_sans_bold"
-                                    android:textFontWeight="800"
-                                    android:text="@string/rated"
-                                    android:textColor="@color/green3"
-                                    android:textSize="10sp" />
-
-                            </LinearLayout>
-
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="0dp"
-                                android:background="#E0E0E0"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <!--Credit area-->
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="0dp"
+                        <TextView
+                            android:id="@+id/badgeCredit"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/mini_card_bg"
-                            android:gravity="center"
-                            android:orientation="vertical">
+                            android:fontFamily="@font/noto_sans"
+                            android:text="10"
+                            android:textColor="@color/deepBlue100"
+                            android:textSize="14sp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/view" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/view"
+                            app:layout_constraintTop_toBottomOf="@+id/badgeCredit">
+
+                            <ImageView
+                                android:layout_width="14dp"
+                                android:layout_height="18dp"
+                                android:layout_marginEnd="4dp"
+                                android:gravity="center_vertical"
+                                android:src="@drawable/ic_ego_logo"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@+id/textView5"
+                                app:tint="@color/segoPurple700" />
+
                             <TextView
-                                android:id="@+id/badgeCredit"
+                                android:id="@+id/textView5"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="10"
-                                android:textSize="14sp"
-                                android:fontFamily="@font/noto_sans"
-                                android:textColor="@color/deepBlue100"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent">
-                            </TextView>
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/badgeCredit">
-
-                                <ImageView
-                                    android:layout_width="12dp"
-                                    android:layout_height="12dp"
-                                    android:gravity="center_vertical"
-                                    android:src="@drawable/ic_baseline_done_24"
-                                    android:layout_marginEnd="4dp"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toStartOf="@+id/textView5"
-                                    app:tint="@color/segoPurple700" />
-
-                                <TextView
-                                    android:id="@+id/textView5"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/noto_sans_bold"
-                                    android:gravity="center_vertical"
-                                    android:textFontWeight="800"
-                                    android:text="@string/credit"
-                                    android:textColor="@color/segoPurple700"
-                                    android:textSize="10sp" />
-                            </LinearLayout>
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    </LinearLayout>
+                                android:fontFamily="@font/noto_sans_bold"
+                                android:gravity="center_vertical"
+                                android:text="@string/credit"
+                                android:textColor="@color/segoPurple700"
+                                android:textFontWeight="800"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <!--Profil Fotografı-->
@@ -235,41 +217,26 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="20dp"
                     android:background="@color/White"
+                    android:clipToPadding="false"
+                    android:clipChildren="false"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/clProfileCard">
 
+<!--                    Buttons-->
                     <LinearLayout
                         android:id="@+id/rowButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="18dp"
+                        android:layout_marginStart="16dp"
                         android:layout_marginTop="18dp"
-                        android:layout_marginEnd="18dp"
+                        android:layout_marginEnd="16dp"
                         android:clipToPadding="false"
+                        android:clipChildren="false"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
-
-
-<!--                        <Button-->
-<!--                            android:id="@+id/btnAddTest"-->
-<!--                            android:layout_width="0dp"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginEnd="12dp"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:background="@drawable/v_selector_btn_new_test"-->
-<!--                            android:drawableTop="@drawable/outline_add_white_36"-->
-<!--                            android:elevation="7dp"-->
-<!--                            android:outlineProvider="bounds"-->
-<!--                            android:paddingVertical="10dp"-->
-<!--                            android:fontFamily="@font/noto_sans"-->
-<!--                            android:stateListAnimator="@null"-->
-<!--                            android:text="@string/action_btn_new_test"-->
-<!--                            android:textAllCaps="false"-->
-<!--                            android:translationZ="2dp" />-->
-
 
                         <Button
                             android:id="@+id/btnShareTest"
@@ -308,205 +275,292 @@
                             android:textAllCaps="false" />
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/textView9"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
-                        android:fontFamily="@font/noto_sans"
-                        android:gravity="center_horizontal"
-                        android:text="Kişilik Tipi"
-                        android:textColor="@color/deepBlue100"
-                        android:textSize="22sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/rowButton" />
-
-<!--                    Empty Card-->
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/clInfoCard"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraintLayout"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginEnd="18dp"
-                        android:elevation="4dp"
-                        app:cardCornerRadius="11dp"
-                        tools:visibility="visible"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_height="match_parent"
+                        android:clipToPadding="false"
+                        android:clipChildren="false"
+                        android:paddingBottom="10dp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView9">
+                        app:layout_constraintTop_toBottomOf="@+id/rowButton">
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
+                        <TextView
+                            android:id="@+id/tvPersonalitySectionTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="12dp"
+                            android:fontFamily="@font/noto_sans"
+                            android:gravity="center_horizontal"
+                            android:text="@string/info_personality_type_title"
+                            android:textColor="@color/deepBlue100"
+                            android:textSize="22sp"
+                            tools:visibility="visible"
+                            android:visibility="gone"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <!--                    Empty Card-->
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/clShareTest"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/White"
-                            android:paddingBottom="10dp">
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="12dp"
+                            android:layout_marginEnd="18dp"
+                            android:elevation="4dp"
+                            app:cardCornerRadius="11dp"
+                            tools:visibility="visible"
+                            android:visibility="gone"
+                            android:clipToPadding="false"
+                            android:clipChildren="false"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tvPersonalitySectionTitle">
 
-                            <ImageView
-                                android:id="@+id/imageView5"
-                                android:layout_width="145dp"
-                                android:layout_height="145dp"
-                                android:layout_marginTop="12dp"
-                                android:layout_marginEnd="12sp"
-                                android:src="@drawable/ic_rates"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/White"
+                                android:clipToPadding="false"
+                                android:clipChildren="false">
+
+                                <ImageView
+                                    android:id="@+id/imageView5"
+                                    android:layout_width="145dp"
+                                    android:layout_height="145dp"
+                                    android:layout_marginTop="12dp"
+                                    android:layout_marginEnd="12sp"
+                                    android:src="@drawable/ic_no_result_info_card"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/tvProfileInfoCard"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="12dp"
+                                    android:layout_marginTop="36dp"
+                                    android:layout_marginEnd="12dp"
+                                    android:fontFamily="@font/noto_sans"
+                                    android:text="@string/info_profile_card"
+                                    android:textColor="@color/deepBlue100"
+                                    android:textSize="12sp"
+                                    app:layout_constraintEnd_toStartOf="@+id/imageView5"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <Button
+                                    android:id="@+id/btnInfoShare"
+                                    android:layout_width="0dp"
+                                    android:layout_height="36dp"
+                                    android:layout_marginTop="12dp"
+                                    android:background="@drawable/shape_share_button"
+                                    android:fontFamily="@font/noto_sans"
+                                    android:paddingHorizontal="24dp"
+                                    android:paddingVertical="8dp"
+                                    android:text="@string/action_btn_share_test"
+                                    android:textAllCaps="false"
+                                    android:textFontWeight="600"
+                                    app:layout_constraintEnd_toEndOf="@+id/tvProfileInfoCard"
+                                    app:layout_constraintStart_toStartOf="@+id/tvProfileInfoCard"
+                                    app:layout_constraintTop_toBottomOf="@+id/tvProfileInfoCard" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <!--                    Trait Card-->
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/clPersonalityCard"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="12dp"
+                            android:layout_marginEnd="18dp"
+                            android:elevation="4dp"
+                            app:cardCornerRadius="11dp"
+                            tools:visibility="visible"
+                            android:visibility="gone"
+                            android:clipToPadding="false"
+                            android:clipChildren="false"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/clShareTest">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/White"
+                                android:paddingBottom="10dp"
+                                android:clipToPadding="false"
+                                android:clipChildren="false">
+
+                                <ImageView
+                                    android:id="@+id/ivPersonalityCard"
+                                    android:layout_width="145dp"
+                                    android:layout_height="145dp"
+                                    android:layout_marginTop="12dp"
+                                    android:layout_marginEnd="12sp"
+                                    android:layout_marginBottom="12dp"
+                                    android:src="@drawable/ic_personality_card_placeholder"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/tvPersonalityCardTitle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="12dp"
+                                    android:layout_marginTop="12dp"
+                                    android:fontFamily="@font/noto_sans"
+                                    tools:text="Mimar"
+                                    android:textColor="#6cbe84"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/tvPersonalityCardShortName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="12dp"
+                                    android:layout_marginTop="4dp"
+                                    android:fontFamily="@font/noto_sans"
+                                    tools:text="INTP"
+                                    android:textColor="#424874"
+                                    android:textFontWeight="600"
+                                    android:textSize="14sp"
+                                    android:textStyle="normal"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/tvPersonalityCardTitle" />
+
+                                <TextView
+                                    android:id="@+id/tvPersonalityCardDescription"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="14dp"
+                                    android:layout_marginTop="4dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:fontFamily="@font/noto_sans"
+                                    tools:text="Mimar kişilik tipinin açıklaması burada yer alacaktır. Şu an da o açıklamayı yazıyorum."
+                                    android:textColor="@color/deepBlue100"
+                                    android:textSize="12sp"
+                                    app:layout_constraintEnd_toStartOf="@+id/ivPersonalityCard"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/tvPersonalityCardShortName" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </androidx.cardview.widget.CardView>
+
+<!--                        Create Test Section-->
+                        <LinearLayout
+                            android:id="@+id/llCreateTest"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginTop="12dp"
+                            tools:visibility="visible"
+                            android:visibility="gone"
+                            android:clipToPadding="false"
+                            android:clipChildren="false"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/clPersonalityCard">
 
                             <TextView
-                                android:id="@+id/tvProfileInfoCard"
-                                android:layout_width="0dp"
-                                android:layout_height="0dp"
-                                android:layout_marginStart="14dp"
-                                android:layout_marginTop="12dp"
-                                android:layout_marginEnd="10dp"
+                                android:id="@+id/tvCreateTest"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="16dp"
                                 android:fontFamily="@font/noto_sans"
-                                android:text="@string/info_profile_card"
+                                android:gravity="center_horizontal"
+                                android:text="@string/info_create_test_title"
                                 android:textColor="@color/deepBlue100"
-                                android:textSize="12sp"
-                                app:layout_constraintBottom_toTopOf="@+id/btnInfoShare"
-                                app:layout_constraintEnd_toStartOf="@+id/imageView5"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <Button
-                                android:id="@+id/btnInfoShare"
-                                android:layout_width="0dp"
-                                android:layout_height="32dp"
-                                android:layout_marginStart="12dp"
-                                android:layout_marginBottom="12dp"
-                                android:background="@drawable/shape_info_button"
-                                android:backgroundTint="@color/orange"
-                                android:fontFamily="@font/noto_sans"
-                                android:paddingHorizontal="22dp"
-                                android:paddingVertical="7dp"
-                                android:text="@string/action_btn_share_test"
-                                android:textAllCaps="false"
-                                android:textFontWeight="600"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-                    </androidx.cardview.widget.CardView>
-
-<!--                    Trait Card-->
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/clTraitCard"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginEnd="18dp"
-                        android:elevation="4dp"
-                        app:cardCornerRadius="11dp"
-                        tools:visibility="invisible"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView9">
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@color/White"
-                            android:paddingBottom="10dp">
-
-                            <ImageView
-                                android:id="@+id/ivTraitImage"
-                                android:layout_width="145dp"
-                                android:layout_height="145dp"
-                                android:layout_marginTop="12dp"
-                                android:layout_marginEnd="12sp"
-                                android:src="@drawable/ic_rates"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <TextView
-                                android:id="@+id/tvTraitNameShort"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="12dp"
-                                android:layout_marginTop="4dp"
-                                android:fontFamily="@font/noto_sans"
-                                android:textColor="#424874"
-                                android:textFontWeight="600"
-                                android:textSize="14sp"
-                                android:textStyle="normal"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/tvTraitName"
-                                android:text="INTP" />
-
-                            <TextView
-                                android:id="@+id/tvTraitName"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="12dp"
-                                android:layout_marginTop="12dp"
-                                android:fontFamily="@font/noto_sans"
-                                android:textColor="#6cbe84"
-                                android:textSize="20sp"
+                                android:textSize="22sp"
                                 android:textStyle="bold"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                android:text="Mimar" />
+                                app:layout_constraintTop_toTopOf="parent" />
 
-                            <TextView
-                                android:id="@+id/tvTraitText"
-                                android:layout_width="0dp"
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/clCreateTest"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="14dp"
-                                android:layout_marginTop="4dp"
-                                android:layout_marginEnd="10dp"
-                                android:fontFamily="@font/noto_sans"
-                                android:text="Mimar kişilik tipinin açıklaması burada yer alacaktır. Şu an da o açıklamayı yazıyorum."
-                                android:textColor="@color/deepBlue100"
-                                android:textSize="12sp"
-                                app:layout_constraintBottom_toTopOf="@+id/btTraitLink"
-                                app:layout_constraintEnd_toStartOf="@+id/ivTraitImage"
+                                android:elevation="4dp"
+                                app:cardCornerRadius="11dp"
+                                android:paddingBottom="12dp"
+                                android:layout_marginHorizontal="16dp"
+                                android:layout_marginBottom="12dp"
+                                android:layout_marginTop="8dp"
+                                app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/tvTraitNameShort" />
+                                app:layout_constraintTop_toBottomOf="@+id/clShareTest">
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
 
-                            <Button
-                                android:id="@+id/btTraitLink"
-                                android:layout_width="wrap_content"
-                                android:layout_height="32dp"
-                                android:layout_marginStart="12dp"
-                                android:layout_marginTop="13dp"
-                                android:background="@drawable/shape_info_button"
-                                android:backgroundTint="@color/green4"
-                                android:fontFamily="@font/noto_sans"
-                                android:paddingHorizontal="22dp"
-                                android:paddingVertical="7dp"
-                                android:text="@string/action_read_more"
-                                android:textAllCaps="false"
-                                android:textFontWeight="600"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/tvTraitText" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-                    </androidx.cardview.widget.CardView>
+                                    <TextView
+                                        android:id="@+id/tvCreateTestInfo"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/noto_sans"
+                                        android:text="@string/info_create_test_description"
+                                        android:textColor="@color/deepBlue100"
+                                        android:textSize="12sp"
+                                        android:layout_marginVertical="12dp"
+                                        android:layout_marginHorizontal="12dp"
+                                        app:layout_constraintEnd_toStartOf="@+id/btnCreateTest"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintBottom_toBottomOf="parent"/>
 
-                    <FrameLayout
-                        android:id="@+id/ProfileCardAd"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="18dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginEnd="18dp"
-                        android:layout_marginBottom="12dp"
-                        android:background="@drawable/shape_card"
-                        android:elevation="4dp"
-                        android:visibility="visible"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/clInfoCard">
+                                    <Button
+                                        android:id="@+id/btnCreateTest"
+                                        android:layout_width="0dp"
+                                        android:layout_height="36dp"
+                                        android:layout_marginTop="12dp"
+                                        android:background="@drawable/shape_create_test"
+                                        android:fontFamily="@font/noto_sans"
+                                        android:paddingHorizontal="24dp"
+                                        android:paddingVertical="8dp"
+                                        android:layout_margin="12dp"
+                                        android:text="@string/action_create_test"
+                                        android:textAllCaps="false"
+                                        android:textFontWeight="600"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        app:layout_constraintStart_toEndOf="@id/tvCreateTestInfo"
+                                        app:layout_constraintEnd_toEndOf="parent"/>
+                                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                        <com.google.android.gms.ads.AdView
-                            android:id="@+id/profileBannerAdd"
+
+                            </androidx.cardview.widget.CardView>
+
+                        </LinearLayout>
+
+
+                        <FrameLayout
+                            android:id="@+id/ProfileCardAd"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:adSize="LARGE_BANNER"
-                            app:adUnitId="@string/admob_profile_banner" />
-                    </FrameLayout>
+                            android:layout_marginStart="18dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="18dp"
+                            android:clipToPadding="false"
+                            android:clipChildren="false"
+                            android:background="@drawable/shape_card"
+                            android:elevation="4dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/llCreateTest">
+                            <com.google.android.gms.ads.AdView
+                                android:id="@+id/profileBannerAdd"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:adSize="LARGE_BANNER"
+                                app:adUnitId="@string/admob_profile_banner" />
+                        </FrameLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

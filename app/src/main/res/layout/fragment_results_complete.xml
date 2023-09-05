@@ -5,7 +5,7 @@
     android:id="@+id/result_frame_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fragmentBackground"
+    android:background="@color/White"
     tools:context=".fragment.ResultsFragment">
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeLayout"
@@ -105,7 +105,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/noto_sans"
-                            android:textColor="@color/Gray100"
+                            android:textColor="@color/deepBlue100"
                             android:textSize="12sp"
                             android:layout_marginStart="12dp"
                             android:layout_marginTop="8dp"

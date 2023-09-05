@@ -41,7 +41,7 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvStartPercent"
         android:layout_width="wrap_content"
-        android:layout_height="16dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:layout_marginEnd="6dp"
         android:fontFamily="@font/noto_sans_bold"
@@ -77,7 +77,7 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvEndPercent"
         android:layout_width="wrap_content"
-        android:layout_height="16dp"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/noto_sans_bold"
         android:textSize="12sp"
         android:layout_marginEnd="12dp"
@@ -87,7 +87,4 @@
         app:layout_constraintStart_toEndOf="@id/ivProgressBar"
         app:layout_constraintTop_toBottomOf="@+id/tvHeaderLabel"
         tools:text="%56" />
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
