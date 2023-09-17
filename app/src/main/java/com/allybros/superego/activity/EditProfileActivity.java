@@ -14,6 +14,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -28,13 +29,11 @@ import com.allybros.superego.api.ChangeInfoTask;
 import com.allybros.superego.api.ImageChangeTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
+import com.allybros.superego.util.InputMethodWatcher;
 import com.allybros.superego.util.SessionManager;
+import com.allybros.superego.widget.SegoEditText;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
-import com.r0adkll.slidr.Slidr;
-import com.r0adkll.slidr.model.SlidrInterface;
 import com.squareup.picasso.Picasso;
 import java.io.IOException;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -45,7 +44,8 @@ import static com.allybros.superego.util.HelperMethods.imageToString;
 public class EditProfileActivity extends AppCompatActivity {
     private MaterialProgressBar progressEditProfile;
     private ConstraintLayout cardFormEditProfile;
-    private EditText username,email,information;
+    private SegoEditText username, email;
+    private EditText information;
     private ImageView ivChangeAvatar, ivBack;
     private TextView tvOptionsTitle;
     private CircleImageView settingsImage;
@@ -55,7 +55,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private Button btnSaveProfile;
     private final int IMG_REQUEST=1;    //Needs for image selection from local storage
 
-
+    private InputMethodWatcher inputMethodWatcher;
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +65,7 @@ public class EditProfileActivity extends AppCompatActivity {
         setupReceivers();
         setupUi();
         setupTextWatchers();
+        initInputMethodWatcher();
     }
 
     private void initializeComponents(){
@@ -207,6 +208,11 @@ public class EditProfileActivity extends AppCompatActivity {
         btnSaveProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (inputMethodWatcher.isKeyboardShown()){
+                    Log.d("Page changed", "Hide soft keyboard");
+                    inputMethodWatcher.hideSoftKeyboard();
+                }
+
                 // Check internet connection
                 ConnectivityManager cm = (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
@@ -312,12 +318,16 @@ public class EditProfileActivity extends AppCompatActivity {
     private void setProgressVisibility(boolean visible){
         if (visible) {
             progressEditProfile.setVisibility(View.VISIBLE);
-            cardFormEditProfile.setAlpha(0.5f);
+            username.setEnabled(false);
+            email.setEnabled(false);
+            information.setEnabled(false);
             btnSaveProfile.setEnabled(false);
         } else {
             progressEditProfile.setVisibility(View.INVISIBLE);
-            cardFormEditProfile.setAlpha(1f);
-            btnSaveProfile.setEnabled(true);;
+            username.setEnabled(true);
+            email.setEnabled(true);
+            information.setEnabled(true);
+            btnSaveProfile.setEnabled(true);
         }
     }
 
@@ -342,13 +352,12 @@ public class EditProfileActivity extends AppCompatActivity {
         }
     }
 
-    private void setError(EditText editText, String errorMessage) {
-        editText.setHint(errorMessage);
-        editText.setBackground(getDrawable(R.drawable.et_error_background));
+    private void setError(SegoEditText segoEditText, String errorMessage) {
+        segoEditText.setError(errorMessage);
     }
 
-    private void clearError(EditText editText) {
-        editText.setBackground(getDrawable(R.drawable.et_background));
+    private void clearError(SegoEditText segoEditText) {
+        segoEditText.clearError();
     }
 
     @Override
@@ -362,5 +371,13 @@ public class EditProfileActivity extends AppCompatActivity {
 
     public void onBackPressed(View view) {
         onBackPressed();
+    }
+
+    /**
+     * Initializes input method watcher for detecting virtual keyboard.
+     */
+    private void initInputMethodWatcher(){
+        View contentRoot = ((ViewGroup) findViewById(R.id.editProfileLayout)).getChildAt(0);
+        inputMethodWatcher = new InputMethodWatcher(contentRoot);
     }
 }

@@ -11,10 +11,11 @@
     <color name="White">#ffffff</color>
     <color name="transparent">#00000000</color>
     <color name="red">#FF0202</color>
+    <color name="seperator">#26000000</color>
 
     <!--Component Colors-->
     <color name="bgBottomNavigation">#FAFAFA</color>
-    <color name="bgNavigationItemActive">#9B51E0</color>
+    <color name="bgNavigationItemActive">#553C8B</color>
     <color name="bgNavigationItemPassive">#BDBDBD</color>
     <color name="statusbarPurple">#454278</color>
 

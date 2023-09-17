@@ -1,5 +1,6 @@
 package com.allybros.superego.widget;
 
+import android.animation.Animator;
 import android.animation.LayoutTransition;
 import android.app.Activity;
 import android.content.Context;
@@ -21,6 +22,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
 import com.allybros.superego.R;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 
 /**
  * Created by orcunk on 13.12.2021 22:10
@@ -28,7 +31,7 @@ import com.allybros.superego.R;
 public class SegoEditText extends ConstraintLayout {
 
     private ConstraintLayout rlRoot;
-    private TextView tvHeader;
+    private TextView tvHeader, tvError;
     private EditText et;
     private ImageView ivEnd;
     private boolean isPasswordArea = false;
@@ -41,6 +44,8 @@ public class SegoEditText extends ConstraintLayout {
     private int inputTextColor = getResources().getColor(R.color.Black);
     @Dimension
     private int inputTextSize =13;
+
+    boolean isErrorVisible = false;
 
     public SegoEditText(Context context) {
         super(context);
@@ -98,6 +103,7 @@ public class SegoEditText extends ConstraintLayout {
         et = findViewById(R.id.et);
         ivEnd = findViewById(R.id.ivEnd);
         tvHeader = findViewById(R.id.tvHeader);
+        tvError = findViewById(R.id.tvError);
         initViews();
         getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);
     }
@@ -107,6 +113,7 @@ public class SegoEditText extends ConstraintLayout {
         if(getLayoutTransition() == null){
             setLayoutTransition(new LayoutTransition());
         }
+        YoYo.with(Techniques.SlideOutDown).duration(0).playOn(tvError);
         setPasswordView(isPasswordArea);
         setHeaderText(headerText);
         setHeaderTextColor(headerTextColor);
@@ -135,6 +142,8 @@ public class SegoEditText extends ConstraintLayout {
         tvHeader.setText(headerText);
     }
 
+    public void setText(String text) { et.setText(text); }
+
     public void setPasswordView(boolean isPasswordArea) {
         if(isPasswordArea){
             ivEnd.setVisibility(View.VISIBLE);
@@ -162,15 +171,27 @@ public class SegoEditText extends ConstraintLayout {
         }
     }
 
-    public void setError(String errorMessage, Activity activity) {
-        Bubble bubble = new Bubble(errorMessage, activity, null, null, null, null);
-        bubble.showBubble(et);
-        et.setHint(errorMessage);
-        et.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.et_error_background));
+    public void setError(String errorMessage) {
+        if (!isErrorVisible) {
+            et.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.et_error_background));
+            tvError.setText(errorMessage);
+            tvError.setVisibility(VISIBLE);
+            YoYo.with(Techniques.SlideInDown).duration(450).playOn(tvError);
+            isErrorVisible = true;
+        }
     }
 
     public void clearError() {
-        et.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.et_background));
+        if (isErrorVisible){
+            et.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.et_background));
+            YoYo.with(Techniques.SlideOutUp).duration(450).onEnd(new YoYo.AnimatorCallback() {
+                @Override
+                public void call(Animator animator) {
+                    tvError.setVisibility(GONE);
+                    isErrorVisible = false;
+                }
+            }).playOn(tvError);
+        }
     }
 
     public String getText(){

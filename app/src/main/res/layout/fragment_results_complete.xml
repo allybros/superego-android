@@ -121,6 +121,7 @@
                             android:layout_height="@dimen/image_result_page_personality_size"
                             android:layout_marginTop="16dp"
                             android:layout_marginEnd="16dp"
+                            android:src="@drawable/ic_personality_card_placeholder"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 

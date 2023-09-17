@@ -4,6 +4,7 @@ package com.allybros.superego.fragment;
 import static com.allybros.superego.unit.ConstantValues.WEB_URL;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -14,6 +15,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -40,6 +42,7 @@ import com.allybros.superego.api.LoadProfileTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.util.SessionManager;
+import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -147,7 +150,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void setupPersonalityCard() {
-        Picasso.get().load(sessionManager.getUser().getPersonality().getImg_url()).into(ivPersonalityCard);
+        GlideToVectorYou.justLoadImage((Activity) getContext(), Uri.parse(sessionManager.getUser().getPersonality().getImg_url()), ivPersonalityCard);
         tvPersonalityCardTitle.setText(sessionManager.getUser().getPersonality().getTitle());
         tvPersonalityCardShortName.setText(sessionManager.getUser().getPersonality().getType());
         tvPersonalityCardDescription.setText(sessionManager.getUser().getPersonality().getDescription());

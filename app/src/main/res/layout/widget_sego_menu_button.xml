@@ -16,19 +16,20 @@
             android:background="@drawable/selector_card"
             android:clickable="true"
             android:focusable="true">
+
             <TextView
                 android:id="@+id/tvButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="19dp"
                 android:fontFamily="@font/noto_sans_bold"
                 android:text="@string/option_edit_profile"
                 android:textColor="@color/segoPurple600"
-                android:textSize="20sp"
                 android:textFontWeight="600"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/ivButton"
                 app:layout_constraintStart_toEndOf="@+id/ivButton"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/ivButton" />
 
             <ImageView
                 android:id="@+id/ivButton"

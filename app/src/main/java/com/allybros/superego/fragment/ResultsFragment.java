@@ -13,6 +13,7 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -47,26 +48,20 @@ import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.unit.Ocean;
 import com.allybros.superego.unit.Score;
 import com.allybros.superego.unit.User;
-import com.allybros.superego.adapter.ScoresAdapter;
 import com.allybros.superego.util.SessionManager;
 import com.allybros.superego.widget.SegoProgressBar;
 import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.FullScreenContentCallback;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.OnPaidEventListener;
 import com.google.android.gms.ads.OnUserEarnedRewardListener;
-import com.google.android.gms.ads.ResponseInfo;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
-import com.google.android.gms.ads.rewarded.OnAdMetadataChangedListener;
 import com.google.android.gms.ads.rewarded.RewardItem;
 import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
-import com.google.android.gms.ads.rewarded.ServerSideVerificationOptions;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
@@ -84,8 +79,6 @@ public class ResultsFragment extends Fragment {
     private AdView adResultBanner;
     private Button btnShowAd, btnShareTestResult, btnCreateTest;
     private RewardedAd rewardedAd;
-
-    ScoresAdapter clearHelper;
 
     private ImageView ivShareResults;
 
@@ -267,6 +260,7 @@ public class ResultsFragment extends Fragment {
                 TextView tvPersonalityType = getView().findViewById(R.id.tvPersonalityType);
                 TextView tvPersonalityDescription = getView().findViewById(R.id.tvPersonalityDescription);
                 ImageView ivPersonality = getView().findViewById(R.id.ivPersonality);
+                ImageView ivShareResults = getView().findViewById(R.id.ivShareResults);
 
                 tvPersonalityTitle.setText(currentUser.getPersonality().getTitle());
                 tvPersonalityTitle.setTextColor(Color.parseColor(currentUser.getPersonality().getPrimary_color()));
@@ -276,10 +270,17 @@ public class ResultsFragment extends Fragment {
 
                 tvPersonalityDescription.setText(currentUser.getPersonality().getDescription());
 
-                Picasso.get().load(currentUser.getPersonality().getImg_url()).into(ivPersonality);
+                GlideToVectorYou.justLoadImage((Activity) getContext(), Uri.parse(currentUser.getPersonality().getImg_url()), ivPersonality);
 
                 fillScores(llScoresContainer, currentUser.getScores());
                 fillOcean(currentUser.getOcean());
+                ivShareResults.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        shareResults();
+                    }
+                });
+
                 break;
 
             //No results

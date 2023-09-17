@@ -280,11 +280,15 @@ public class ChangePasswordActivity extends AppCompatActivity {
     private void setProgressVisibility(boolean visible) {
         if (visible) {
             progressChangePassword.setVisibility(View.VISIBLE);
-            cardFormChangePassword.setAlpha(0.5f);
+            etOldPassword.setEnabled(false);
+            etNewPassword.setEnabled(false);
+            etNewPasswordAgain.setEnabled(false);
             btChangePassword.setEnabled(false);
         } else {
             progressChangePassword.setVisibility(View.INVISIBLE);
-            cardFormChangePassword.setAlpha(1f);
+            etOldPassword.setEnabled(true);
+            etNewPassword.setEnabled(true);
+            etNewPasswordAgain.setEnabled(true);
             btChangePassword.setEnabled(true);
         }
     }

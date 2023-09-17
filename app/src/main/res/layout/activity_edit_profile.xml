@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/editProfileLayout"
+<androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/editProfileLayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <View
         android:id="@+id/vRectengle"
@@ -75,65 +75,33 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvOptionsTitle">
 
-
-                <TextView
-                    android:id="@+id/textInputUsername"
+                <com.allybros.superego.widget.SegoEditText
+                    android:id="@+id/etUsername"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginTop="61dp"
-                    android:textColor="@color/segoPurple600"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="@string/hint_change_info_username"
+                    app:sego_header_text="@string/hint_change_info_username"
+                    app:sego_header_text_color="@color/segoPurple600"
+                    app:sego_input_text_color="@color/Black"
+                    tools:layout_height="60dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"/>
 
-                <EditText
-                    android:id="@+id/etUsername"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/et_background"
-                    android:padding="8dp"
-                    android:inputType="text"
-                    android:fontFamily="@font/noto_sans"
-                    android:layout_marginStart="20dp"
-                    android:textSize="13sp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginEnd="20dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputUsername" />
-
-
-                <TextView
-                    android:id="@+id/textInputEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="20dp"
-                    android:layout_marginTop="8dp"
-                    android:textColor="@color/segoPurple600"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="@string/hint_change_info_email"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/etUsername" />
-
-                <EditText
+                <com.allybros.superego.widget.SegoEditText
                     android:id="@+id/etEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/et_background"
-                    android:padding="8dp"
-                    android:inputType="textEmailAddress"
-                    android:fontFamily="@font/noto_sans"
-                    android:textSize="13sp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginEnd="20dp"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="16dp"
+                    app:sego_header_text="@string/hint_change_info_email"
+                    app:sego_header_text_color="@color/segoPurple600"
+                    app:sego_input_text_color="@color/Black"
+                    tools:layout_height="60dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputEmail" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/etUsername"/>
 
 
                 <TextView

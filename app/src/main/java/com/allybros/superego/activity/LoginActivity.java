@@ -88,9 +88,11 @@ public class LoginActivity extends AppCompatActivity {
                 switch (status){
 
                     case ErrorCodes.SYSFAIL:
+                        //TODO: We should write something
+                        break;
                     case ErrorCodes.CAPTCHA_REQUIRED:
-                        etUid.setError(" ", activity);
-                        etPassword.setError(getString(R.string.error_login_failed), activity);
+                        etUid.setError(getString(R.string.error_login_failed));
+                        etPassword.setError(getString(R.string.error_login_failed));
                         break;
 
                     case ErrorCodes.SUSPEND_SESSION:
@@ -198,10 +200,10 @@ public class LoginActivity extends AppCompatActivity {
                 etUid.clearError();
 
             if(etUid.getText().isEmpty()){
-                etUid.setError(getString(R.string.error_username_empty), activity);
+                etUid.setError(getString(R.string.error_username_empty));
             }
             if(etPassword.getText().isEmpty()){
-                etPassword.setError(getString(R.string.error_password_empty), activity);
+                etPassword.setError(getString(R.string.error_password_empty));
             }
             if(!etPassword.getText().isEmpty() && !etUid.getText().toString().isEmpty()){
                 setProgress(true);
@@ -209,8 +211,6 @@ public class LoginActivity extends AppCompatActivity {
             }
             }
         });
-
-
 
         etPassword.addTextChangedListener(new TextWatcher() {
             @Override
@@ -226,10 +226,31 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if(s.toString().isEmpty()){
-                    etPassword.setError(getString(R.string.error_password_empty), activity);
+                    etPassword.setError(getString(R.string.error_password_empty));
                 } else {
                     etPassword.clearError();
                 }
+            }
+        });
+
+        etUid.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                //this method is empty
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //this method is empty
+                if(s.toString().isEmpty()) {
+                    etUid.setError(getString(R.string.error_username_empty));
+                } else {
+                    etUid.clearError();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
 
             }
         });

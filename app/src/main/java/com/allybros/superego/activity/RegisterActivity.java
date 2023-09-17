@@ -115,23 +115,23 @@ public class RegisterActivity extends AppCompatActivity {
                         break;
 
                     case ErrorCodes.USERNAME_NOT_LEGAL:
-                        etRegisterUsername.setError(getString(R.string.error_username_not_legal), activity);
+                        etRegisterUsername.setError(getString(R.string.error_username_not_legal));
                         break;
 
                     case ErrorCodes.USERNAME_ALREADY_EXIST:
-                        etRegisterUsername.setError(getString(R.string.error_username_taken), activity);
+                        etRegisterUsername.setError(getString(R.string.error_username_taken));
                         break;
 
                     case ErrorCodes.EMAIL_ALREADY_EXIST:
-                        etRegisterMail.setError(getString(R.string.error_email_already_exist), activity);
+                        etRegisterMail.setError(getString(R.string.error_email_already_exist));
                         break;
 
                     case ErrorCodes.EMAIL_NOT_LEGAL:
-                        etRegisterMail.setError(getString(R.string.error_email_not_legal), activity);
+                        etRegisterMail.setError(getString(R.string.error_email_not_legal));
                         break;
 
                     case ErrorCodes.PASSWORD_NOT_LEGAL:
-                        etRegisterPassword.setError(getString(R.string.error_password_not_legal), activity);
+                        etRegisterPassword.setError(getString(R.string.error_password_not_legal));
                         break;
                 }
             }
@@ -179,15 +179,15 @@ public class RegisterActivity extends AppCompatActivity {
 
                 //Validate fields
                 if (usernameInput.isEmpty()){
-                    etRegisterUsername.setError(getResources().getString(R.string.error_username_empty), activity);
+                    etRegisterUsername.setError(getResources().getString(R.string.error_username_empty));
                 }
 
                 if (emailInput.isEmpty()){
-                    etRegisterMail.setError(getResources().getString(R.string.error_email_empty), activity);
+                    etRegisterMail.setError(getResources().getString(R.string.error_email_empty));
                 }
 
                 if (passwordInput.isEmpty()){
-                    etRegisterPassword.setError(getResources().getString(R.string.error_password_empty), activity);
+                    etRegisterPassword.setError(getResources().getString(R.string.error_password_empty));
                 }
 
                 if (!conditions){
@@ -234,11 +234,52 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if(s.toString().isEmpty()){
-                    etRegisterPassword.setError(getString(R.string.error_password_empty), activity);
+                    etRegisterPassword.setError(getString(R.string.error_password_empty));
                 } else {
                     etRegisterPassword.clearError();
                 }
+            }
+        });
+        etRegisterMail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                //this method is empty
+            }
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //this method is empty
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                //this method is empty
+                if(s.toString().isEmpty()){
+                    etRegisterMail.setError(getResources().getString(R.string.error_email_empty));
+                } else {
+                    etRegisterMail.clearError();
+                }
+            }
+        });
+        etRegisterUsername.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                //this method is empty
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //this method is empty
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                //this method is empty
+                if(s.toString().isEmpty()){
+                    etRegisterUsername.setError(getResources().getString(R.string.error_username_empty));
+                } else {
+                    etRegisterUsername.clearError();
+                }
             }
         });
 
