@@ -65,7 +65,7 @@ public class SessionManager {
         // Clear data from device
         SharedPreferences pref = context.getSharedPreferences(USER_INFORMATION_PREF, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
-        editor.clear().apply();
+        editor.clear().commit();
     }
 
     public User getUser() {

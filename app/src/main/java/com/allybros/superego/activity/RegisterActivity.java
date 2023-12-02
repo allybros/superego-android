@@ -103,7 +103,7 @@ public class RegisterActivity extends AppCompatActivity {
                 switch (status) {
                     case ErrorCodes.SUCCESS:
                         //Auto Login User
-                        LoginTask.loginTask(getApplicationContext(), usernameInput, passwordInput);
+                        LoginTask.loginTask(getApplicationContext(), activity.usernameInput, activity.passwordInput);
                         setProgress(true);
                         break;
                     case ErrorCodes.SYSFAIL:
@@ -200,7 +200,10 @@ public class RegisterActivity extends AppCompatActivity {
                         && conditions) {
                     Log.d("Register request send","Register request send");
                     setProgress(true);
-                    RegisterTask.registerTask(getApplicationContext(), etRegisterUsername.getText().toString(), etRegisterMail.getText().toString(), etRegisterPassword.getText().toString(), true);
+                    RegisterTask.registerTask(getApplicationContext(), etRegisterUsername.getText(), etRegisterMail.getText(), etRegisterPassword.getText(), true);
+                    etRegisterUsername.setText("");
+                    etRegisterMail.setText("");
+                    etRegisterPassword.setText("");
                 }
 
             }
@@ -431,5 +434,12 @@ public class RegisterActivity extends AppCompatActivity {
                     })
                     .show();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(registerReceiver);
+        LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(autoLoginReceiver);
+        super.onDestroy();
     }
 }
