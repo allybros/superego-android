@@ -5,27 +5,253 @@
     android:id="@+id/result_frame_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fragmentBackground"
+    android:background="@color/White"
     tools:context=".fragment.ResultsFragment">
-
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-            <ListView
-                android:id="@+id/listViewTraits"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clickable="false"
-                android:divider="@null"
-                android:dividerHeight="0dp"
-                android:paddingTop="12dp"
-                android:scrollingCache="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_height="wrap_content">
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clPersonalityTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvHeaderPersonalityTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:fontFamily="@font/noto_sans_bold"
+                        android:text="@string/header_result_page_personality_title"
+                        android:textColor="@color/deepBlue100"
+                        android:textSize="30sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/ivShareResults"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <ImageView
+                        android:id="@+id/ivShareResults"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/baseline_share_24"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvPersonality"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:elevation="7dp"
+                    app:cardCornerRadius="11dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/clPersonalityTitle">
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="12dp">
+
+                        <TextView
+                            android:id="@+id/tvPersonalityTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/noto_sans_bold"
+                            android:textColor="@color/deepBlue100"
+                            android:textSize="24sp"
+                            android:textStyle="bold"
+                            tools:text="Mimar"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginTop="12dp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/tvPersonalityType"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/noto_sans"
+                            android:textColor="@color/deepBlue100"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            tools:text="INTJ"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginTop="8dp"
+                            app:layout_constraintTop_toBottomOf="@+id/tvPersonalityTitle"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/tvPersonalityDescription"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/noto_sans"
+                            android:textColor="@color/deepBlue100"
+                            android:textSize="12sp"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="2dp"
+                            app:layout_constraintEnd_toStartOf="@+id/ivPersonality"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tvPersonalityType"
+                            tools:text="Mimar kişilik tipinin açıklaması burada yer alacaktır. Şu an da o açıklamayı yazıyorum." />
+
+                        <ImageView
+                            android:id="@+id/ivPersonality"
+                            android:layout_width="@dimen/image_result_page_personality_size"
+                            android:layout_height="@dimen/image_result_page_personality_size"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:src="@drawable/ic_personality_card_placeholder"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.allybros.superego.widget.SegoProgressBar
+                            android:id="@+id/segoProgressO"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tvPersonalityDescription"
+                            app:sego_progress_bar_color="@color/progressPassive"
+                            app:sego_progress_color="@color/progressGreen"
+                            app:sego_progress_end_percent="50"
+                            app:sego_progress_header_label="@string/label_openness"
+                            app:sego_progress_start_label="@string/label_openness_left"
+                            app:sego_progress_end_label="@string/label_openness_right"/>
+
+                        <com.allybros.superego.widget.SegoProgressBar
+                            android:id="@+id/segoProgressC"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:sego_progress_bar_color="@color/progressPassive"
+                            app:sego_progress_color="@color/progressOrange"
+                            app:sego_progress_end_percent="50"
+                            app:sego_progress_header_label="@string/label_conscientiousness"
+                            app:sego_progress_start_label="@string/label_conscientiousness_left"
+                            app:sego_progress_end_label="@string/label_conscientiousness_right"
+                            app:sego_progress_start_percent="50"
+                            tools:layout_height="60dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/segoProgressO" />
+
+                        <com.allybros.superego.widget.SegoProgressBar
+                            android:id="@+id/segoProgressE"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:sego_progress_bar_color="@color/progressPassive"
+                            app:sego_progress_color="@color/progressBlue"
+                            app:sego_progress_end_percent="50"
+                            app:sego_progress_header_label="@string/label_extraversion"
+                            app:sego_progress_start_label="@string/label_extraversion_left"
+                            app:sego_progress_end_label="@string/label_extraversion_right"
+                            app:sego_progress_start_percent="50"
+                            tools:layout_height="60dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/segoProgressC" />
+
+                        <com.allybros.superego.widget.SegoProgressBar
+                            android:id="@+id/segoProgressA"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:sego_progress_bar_color="@color/progressPassive"
+                            app:sego_progress_color="@color/progressRed"
+                            app:sego_progress_end_percent="50"
+                            app:sego_progress_header_label="@string/label_agreeableness"
+                            app:sego_progress_start_label="@string/label_agreeableness_left"
+                            app:sego_progress_end_label="@string/label_agreeableness_right"
+                            app:sego_progress_start_percent="50"
+                            tools:layout_height="60dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/segoProgressE" />
+
+                        <com.allybros.superego.widget.SegoProgressBar
+                            android:id="@+id/segoProgressN"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginEnd="12dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/segoProgressA"
+                            app:sego_progress_bar_color="@color/progressPassive"
+                            app:sego_progress_color="@color/progressPurple"
+                            app:sego_progress_end_percent="50"
+                            app:sego_progress_header_label="@string/label_neuroticism"
+                            app:sego_progress_start_label="@string/label_neuroticism_left"
+                            app:sego_progress_end_label="@string/label_neuroticism_right"
+                            app:sego_progress_start_percent="50"
+                            tools:layout_height="60dp" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clTraitTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cvPersonality">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvHeaderPoints"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="4dp"
+                        android:fontFamily="@font/noto_sans_bold"
+                        android:text="@string/header_result_page_title"
+                        android:textColor="@color/deepBlue100"
+                        android:textSize="30sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:id="@+id/llScoresContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="6dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:listitem="@layout/scores_list_row"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toBottomOf="@+id/clTraitTitle"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
 </FrameLayout>

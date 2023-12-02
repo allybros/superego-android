@@ -1,69 +1,69 @@
 package com.allybros.superego.fragment;
 
 
+import static com.allybros.superego.unit.ConstantValues.WEB_URL;
+
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.res.Configuration;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.content.ContextCompat;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.allybros.superego.R;
 import com.allybros.superego.activity.LoginActivity;
+import com.allybros.superego.activity.SettingsActivity;
 import com.allybros.superego.activity.UserPageActivity;
 import com.allybros.superego.activity.WebViewActivity;
-import com.allybros.superego.api.EarnRewardTask;
 import com.allybros.superego.api.LoadProfileTask;
-import com.allybros.superego.ui.CircledNetworkImageView;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
-import com.allybros.superego.unit.Score;
-import com.allybros.superego.util.HelperMethods;
 import com.allybros.superego.util.SessionManager;
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
+import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
-import com.google.android.gms.ads.rewarded.RewardItem;
-import com.google.android.gms.ads.rewarded.RewardedAd;
-import com.google.android.gms.ads.rewarded.RewardedAdCallback;
-import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileFragment extends Fragment {
 
-    private TextView tvUsername, tvUserbio, tvProfileInfoCard;
-    private Button btnNewTest, btnShareTest, btnShareResults, btnBadgeCredit, btnBadgeRated;
-    private CircledNetworkImageView imageViewAvatar;
+    private TextView tvUsername, tvUserbio, badgeCredit, badgeRated, tvPersonalitySectionTitle, tvPersonalityCardTitle, tvPersonalityCardShortName, tvPersonalityCardDescription;
+    private Button btnShareTest, btnShareResults, btnInfoShare, btnNewTest;
+    private CardView clPersonalityCard, clShareTest;
+    private LinearLayout llCreateTest;
+    private ImageView btnSettings, ivPersonalityCard;
+    private CircleImageView imageViewAvatar;
     private SwipeRefreshLayout profileSwipeLayout;
-    private RewardedAd rewardedAd;
     private AdView adProfileBanner;
     //API Receivers
     private BroadcastReceiver refreshReceiver;
@@ -90,10 +90,73 @@ public class ProfileFragment extends Fragment {
         setupReceivers();
         initProfileCard();
         initButtons();
-        initInfoCard();
-        prepareRewardedAd();
+        initShareTest();
         prepareBannerAd();
         initSwipeLayout();
+        setupInfoCards();
+    }
+
+    private void setupInfoCards() {
+        clPersonalityCard = getView().findViewById(R.id.clPersonalityCard);
+        tvPersonalitySectionTitle = getView().findViewById(R.id.tvPersonalitySectionTitle);
+        clShareTest = getView().findViewById(R.id.clShareTest);
+        llCreateTest = getView().findViewById(R.id.llCreateTest);
+        btnNewTest = getView().findViewById(R.id.btnCreateTest);
+
+        ivPersonalityCard = getView().findViewById(R.id.ivPersonalityCard);
+        tvPersonalityCardTitle = getView().findViewById(R.id.tvPersonalityCardTitle);
+        tvPersonalityCardShortName = getView().findViewById(R.id.tvPersonalityCardShortName);
+        tvPersonalityCardDescription = getView().findViewById(R.id.tvPersonalityCardDescription);
+
+        btnNewTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Check internet connection
+                ConnectivityManager cm = (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+                boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+                if(isConnected){
+                    Intent addTestIntent = new Intent(getContext(), WebViewActivity.class);
+                    addTestIntent.putExtra("url", ConstantValues.CREATE_TEST);
+                    addTestIntent.putExtra("title", getString(R.string.activity_label_new_test));
+                    startActivity(addTestIntent);
+                }
+                else {
+                    Snackbar.make(profileSwipeLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
+                    Log.d("CONNECTION", String.valueOf(isConnected));
+                }
+            }
+        });
+
+        if (sessionManager.getUser().getTestId() != null && !sessionManager.getUser().getTestId().isEmpty()) {
+            if (sessionManager.getUser().getOcean() == null) {
+                tvPersonalitySectionTitle.setVisibility(View.VISIBLE);
+                clShareTest.setVisibility(View.VISIBLE);
+                clPersonalityCard.setVisibility(View.GONE);
+                llCreateTest.setVisibility(View.VISIBLE);
+            } else {
+                tvPersonalitySectionTitle.setVisibility(View.VISIBLE);
+                clShareTest.setVisibility(View.GONE);
+                clPersonalityCard.setVisibility(View.VISIBLE);
+                llCreateTest.setVisibility(View.VISIBLE);
+                setupPersonalityCard();
+            }
+        } else {
+            tvPersonalitySectionTitle.setVisibility(View.GONE);
+            clShareTest.setVisibility(View.GONE);
+            clPersonalityCard.setVisibility(View.GONE);
+            llCreateTest.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void setupPersonalityCard() {
+        GlideToVectorYou.justLoadImage((Activity) getContext(), Uri.parse(sessionManager.getUser().getPersonality().getImg_url()), ivPersonalityCard);
+        tvPersonalityCardTitle.setText(sessionManager.getUser().getPersonality().getTitle());
+        tvPersonalityCardShortName.setText(sessionManager.getUser().getPersonality().getType());
+        tvPersonalityCardDescription.setText(sessionManager.getUser().getPersonality().getDescription());
+
+        tvPersonalityCardTitle.setTextColor(Color.parseColor(sessionManager.getUser().getPersonality().getPrimary_color()));
+        tvPersonalityCardShortName.setTextColor(Color.parseColor(sessionManager.getUser().getPersonality().getSecondary_color()));
     }
 
     /**
@@ -184,73 +247,27 @@ public class ProfileFragment extends Fragment {
     }
 
     @SuppressLint("DefaultLocale")
-    private void initProfileCard(){
+    private void initProfileCard() {
         //Set profile card components
         imageViewAvatar = getView().findViewById(R.id.user_avatar);
         tvUserbio = getView().findViewById(R.id.tvUserbio);
         tvUsername = getView().findViewById(R.id.tvUsername);
-        btnBadgeCredit = getView().findViewById(R.id.partial_credit_button);
-        btnBadgeRated = getView().findViewById(R.id.badgeRated);
+        badgeCredit = getView().findViewById(R.id.badgeCredit);
+        badgeRated = getView().findViewById(R.id.badgeRated);
 
         //Populate views
-        if (sessionManager.getUser().getUserBio() != null) {
+        if (sessionManager.getUser().getUserBio() != null && !sessionManager.getUser().getUserBio().isEmpty()) {
             tvUserbio.setText(sessionManager.getUser().getUserBio());
         } else {
             tvUserbio.setText(R.string.default_bio_profile);
         }
 
         tvUsername.setText("@"+sessionManager.getUser().getUsername());
-        btnBadgeCredit.setText(String.format("%d %s", sessionManager.getUser().getCredit(), getString(R.string.credit)));
+        badgeCredit.setText(String.valueOf(sessionManager.getUser().getCredit()));
+        badgeRated.setText(String.valueOf(sessionManager.getUser().getRated()));
 
-        btnBadgeCredit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.SegoAlertDialog);
-                builder.setTitle(Html.fromHtml(getString(R.string.app_name)));
-                builder.setMessage(Html.fromHtml(getString(R.string.info_ads_desc)));
-                builder.setPositiveButton(getString(R.string.action_ok), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        if (rewardedAd.isLoaded()) {
-                            // Check internet connection
-                            ConnectivityManager cm = (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-                            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-                            boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-                            if(isConnected){
-                                showRewardedAd();
-                            }
-                            else {
-                                Snackbar.make(profileSwipeLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
-                                Log.d("CONNECTION", String.valueOf(isConnected));
-                            }
-                        } else {
-                            // Show error dialog
-                            new AlertDialog.Builder(getActivity(), R.style.SegoAlertDialog)
-                                    .setTitle("insightof.me")
-                                    .setMessage(R.string.info_reward_ad_not_loaded)
-                                    .setPositiveButton(getString(R.string.action_ok), new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.dismiss();
-                                        }
-                                    })
-                                    .show();
-                            Log.d("EgoRewardAd", "The rewarded ad wasn't loaded yet.");
-                        }
-                    }
-                });
-                builder.setNegativeButton(getString(R.string.action_cancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                    }
-                });
-                builder.show();
-            }
-        });
 
-        btnBadgeRated.setText(sessionManager.getUser().getRated() + getString(R.string.rated));
-
-        HelperMethods.imageLoadFromUrlNoCache(getContext(), ConstantValues.AVATAR_URL+sessionManager.getUser().getImage(), imageViewAvatar);
+        Picasso.get().load(ConstantValues.AVATAR_URL+sessionManager.getUser().getImage()).into(imageViewAvatar);
     }
 
     /**
@@ -258,9 +275,9 @@ public class ProfileFragment extends Fragment {
      */
     private void initButtons(){
         //Initialize toolbar buttons
-        btnNewTest = getView().findViewById(R.id.btnAddTest);
         btnShareTest = getView().findViewById(R.id.btnShareTest);
         btnShareResults = getView().findViewById(R.id.btnShareResult);
+        btnSettings = getView().findViewById(R.id.btnSettings);
 
         if (!sessionManager.getUser().hasResults()) {
             btnShareResults.setAlpha(0.6f);
@@ -272,26 +289,6 @@ public class ProfileFragment extends Fragment {
             showDialog();
         }
 
-        btnNewTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Check internet connection
-                ConnectivityManager cm = (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-                NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-                boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-                if(isConnected){
-                    Intent addTestIntent = new Intent(getContext(), WebViewActivity.class);
-                    addTestIntent.putExtra("url", ConstantValues.CREATE_TEST);
-                    addTestIntent.putExtra("title", getString(R.string.activity_label_new_test));
-                    startActivity(addTestIntent);
-                }
-                else {
-                    Snackbar.make(profileSwipeLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
-                    Log.d("CONNECTION", String.valueOf(isConnected));
-                }
-            }
-        });
-
         btnShareTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -299,13 +296,15 @@ public class ProfileFragment extends Fragment {
                     shareTest();
                 } else {
                    Snackbar.make(profileSwipeLayout, R.string.alert_no_test, BaseTransientBottomBar.LENGTH_LONG)
-                       .setAction(R.string.action_btn_new_test, new View.OnClickListener() {
+                           .setAction(R.string.action_btn_new_test, new View.OnClickListener() {
                            @Override
                            public void onClick(View v) {
                                btnNewTest.performClick();
                            }
                        }).setActionTextColor(getResources().getColor(R.color.materialLightPurple))
                        .show();
+                    Snackbar.make(profileSwipeLayout, R.string.alert_no_test, BaseTransientBottomBar.LENGTH_LONG).show();
+
                 }
             }
         });
@@ -318,7 +317,14 @@ public class ProfileFragment extends Fragment {
                 } else {
                     Snackbar.make(profileSwipeLayout, R.string.alert_no_results, BaseTransientBottomBar.LENGTH_LONG).show();
                 }
+            }
+        });
 
+        btnSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(), SettingsActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -326,19 +332,13 @@ public class ProfileFragment extends Fragment {
     /**
      * Set up profile info card
      */
-    private void initInfoCard(){
-        tvProfileInfoCard = getView().findViewById(R.id.tvProfileInfoCard);
+    private void initShareTest() {
+        btnInfoShare = getView().findViewById(R.id.btnInfoShare);
 
-        if(!sessionManager.getUser().hasTest()){ //User don't have a test
-            tvProfileInfoCard.setText(R.string.info_no_test);
-        }else{//User have test
-            tvProfileInfoCard.setText(R.string.info_share_test);
-        }
-
-        tvProfileInfoCard.setOnClickListener(new View.OnClickListener() {
+        btnInfoShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnShareResults.performClick();
+                shareTest();
             }
         });
     }
@@ -371,7 +371,7 @@ public class ProfileFragment extends Fragment {
     /**
      * Initializes, loads and shows profile banner ad.
      */
-    private void prepareBannerAd(){
+    private void prepareBannerAd() {
         // Initialize mobile ads
         MobileAds.initialize(getActivity(), new OnInitializationCompleteListener() {
             @Override
@@ -385,107 +385,7 @@ public class ProfileFragment extends Fragment {
         AdRequest adRequest = new AdRequest.Builder().build();
         adProfileBanner.loadAd(adRequest);
         // Set ad listener
-        adProfileBanner.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-                Log.d(adTag,"Profile banner ad loaded.");
-            }
-
-            @Override
-            public void onAdFailedToLoad(int errorCode) {
-                Log.d(adTag,"Profile banner ad couldn't be loaded");
-            }
-
-            @Override
-            public void onAdOpened() {
-                // Code to be executed when an ad opens an overlay that
-                // covers the screen.
-                Log.d(adTag,"Profile banner ad opened.");
-            }
-
-            @Override
-            public void onAdClicked() {
-                // Code to be executed when the user clicks on an ad.
-                 Log.d(adTag,"Profile banner ad clicked.");
-            }
-
-            @Override
-            public void onAdLeftApplication() {
-                // Code to be executed when the user has left the app.
-                Log.d(adTag,"User left application");
-            }
-
-            @Override
-            public void onAdClosed() {
-                // Code to be executed when the user is about to return
-                // to the app after tapping on an ad.
-                Log.d(adTag,"User returned from ad.");
-            }
-        });
-    }
-
-    /**
-     * Initializes and loads rewarded video ad.
-     */
-    private void prepareRewardedAd(){
-        final Context fragmentContext = getActivity();
-        if (fragmentContext==null) return;
-
-        this.rewardedAd = new RewardedAd(fragmentContext, getResources().getString(R.string.admob_ad_interface));
-        final RewardedAdLoadCallback adLoadCallback = new RewardedAdLoadCallback() {
-            @Override
-            public void onRewardedAdLoaded() {
-                // Ad successfully loaded.
-                Log.d("Reward Ad","Ad successfully loaded.");
-                if(sessionManager.getUser().getRated() >= 5){
-                    //User able to use Ego points
-                    btnBadgeCredit.setBackground(ContextCompat.getDrawable(fragmentContext, R.drawable.selector_credit));
-                    btnBadgeCredit.setEnabled(true);
-                    YoYo.with(Techniques.Bounce)
-                            .duration(1000)
-                            .repeat(5)
-                            .playOn(btnBadgeCredit);
-                }
-            }
-
-            @Override
-            public void onRewardedAdFailedToLoad(int errorCode) {
-                // Ad failed to load.
-                Log.d("Reward Ad","Ad failed to load. Try again");
-                prepareRewardedAd();
-            }
-        };
-        rewardedAd.loadAd(new AdRequest.Builder().build(), adLoadCallback);
-    }
-
-    /**
-     * Shows rewarded Ad and sets RewardAd callback. Calls reward task user if the user earned.
-     */
-    private void showRewardedAd(){
-        final String rewardCallbackTag = "RewardedAdCallback";
-        //Prepare rewarded ad callback
-        RewardedAdCallback rewardedAdCallback = new RewardedAdCallback() {
-            @Override
-            public void onRewardedAdOpened() {
-                Log.d(rewardCallbackTag,"Ad opened.");
-            }
-            @Override
-            public void onRewardedAdClosed() {
-                Log.d(rewardCallbackTag,"Ad closed.");
-            }
-            @Override
-            public void onUserEarnedReward(@NonNull RewardItem reward) {
-                Log.d(rewardCallbackTag,"User earned reward.");
-                EarnRewardTask.EarnRewardTask(getContext(), sessionManager.getSessionToken());
-                Log.d("Reward",""+reward.getAmount());
-            }
-            @Override
-            public void onRewardedAdFailedToShow(int errorCode) {
-                Log.d(rewardCallbackTag,"Ad failed to display.");
-            }
-        };
-        //Show rewarded ad
-        rewardedAd.show(getActivity(), rewardedAdCallback);
+        adProfileBanner.setAdListener(new AdListener(){});
     }
 
     /**
@@ -496,9 +396,9 @@ public class ProfileFragment extends Fragment {
         sharingIntent.setType("text/plain");
 
         String testResultId = SessionManager.getInstance().getUser().getTestResultId();
-        String testUrl = String.format("https://insightof.me/%s", sessionManager.getUser().getTestId());
+        String testUrl = String.format(WEB_URL + "%s", sessionManager.getUser().getTestId());
 
-        String shareBody = getString(R.string.body_share_results, testResultId+"\n", testUrl);
+        String shareBody = getString(R.string.body_share_results, WEB_URL + "result/" +testResultId+"\n", testUrl);
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, R.string.action_btn_share_results);
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
         startActivity(Intent.createChooser(sharingIntent, getString(R.string.action_btn_share_results)));
@@ -510,35 +410,11 @@ public class ProfileFragment extends Fragment {
     private void shareTest(){
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
-        String testUrl = String.format("https://insightof.me/%s", sessionManager.getUser().getTestId());
+        String testUrl = String.format(WEB_URL + "%s", sessionManager.getUser().getTestId());
         String shareBody = getString(R.string.body_share_test, testUrl);
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, R.string.action_btn_share_test);
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
         startActivity(Intent.createChooser(sharingIntent, getString(R.string.action_btn_share_test)));
-    }
-
-    /**
-     *  Detects orientation changing and resets view objects and their controller.
-     * @param newConfig     represents configs that are current situation of phone. Used for detecting orientation config
-     */
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        // Checks the orientation of the screen
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE
-            || newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            //Delete old receivers
-            LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(refreshReceiver);
-            LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(rewardReceiver);
-            //Reset all view object and their controllers
-            setupReceivers();
-            initProfileCard();
-            initButtons();
-            initInfoCard();
-            prepareRewardedAd();
-            prepareBannerAd();
-            initSwipeLayout();
-        }
     }
 
     /**

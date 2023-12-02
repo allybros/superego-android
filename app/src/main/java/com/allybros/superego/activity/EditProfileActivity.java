@@ -10,33 +10,33 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
 import com.allybros.superego.R;
 import com.allybros.superego.api.ChangeInfoTask;
 import com.allybros.superego.api.ImageChangeTask;
-import com.allybros.superego.request.RequestForGetImageNoCache;
-import com.allybros.superego.ui.CircledNetworkImageView;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
+import com.allybros.superego.util.InputMethodWatcher;
 import com.allybros.superego.util.SessionManager;
-import com.android.volley.toolbox.ImageLoader;
+import com.allybros.superego.widget.SegoEditText;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
-import com.r0adkll.slidr.Slidr;
-import com.r0adkll.slidr.model.SlidrInterface;
-
+import com.squareup.picasso.Picasso;
 import java.io.IOException;
-
+import de.hdodenhof.circleimageview.CircleImageView;
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 
 import static com.allybros.superego.util.HelperMethods.imageToString;
@@ -44,18 +44,18 @@ import static com.allybros.superego.util.HelperMethods.imageToString;
 public class EditProfileActivity extends AppCompatActivity {
     private MaterialProgressBar progressEditProfile;
     private ConstraintLayout cardFormEditProfile;
-    private TextInputEditText username,email,information;
-    private TextInputLayout etUsername_text_input,etEmail_text_input,etInformation_text_input;
-    private SlidrInterface slidr;
-    private Button btChangePhoto;
-    private CircledNetworkImageView settingsImage;
+    private SegoEditText username, email;
+    private EditText information;
+    private ImageView ivChangeAvatar, ivBack;
+    private TextView tvOptionsTitle;
+    private CircleImageView settingsImage;
     private ConstraintLayout editProfileLayout;
     public static Uri newImagePath=null;
     private BroadcastReceiver updateInformationReceiver, updateImageReceiver;
     private Button btnSaveProfile;
     private final int IMG_REQUEST=1;    //Needs for image selection from local storage
 
-
+    private InputMethodWatcher inputMethodWatcher;
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,20 +64,21 @@ public class EditProfileActivity extends AppCompatActivity {
         initializeComponents();
         setupReceivers();
         setupUi();
+        setupTextWatchers();
+        initInputMethodWatcher();
     }
 
     private void initializeComponents(){
         editProfileLayout = findViewById(R.id.editProfileLayout);
         progressEditProfile = findViewById(R.id.progressEditProfile);
         cardFormEditProfile = findViewById(R.id.cardFormEditProfile);
-        btChangePhoto = findViewById(R.id.btChangePhoto);
+        ivChangeAvatar = findViewById(R.id.ivChangeAvatar);
+        ivBack = findViewById(R.id.ivBack);
+        tvOptionsTitle = findViewById(R.id.tvOptionsTitle);
         username = findViewById(R.id.etUsername);
         email = findViewById(R.id.etEmail);
         information = findViewById(R.id.etInformation);
-        etUsername_text_input = findViewById(R.id.textInputUsername);
-        etEmail_text_input = findViewById(R.id.textInputEmail);
-        etInformation_text_input = findViewById(R.id.etInformation_text_input);
-        settingsImage = findViewById(R.id.imageSettings);
+        settingsImage = findViewById(R.id.ivUserAvatarEditProfile);
         btnSaveProfile = findViewById(R.id.btnSaveProfile);
     }
 
@@ -171,9 +172,6 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private void setupUi(){
 
-        btChangePhoto.bringToFront();
-        btChangePhoto.invalidate();
-
         //Set view components
         email.setText(SessionManager.getInstance().getUser().getEmail());
         username.setText(SessionManager.getInstance().getUser().getUsername());
@@ -186,17 +184,11 @@ public class EditProfileActivity extends AppCompatActivity {
         boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
         //Load image
         String URL= ConstantValues.AVATAR_URL+SessionManager.getInstance().getUser().getImage();
-        ImageLoader mImageLoader;
-        mImageLoader = RequestForGetImageNoCache.getInstance(getApplicationContext()).getImageLoader();
-        mImageLoader.get(URL, ImageLoader.getImageListener(settingsImage, R.drawable.default_avatar, R.drawable.default_avatar));
-        settingsImage.setImageUrl(URL, mImageLoader);
+        Picasso.get().load(URL).into(settingsImage);
+
         if(!isConnected) Snackbar.make(editProfileLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
 
-        //Require for slide behaviour
-        slidr= Slidr.attach(this);
-        slidr.unlock();
-
-        btChangePhoto.setOnClickListener(new View.OnClickListener() {
+        ivChangeAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Check internet connection
@@ -216,6 +208,11 @@ public class EditProfileActivity extends AppCompatActivity {
         btnSaveProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (inputMethodWatcher.isKeyboardShown()){
+                    Log.d("Page changed", "Hide soft keyboard");
+                    inputMethodWatcher.hideSoftKeyboard();
+                }
+
                 // Check internet connection
                 ConnectivityManager cm = (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
@@ -229,6 +226,54 @@ public class EditProfileActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+
+
+    private void setupTextWatchers() {
+        username.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                //this method is empty
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //this method is empty
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.toString().isEmpty()){
+                    setError(username, getString(R.string.error_username_empty));
+                } else {
+                    clearError(username);
+                }
+            }
+        });
+
+        email.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                //this method is empty
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //this method is empty
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.toString().isEmpty()){
+                    setError(email, getString(R.string.error_email_empty));
+                } else {
+                    clearError(email);
+                }
+
+            }
+        });
+
     }
 
     //Opens intent that provide selecting image from local storage
@@ -273,12 +318,16 @@ public class EditProfileActivity extends AppCompatActivity {
     private void setProgressVisibility(boolean visible){
         if (visible) {
             progressEditProfile.setVisibility(View.VISIBLE);
-            cardFormEditProfile.setAlpha(0.5f);
+            username.setEnabled(false);
+            email.setEnabled(false);
+            information.setEnabled(false);
             btnSaveProfile.setEnabled(false);
         } else {
             progressEditProfile.setVisibility(View.INVISIBLE);
-            cardFormEditProfile.setAlpha(1f);
-            btnSaveProfile.setEnabled(true);;
+            username.setEnabled(true);
+            email.setEnabled(true);
+            information.setEnabled(true);
+            btnSaveProfile.setEnabled(true);
         }
     }
 
@@ -286,19 +335,29 @@ public class EditProfileActivity extends AppCompatActivity {
      * Validate user information and send request to the API
      */
     private void saveProfile(){
-        // Moved menu item option here
-        etEmail_text_input.setErrorEnabled(false);
-        etInformation_text_input.setErrorEnabled(false);
-        etUsername_text_input.setErrorEnabled(false);
+        clearError(username);
+        clearError(email);
 
-        if(username.getText().toString().isEmpty()) etUsername_text_input.setError(getString(R.string.input_error_field_required));
-        if(email.getText().toString().isEmpty()) etEmail_text_input.setError(getString(R.string.input_error_field_required));
+        if(username.getText().toString().isEmpty()){
+            setError(username, getString(R.string.error_username_empty));
+        }
+        if(email.getText().toString().isEmpty()){
+            setError(email, getString(R.string.error_email_empty));
+        }
 
         if(!username.getText().toString().isEmpty()
                 && !email.getText().toString().isEmpty() ){
             setProgressVisibility(true);
             ChangeInfoTask.changeInfoTask(getApplicationContext(),username.getText().toString(),email.getText().toString(),information.getText().toString(), SessionManager.getInstance().getSessionToken());
         }
+    }
+
+    private void setError(SegoEditText segoEditText, String errorMessage) {
+        segoEditText.setError(errorMessage);
+    }
+
+    private void clearError(SegoEditText segoEditText) {
+        segoEditText.clearError();
     }
 
     @Override
@@ -308,5 +367,17 @@ public class EditProfileActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(EditProfileActivity.this).unregisterReceiver(updateInformationReceiver);
         Log.d("SettingsDestroy","RUN");
         super.onDestroy();
+    }
+
+    public void onBackPressed(View view) {
+        onBackPressed();
+    }
+
+    /**
+     * Initializes input method watcher for detecting virtual keyboard.
+     */
+    private void initInputMethodWatcher(){
+        View contentRoot = ((ViewGroup) findViewById(R.id.editProfileLayout)).getChildAt(0);
+        inputMethodWatcher = new InputMethodWatcher(contentRoot);
     }
 }

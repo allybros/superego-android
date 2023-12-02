@@ -12,6 +12,8 @@ import com.allybros.superego.activity.SplashActivity;
 import com.allybros.superego.activity.UserPageActivity;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
+import com.allybros.superego.unit.Ocean;
+import com.allybros.superego.unit.Personality;
 import com.allybros.superego.unit.Score;
 import com.allybros.superego.unit.User;
 import com.allybros.superego.util.SessionManager;
@@ -56,34 +58,73 @@ public class LoadProfileTask{
             public void onResponse(String response) {
                 Log.d("Load Profile Response", response);
                 try {
-                    JSONObject jsonObject=new JSONObject(response);
-                    int status = jsonObject.getInt("status");
+                    JSONObject result=new JSONObject(response);
+                    int status = result.getInt("status");
 
                     if (status == ErrorCodes.SUCCESS) {
                         // Build user object
-                        int user_type = jsonObject.getInt("user_type");
-                        String username = jsonObject.getString("username");
-                        String user_bio = jsonObject.getString("user_bio");
-                        String test_id = jsonObject.getString("test_id");
-                        String test_result_id = jsonObject.getString("test_result_id");
-                        String email = jsonObject.getString("email");
-                        String image = jsonObject.getString("avatar");
-                        int rated = jsonObject.getInt("rated");
-                        int credit = jsonObject.getInt("credit");
+                        int user_type = result.getInt("user_type");
+                        String username = result.getString("username");
+                        String user_bio = result.getString("user_bio");
+                        String test_id = result.getString("test_id");
+                        String test_result_id = result.getString("test_result_id");
+                        String email = result.getString("email");
+                        String image = result.getString("avatar");
+                        int rated = result.getInt("rated");
+                        int credit = result.getInt("credit");
 
                         //Build scores list
                         ArrayList<Score> scoresList = new ArrayList<>();
-                        if (!jsonObject.isNull("scores")) {
-                            for (int i = 0; i < jsonObject.getJSONArray("scores").length(); i++) {
-                                JSONObject scoresObject = (JSONObject) jsonObject.getJSONArray("scores").get(i);
+                        if (!result.isNull("scores")) {
+                            for (int i = 0; i < result.getJSONArray("scores").length(); i++) {
+                                JSONObject scoresObject = (JSONObject) result.getJSONArray("scores").get(i);
                                 int traitNo = scoresObject.getInt("traitNo");
                                 float value = scoresObject.getInt("value");
                                 scoresList.add(new Score(traitNo, value));
                             }
                         }
 
+                        Ocean ocean = null;
+                        if (!result.isNull("ocean")) {
+                            JSONObject oceanObject = result.getJSONObject("ocean");
+                            double o = oceanObject.getDouble("o");
+                            double c = oceanObject.getDouble("c");
+                            double e = oceanObject.getDouble("e");
+                            double a = oceanObject.getDouble("a");
+                            double n = oceanObject.getDouble("n");
+                            ocean = new Ocean(o,c,e,a,n);
+                        }
+
+                        Personality personality = null;
+                        if (!result.isNull("personality")) {
+                            JSONObject oceanObject = result.getJSONObject("personality");
+                            String  type = oceanObject.getString("type");
+                            String  title = oceanObject.getString("title");
+                            String  description = oceanObject.getString("description");
+                            String  detail_url = oceanObject.getString("detail_url");
+                            String  primary_color = oceanObject.getString("primary_color");
+                            String  secondary_color = oceanObject.getString("secondary_color");
+                            String  img_url = oceanObject.getString("img_url");
+                            personality = new Personality(type, title, description, detail_url, primary_color, secondary_color, img_url);
+                        }
+
+
                         SessionManager.getInstance().setUser(
-                                new User(user_type, rated, credit, image, test_id, "test_result_id", username, user_bio, email, scoresList));
+                                new User(
+                                        user_type,
+                                        rated,
+                                        credit,
+                                        image,
+                                        test_id,
+                                        test_result_id,
+                                        username,
+                                        user_bio,
+                                        email,
+                                        scoresList,
+                                        ocean,
+                                        personality
+                                )
+                        );
                     }
                     // Send broadcast
                     Log.d("Load Profile Task","Load profile completed.");

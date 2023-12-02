@@ -1,20 +1,31 @@
 package com.allybros.superego.fragment;
 
+import static com.allybros.superego.unit.ConstantValues.EMOJI_END_POINT;
+import static com.allybros.superego.unit.ConstantValues.WEB_URL;
+
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,34 +33,42 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.content.ContextCompat;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.allybros.superego.R;
 import com.allybros.superego.activity.UserPageActivity;
+import com.allybros.superego.activity.WebViewActivity;
 import com.allybros.superego.api.EarnRewardTask;
 import com.allybros.superego.api.LoadProfileTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
+import com.allybros.superego.unit.Ocean;
+import com.allybros.superego.unit.Score;
 import com.allybros.superego.unit.User;
-import com.allybros.superego.ui.ScoresAdapter;
 import com.allybros.superego.util.SessionManager;
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
+import com.allybros.superego.widget.SegoProgressBar;
+import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.OnUserEarnedRewardListener;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.ads.rewarded.RewardItem;
 import com.google.android.gms.ads.rewarded.RewardedAd;
-import com.google.android.gms.ads.rewarded.RewardedAdCallback;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.Random;
+
 
 public class ResultsFragment extends Fragment {
     private TextView tvRemainingRates;
@@ -58,12 +77,17 @@ public class ResultsFragment extends Fragment {
     private User currentUser;
     private BroadcastReceiver resultsRefreshReceiver;
     private AdView adResultBanner;
-    private Button btnBadgeCredit, btnShowAd;
+    private Button btnShowAd, btnShareTestResult, btnCreateTest;
     private RewardedAd rewardedAd;
+
+    private ImageView ivShareResults;
+
+    private LinearLayout llScoresContainer;
     private SessionManager sessionManager = SessionManager.getInstance();
+
     //3 states of Result screen represented in an Enum
     private enum State {
-        NONE, PARTIAL, COMPLETE
+        NONE, NONE_TEST, PARTIAL, COMPLETE
     }
 
     public ResultsFragment() {
@@ -83,8 +107,10 @@ public class ResultsFragment extends Fragment {
                 return inflater.inflate(R.layout.fragment_results_partial, container, false);
             case COMPLETE:
                 return inflater.inflate(R.layout.fragment_results_complete, container, false);
+            case NONE:
+                return inflater.inflate(R.layout.fragment_results_none_test, container, false);
             default:
-                return inflater.inflate(R.layout.fragment_results_none, container, false);
+                return inflater.inflate(R.layout.fragment_result_none_no_test, container, false);
         }
     }
 
@@ -96,16 +122,20 @@ public class ResultsFragment extends Fragment {
         setupView();
     }
 
-    private State getState(){
+    private State getState() {
         if (currentUser.getScores().size() >= 6)
             return State.COMPLETE;
         else if (currentUser.getScores().size() >= 1)
             return State.PARTIAL;
-        else
+        else if (sessionManager.getUser().getTestId() != null && !sessionManager.getUser().getTestId().isEmpty()) {
             return State.NONE;
+        } else {
+            return State.NONE_TEST;
+        }
+
     }
 
-    private void prepareBannerAd(){
+    private void prepareBannerAd() {
         // Initialize mobile ads
         MobileAds.initialize(getActivity(), new OnInitializationCompleteListener() {
             @Override
@@ -122,47 +152,35 @@ public class ResultsFragment extends Fragment {
         adResultBanner.setAdListener(new AdListener() {
             @Override
             public void onAdLoaded() {
-                Log.d(adTag,"Result banner ad loaded.");
-            }
-
-            @Override
-            public void onAdFailedToLoad(int errorCode) {
-                Log.d(adTag,"Result banner ad couldn't be loaded");
+                Log.d(adTag, "Result banner ad loaded.");
             }
 
             @Override
             public void onAdOpened() {
                 // Code to be executed when an ad opens an overlay that
                 // covers the screen.
-                Log.d(adTag,"Result banner ad opened.");
+                Log.d(adTag, "Result banner ad opened.");
             }
 
             @Override
             public void onAdClicked() {
                 // Code to be executed when the user clicks on an ad.
-                Log.d(adTag,"Result banner ad clicked.");
-            }
-
-            @Override
-            public void onAdLeftApplication() {
-                // Code to be executed when the user has left the app.
-                Log.d(adTag,"User left application");
+                Log.d(adTag, "Result banner ad clicked.");
             }
 
             @Override
             public void onAdClosed() {
                 // Code to be executed when the user is about to return
                 // to the app after tapping on an ad.
-                Log.d(adTag,"User returned from ad.");
+                Log.d(adTag, "User returned from ad.");
             }
         });
     }
 
 
-
     //Set up view objects
     @SuppressLint("StringFormatMatches")
-    private void setupView(){
+    private void setupView() {
         //Setup refresher
         swipeLayout = getView().findViewById(R.id.swipeLayout);
         if (swipeLayout != null)
@@ -170,16 +188,15 @@ public class ResultsFragment extends Fragment {
                 @Override
                 public void onRefresh() {
                     // Check internet connection
-                    ConnectivityManager cm = (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                    ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
                     NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
                     boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-                    if(isConnected){
+                    if (isConnected) {
                         //Start load task
                         LoadProfileTask.loadProfileTask(getContext(),
                                 SessionManager.getInstance().getSessionToken(),
                                 ConstantValues.ACTION_REFRESH_RESULTS);
-                    }
-                    else {
+                    } else {
                         Snackbar.make(swipeLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
                         Log.d("CONNECTION", String.valueOf(isConnected));
                         swipeLayout.setRefreshing(false);
@@ -193,28 +210,28 @@ public class ResultsFragment extends Fragment {
             //One result
             case PARTIAL:
                 //Get views
-                listViewTraits = getView().findViewById(R.id.listViewPartialTraits);
-                tvRemainingRates = getView().findViewById(R.id.tvRemainingRatesPartial);
-                btnBadgeCredit = getView().findViewById(R.id.partial_credit_button);
+                llScoresContainer = getView().findViewById(R.id.llScoresContainer);
                 btnShowAd = getView().findViewById(R.id.button_get_ego);
+                tvRemainingRates = getView().findViewById(R.id.tvRatedResultPage);
+
                 //Populate views
                 int remainingRates = 10 - (currentUser.getRated() + currentUser.getCredit());
                 tvRemainingRates.setText(getString(R.string.remaining_credits, remainingRates));
-                listViewTraits.setAdapter( new ScoresAdapter(getActivity(), currentUser.getScores()) );
-                btnBadgeCredit.setText(String.format("%d %s", sessionManager.getUser().getCredit(), getString(R.string.credit)));
+
+                fillScores(llScoresContainer, currentUser.getScores());
                 prepareRewardedAd();
+                prepareBannerAd();
                 btnShowAd.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (rewardedAd.isLoaded()) {
+                        if (rewardedAd != null) {
                             // Check internet connection
-                            ConnectivityManager cm = (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                            ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
                             NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
                             boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-                            if(isConnected){
+                            if (isConnected) {
                                 showRewardedAd();
-                            }
-                            else {
+                            } else {
                                 Snackbar.make(swipeLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
                                 Log.d("CONNECTION", String.valueOf(isConnected));
                             }
@@ -238,28 +255,142 @@ public class ResultsFragment extends Fragment {
 
             //All results
             case COMPLETE:
-                listViewTraits = getView().findViewById(R.id.listViewTraits);
-                listViewTraits.setAdapter( new ScoresAdapter(getActivity(), currentUser.getScores()) );
+                llScoresContainer = getView().findViewById(R.id.llScoresContainer);
+                TextView tvPersonalityTitle = getView().findViewById(R.id.tvPersonalityTitle);
+                TextView tvPersonalityType = getView().findViewById(R.id.tvPersonalityType);
+                TextView tvPersonalityDescription = getView().findViewById(R.id.tvPersonalityDescription);
+                ImageView ivPersonality = getView().findViewById(R.id.ivPersonality);
+                ImageView ivShareResults = getView().findViewById(R.id.ivShareResults);
+
+                tvPersonalityTitle.setText(currentUser.getPersonality().getTitle());
+                tvPersonalityTitle.setTextColor(Color.parseColor(currentUser.getPersonality().getPrimary_color()));
+
+                tvPersonalityType.setText(currentUser.getPersonality().getType());
+                tvPersonalityType.setTextColor(Color.parseColor(currentUser.getPersonality().getSecondary_color()));
+
+                tvPersonalityDescription.setText(currentUser.getPersonality().getDescription());
+
+                GlideToVectorYou.justLoadImage((Activity) getContext(), Uri.parse(currentUser.getPersonality().getImg_url()), ivPersonality);
+
+                fillScores(llScoresContainer, currentUser.getScores());
+                fillOcean(currentUser.getOcean());
+                ivShareResults.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        shareResults();
+                    }
+                });
+
                 break;
 
             //No results
-            default:
-                //Get views
+            case NONE_TEST:
+                //No test
+                btnShowAd = getView().findViewById(R.id.button_get_ego);
+                btnCreateTest = getView().findViewById(R.id.btnCreateTest);
+
+                prepareBannerAd();
+                btnCreateTest.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        createTest();
+                    }
+                });
+                break;
+            case NONE:
+                //The test is exist
                 tvRemainingRates = getView().findViewById(R.id.tvRatedResultPage);
+                btnShowAd = getView().findViewById(R.id.button_get_ego);
+                btnShareTestResult = getView().findViewById(R.id.btnShareTestResult);
+
                 //Populate views
                 remainingRates = 5 - currentUser.getRated();
-                tvRemainingRates.setText( getString(R.string.remaining_credits, remainingRates) );
+                tvRemainingRates.setText(getString(R.string.remaining_credits, remainingRates));
                 prepareBannerAd();
+                btnShareTestResult.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (sessionManager.getUser().hasTest()) {
+                            shareTest();
+                        } else {
+                            Snackbar.make(swipeLayout, R.string.alert_no_test, BaseTransientBottomBar.LENGTH_LONG)
+                                    .setActionTextColor(getResources().getColor(R.color.materialLightPurple))
+                                    .show();
+                        }
+                    }
+                });
                 break;
+
         }
     }
 
+    private void fillOcean(Ocean ocean) {
+        SegoProgressBar segoProgressO = getView().findViewById(R.id.segoProgressO);
+        SegoProgressBar segoProgressC = getView().findViewById(R.id.segoProgressC);
+        SegoProgressBar segoProgressE = getView().findViewById(R.id.segoProgressE);
+        SegoProgressBar segoProgressA = getView().findViewById(R.id.segoProgressA);
+        SegoProgressBar segoProgressN = getView().findViewById(R.id.segoProgressN);
+
+        setSegoProgress(segoProgressO, getLeftPercent(ocean.getO()));
+        setSegoProgress(segoProgressC, getLeftPercent(ocean.getC()));
+        setSegoProgress(segoProgressE, getLeftPercent(ocean.getE()));
+        setSegoProgress(segoProgressA, getLeftPercent(ocean.getA()));
+        setSegoProgress(segoProgressN, getLeftPercent(ocean.getN()));
+    }
+
+    private void setSegoProgress(SegoProgressBar segoProgress, int leftPercent) {
+        segoProgress.setNewPercent(leftPercent, Math.abs(100 - leftPercent));
+    }
+
+    private int getLeftPercent(double number) {
+        return (int) Math.round(((number + 1) / 2) * 100);
+    }
+
+    /**
+     * It fills scores container
+     *
+     * @param llScoresContainer
+     * @param scores
+     */
+    private void fillScores(LinearLayout llScoresContainer, ArrayList<Score> scores) {
+        for (Score score : scores) {
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            View score_row = inflater.inflate(R.layout.scores_list_row, null);
+
+            ImageView traitImage = score_row.findViewById(R.id.traitEmojiView);
+            TextView traitNameView = score_row.findViewById(R.id.traitNameView);
+            FrameLayout traitEmojiContainer = score_row.findViewById(R.id.imageViewContainer);
+            ConstraintLayout clTraitRow = score_row.findViewById(R.id.clTraitRow);
+
+            if (score != null) {
+                //Set name
+                traitNameView.setText(score.getTraitName());
+                //Load emoji
+                Uri myUrl = Uri.parse(EMOJI_END_POINT + score.getEmojiName());
+                GlideToVectorYou.justLoadImage((Activity) getContext(), myUrl, traitImage);
+            }
+
+            //Set emoji container background
+            Random random = new Random(System.currentTimeMillis());
+            // Not too dark or bright. Keep in an interval.
+            int r = random.nextInt(120) + 60;
+            int g = random.nextInt(120) + 60;
+            int b = random.nextInt(120) + 60;
+            Drawable shape = traitEmojiContainer.getBackground();
+            shape.setColorFilter(Color.rgb(r, g, b), PorterDuff.Mode.SRC_ATOP);
+            clTraitRow.setVisibility(View.VISIBLE);
+
+            llScoresContainer.addView(score_row);
+        }
+    }
+
+
     //Set up refresh receiver
-    private void setupReceiver(){
+    private void setupReceiver() {
         resultsRefreshReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                int status = intent.getIntExtra("status",0);
+                int status = intent.getIntExtra("status", 0);
                 swipeLayout.setRefreshing(false);
 
                 //Update fragments
@@ -276,32 +407,7 @@ public class ResultsFragment extends Fragment {
             }
         };
         //TODO: Replace when new API package is developed
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(resultsRefreshReceiver,new IntentFilter(ConstantValues.ACTION_REFRESH_RESULTS));
-    }
-
-    /**
-     *  Detects orientation changing and resets view objects and their controller.
-     * @param newConfig     represents configs that are current situation of phone. Used for detecting orientation config
-     */
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        // Checks the orientation of the screen
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            //Delete old receivers
-            LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(resultsRefreshReceiver);
-            //Reset all view object and their controllers
-            setupReceiver();
-            setupView();
-            prepareBannerAd();
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-            //Delete old receivers
-            LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(resultsRefreshReceiver);
-            //Reset all view object and their controllers
-            setupReceiver();
-            setupView();
-            prepareBannerAd();
-        }
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(resultsRefreshReceiver, new IntentFilter(ConstantValues.ACTION_REFRESH_RESULTS));
     }
 
     @Override
@@ -313,55 +419,94 @@ public class ResultsFragment extends Fragment {
     /**
      * Initializes and loads rewarded video ad.
      */
-    private void prepareRewardedAd(){
+    private void prepareRewardedAd() {
         final Context fragmentContext = getActivity();
-        if (fragmentContext==null) return;
+        if (fragmentContext == null) return;
+        RewardedAd.load(
+            fragmentContext,
+            getResources().getString(R.string.admob_ad_interface),
+            new AdRequest.Builder().build(),
+            new RewardedAdLoadCallback() {
+                @Override
+                public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                    super.onAdFailedToLoad(loadAdError);
+                    Log.d("Reward Ad", "Ad failed to load. Try again");
+                    rewardedAd = null;
+                }
 
-        this.rewardedAd = new RewardedAd(fragmentContext, getResources().getString(R.string.admob_ad_interface));
-        final RewardedAdLoadCallback adLoadCallback = new RewardedAdLoadCallback() {
-            @Override
-            public void onRewardedAdLoaded() {
-                // Ad successfully loaded.
-                Log.d("Reward Ad","Ad successfully loaded.");
+                @Override
+                public void onAdLoaded(@NonNull RewardedAd ad) {
+                    super.onAdLoaded(rewardedAd);
+                    Log.d("Reward Ad", "Ad successfully loaded.");
+                    rewardedAd = ad;
+                }
             }
-
-            @Override
-            public void onRewardedAdFailedToLoad(int errorCode) {
-                // Ad failed to load.
-                Log.d("Reward Ad","Ad failed to load. Try again");
-                prepareRewardedAd();
-            }
-        };
-        rewardedAd.loadAd(new AdRequest.Builder().build(), adLoadCallback);
+        );
     }
 
     /**
      * Shows rewarded Ad and sets RewardAd callback. Calls reward task user if the user earned.
      */
-    private void showRewardedAd(){
+    private void showRewardedAd() {
         final String rewardCallbackTag = "RewardedAdCallback";
+        final Activity fragmentContext = getActivity();
+        if (fragmentContext == null) return;
         //Prepare rewarded ad callback
-        RewardedAdCallback rewardedAdCallback = new RewardedAdCallback() {
+        rewardedAd.show(fragmentContext, new OnUserEarnedRewardListener() {
             @Override
-            public void onRewardedAdOpened() {
-                Log.d(rewardCallbackTag,"Ad opened.");
-            }
-            @Override
-            public void onRewardedAdClosed() {
-                Log.d(rewardCallbackTag,"Ad closed.");
-            }
-            @Override
-            public void onUserEarnedReward(@NonNull RewardItem reward) {
-                Log.d(rewardCallbackTag,"User earned reward.");
+            public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
+                Log.d(rewardCallbackTag, "User earned reward.");
                 EarnRewardTask.EarnRewardTask(getContext(), sessionManager.getSessionToken());
-                Log.d("Reward",""+reward.getAmount());
             }
-            @Override
-            public void onRewardedAdFailedToShow(int errorCode) {
-                Log.d(rewardCallbackTag,"Ad failed to display.");
-            }
-        };
-        //Show rewarded ad
-        rewardedAd.show(getActivity(), rewardedAdCallback);
+        });
+    }
+
+
+    /**
+     * Shows share test dialog
+     */
+    private void shareTest() {
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        String testUrl = String.format(WEB_URL + "%s", sessionManager.getUser().getTestId());
+        String shareBody = getString(R.string.body_share_test, testUrl);
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, R.string.action_btn_share_test);
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+        startActivity(Intent.createChooser(sharingIntent, getString(R.string.action_btn_share_test)));
+    }
+
+    /**
+     * Shows share result dialog
+     */
+    private void shareResults() {
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+
+        String testResultId = SessionManager.getInstance().getUser().getTestResultId();
+        String testUrl = String.format(WEB_URL + "%s", sessionManager.getUser().getTestId());
+
+        String shareBody = getString(R.string.body_share_results, WEB_URL + "result/" + testResultId + "\n", testUrl);
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, R.string.action_btn_share_results);
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+        startActivity(Intent.createChooser(sharingIntent, getString(R.string.action_btn_share_results)));
+    }
+
+    /**
+     * Opens create test page
+     */
+    private void createTest() {
+        //Check internet connection
+        ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+        if (isConnected) {
+            Intent addTestIntent = new Intent(getContext(), WebViewActivity.class);
+            addTestIntent.putExtra("url", ConstantValues.CREATE_TEST);
+            addTestIntent.putExtra("title", getString(R.string.activity_label_new_test));
+            startActivity(addTestIntent);
+        } else {
+            Snackbar.make(swipeLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
+            Log.d("CONNECTION", String.valueOf(isConnected));
+        }
     }
 }

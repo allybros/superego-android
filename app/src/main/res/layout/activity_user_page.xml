@@ -39,11 +39,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        app:itemTextAppearanceActive="@style/Sego.BottomNavigaton.TextApperance.Active"
+        app:itemTextAppearanceInactive="@style/Sego.BottomNavigaton.TextApperance.Inactive"
         android:background="@color/bgBottomNavigation"
         android:foreground="?attr/selectableItemBackground"
         app:itemBackground="@color/bgBottomNavigation"
-        app:itemIconTint="@android:color/white"
-        app:itemTextColor="@android:color/white"
+        app:itemIconTint="@color/bgNavigationItemPassive"
+        app:itemTextColor="@color/bgNavigationItemPassive"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottom_navigator" />
 

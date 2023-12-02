@@ -2,67 +2,97 @@ package com.allybros.superego.activity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.Html;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.R;
 import com.allybros.superego.api.LoginTask;
 import com.allybros.superego.api.RegisterTask;
+import com.allybros.superego.api.SocialMediaSignInTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
+import com.allybros.superego.widget.SegoEditText;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
+
+import java.util.Arrays;
 
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private TextInputEditText etRegisterUsername,etRegisterMail,etRegisterPassword;
-    private TextInputLayout inputLayoutUsername, inputLayoutEmail, inputLayoutPassword;
+    private SegoEditText etRegisterUsername,etRegisterMail,etRegisterPassword;
     private Button btnRegister;
+    private ConstraintLayout btSignInFacebook, btSignInGoogle;
     private CheckBox checkBoxAgreement;
     private LinearLayout cardFormRegister;
     private MaterialProgressBar progressView;
     private BroadcastReceiver registerReceiver;
     private BroadcastReceiver autoLoginReceiver;
-
+    private TextView tvAgreementRegister, tvSignIn;
     private String usernameInput;
     private String emailInput;
     private String passwordInput;
+
+    static LoginButton btHiddenFacebook;
+    GoogleSignInClient mGoogleSignInClient;
+    CallbackManager callbackManager;
+    private static final int RC_SIGN_IN = 0;    // It require to come back from Google Sign in intent
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         initializeComponents();
-        setupReceivers();
-        setupUi();
+        setupReceivers(this);
+        setupUi(this);
     }
 
     private void initializeComponents(){
         btnRegister = findViewById(R.id.btSignUp);
+        btHiddenFacebook = findViewById(R.id.btHiddenFacebook);
+        btSignInGoogle = findViewById(R.id.btSignInGoogle);
+        btSignInFacebook = findViewById(R.id.btSignInFacebook);
         etRegisterPassword = findViewById(R.id.etRegisterPassword);
         etRegisterMail = findViewById(R.id.etRegisterMail);
         etRegisterUsername = findViewById(R.id.etRegisterUsername);
-        inputLayoutUsername = findViewById(R.id.inputLayoutRegisterUsername);
-        inputLayoutEmail = findViewById(R.id.inputLayoutRegisterEmail);
-        inputLayoutPassword = findViewById(R.id.inputLayoutRegisterPassword);
         checkBoxAgreement = findViewById(R.id.checkboxAgreement);
         cardFormRegister = findViewById(R.id.cardFormRegister);
         progressView = findViewById(R.id.progressViewRegister);
+        tvAgreementRegister = findViewById(R.id.tvAgreementRegister);
+        tvSignIn = findViewById(R.id.tvSignIn);
     }
 
-    private void setupReceivers(){
+    private void setupReceivers(final RegisterActivity activity){
         /* Catches broadcasts of api/RegisterTask class */
         registerReceiver = new BroadcastReceiver() {
             @Override
@@ -85,23 +115,23 @@ public class RegisterActivity extends AppCompatActivity {
                         break;
 
                     case ErrorCodes.USERNAME_NOT_LEGAL:
-                        inputLayoutUsername.setError(getString(R.string.error_username_not_legal));
+                        etRegisterUsername.setError(getString(R.string.error_username_not_legal));
                         break;
 
                     case ErrorCodes.USERNAME_ALREADY_EXIST:
-                        inputLayoutUsername.setError(getString(R.string.error_username_taken));
+                        etRegisterUsername.setError(getString(R.string.error_username_taken));
                         break;
 
                     case ErrorCodes.EMAIL_ALREADY_EXIST:
-                        inputLayoutEmail.setError(getString(R.string.error_email_already_exist));
+                        etRegisterMail.setError(getString(R.string.error_email_already_exist));
                         break;
 
                     case ErrorCodes.EMAIL_NOT_LEGAL:
-                        inputLayoutEmail.setError(getString(R.string.error_email_not_legal));
+                        etRegisterMail.setError(getString(R.string.error_email_not_legal));
                         break;
 
                     case ErrorCodes.PASSWORD_NOT_LEGAL:
-                        inputLayoutPassword.setError(getString(R.string.error_password_not_legal));
+                        etRegisterPassword.setError(getString(R.string.error_password_not_legal));
                         break;
                 }
             }
@@ -130,28 +160,39 @@ public class RegisterActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(autoLoginReceiver, new IntentFilter(ConstantValues.ACTION_LOGIN));
     }
 
-    private void setupUi(){
+    private void setupUi(final RegisterActivity activity){
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputLayoutUsername.setErrorEnabled(false);
-                inputLayoutEmail.setErrorEnabled(false);
-                inputLayoutPassword.setErrorEnabled(false);
+                etRegisterUsername.clearError();
+                etRegisterMail.clearError();
+                etRegisterPassword.clearError();
 
-                usernameInput = etRegisterUsername.getText().toString();
-                emailInput = etRegisterMail.getText().toString();
-                passwordInput = etRegisterPassword.getText().toString();
+                checkBoxAgreement.setBackground(getDrawable(R.drawable.selector_check_box));
+
+                usernameInput = etRegisterUsername.getText();
+                emailInput = etRegisterMail.getText();
+                passwordInput = etRegisterPassword.getText();
                 boolean conditions = checkBoxAgreement.isChecked();
 
+
                 //Validate fields
-                if (usernameInput.isEmpty()) inputLayoutUsername.setError(getResources().getString(R.string.error_username_empty));
+                if (usernameInput.isEmpty()){
+                    etRegisterUsername.setError(getResources().getString(R.string.error_username_empty));
+                }
 
-                if (emailInput.isEmpty()) inputLayoutEmail.setError(getResources().getString(R.string.error_email_empty));
+                if (emailInput.isEmpty()){
+                    etRegisterMail.setError(getResources().getString(R.string.error_email_empty));
+                }
 
-                if (passwordInput.isEmpty()) inputLayoutPassword.setError(getResources().getString(R.string.error_password_empty));
+                if (passwordInput.isEmpty()){
+                    etRegisterPassword.setError(getResources().getString(R.string.error_password_empty));
+                }
 
-                if (!conditions) checkBoxAgreement.setError(getResources().getString(R.string.error_conditions_not_accepted));
+                if (!conditions){
+                    checkBoxAgreement.setBackground(getDrawable(R.drawable.checkbox_error));
+                }
 
                 if (!usernameInput.isEmpty()
                         && !emailInput.isEmpty()
@@ -165,6 +206,139 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        tvAgreementRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = getResources().getString(R.string.conditions_link);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(url));
+                startActivity(intent);
+            }
+        });
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            tvSignIn.setText(Html.fromHtml(getResources().getString(R.string.action_login)), TextView.BufferType.SPANNABLE);
+        }
+
+        etRegisterPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                //this method is empty
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //this method is empty
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.toString().isEmpty()){
+                    etRegisterPassword.setError(getString(R.string.error_password_empty));
+                } else {
+                    etRegisterPassword.clearError();
+                }
+            }
+        });
+        etRegisterMail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                //this method is empty
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //this method is empty
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                //this method is empty
+                if(s.toString().isEmpty()){
+                    etRegisterMail.setError(getResources().getString(R.string.error_email_empty));
+                } else {
+                    etRegisterMail.clearError();
+                }
+            }
+        });
+        etRegisterUsername.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                //this method is empty
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //this method is empty
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                //this method is empty
+                if(s.toString().isEmpty()){
+                    etRegisterUsername.setError(getResources().getString(R.string.error_username_empty));
+                } else {
+                    etRegisterUsername.clearError();
+                }
+            }
+        });
+
+        checkBoxAgreement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkBoxAgreement.setBackground(getDrawable(R.drawable.selector_check_box));
+            }
+        });
+
+        //Set Google Sign In
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.GOOGLE_CLIENT_ID))
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(getApplicationContext(), gso);
+
+        btSignInGoogle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+                startActivityForResult(signInIntent, RC_SIGN_IN);
+            }
+        });
+
+        //Set Facebook Sign In
+        btSignInFacebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btHiddenFacebook.callOnClick();
+            }
+        });
+        callbackManager = CallbackManager.Factory.create();
+        btHiddenFacebook.setPermissions(Arrays.asList("email","public_profile"));
+
+        callbackManager = CallbackManager.Factory.create();
+
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        // App code
+                        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+                        Log.d("Facebook","B"+accessToken.getToken());
+                        SocialMediaSignInTask.loginTask(getApplicationContext(),accessToken.getToken(),"facebook");
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        // App code
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                        // App code
+                    }
+                });
+
+
     }
 
     /**
@@ -175,9 +349,9 @@ public class RegisterActivity extends AppCompatActivity {
     private void setProgress(boolean visible){
         if (visible) {
             // Disable form elements
-            inputLayoutUsername.setEnabled(false);
-            inputLayoutEmail.setEnabled(false);
-            inputLayoutPassword.setEnabled(false);
+            etRegisterUsername.setEnabled(false);
+            etRegisterMail.setEnabled(false);
+            etRegisterPassword.setEnabled(false);
             checkBoxAgreement.setEnabled(false);
             btnRegister.setEnabled(false);
 
@@ -186,9 +360,9 @@ public class RegisterActivity extends AppCompatActivity {
 
         } else {
             //Enable form elements
-            inputLayoutUsername.setEnabled(true);
-            inputLayoutEmail.setEnabled(true);
-            inputLayoutPassword.setEnabled(true);
+            etRegisterUsername.setEnabled(true);
+            etRegisterMail.setEnabled(true);
+            etRegisterPassword.setEnabled(true);
             checkBoxAgreement.setEnabled(true);
             btnRegister.setEnabled(true);
 
@@ -199,7 +373,63 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        Intent intent=new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(intent);
         finish();
+    }
+
+    public void onSignInButtonClicked(View view) {
+        Intent intent=new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    /**
+     * Provides that cacth the results that come back from Google an Facebook sign in
+     * @param data is a variable that comes back from the intent. It includes data that is needed.
+     * @param requestCode is a variable that defines what intent come back.
+     * @param resultCode  is a variable that defines intent result.
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode,resultCode,data);
+        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            // The Task returned from this call is always completed, no need to attach
+            // a listener.
+            setProgress(true);
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
+        }
+    }
+
+    /**
+     * Sends request to Ally Bros Api for signing in with Google
+     * @param completedTask that has provided from GoogleSignInApi. It has result of google sign in task.
+     */
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            // Signed in successfully, show authenticated UI.
+            Log.w("GoogleSignInSuccess", account.getDisplayName()+account.getEmail()+account.getPhotoUrl()+account.getIdToken());
+            SocialMediaSignInTask.loginTask(getApplicationContext(),account.getIdToken(),"google");
+        } catch (ApiException e) {
+            // The ApiException status code indicates the detailed failure reason.
+            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+            Log.w("GoogleSignInError", "signInResult:failed code=" + e.getStatusCode());
+            setProgress(false);
+            // Show error dialog
+            new AlertDialog.Builder(RegisterActivity.this, R.style.SegoAlertDialog)
+                    .setTitle("insightof.me")
+                    .setMessage(R.string.error_google_signin)
+                    .setPositiveButton(getString(R.string.action_ok), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .show();
+        }
     }
 }

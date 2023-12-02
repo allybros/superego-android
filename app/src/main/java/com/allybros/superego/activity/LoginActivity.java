@@ -7,15 +7,16 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.Html;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.R;
@@ -23,9 +24,7 @@ import com.allybros.superego.api.LoginTask;
 import com.allybros.superego.api.SocialMediaSignInTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
-import com.allybros.superego.util.SessionManager;
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
+import com.allybros.superego.widget.SegoEditText;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -40,8 +39,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Arrays;
 
@@ -49,12 +46,9 @@ import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 
 public class LoginActivity extends AppCompatActivity {
     private MaterialButton btLogin;
-    private TextInputEditText etUid;
-    private TextInputEditText etPassword;
+    private SegoEditText etPassword, etUid;
     private TextView tvRegister;
-    public TextInputLayout passwordTextInput, usernameTextInput;
-    private Button btSignInFacebook, btSignInGoogle;
-    private LinearLayout cardFormLogin;
+    private ConstraintLayout btSignInFacebook, btSignInGoogle;
     private MaterialProgressBar progressView;
 
     static LoginButton btHiddenFacebook;
@@ -68,25 +62,22 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initializeComponents();
-        setupReceivers();
-        setupUi();
+        setupReceivers(this);
+        setupUi(this);
     }
 
     private void initializeComponents(){
-        usernameTextInput = findViewById(R.id.inputLayoutLoginUid);
         btLogin = findViewById(R.id.btLogin);
         btHiddenFacebook = findViewById(R.id.btHiddenFacebook);
         btSignInGoogle = findViewById(R.id.btSignInGoogle);
         btSignInFacebook = findViewById(R.id.btSignInFacebook);
         tvRegister = findViewById(R.id.tvRegister);
         etUid = findViewById(R.id.etLoginUid);
-        etPassword = findViewById(R.id.etLoginPassword);
-        passwordTextInput = findViewById(R.id.inputLayoutLoginPassword);
-        cardFormLogin = findViewById(R.id.cardFormLogin);
+        etPassword = findViewById(R.id.etPassword);
         progressView = findViewById(R.id.progressViewLogin);
     }
 
-    private void setupReceivers(){
+    private void setupReceivers(final LoginActivity activity){
         /* Catches broadcasts of api/LoginTask class */
         loginReceiver = new BroadcastReceiver() {
             @Override
@@ -97,12 +88,11 @@ public class LoginActivity extends AppCompatActivity {
                 switch (status){
 
                     case ErrorCodes.SYSFAIL:
+                        //TODO: We should write something
+                        break;
                     case ErrorCodes.CAPTCHA_REQUIRED:
-                        usernameTextInput.setError(" ");
-                        passwordTextInput.setError(getString(R.string.error_login_failed));
-                        YoYo.with(Techniques.Shake)
-                                .duration(400)
-                                .playOn(findViewById(R.id.cardFormLogin));
+                        etUid.setError(getString(R.string.error_login_failed));
+                        etPassword.setError(getString(R.string.error_login_failed));
                         break;
 
                     case ErrorCodes.SUSPEND_SESSION:
@@ -196,7 +186,7 @@ public class LoginActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(loginSocialMediaReceiver, new IntentFilter(ConstantValues.ACTION_SOCIAL_MEDIA_LOGIN));
     }
 
-    private void setupUi(){
+    private void setupUi(final LoginActivity activity){
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             tvRegister.setText(Html.fromHtml(getResources().getString(R.string.desc_call_register)), TextView.BufferType.SPANNABLE);
@@ -205,30 +195,65 @@ public class LoginActivity extends AppCompatActivity {
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            passwordTextInput.setErrorEnabled(false);
-            usernameTextInput.setErrorEnabled(false);
+            etPassword.clearError();
 
-            if(etUid.getText().toString().isEmpty()){
-                usernameTextInput.setError(getString(R.string.error_username_empty));
+                etUid.clearError();
+
+            if(etUid.getText().isEmpty()){
+                etUid.setError(getString(R.string.error_username_empty));
             }
-            if(etPassword.getText().toString().isEmpty()){
-                passwordTextInput.setError(getString(R.string.error_password_empty));
+            if(etPassword.getText().isEmpty()){
+                etPassword.setError(getString(R.string.error_password_empty));
             }
-            if(!etPassword.getText().toString().isEmpty() && !etUid.getText().toString().isEmpty()){
+            if(!etPassword.getText().isEmpty() && !etUid.getText().toString().isEmpty()){
                 setProgress(true);
                 LoginTask.loginTask(getApplicationContext(), etUid.getText().toString(),etPassword.getText().toString());
             }
             }
         });
 
-        tvRegister.setOnClickListener(new View.OnClickListener() {
+        etPassword.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View v) {
-            Intent intent=new Intent(getApplicationContext(), RegisterActivity.class);
-            startActivity(intent);
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                //this method is empty
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //this method is empty
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.toString().isEmpty()){
+                    etPassword.setError(getString(R.string.error_password_empty));
+                } else {
+                    etPassword.clearError();
+                }
             }
         });
 
+        etUid.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                //this method is empty
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //this method is empty
+                if(s.toString().isEmpty()) {
+                    etUid.setError(getString(R.string.error_username_empty));
+                } else {
+                    etUid.clearError();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         //Set Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -265,7 +290,6 @@ public class LoginActivity extends AppCompatActivity {
                         AccessToken accessToken = AccessToken.getCurrentAccessToken();
                         Log.d("Facebook","B"+accessToken.getToken());
                         SocialMediaSignInTask.loginTask(getApplicationContext(),accessToken.getToken(),"facebook");
-
                     }
 
                     @Override
@@ -336,16 +360,14 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void setProgress(boolean visible) {
         if (visible) {
-            passwordTextInput.setEnabled(false);
-            usernameTextInput.setEnabled(false);
+            etPassword.setEnabled(false);
+            etUid.setEnabled(false);
             btLogin.setEnabled(false);
-            cardFormLogin.setAlpha(0.8f);
             progressView.setVisibility(View.VISIBLE);
         } else {
-            passwordTextInput.setEnabled(true);
-            usernameTextInput.setEnabled(true);
+            etPassword.setEnabled(true);
+            etUid.setEnabled(true);
             btLogin.setEnabled(true);
-            cardFormLogin.setAlpha(1f);
             progressView.setVisibility(View.GONE);
         }
     }
@@ -358,4 +380,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    public void onRegisterButtonClicked(View view) {
+        Intent intent=new Intent(getApplicationContext(), RegisterActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

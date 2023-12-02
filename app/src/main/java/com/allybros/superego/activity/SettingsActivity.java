@@ -11,7 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -19,14 +19,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.R;
-import com.allybros.superego.ui.LicensesAdapter;
+import com.allybros.superego.adapter.LicensesAdapter;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.util.SessionManager;
+import com.allybros.superego.widget.SegoMenuButton;
 import com.facebook.CallbackManager;
 import com.facebook.login.LoginManager;
 import com.facebook.login.widget.LoginButton;
@@ -35,22 +35,21 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.r0adkll.slidr.Slidr;
-import com.r0adkll.slidr.model.SlidrInterface;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class SettingsActivity extends AppCompatActivity {
 
-    private ConstraintLayout optionEditProfile;
-    private ConstraintLayout optionChangePassword;
-    private ConstraintLayout optionAbout;
-    private ConstraintLayout optionLicenses;
-    private ConstraintLayout optionSignOut;
-    private SlidrInterface slidr;
+    private SegoMenuButton optionEditProfile, optionChangePassword,optionAbout,optionLicenses, optionSignOut;
     private LoginButton logoutFacebook;
     private BroadcastReceiver logoutReceiver;
+    private TextView tvUsername;
+    private CircleImageView ivUserAvatar;
+    private ImageView ivBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,18 +57,21 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         ActionBar appBar = getSupportActionBar();
         if (appBar != null) appBar.setDisplayHomeAsUpEnabled(true);
-        slidr = Slidr.attach(this);
-        slidr.unlock();
-        setOptions();
+        setViews();
     }
 
-    private void setOptions(){
+    private void setViews(){
         optionEditProfile = findViewById(R.id.cardBtnEditProfile);
         optionChangePassword = findViewById(R.id.cardBtnPassword);
         optionAbout = findViewById(R.id.cardBtnAbout);
         optionLicenses = findViewById(R.id.cardBtnLicenses);
         optionSignOut = findViewById(R.id.cardBtnSingOut);
         logoutFacebook = findViewById(R.id.logoutFacebook); //Only trigger logout for Facebook
+        ivUserAvatar = findViewById(R.id.ivUserAvatar);
+        tvUsername = findViewById(R.id.tvUsername);
+        ivBack = findViewById(R.id.ivBack);
+
+
         setupReceivers();
 
         optionEditProfile.setOnClickListener(new View.OnClickListener() {
@@ -109,7 +111,16 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
+        String username = "@" + SessionManager.getInstance().getUser().getUsername();
+        tvUsername.setText(username);
+        Picasso.get().load(ConstantValues.AVATAR_URL+SessionManager.getInstance().getUser().getImage()).into(ivUserAvatar);
 
     }
 
@@ -256,7 +267,9 @@ public class SettingsActivity extends AppCompatActivity {
         builder.setView(dialogView).show();
     }
 
-
+    public void onBackPressed(View view) {
+        onBackPressed();
+    }
 
     @Override
     protected void onDestroy() {

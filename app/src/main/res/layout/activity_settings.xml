@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fragmentBackground">
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <View
+        android:id="@+id/vRectengle"
+        android:layout_width="match_parent"
+        android:layout_height="277dp"
+        android:background="@drawable/background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -15,310 +21,129 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        android:background="@color/fragmentBackground">
-
-        <LinearLayout
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:background="@color/transparent">
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:context=".activity.SettingsActivity">
+            android:layout_height="wrap_content">
 
-            <FrameLayout
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="23dp"
+                android:onClick="onBackPressed"
+                android:src="@drawable/ic_arrow_back_white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvOptionsTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="18dp"
+                android:layout_toEndOf="@+id/ivBack"
+                android:fontFamily="@font/noto_sans"
+                android:onClick="onBackPressed"
+                android:text="@string/activity_label_options"
+                android:textColor="@color/White"
+                android:textFontWeight="700"
+                android:textStyle="bold"
+                android:textSize="24sp"
+                app:layout_constraintStart_toEndOf="@+id/ivBack"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ivUserAvatar"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_below="@+id/ivBack"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="34dp"
+                android:layout_marginTop="27dp"
+                android:src="@drawable/default_avatar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivBack" />
+
+            <TextView
+                android:id="@+id/tvUsername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ivBack"
+                android:layout_marginStart="11dp"
+                android:layout_marginTop="36dp"
+                android:layout_toEndOf="@+id/ivUserAvatar"
+                android:fontFamily="@font/noto_sans"
+                android:text="\@username"
+                android:textStyle="bold"
+                android:textColor="@color/White"
+                android:textSize="20sp"
+                android:textFontWeight="600"
+                app:layout_constraintStart_toEndOf="@+id/ivUserAvatar"
+                app:layout_constraintTop_toBottomOf="@+id/ivBack" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:padding="12dp">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_below="@+id/ivUserAvatar"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/settings_list_bg"
+                android:elevation="8dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivUserAvatar">
+                <com.allybros.superego.widget.SegoMenuButton
                     android:id="@+id/cardBtnEditProfile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/selector_card"
-                    android:clickable="true"
-                    android:elevation="4dp"
-                    android:focusable="true"
-                    android:padding="12dp">
-
-                    <TextView
-                        android:id="@+id/tvEditProfile"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="@string/option_edit_profile"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toEndOf="@+id/ivEditProfile"
-                        app:layout_constraintTop_toTopOf="parent" />
-                    <com.facebook.login.widget.LoginButton
-                        android:id="@+id/logoutFacebook"
-                        android:visibility="gone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        tools:ignore="MissingConstraints">
-                    </com.facebook.login.widget.LoginButton>
-                    <TextView
-                        android:id="@+id/tvEditProfileDesc"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="@string/option_edit_profile_desc"
-                        android:textColor="@color/Gray"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toEndOf="@+id/ivEditProfile"
-                        app:layout_constraintTop_toBottomOf="@+id/tvEditProfile" />
-
-                    <ImageView
-                        android:id="@+id/ivEditProfile"
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:layout_marginTop="4dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/v_account_edit"
-                        app:tint="@color/materialPurple" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp"
-                android:paddingBottom="12dp">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
+                    app:sego_start_icon="@drawable/ic_pencil_purple"
+                    app:sego_label_text="@string/option_edit_profile"
+                    app:sego_bottom_divider="true"
+                    tools:layout_height="60dp"/>
+                <com.allybros.superego.widget.SegoMenuButton
                     android:id="@+id/cardBtnPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/selector_card"
-                    android:clickable="true"
-                    android:elevation="4dp"
-                    android:focusable="true"
-                    android:padding="12dp">
-
-                    <TextView
-                        android:id="@+id/tvPassword"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="@string/option_password"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toEndOf="@+id/ivPassword"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tvPasswordDesc"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="@string/option_password_desc"
-                        android:textColor="@color/Gray"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toEndOf="@+id/ivPassword"
-                        app:layout_constraintTop_toBottomOf="@+id/tvPassword" />
-
-                    <ImageView
-                        android:id="@+id/ivPassword"
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:layout_marginTop="4dp"
-                        android:tint="@color/materialPurple"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/v_account_key" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp"
-                android:paddingBottom="12dp">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
+                    app:sego_start_icon="@drawable/ic_key_purple"
+                    app:sego_label_text="@string/option_password"
+                    app:sego_bottom_divider="true"
+                    tools:layout_height="60dp"/>
+                <com.allybros.superego.widget.SegoMenuButton
                     android:id="@+id/cardBtnAbout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/selector_card"
-                    android:clickable="true"
-                    android:elevation="4dp"
-                    android:focusable="true"
-                    android:padding="12dp">
-
-                    <TextView
-                        android:id="@+id/tvAbout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="@string/option_about"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toEndOf="@+id/ivAbout"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tvAboutDesc"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="@string/option_about_desc"
-                        android:textColor="@color/Gray"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toEndOf="@+id/ivAbout"
-                        app:layout_constraintTop_toBottomOf="@+id/tvAbout" />
-
-                    <ImageView
-                        android:id="@+id/ivAbout"
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:layout_marginTop="4dp"
-                        android:minWidth="36dp"
-                        android:minHeight="36dp"
-                        android:tint="@color/materialPurple"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/v_information_variant" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp"
-                android:paddingBottom="12dp">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
+                    app:sego_start_icon="@drawable/ic_info_purple"
+                    app:sego_label_text="@string/option_about"
+                    app:sego_bottom_divider="true"
+                    tools:layout_height="60dp"/>
+                <com.allybros.superego.widget.SegoMenuButton
                     android:id="@+id/cardBtnLicenses"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/selector_card"
-                    android:clickable="true"
-                    android:elevation="4dp"
-                    android:focusable="true"
-                    android:padding="12dp">
-
-                    <TextView
-                        android:id="@+id/tvLicenses"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="@string/option_licenses"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toEndOf="@+id/ivLicenses"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tvLicensesDesc"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="@string/option_licenses_desc"
-                        android:textColor="@color/Gray"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toEndOf="@+id/ivLicenses"
-                        app:layout_constraintTop_toBottomOf="@+id/tvLicenses" />
-
-                    <ImageView
-                        android:id="@+id/ivLicenses"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:minWidth="36dp"
-                        android:minHeight="36dp"
-                        android:tint="@color/materialPurple"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/v_scale_balance" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp"
-                android:paddingBottom="12dp">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
+                    app:sego_start_icon="@drawable/ic_balance_purple"
+                    app:sego_label_text="@string/option_licenses"
+                    app:sego_bottom_divider="true"
+                    tools:layout_height="60dp"/>
+                <com.allybros.superego.widget.SegoMenuButton
                     android:id="@+id/cardBtnSingOut"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/selector_card"
-                    android:clickable="true"
-                    android:elevation="4dp"
-                    android:focusable="true"
-                    android:padding="12dp">
-
-                    <TextView
-                        android:id="@+id/tvSignOut"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="@string/action_sign_out"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toEndOf="@+id/ivSignOut"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tvSignOutDesc"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="@string/option_sign_out_desc"
-                        android:textColor="@color/Gray"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toEndOf="@+id/ivSignOut"
-                        app:layout_constraintTop_toBottomOf="@+id/tvSignOut" />
-
-                    <ImageView
-                        android:id="@+id/ivSignOut"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:minWidth="36dp"
-                        android:minHeight="36dp"
-                        android:tint="@color/materialPurple"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/v_logout_variant" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </FrameLayout>
-
-        </LinearLayout>
+                    android:paddingBottom="9dp"
+                    app:sego_start_icon="@drawable/ic_logout_purple"
+                    app:sego_label_text="@string/action_sign_out"
+                    app:sego_bottom_divider="false"
+                    tools:layout_height="60dp"/>
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
-
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="83dp"
-        android:layout_marginEnd="84dp"
-        android:layout_marginBottom="12dp"
-        android:text="@string/with_version_from"
-        android:textSize="11sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -326,10 +151,19 @@
         android:layout_height="30dp"
         android:layout_marginStart="125dp"
         android:layout_marginEnd="126dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView7"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/brand_grey" />
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/logoutFacebook"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
+    </com.facebook.login.widget.LoginButton>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

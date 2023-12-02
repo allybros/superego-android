@@ -4,21 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_bitmap"
+    android:background="@drawable/login_background"
     tools:context="com.allybros.superego.activity.RegisterActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/gradient_overlay">
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/brandLogo"
-            android:layout_width="200dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="30dp"
+            android:layout_width="208.125dp"
+            android:layout_height="37dp"
+            android:layout_marginTop="21dp"
             android:src="@drawable/brand_white"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,12 +25,13 @@
             android:id="@+id/tvRegisterHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/header_register"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/noto_sans"
+            android:text="@string/login_text_header"
             android:textColor="@color/White"
-            android:textSize="24sp"
-            android:textStyle="bold"
+            android:textFontWeight="600"
+            android:textSize="17sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/brandLogo" />
 
@@ -39,98 +39,78 @@
             android:id="@+id/cardFormRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:background="@drawable/shape_card"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="35dp"
+            android:background="@color/transparent"
             android:orientation="vertical"
-            android:padding="12dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvRegisterHeader"
-            app:layout_constraintVertical_bias="0.234">
+            app:layout_constraintTop_toBottomOf="@+id/tvRegisterHeader">
 
-            <!--Input Username -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputLayoutRegisterUsername"
-                style="@style/SegoInputLayout"
+            <com.allybros.superego.widget.SegoEditText
+                android:id="@+id/etRegisterUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:hint="@string/hint_register_uid"
-                app:errorEnabled="false"
-                app:startIconDrawable="@drawable/baseline_person_black_24">
+                app:sego_header_text="@string/hint_register_uid"
+                app:sego_header_text_color="@color/White"
+                app:sego_input_text_color="@color/Black"
+                tools:layout_height="60dp"/>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etRegisterUsername"
-                    style="@style/SegoEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@null">
-
-                </com.google.android.material.textfield.TextInputEditText>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!--Input Email -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputLayoutRegisterEmail"
-                style="@style/SegoInputLayout"
+            <com.allybros.superego.widget.SegoEditText
+                android:id="@+id/etRegisterMail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:hint="@string/hint_register_email"
-                app:errorEnabled="false"
-                app:hintTextColor="@color/Black"
-                app:startIconDrawable="@drawable/v_email">
+                android:layout_marginTop="8dp"
+                app:sego_header_text="@string/hint_register_email"
+                app:sego_header_text_color="@color/White"
+                app:sego_input_text_color="@color/Black"
+                tools:layout_height="60dp"/>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etRegisterMail"
-                    style="@style/SegoEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!--Input Password -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputLayoutRegisterPassword"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <com.allybros.superego.widget.SegoEditText
+                android:id="@+id/etRegisterPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_register_password"
-                app:endIconMode="password_toggle"
-                app:errorEnabled="false"
-                app:hintTextColor="@color/Black"
-                app:prefixTextColor="@color/Black"
-                app:startIconDrawable="@drawable/v_account_key">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etRegisterPassword"
-                    style="@style/SegoEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPassword" />
-            </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginTop="8dp"
+                app:sego_header_text="@string/hint_register_password"
+                app:sego_header_text_color="@color/White"
+                app:sego_input_text_color="@color/Black"
+                app:sego_is_password_input="true"
+                tools:layout_height="60dp"/>
 
             <!--Input Agreement -->
             <LinearLayout
                 android:id="@+id/layoutAgreement"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="11dp"
                 android:orientation="horizontal">
 
                 <CheckBox
                     android:id="@+id/checkboxAgreement"
-                    android:layout_width="36dp"
-                    android:layout_height="24dp"
-                    android:buttonTint="@color/materialPurple" />
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/selector_check_box"
+                    android:button="@color/White"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/tvAgreementRegister"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start|center"
-                    android:text="@string/action_agreement_link" />
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/noto_sans"
+                    android:layout_marginStart="5dp"
+                    android:textSize="11sp"
+                    android:text="@string/action_agreement_link"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/checkboxAgreement"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </LinearLayout>
 
@@ -139,9 +119,155 @@
                 style="@style/SegoBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="19dp"
                 android:text="@string/action_register"
-                android:textColor="@color/White" />
+                android:textColor="@color/White"
+                android:textFontWeight="600"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llConnectCall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="35dp"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardFormRegister">
+
+
+            <View
+                android:layout_width="110dp"
+                android:layout_height="1.5dp"
+                android:layout_marginTop="35dp"
+                android:layout_marginEnd="13dp"
+                android:layout_weight="1"
+                android:background="@drawable/horizontal_line" />
+
+            <TextView
+                android:id="@+id/tvConnectCall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/noto_sans"
+                android:gravity="center"
+                android:text="@string/call_or_connect_via"
+                android:textColor="@color/fragmentBackground"
+                android:textFontWeight="600"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="110dp"
+                android:layout_height="1.5dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="35dp"
+                android:layout_weight="1"
+                android:background="@drawable/horizontal_line" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/socialButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="35dp"
+            android:layout_marginTop="25dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/llConnectCall">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/btSignInGoogle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingHorizontal="24dp"
+                    android:background="@drawable/selector_google_button"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <TextView
+                        android:id="@+id/tvEditProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="11dp"
+                        android:fontFamily="@font/noto_sans_bold"
+                        android:text="@string/action_login_via_google"
+                        android:textColor="@color/White"
+                        android:textFontWeight="500"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/imageView4"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="4dp"
+                        android:src="@drawable/brand_google"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/tvEditProfile"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/btSignInFacebook"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingHorizontal="24dp"
+                    android:background="@drawable/selector_facebook_button"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="11dp"
+                        android:fontFamily="@font/noto_sans_bold"
+                        android:text="@string/action_login_via_facebook"
+                        android:textColor="@color/White"
+                        android:textFontWeight="500"
+                        android:layout_marginStart="17dp"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/imageView7"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="4dp"
+                        android:src="@drawable/brand_facebook"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/textView2"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </FrameLayout>
+
 
         </LinearLayout>
 
@@ -160,8 +286,51 @@
             app:mpb_progressStyle="circular"
             app:mpb_progressTint="@color/materialPurple"
             android:indeterminateTint="@color/materialPurple"
-            style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal"
-            />
+            style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal" />
+
+
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/btHiddenFacebook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@+id/btHiddenGoogle"
+            app:layout_constraintTop_toBottomOf="@+id/cardFormLogin" />
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/btHiddenGoogle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/cardFormLogin"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/noto_sans"
+            android:gravity="center"
+            android:onClick="onSignInButtonClicked"
+            android:text="@string/desc_call_sign_in"
+            android:textColor="#2d2846"
+            android:textFontWeight="400"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/tvSignIn" />
+
+        <TextView
+            android:id="@+id/tvSignIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:fontFamily="@font/noto_sans"
+            android:onClick="onSignInButtonClicked"
+            android:textSize="12sp"
+            android:textFontWeight="500"
+            android:text="@string/action_login"
+            android:textColor="#553C8B"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

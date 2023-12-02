@@ -3,10 +3,8 @@ package com.allybros.superego.activity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
-import android.se.omapi.Session;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,11 +17,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.allybros.superego.R;
-import com.allybros.superego.api.LoadProfileTask;
 import com.allybros.superego.fragment.ProfileFragment;
 import com.allybros.superego.fragment.ResultsFragment;
 import com.allybros.superego.fragment.SearchFragment;
-import com.allybros.superego.ui.PagerAdapter;
+import com.allybros.superego.adapter.PagerAdapter;
 import com.allybros.superego.util.InputMethodWatcher;
 import com.allybros.superego.util.SessionManager;
 import com.daimajia.androidanimations.library.Techniques;
@@ -184,15 +181,15 @@ public class UserPageActivity extends AppCompatActivity {
         //Disable all navigation Items
         for (BottomNavigationItemView navItem: navigationItems) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                navItem.setTextColor(ColorStateList.valueOf(getColor(R.color.Gray)));
-                navItem.setIconTintList(ColorStateList.valueOf(getColor(R.color.Gray)));
+                navItem.setTextColor(ColorStateList.valueOf(getColor(R.color.bgNavigationItemPassive)));
+                navItem.setIconTintList(ColorStateList.valueOf(getColor(R.color.bgNavigationItemPassive)));
             }
             navItem.setChecked(false);
         }
         //Enable selected item
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            activeNavItem.setTextColor(ColorStateList.valueOf(getColor(R.color.White)));
-            activeNavItem.setIconTintList(ColorStateList.valueOf(getColor(R.color.White)));
+            activeNavItem.setTextColor(ColorStateList.valueOf(getColor(R.color.bgNavigationItemActive)));
+            activeNavItem.setIconTintList(ColorStateList.valueOf(getColor(R.color.bgNavigationItemActive)));
         }
         activeNavItem.setChecked(true);
         viewPager.setCurrentItem(index);

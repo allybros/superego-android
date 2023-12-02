@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.PlayGroundActivity">
+
+    <com.allybros.superego.widget.SegoProgressBar
+        android:id="@+id/segoProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:sego_progress_end_label="Kapalı"
+        app:sego_progress_end_percent="50"
+        app:sego_progress_start_percent="50"
+        app:sego_progress_header_label="Yeniliğe"
+        app:sego_progress_start_label="Açık"
+        app:sego_progress_color="@color/progressBlue"
+        app:sego_progress_bar_color="@color/progressPassive"
+        tools:layout_height="60dp"/>
+
+    <EditText
+        android:id="@+id/etStartPercent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Start percent"
+        android:textColor="@color/Black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/segoProgress" />
+
+    <EditText
+        android:id="@+id/etEndPercent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="End percent"
+        android:textColor="@color/Black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/segoProgress" />
+
+    <Button
+        android:id="@+id/bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tamam"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/segoProgress" />
+</androidx.constraintlayout.widget.ConstraintLayout>
