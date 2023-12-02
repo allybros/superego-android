@@ -12,7 +12,6 @@ public class ConstantValues {
     public static final String API_ROOT = "https://dev.allybros.com/superego-api/";
     public static final String WEB_URL = "https://dev.allybros.com/superego-web/";
     public static final String TWEMOJI_URL = "https://dev.allybros.com/twemoji";
-    public static final String AVATAR_URL = API_ROOT + "images.php?get=";
 
     //API LINKS
     public static final String UPDATE_INFORMATION = API_ROOT + "edit-profile.php";
@@ -26,7 +25,7 @@ public class ConstantValues {
     public static final String SEARCH_URL = API_ROOT +  "search.php?q=";
     public static final String PARAM_TEST = API_ROOT +  "param_test.php";
     public static final String PASSWORD_CHANGE = API_ROOT +  "reset-password.php";
-    public static final String CREATE_TEST = WEB_URL + "new-test";
+    public static final String CREATE_TEST = WEB_URL + "new-test?embed=1";
     public static final String RATE_URL =  WEB_URL + "rate.php?embed=true&test=";
     public static final String LOGOUT_URL = API_ROOT + "logout.php";
 

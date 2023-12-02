@@ -51,7 +51,9 @@ public class SearchAdapter extends ArrayAdapter<User> {
 
         tvSearchUsername.setText(u.getUsername());
         tvSearchUserbio.setText(bioSum);
-        Picasso.get().load(ConstantValues.AVATAR_URL+u.getAvatarName()).into(ivSearchUserAvatar);
+        Picasso.get().load(u.getAvatarName())
+                .error(R.drawable.default_avatar)
+                .into(ivSearchUserAvatar);
 
         return convertView;
     }

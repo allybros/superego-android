@@ -267,7 +267,7 @@ public class ProfileFragment extends Fragment {
         badgeRated.setText(String.valueOf(sessionManager.getUser().getRated()));
 
 
-        Picasso.get().load(ConstantValues.AVATAR_URL+sessionManager.getUser().getImage()).into(imageViewAvatar);
+        Picasso.get().load(sessionManager.getUser().getImage()).error(R.drawable.default_avatar).into(imageViewAvatar);
     }
 
     /**

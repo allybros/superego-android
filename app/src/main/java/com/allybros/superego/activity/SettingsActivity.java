@@ -120,7 +120,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         String username = "@" + SessionManager.getInstance().getUser().getUsername();
         tvUsername.setText(username);
-        Picasso.get().load(ConstantValues.AVATAR_URL+SessionManager.getInstance().getUser().getImage()).into(ivUserAvatar);
+        Picasso.get().load(SessionManager.getInstance().getUser().getImage()).error(R.drawable.default_avatar).into(ivUserAvatar);
 
     }
 

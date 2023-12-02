@@ -183,8 +183,8 @@ public class EditProfileActivity extends AppCompatActivity {
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
         //Load image
-        String URL= ConstantValues.AVATAR_URL+SessionManager.getInstance().getUser().getImage();
-        Picasso.get().load(URL).into(settingsImage);
+        String URL= SessionManager.getInstance().getUser().getImage();
+        Picasso.get().load(URL).error(R.drawable.default_avatar).into(settingsImage);
 
         if(!isConnected) Snackbar.make(editProfileLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
 
