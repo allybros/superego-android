@@ -43,19 +43,20 @@ import static com.allybros.superego.util.HelperMethods.imageToString;
 
 public class EditProfileActivity extends AppCompatActivity {
     private MaterialProgressBar progressEditProfile;
-    private ConstraintLayout cardFormEditProfile;
-    private SegoEditText username, email;
-    private EditText information;
-    private ImageView ivChangeAvatar, ivBack;
-    private TextView tvOptionsTitle;
-    private CircleImageView settingsImage;
+    private SegoEditText etUsername;
+    private SegoEditText etEmail;
+    private EditText etBio;
+    private ImageView ivChangeAvatar;
+    private CircleImageView ivSettings;
     private ConstraintLayout editProfileLayout;
-    public static Uri newImagePath=null;
-    private BroadcastReceiver updateInformationReceiver, updateImageReceiver;
+    public static Uri newImagePath = null;
+    private BroadcastReceiver updateInformationReceiver;
+    private BroadcastReceiver updateImageReceiver;
     private Button btnSaveProfile;
-    private final int IMG_REQUEST=1;    //Needs for image selection from local storage
+    private static final int IMG_REQUEST = 1; //Needs for image selection from local storage
 
     private InputMethodWatcher inputMethodWatcher;
+    
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,14 +72,13 @@ public class EditProfileActivity extends AppCompatActivity {
     private void initializeComponents(){
         editProfileLayout = findViewById(R.id.editProfileLayout);
         progressEditProfile = findViewById(R.id.progressEditProfile);
-        cardFormEditProfile = findViewById(R.id.cardFormEditProfile);
+        findViewById(R.id.cardFormEditProfile);
         ivChangeAvatar = findViewById(R.id.ivChangeAvatar);
-        ivBack = findViewById(R.id.ivBack);
-        tvOptionsTitle = findViewById(R.id.tvOptionsTitle);
-        username = findViewById(R.id.etUsername);
-        email = findViewById(R.id.etEmail);
-        information = findViewById(R.id.etInformation);
-        settingsImage = findViewById(R.id.ivUserAvatarEditProfile);
+        findViewById(R.id.ivBack);
+        etUsername = findViewById(R.id.etUsername);
+        etEmail = findViewById(R.id.etEmail);
+        etBio = findViewById(R.id.etInformation);
+        ivSettings = findViewById(R.id.ivUserAvatarEditProfile);
         btnSaveProfile = findViewById(R.id.btnSaveProfile);
     }
 
@@ -137,7 +137,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 int status = intent.getIntExtra("status",0);
                 Log.d("receiver", "Got message: " + status);
                 setProgressVisibility(false);
-                settingsImage.setVisibility(View.VISIBLE);
+                ivSettings.setVisibility(View.VISIBLE);
                 //Check status
                 switch (status){
                     case ErrorCodes.SUCCESS:
@@ -145,13 +145,11 @@ public class EditProfileActivity extends AppCompatActivity {
                         break;
 
                     case ErrorCodes.SYSFAIL:
+                    case ErrorCodes.FILE_WRITE_ERROR:
                         Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.error_no_connection),Snackbar.LENGTH_LONG).show();
                         break;
 
                     case ErrorCodes.INVALID_FILE_EXTENSION:
-                        Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.error_invalid_file_type),Snackbar.LENGTH_LONG).show();
-                        break;
-
                     case ErrorCodes.INVALID_FILE_TYPE:
                         Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.error_invalid_file_type),Snackbar.LENGTH_LONG).show();
                         break;
@@ -160,8 +158,7 @@ public class EditProfileActivity extends AppCompatActivity {
                         Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.error_invalid_file_size),Snackbar.LENGTH_LONG).show();
                         break;
 
-                    case ErrorCodes.FILE_WRITE_ERROR:
-                        Snackbar.make(editProfileLayout,getApplicationContext().getString(R.string.error_no_connection),Snackbar.LENGTH_LONG).show();
+                    default:
                         break;
                 }
             }
@@ -173,9 +170,9 @@ public class EditProfileActivity extends AppCompatActivity {
     private void setupUi(){
 
         //Set view components
-        email.setText(SessionManager.getInstance().getUser().getEmail());
-        username.setText(SessionManager.getInstance().getUser().getUsername());
-        information.setText(SessionManager.getInstance().getUser().getUserBio());
+        etEmail.setText(SessionManager.getInstance().getUser().getEmail());
+        etUsername.setText(SessionManager.getInstance().getUser().getUsername());
+        etBio.setText(SessionManager.getInstance().getUser().getUserBio());
 
 
         // Check internet connection
@@ -184,7 +181,7 @@ public class EditProfileActivity extends AppCompatActivity {
         boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
         //Load image
         String URL= SessionManager.getInstance().getUser().getImage();
-        Picasso.get().load(URL).error(R.drawable.default_avatar).into(settingsImage);
+        Picasso.get().load(URL).error(R.drawable.default_avatar).into(ivSettings);
 
         if(!isConnected) Snackbar.make(editProfileLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
 
@@ -231,7 +228,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
 
     private void setupTextWatchers() {
-        username.addTextChangedListener(new TextWatcher() {
+        etUsername.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 //this method is empty
@@ -245,14 +242,14 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if(s.toString().isEmpty()){
-                    setError(username, getString(R.string.error_username_empty));
+                    setError(etUsername, getString(R.string.error_username_empty));
                 } else {
-                    clearError(username);
+                    clearError(etUsername);
                 }
             }
         });
 
-        email.addTextChangedListener(new TextWatcher() {
+        etEmail.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 //this method is empty
@@ -266,9 +263,9 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if(s.toString().isEmpty()){
-                    setError(email, getString(R.string.error_email_empty));
+                    setError(etEmail, getString(R.string.error_email_empty));
                 } else {
-                    clearError(email);
+                    clearError(etEmail);
                 }
 
             }
@@ -297,8 +294,8 @@ public class EditProfileActivity extends AppCompatActivity {
                 Log.d("SIZE:  ",""+ bitmap.getByteCount());
                 if(fileSize < ConstantValues.MAX_FILE_SIZE){
                     SessionManager.getInstance().getUser().setAvatar(bitmap);
-                    settingsImage.setImageBitmap(SessionManager.getInstance().getUser().getAvatar());
-                    settingsImage.setVisibility(View.INVISIBLE);
+                    ivSettings.setImageBitmap(SessionManager.getInstance().getUser().getAvatar());
+                    ivSettings.setVisibility(View.INVISIBLE);
                     setProgressVisibility(true);
                     ImageChangeTask.imageChangeTask(imageToString(SessionManager.getInstance().getUser().getAvatar()),getApplicationContext());
                 }else{
@@ -318,15 +315,15 @@ public class EditProfileActivity extends AppCompatActivity {
     private void setProgressVisibility(boolean visible){
         if (visible) {
             progressEditProfile.setVisibility(View.VISIBLE);
-            username.setEnabled(false);
-            email.setEnabled(false);
-            information.setEnabled(false);
+            etUsername.setEnabled(false);
+            etEmail.setEnabled(false);
+            etBio.setEnabled(false);
             btnSaveProfile.setEnabled(false);
         } else {
             progressEditProfile.setVisibility(View.INVISIBLE);
-            username.setEnabled(true);
-            email.setEnabled(true);
-            information.setEnabled(true);
+            etUsername.setEnabled(true);
+            etEmail.setEnabled(true);
+            etBio.setEnabled(true);
             btnSaveProfile.setEnabled(true);
         }
     }
@@ -335,20 +332,20 @@ public class EditProfileActivity extends AppCompatActivity {
      * Validate user information and send request to the API
      */
     private void saveProfile(){
-        clearError(username);
-        clearError(email);
+        clearError(etUsername);
+        clearError(etEmail);
 
-        if(username.getText().toString().isEmpty()){
-            setError(username, getString(R.string.error_username_empty));
+        if(etUsername.getText().toString().isEmpty()){
+            setError(etUsername, getString(R.string.error_username_empty));
         }
-        if(email.getText().toString().isEmpty()){
-            setError(email, getString(R.string.error_email_empty));
+        if(etEmail.getText().toString().isEmpty()){
+            setError(etEmail, getString(R.string.error_email_empty));
         }
 
-        if(!username.getText().toString().isEmpty()
-                && !email.getText().toString().isEmpty() ){
+        if(!etUsername.getText().toString().isEmpty()
+                && !etEmail.getText().toString().isEmpty() ){
             setProgressVisibility(true);
-            ChangeInfoTask.changeInfoTask(getApplicationContext(),username.getText().toString(),email.getText().toString(),information.getText().toString(), SessionManager.getInstance().getSessionToken());
+            ChangeInfoTask.changeInfoTask(getApplicationContext(), etUsername.getText().toString(), etEmail.getText().toString(), etBio.getText().toString(), SessionManager.getInstance().getSessionToken());
         }
     }
 

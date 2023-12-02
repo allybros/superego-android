@@ -7,7 +7,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <View
-        android:id="@+id/vRectengle"
+        android:id="@+id/vRectangle"
         android:layout_width="match_parent"
         android:layout_height="277dp"
         android:background="@drawable/background"
@@ -30,33 +30,43 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/ivBack"
+
+            <!-- Navigation Group -->
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="24dp"
-                android:onClick="onBackPressed"
-                android:src="@drawable/ic_arrow_back_white"
+                android:id="@+id/vNavigation"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="12dp"
+                android:gravity="center">
 
-            <TextView
-                android:id="@+id/tvOptionsTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                android:layout_toEndOf="@+id/ivBack"
-                android:onClick="onBackPressed"
-                android:fontFamily="@font/noto_sans"
-                android:textFontWeight="700"
-                android:textStyle="bold"
-                android:text="@string/option_edit_profile"
-                android:textColor="@color/White"
-                android:textSize="24sp"
-                app:layout_constraintStart_toEndOf="@+id/ivBack"
-                app:layout_constraintTop_toTopOf="parent" />
+                <ImageView
+                    android:id="@+id/ivBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:onClick="onBackPressed"
+                    android:src="@drawable/ic_arrow_back_white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
+                <TextView
+                    android:id="@+id/tvOptionsTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:fontFamily="@font/noto_sans"
+                    android:onClick="onBackPressed"
+                    android:text="@string/activity_label_edit_profile"
+                    android:textColor="@color/White"
+                    android:textFontWeight="700"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:paddingBottom="4dp"
+                    app:layout_constraintStart_toEndOf="@+id/ivBack"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -73,7 +83,7 @@
                 android:paddingBottom="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvOptionsTitle">
+                app:layout_constraintTop_toBottomOf="@+id/vNavigation">
 
                 <com.allybros.superego.widget.SegoEditText
                     android:id="@+id/etUsername"
@@ -164,7 +174,7 @@
                 android:src="@drawable/default_avatar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ivBack" />
+                app:layout_constraintTop_toBottomOf="@+id/vNavigation" />
 
             <ImageView
                 android:id="@+id/ivChangeAvatar"
@@ -176,7 +186,7 @@
                 android:translationZ="1000dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ivBack" />
+                app:layout_constraintTop_toBottomOf="@+id/vNavigation" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

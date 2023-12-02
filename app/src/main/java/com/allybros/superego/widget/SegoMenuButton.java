@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,22 +14,21 @@ import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 
 import com.allybros.superego.R;
 
 public class SegoMenuButton extends LinearLayout {
 
-    private ConstraintLayout clContainer;
+    private LinearLayout layoutSegoMenuButtonContainer;
     private TextView tvButton;
     private ImageView ivButton;
     private View vBottomDivider;
     private String buttonLabel;
-    private Drawable background = getResources().getDrawable(R.drawable.selector_card);
-    private Drawable icon = getResources().getDrawable(R.drawable.ic_pencil_purple);
+    private Drawable background = ContextCompat.getDrawable(getContext(), R.drawable.selector_card);
+    private Drawable icon = ContextCompat.getDrawable(getContext(), R.drawable.ic_pencil_purple);
     @ColorInt
-    private int labelColor = getResources().getColor(R.color.segoPurple600);
-    private OnClickListener onClickListener = null;
+    private int labelColor = ContextCompat.getColor(getContext(), R.color.segoPurple600);
     private boolean isBottomDividerVisible;
 
     public SegoMenuButton(Context context) {
@@ -55,24 +55,27 @@ public class SegoMenuButton extends LinearLayout {
     private void initArgs(Context context, AttributeSet attrs) {
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.SegoMenuButton);
         int count = array.getIndexCount();
-        for (int i= 0; i < count; i++){
+        for (int i = 0; i < count; i++) {
             int attr = array.getIndex(i);
-            switch (attr){
+            switch (attr) {
                 case R.styleable.SegoMenuButton_sego_button_background:
-                    background = array.getDrawable(attr);
+                    this.background = array.getDrawable(attr);
                     break;
                 case R.styleable.SegoMenuButton_sego_label_text:
-                    buttonLabel = array.getString(attr);
+                    this.buttonLabel = array.getString(attr);
                     break;
                 case R.styleable.SegoMenuButton_sego_start_icon:
-                    icon = array.getDrawable(attr);
+                    this.icon = array.getDrawable(attr);
                     break;
                 case R.styleable.SegoMenuButton_sego_label_color:
-                    labelColor = array.getColor(attr,getResources().getColor(R.color.segoPurple600));
+                    this.labelColor = array.getColor(attr, this.labelColor);
                     break;
                 case R.styleable.SegoMenuButton_sego_bottom_divider:
-                    isBottomDividerVisible = array.getBoolean(attr, false);
+                    this.isBottomDividerVisible = array.getBoolean(attr, false);
                     break;
+                default:
+                    // Unrecognized argument
+                    Log.e("SegoMenuButton", "Unexpected attribute " + attr);
             }
         }
         array.recycle();
@@ -80,7 +83,7 @@ public class SegoMenuButton extends LinearLayout {
 
     private void init() {
         LayoutInflater.from(getContext()).inflate(R.layout.widget_sego_menu_button, this, true);
-        clContainer = findViewById(R.id.clContainer);
+        layoutSegoMenuButtonContainer = findViewById(R.id.vSegoMenuButtonContainerLayout);
         tvButton = findViewById(R.id.tvButton);
         ivButton = findViewById(R.id.ivButton);
         vBottomDivider = findViewById(R.id.vBottomDivider);
@@ -90,7 +93,7 @@ public class SegoMenuButton extends LinearLayout {
 
 
     private void initViews() {
-        if(getLayoutTransition() == null){
+        if (getLayoutTransition() == null) {
             setLayoutTransition(new LayoutTransition());
         }
 
@@ -116,18 +119,19 @@ public class SegoMenuButton extends LinearLayout {
 
     /**
      * Set button background with selector.
+     *
      * @param background It's a selector.
      */
     private void setButtonBackground(Drawable background) {
-        clContainer.setBackground(background);
+        layoutSegoMenuButtonContainer.setBackground(background);
     }
 
     private void setButtonLabel(String tvLabel) {
         tvButton.setText(tvLabel);
     }
 
-    public void setOnClickListener(OnClickListener onClickListener){
-        this.onClickListener = onClickListener;
-        clContainer.setOnClickListener(this.onClickListener);
+    @Override
+    public void setOnClickListener(OnClickListener onClickListener) {
+        layoutSegoMenuButtonContainer.setOnClickListener(onClickListener);
     }
 }
