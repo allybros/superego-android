@@ -71,7 +71,7 @@
     <string name="option_sign_out_desc">End current session.</string>
     <string name="call_or_connect_via">or connect;</string>
     <string name="desc_call_register">Don\'t have an account?</string>
-    <string name="rated">\ Rates\n</string>
+    <string name="rated">\ Rates</string>
     <string name="error_code">Code:</string>
     <string name="remaining_credits">Remaining Rates: %1$s</string>
     <string name="default_bio_profile">Short information about you.</string>
@@ -79,7 +79,7 @@
     <string name="alert_context_end_session">Are you sure that you really want to end your current session.</string>
     <string name="alert_sign_up">Create New Account</string>
     <string name="header_register">Insight of You From Your Friends</string>
-    <string name="login_text_header">Learn Your Traits</string>
+    <string name="login_text_header">Find Out Your Traits</string>
     <string name="login_text_sub">Reveal your true personality by\nasking your friends</string>
     <string name="default_bio_search">insightof.me user.</string>
     <string name="label_openness">Openness</string>
@@ -122,7 +122,7 @@
     <string name="action_get_ego_points">Get Ego Points Now</string>
     <string name="tvAboutConstant">About me:</string>
     <string name="tvSupporter">Ad:</string>
-    <string name="header_result_page_title">The Character Traits</string>
+    <string name="header_result_page_title">Your traits</string>
     <string name="info_profile_card">Share the personality test with your more friends so you can see your personal traits.</string>
     <string name="info_result_ad_text">See all the results without waiting any longer!</string>
     <string name="action_get_ego">Get Ego</string>
@@ -137,7 +137,7 @@
     <string name="info_no_test_result">Create your personality test and share it with your friends to learn personality traits.</string>
     <string name="info_title_no_test_result">Create Test</string>
     <string name="info_create_test_description">Do you want to create a test? Click now!</string>
-    <string name="info_personality_type_title">The Personality Type</string>
+    <string name="info_personality_type_title">Your personality</string>
     <string name="action_btn_continue">Continue</string>
     <string name="action_btn_back">Back</string>
     <string name="action_btn_start">Start</string>

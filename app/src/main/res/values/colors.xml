@@ -19,8 +19,8 @@
     <color name="bgNavigationItemPassive">#BDBDBD</color>
     <color name="statusbarPurple">#454278</color>
 
-    <color name="fragmentBackground">#f9f9f9</color>
-    <color name="guideBackground">#f2f2f2</color>
+    <color name="fragmentBackground">#ffffff</color>
+    <color name="guideBackground">#f6f6f6</color>
 
     <!--Brand Buttons Color-->
     <color name="google">#c84361</color>
