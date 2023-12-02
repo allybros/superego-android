@@ -96,6 +96,9 @@
     <string name="action_login_via_facebook">Facebook ile Giriş Yap</string>
     <string name="action_create_new_account" ><font color='#674D9F'>Hesap Oluştur</font></string>
     <string name="action_read_more" >Daha Fazla</string>
+    <string name="action_btn_continue" >Devam</string>
+    <string name="action_btn_back" >Geri</string>
+    <string name="action_btn_start" >Başla</string>
 
 
     <!--Contents:
@@ -137,6 +140,13 @@
     <string name="info_create_test_title">Yeni Test Oluştur</string>
     <string name="info_personality_type_title">Kişilik Tipi</string>
     <string name="info_create_test_description">Test mi oluşturmak istiyorsun? Hemen tıkla!</string>
+
+    <string name="guide_content_1">"   Arkadaşlarının seni değerlendirmesi için kendine özel bir kişilik testi oluştur."</string>
+    <string name="guide_content_2">Oluşturduğun testini yakın arkadaşlarınla paylaş, arkadaşların anonim olarak kişiliğini değerlendirsinler.</string>
+    <string name="guide_content_3">En çok öne çıkan karakter özelliklerin ve arkadaşlarının senin hakkındaki genel görüşleri hakkında fikir sahibi ol.</string>
+    <string name="guide_header_1">Bir Test Oluştur</string>
+    <string name="guide_header_2">Arkadaşların Seni Değerlendirsin</string>
+    <string name="guide_header_3">Gerçek Kişilik\n Özelliklerini Keşfet</string>
 
 
     <string name="info_search">insightof.me\' de kayıtlı arkadaşlarını bulmak için kullanıcı adıyla arama yap.</string>

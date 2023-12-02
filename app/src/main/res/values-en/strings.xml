@@ -138,4 +138,13 @@
     <string name="info_title_no_test_result">Create Test</string>
     <string name="info_create_test_description">Do you want to create a test? Click now!</string>
     <string name="info_personality_type_title">The Personality Type</string>
+    <string name="action_btn_continue">Continue</string>
+    <string name="action_btn_back">Back</string>
+    <string name="action_btn_start">Start</string>
+    <string name="guide_content_1">"Create a special personality test for your friends to rate you."</string>
+    <string name="guide_content_2">Share the quiz you created with your friends, and your friends will evaluate your personality anonymously.</string>
+    <string name="guide_content_3">Get an idea of your most prominent character traits and your friends\' overall opinion about you.</string>
+    <string name="guide_header_3">Discover Real Personality Traits</string>
+    <string name="guide_header_2">Let Your Friends Evaluate You</string>
+    <string name="guide_header_1">Create a Test</string>
 </resources>

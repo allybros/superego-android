@@ -88,8 +88,7 @@ public class LoginActivity extends AppCompatActivity {
                 switch (status){
 
                     case ErrorCodes.SYSFAIL:
-                        //TODO: We should write something
-                        break;
+
                     case ErrorCodes.CAPTCHA_REQUIRED:
                         etUid.setError(getString(R.string.error_login_failed));
                         etPassword.setError(getString(R.string.error_login_failed));

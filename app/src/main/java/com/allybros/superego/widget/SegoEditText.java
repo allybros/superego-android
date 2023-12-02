@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.Dimension;
+import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
@@ -172,23 +173,29 @@ public class SegoEditText extends ConstraintLayout {
     }
 
     public void setError(String errorMessage) {
-        if (!isErrorVisible) {
-            et.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.et_error_background));
-            tvError.setText(errorMessage);
-            tvError.setVisibility(VISIBLE);
-            YoYo.with(Techniques.SlideInDown).duration(450).playOn(tvError);
-            isErrorVisible = true;
-        }
+        manageError(errorMessage);
     }
 
     public void clearError() {
-        if (isErrorVisible){
+        manageError(null);
+    }
+
+    public synchronized void manageError(@Nullable String errorMessage) {
+        if (errorMessage == null || errorMessage.isEmpty()){
             et.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.et_background));
-            YoYo.with(Techniques.SlideOutUp).duration(450).onEnd(new YoYo.AnimatorCallback() {
+            YoYo.with(Techniques.SlideOutUp).duration(50).onEnd(new YoYo.AnimatorCallback() {
                 @Override
                 public void call(Animator animator) {
                     tvError.setVisibility(GONE);
-                    isErrorVisible = false;
+                }
+            }).playOn(tvError);
+        } else {
+            et.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.et_error_background));
+            tvError.setText(errorMessage);
+            YoYo.with(Techniques.SlideInDown).duration(50).onEnd(new YoYo.AnimatorCallback() {
+                @Override
+                public void call(Animator animator) {
+                    tvError.setVisibility(VISIBLE);
                 }
             }).playOn(tvError);
         }
