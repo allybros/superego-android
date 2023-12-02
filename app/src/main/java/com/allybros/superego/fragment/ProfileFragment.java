@@ -66,6 +66,7 @@ public class ProfileFragment extends Fragment {
     //API Receivers
     private BroadcastReceiver refreshReceiver;
     private BroadcastReceiver rewardReceiver;
+    boolean isTestCreated = false;
     //Current session
     private SessionManager sessionManager = SessionManager.getInstance();
 
@@ -162,7 +163,9 @@ public class ProfileFragment extends Fragment {
      */
     public void reloadProfile(){
         // Call API task
+        isTestCreated = true;
         LoadProfileTask.loadProfileTask(getActivity().getApplicationContext(), sessionManager.getSessionToken(), ConstantValues.ACTION_REFRESH_PROFILE);
+
     }
 
     /**
@@ -319,11 +322,6 @@ public class ProfileFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
-        if (!sessionManager.getUser().hasTest()) {
-            btnShareTest.setAlpha(0.6f);
-            navigateToCreateTest();
-        }
     }
 
     /**
@@ -418,12 +416,14 @@ public class ProfileFragment extends Fragment {
      * Navigates to create test page
      */
     private void navigateToCreateTest(){
-        Intent intent = new Intent(getContext(), WebViewActivity.class);
-        intent.putExtra("url", ConstantValues.CREATE_TEST);
-        intent.putExtra("title", getString(R.string.activity_label_new_test));
-        startActivity(intent);
+        if (!sessionManager.getUser().hasTest() && !isTestCreated) {
+            btnShareTest.setAlpha(0.6f);
+            Intent intent = new Intent(getContext(), WebViewActivity.class);
+            intent.putExtra("url", ConstantValues.CREATE_TEST);
+            intent.putExtra("title", getString(R.string.activity_label_new_test));
+            startActivity(intent);
+        }
     }
-
 
     @Override
     public void onDestroy() {
@@ -436,6 +436,7 @@ public class ProfileFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if(sessionManager.getUser().getAvatar()!=null) imageViewAvatar.setImageBitmap(sessionManager.getUser().getAvatar());
+        navigateToCreateTest();
     }
 
 }
