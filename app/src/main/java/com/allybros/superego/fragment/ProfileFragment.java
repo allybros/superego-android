@@ -5,13 +5,11 @@ import static com.allybros.superego.unit.ConstantValues.WEB_URL;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -283,12 +281,6 @@ public class ProfileFragment extends Fragment {
             btnShareResults.setAlpha(0.6f);
         }
 
-        //Shows alert dialog for creating test
-        if (!sessionManager.getUser().hasTest()) {
-            btnShareTest.setAlpha(0.6f);
-            showDialog();
-        }
-
         btnShareTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -327,6 +319,11 @@ public class ProfileFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        if (!sessionManager.getUser().hasTest()) {
+            btnShareTest.setAlpha(0.6f);
+            navigateToCreateTest();
+        }
     }
 
     /**
@@ -418,27 +415,13 @@ public class ProfileFragment extends Fragment {
     }
 
     /**
-     * Shows a create test dialog
+     * Navigates to create test page
      */
-    private void showDialog(){
-
-        final Dialog dialog = new Dialog(getContext(), R.style.SegoAlertDialog);
-        dialog.setContentView(R.layout.dialog_create_test);
-
-        Button dialogButton = (Button) dialog.findViewById(R.id.dialog_button_create_test);
-
-        dialogButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), WebViewActivity.class);
-                intent.putExtra("url", ConstantValues.CREATE_TEST);
-                intent.putExtra("title", getString(R.string.activity_label_new_test));
-                startActivity(intent);
-                dialog.dismiss();
-            }
-        });
-
-        dialog.show();
+    private void navigateToCreateTest(){
+        Intent intent = new Intent(getContext(), WebViewActivity.class);
+        intent.putExtra("url", ConstantValues.CREATE_TEST);
+        intent.putExtra("title", getString(R.string.activity_label_new_test));
+        startActivity(intent);
     }
 
 

@@ -42,7 +42,8 @@ public class WebViewActivity extends AppCompatActivity {
     private String url;
     private String title;
 
-    private static final String WEB_ACTION_CREATE_TEST = "create_test";
+    private static final String WEB_ACTION_CREATE_TEST = "new-test";
+    private static final String COMPLETED = "completed";
     private static final String WEB_ACTION_RATE = "rate";
 
 
@@ -84,7 +85,7 @@ public class WebViewActivity extends AppCompatActivity {
                     String status = responseUri.getQueryParameter("status");
                     Log.d("WebView Result", actionName + ", "+ status);
                     //TODO: Decouple result handling from this class
-                    if (actionName.equals(WEB_ACTION_CREATE_TEST) && Objects.equals(""+status, ""+ErrorCodes.SUCCESS))
+                    if (actionName.equals(WEB_ACTION_CREATE_TEST) && Objects.equals(status, COMPLETED))
                         SessionManager.getInstance().touchSession(); //User info modified.
                     // Activity result
                     finish();
