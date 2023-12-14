@@ -40,11 +40,11 @@ public class SegoEditText extends ConstraintLayout {
     @ColorInt
     private int headerTextColor = getResources().getColor(R.color.Black);
     @Dimension
-    private int headerTextSize = 12;
+    private int headerTextSize = 14;
     @ColorInt
     private int inputTextColor = getResources().getColor(R.color.Black);
     @Dimension
-    private int inputTextSize =13;
+    private int inputTextSize =16;
 
     boolean isErrorVisible = false;
 

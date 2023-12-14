@@ -7,14 +7,11 @@ import android.util.Log;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.R;
-import com.allybros.superego.activity.LoginActivity;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
-import com.android.volley.AuthFailureError;
+import com.allybros.superego.util.SessionManager;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -28,6 +25,12 @@ import java.util.Map;
  * @author 0rcun
  */
 public class RegisterTask {
+    private static final String REGISTER_TASK = "RegisterTask";
+    private static final String FIELD_STATUS = "status";
+    private static final String FIELD_SESSION_TOKEN = "session_token";
+
+    private RegisterTask() {}
+
     /**
      * The function sends a request to register with information and then receives response. After that broadcasts the response.
      * @param context   required to build request and send Broadcast
@@ -36,41 +39,46 @@ public class RegisterTask {
      * @param password  required to register user
      * @param agreement required to register user
      */
-    public static void registerTask (final Context context, final String username, final String email, final String password, final boolean agreement){
+    public static void registerTask (final Context context, final String username,
+                                     final String email, final String password,
+                                     final boolean agreement, final String recaptchaResponse){
         RequestQueue queue = Volley.newRequestQueue(context);
         final Intent intent = new Intent(ConstantValues.ACTION_REGISTER);
+        final StringRequest jsonRequest = new StringRequest(Request.Method.POST, ConstantValues.REGISTER, response -> {
+            // Handle Response
+            Log.d("Response", response);
+            int status = 0;
+            try {
+                // Decode response
+                JSONObject jsonObj = new JSONObject(response);
+                status = jsonObj.getInt(FIELD_STATUS);
+                String sessionToken = jsonObj.getString(FIELD_SESSION_TOKEN);
+                // Save session information
+                Log.i(REGISTER_TASK, "Creating session from register api response");
+                SessionManager.getInstance().setSessionToken(sessionToken);
+                SessionManager.getInstance().writeInfoLocalStorage(username, password, sessionToken, context);
 
-        final StringRequest jsonRequest=new StringRequest(Request.Method.POST, ConstantValues.REGISTER, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d("Response",response.toString());
-                int status;
-                try {
-                    JSONObject jsonObj = new JSONObject(response);
-                    status = jsonObj.getInt("status");
-                    intent.putExtra("status", status);
-                    LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            } catch (JSONException e) {
+                Log.e(REGISTER_TASK, "Unable to decode API response");
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                intent.putExtra("status", ErrorCodes.CONNECTION_ERROR);
-                LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-
-            }
+            // Send broadcast
+            intent.putExtra(FIELD_STATUS, status);
+            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+        }, error -> {
+            intent.putExtra(FIELD_STATUS, ErrorCodes.CONNECTION_ERROR);
+            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+            Log.e(REGISTER_TASK, "An error occurred while sending the request");
         }) {
             //Add parameters in request
             @Override
-            protected Map<String,String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
+            protected Map<String,String> getParams() {
+                Map<String, String> params = new HashMap<>();
                 params.put("username", username);
                 params.put("email", email);
                 params.put("password", password);
                 params.put("conditions", String.valueOf(agreement));
-                params.put("g-recaptcha-response", context.getResources().getString(R.string.recaptcha_skip));
+                params.put("g-recaptcha-response", recaptchaResponse);
+                params.put("g-recaptcha-site-key", context.getString(R.string.recaptcha_client_key));
                 return params;
             }
         };

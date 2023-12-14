@@ -5,10 +5,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
@@ -17,9 +15,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.allybros.superego.R;
-import com.allybros.superego.api.LoadProfileTask;
-import com.allybros.superego.unit.ConstantValues;
-import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.util.SessionManager;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -28,10 +23,7 @@ import com.r0adkll.slidr.model.SlidrInterface;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.Map;
 import java.util.Objects;
-
-import javax.xml.transform.Result;
 
 public class WebViewActivity extends AppCompatActivity {
 
@@ -109,10 +101,12 @@ public class WebViewActivity extends AppCompatActivity {
                 .playOn(findViewById(R.id.imageViewLogo));
 
         // Post session-token
-        String postData=null;
+        String postData = null;
         try {
             postData = "session-token=" + URLEncoder.encode(SessionManager.getInstance().getSessionToken(), "UTF-8");
+            Log.d("WebView", "Post Data: " + postData);
         } catch (UnsupportedEncodingException e) {
+            Log.e("WebView", "Can't read the post data");
             e.printStackTrace();
         }
 
@@ -129,6 +123,7 @@ public class WebViewActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         finish();
     }
 
