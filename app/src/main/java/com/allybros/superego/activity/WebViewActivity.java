@@ -71,7 +71,6 @@ public class WebViewActivity extends AppCompatActivity {
         //Set webview
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setGeolocationEnabled(true);
-        webView.getSettings().setAppCacheEnabled(false);
         webView.setSoundEffectsEnabled(true);
         //Set webview client
         webViewClient = new WebViewClient(){

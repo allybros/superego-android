@@ -27,9 +27,6 @@ import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.util.SessionManager;
 import com.allybros.superego.widget.SegoMenuButton;
-import com.facebook.CallbackManager;
-import com.facebook.login.LoginManager;
-import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -45,7 +42,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class SettingsActivity extends AppCompatActivity {
 
     private SegoMenuButton optionEditProfile, optionChangePassword,optionAbout,optionLicenses, optionSignOut;
-    private LoginButton logoutFacebook;
     private BroadcastReceiver logoutReceiver;
     private TextView tvUsername;
     private CircleImageView ivUserAvatar;
@@ -66,7 +62,6 @@ public class SettingsActivity extends AppCompatActivity {
         optionAbout = findViewById(R.id.cardBtnAbout);
         optionLicenses = findViewById(R.id.cardBtnLicenses);
         optionSignOut = findViewById(R.id.cardBtnSingOut);
-        logoutFacebook = findViewById(R.id.logoutFacebook); //Only trigger logout for Facebook
         ivUserAvatar = findViewById(R.id.ivUserAvatar);
         tvUsername = findViewById(R.id.tvUsername);
         ivBack = findViewById(R.id.ivBack);
@@ -189,24 +184,7 @@ public class SettingsActivity extends AppCompatActivity {
                                                 finish();
                                             }
                                         });
-                            }else if(SessionManager.getInstance().getUser().getUserType() == 2){  //Sign Out Facebook
-                                //Facebook logout requirements
-                                CallbackManager callbackManager = CallbackManager.Factory.create();
-                                logoutFacebook.setPermissions(Arrays.asList("email","public_profile"));
-                                callbackManager = CallbackManager.Factory.create();
-                                LoginManager.getInstance().logOut();        //Trigger logout process
-
-
-                               /*Ally Bros Logout
-                               String session_token = SessionManager.getInstance().getSessionToken();
-                                        LogoutTask.logoutTask(getApplicationContext(), session_token);*/
-                                //TODO: Bizim logout çalışınca silinmeli
-                                SessionManager.getInstance().clearSession(getApplicationContext()); //Clear local variables that use login
-                                Intent intent1=new Intent(getApplicationContext(), SplashActivity.class);
-                                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                getApplicationContext().startActivity(intent1);
-                                finish();
-                            }else{//Sign out Ally Bros
+                            } else{//Sign out Ally Bros
 
                                /*Ally Bros Logout
                                String session_token = SessionManager.getInstance().getSessionToken();

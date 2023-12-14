@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.allybros.superego.R;
 
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 public class GuideFragment extends Fragment {
@@ -56,7 +55,7 @@ public class GuideFragment extends Fragment {
             case 0:
                 //Sets ImageView
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    imageViewGuide.setImageDrawable(getResources().getDrawable(R.drawable.ic_guide_1, getApplicationContext().getTheme()));
+                    imageViewGuide.setImageDrawable(getResources().getDrawable(R.drawable.ic_guide_1, this.getContext().getTheme()));
                 } else {
                     imageViewGuide.setImageDrawable(getResources().getDrawable(R.drawable.ic_guide_1));
                 }
@@ -67,7 +66,7 @@ public class GuideFragment extends Fragment {
             case 1:
                 //Sets ImageView
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    imageViewGuide.setImageDrawable(getResources().getDrawable(R.drawable.ic_guide_2, getApplicationContext().getTheme()));
+                    imageViewGuide.setImageDrawable(getResources().getDrawable(R.drawable.ic_guide_2, this.getContext().getTheme()));
                 } else {
                     imageViewGuide.setImageDrawable(getResources().getDrawable(R.drawable.ic_guide_2));
                 }
@@ -78,7 +77,7 @@ public class GuideFragment extends Fragment {
             case 2:
                 //Sets ImageView
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    imageViewGuide.setImageDrawable(getResources().getDrawable(R.drawable.ic_guide_3, getApplicationContext().getTheme()));
+                    imageViewGuide.setImageDrawable(getResources().getDrawable(R.drawable.ic_guide_3, this.getContext().getTheme()));
                 } else {
                     imageViewGuide.setImageDrawable(getResources().getDrawable(R.drawable.ic_guide_3));
                 }

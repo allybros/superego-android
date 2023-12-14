@@ -14,6 +14,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -25,20 +27,17 @@ import com.allybros.superego.api.SocialMediaSignInTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.widget.SegoEditText;
-import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.recaptcha.Recaptcha;
+import com.google.android.recaptcha.RecaptchaTasksClient;
 
 import java.util.Arrays;
 
@@ -51,24 +50,26 @@ public class LoginActivity extends AppCompatActivity {
     private ConstraintLayout btSignInFacebook, btSignInGoogle;
     private MaterialProgressBar progressView;
 
-    static LoginButton btHiddenFacebook;
     GoogleSignInClient mGoogleSignInClient;
-    CallbackManager callbackManager;
+
     private static final int RC_SIGN_IN = 0;    // It require to come back from Google Sign in intent
     private BroadcastReceiver loginSocialMediaReceiver, loginReceiver;
+
+    @Nullable
+    private RecaptchaTasksClient recaptchaTasksClient = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initializeComponents();
+        initializeRecaptchaClient();
         setupReceivers(this);
         setupUi(this);
     }
 
     private void initializeComponents(){
         btLogin = findViewById(R.id.btLogin);
-        btHiddenFacebook = findViewById(R.id.btHiddenFacebook);
         btSignInGoogle = findViewById(R.id.btSignInGoogle);
         btSignInFacebook = findViewById(R.id.btSignInFacebook);
         tvRegister = findViewById(R.id.tvRegister);
@@ -76,6 +77,25 @@ public class LoginActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         progressView = findViewById(R.id.progressViewLogin);
     }
+
+    private void initializeRecaptchaClient() {
+        final String recaptchaClientKey = this.getString(R.string.recaptcha_client_key);
+        Recaptcha.getTasksClient(this.getApplication(), recaptchaClientKey, 10000)
+            .addOnSuccessListener(this, new OnSuccessListener<RecaptchaTasksClient>() {
+                @Override
+                public void onSuccess(RecaptchaTasksClient client) {
+                    Log.i("Recaptcha", "Created recaptcha client with client key " + recaptchaClientKey);
+                    LoginActivity.this.recaptchaTasksClient = client;
+                }
+            })
+            .addOnFailureListener(this, new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.e("Recaptcha", "Error occurred on recaptcha client " + e.getMessage());
+                }
+        });
+    }
+
 
     private void setupReceivers(final LoginActivity activity){
         /* Catches broadcasts of api/LoginTask class */
@@ -269,38 +289,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        //Set Facebook Sign In
-        btSignInFacebook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btHiddenFacebook.callOnClick();
-            }
-        });
-        callbackManager = CallbackManager.Factory.create();
-        btHiddenFacebook.setPermissions(Arrays.asList("email","public_profile"));
-
-        callbackManager = CallbackManager.Factory.create();
-
-        LoginManager.getInstance().registerCallback(callbackManager,
-                new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-                        // App code
-                        AccessToken accessToken = AccessToken.getCurrentAccessToken();
-                        Log.d("Facebook","B"+accessToken.getToken());
-                        SocialMediaSignInTask.loginTask(getApplicationContext(),accessToken.getToken(),"facebook");
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        // App code
-                    }
-
-                    @Override
-                    public void onError(FacebookException exception) {
-                        // App code
-                    }
-                });
     }
 
     /**
@@ -312,7 +300,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode,resultCode,data);
         // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             // The Task returned from this call is always completed, no need to attach
