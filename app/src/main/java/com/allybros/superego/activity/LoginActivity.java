@@ -2,19 +2,14 @@ package com.allybros.superego.activity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,29 +27,24 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.recaptcha.Recaptcha;
+import com.google.android.recaptcha.RecaptchaAction;
 import com.google.android.recaptcha.RecaptchaTasksClient;
-
-import java.util.Arrays;
 
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 
 public class LoginActivity extends AppCompatActivity {
     private MaterialButton btLogin;
-    private SegoEditText etPassword, etUid;
-    private TextView tvRegister;
-    private ConstraintLayout btSignInFacebook, btSignInGoogle;
+    private SegoEditText etPassword;
+    private SegoEditText etUid;
+    private ConstraintLayout btSignInGoogle;
     private MaterialProgressBar progressView;
-
-    GoogleSignInClient mGoogleSignInClient;
-
-    private static final int RC_SIGN_IN = 0;    // It require to come back from Google Sign in intent
-    private BroadcastReceiver loginSocialMediaReceiver, loginReceiver;
-
+    private GoogleSignInClient mGoogleSignInClient;
+    private static final int RC_SIGN_IN = 0; // It require to come back from Google Sign in intent
+    private BroadcastReceiver loginSocialMediaReceiver;
+    private BroadcastReceiver loginReceiver;
     @Nullable
     private RecaptchaTasksClient recaptchaTasksClient = null;
 
@@ -64,65 +54,61 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         initializeComponents();
         initializeRecaptchaClient();
-        setupReceivers(this);
-        setupUi(this);
+        setupReceivers();
+        setupUi();
     }
 
+    /**
+     * Binds layout items to the view objects of this class
+     */
     private void initializeComponents(){
         btLogin = findViewById(R.id.btLogin);
         btSignInGoogle = findViewById(R.id.btSignInGoogle);
-        btSignInFacebook = findViewById(R.id.btSignInFacebook);
-        tvRegister = findViewById(R.id.tvRegister);
         etUid = findViewById(R.id.etLoginUid);
         etPassword = findViewById(R.id.etPassword);
         progressView = findViewById(R.id.progressViewLogin);
     }
 
+    /**
+     * Initializes recaptcha client for securing the login call
+     */
     private void initializeRecaptchaClient() {
         final String recaptchaClientKey = this.getString(R.string.recaptcha_client_key);
-        Recaptcha.getTasksClient(this.getApplication(), recaptchaClientKey, 10000)
-            .addOnSuccessListener(this, new OnSuccessListener<RecaptchaTasksClient>() {
-                @Override
-                public void onSuccess(RecaptchaTasksClient client) {
-                    Log.i("Recaptcha", "Created recaptcha client with client key " + recaptchaClientKey);
-                    LoginActivity.this.recaptchaTasksClient = client;
-                }
+        Recaptcha.getTasksClient(this.getApplication(), recaptchaClientKey, 5000)
+            .addOnSuccessListener(this, client -> {
+                Log.i("Recaptcha", "Created recaptcha client with client key " + recaptchaClientKey);
+                this.recaptchaTasksClient = client;
             })
-            .addOnFailureListener(this, new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.e("Recaptcha", "Error occurred on recaptcha client " + e.getMessage());
-                }
-        });
+            .addOnFailureListener(this, e ->
+                Log.e("Recaptcha", "Error occurred on recaptcha client " + e.getMessage())
+            );
     }
 
-
-    private void setupReceivers(final LoginActivity activity){
-        /* Catches broadcasts of api/LoginTask class */
+    private void setupReceivers(){
+        // Receiver for Login Task
         loginReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 int status = intent.getIntExtra("status",0);
                 Log.d("Login receiver", "Status: " + status);
                 setProgress(false);
+
                 switch (status){
-
                     case ErrorCodes.SYSFAIL:
-
                     case ErrorCodes.CAPTCHA_REQUIRED:
                         etUid.setError(getString(R.string.error_login_failed));
                         etPassword.setError(getString(R.string.error_login_failed));
+                        break;
+
+                    case ErrorCodes.INVALID_CAPTCHA:
+                        showCaptchaFailureDialog();
                         break;
 
                     case ErrorCodes.SUSPEND_SESSION:
                         AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this, R.style.SegoAlertDialog);
                         builder.setTitle("insightof.me");
                         builder.setMessage(getString(R.string.error_desc_session_suspended));
-                        builder.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.dismiss();
-                            }
-                        });
+                        builder.setPositiveButton(getString(R.string.action_ok), (dialog, id) -> dialog.dismiss());
                         builder.show();
                         break;
 
@@ -137,11 +123,7 @@ public class LoginActivity extends AppCompatActivity {
                         AlertDialog.Builder builder1 = new AlertDialog.Builder(LoginActivity.this, R.style.SegoAlertDialog);
                         builder1.setTitle("insightof.me");
                         builder1.setMessage(getString(R.string.error_check_connection));
-                        builder1.setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                               dialog.dismiss();
-                            }
-                        });
+                        builder1.setPositiveButton(getString(R.string.action_ok), (dialog, id) -> dialog.dismiss());
                         builder1.show();
                         break;
                 }
@@ -160,75 +142,60 @@ public class LoginActivity extends AppCompatActivity {
                         new AlertDialog.Builder(LoginActivity.this, R.style.SegoAlertDialog)
                             .setTitle("insightof.me")
                             .setMessage(R.string.error_email_empty)
-                            .setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {}
-                            }).show();
+                            .setPositiveButton(getString(R.string.action_ok), (dialog, id) -> {}).show();
                         break;
                     case ErrorCodes.EMAIL_NOT_LEGAL:
                         new AlertDialog.Builder(LoginActivity.this, R.style.SegoAlertDialog)
                             .setTitle("insightof.me")
                             .setMessage(R.string.error_email_not_legal)
-                            .setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {}
-                            }).show();
+                            .setPositiveButton(getString(R.string.action_ok), (dialog, id) -> {}).show();
                         break;
                     case ErrorCodes.USERNAME_NOT_LEGAL:
                         new AlertDialog.Builder(LoginActivity.this, R.style.SegoAlertDialog)
                             .setTitle("insightof.me")
                             .setMessage(R.string.error_username_not_legal)
-                            .setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {}
-                            }).show();
+                            .setPositiveButton(getString(R.string.action_ok), (dialog, id) -> {}).show();
                         break;
-
                     case ErrorCodes.SUCCESS:
                         Intent i = new Intent(getApplicationContext(), SplashActivity.class);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
                         break;
-
                     case ErrorCodes.SYSFAIL:
                     case ErrorCodes.CONNECTION_ERROR:
                         new AlertDialog.Builder(LoginActivity.this, R.style.SegoAlertDialog)
                                 .setTitle("insightof.me")
                                 .setMessage(R.string.error_no_connection)
-                                .setPositiveButton( getString(R.string.action_ok), new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {}
-                                }).show();
+                                .setPositiveButton( getString(R.string.action_ok), (dialog, id) -> {}).show();
                         break;
                 }
             }
         };
 
         //Registers Receivers
-        LocalBroadcastManager.getInstance(this).registerReceiver(loginReceiver, new IntentFilter(ConstantValues.ACTION_LOGIN));
-        LocalBroadcastManager.getInstance(this).registerReceiver(loginSocialMediaReceiver, new IntentFilter(ConstantValues.ACTION_SOCIAL_MEDIA_LOGIN));
+        LocalBroadcastManager.getInstance(this)
+                .registerReceiver(loginReceiver, new IntentFilter(ConstantValues.ACTION_LOGIN));
+        LocalBroadcastManager.getInstance(this)
+                .registerReceiver(loginSocialMediaReceiver, new IntentFilter(ConstantValues.ACTION_SOCIAL_MEDIA_LOGIN));
     }
 
-    private void setupUi(final LoginActivity activity){
-
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-            tvRegister.setText(Html.fromHtml(getResources().getString(R.string.desc_call_register)), TextView.BufferType.SPANNABLE);
-        }
-
-        btLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    private void setupUi(){
+        // Login button
+        btLogin.setOnClickListener(v -> {
             etPassword.clearError();
+            etUid.clearError();
 
-                etUid.clearError();
-
-            if(etUid.getText().isEmpty()){
+            if (etUid.getText().isEmpty()) {
                 etUid.setError(getString(R.string.error_username_empty));
             }
-            if(etPassword.getText().isEmpty()){
+            if (etPassword.getText().isEmpty()) {
                 etPassword.setError(getString(R.string.error_password_empty));
             }
-            if(!etPassword.getText().isEmpty() && !etUid.getText().toString().isEmpty()){
+            if (!etPassword.getText().isEmpty() && !etUid.getText().isEmpty()) {
                 setProgress(true);
-                LoginTask.loginTask(getApplicationContext(), etUid.getText().toString(),etPassword.getText().toString());
+                this.executeLoginTask(etUid.getText(), etPassword.getText());
             }
-            }
+
         });
 
         etPassword.addTextChangedListener(new TextWatcher() {
@@ -255,13 +222,12 @@ public class LoginActivity extends AppCompatActivity {
         etUid.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                //this method is empty
+                // This method is empty
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                //this method is empty
-                if(s.toString().isEmpty()) {
+                if (s.toString().isEmpty()) {
                     etUid.setError(getString(R.string.error_username_empty));
                 } else {
                     etUid.clearError();
@@ -270,7 +236,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                // This method is empty
             }
         });
 
@@ -281,18 +247,43 @@ public class LoginActivity extends AppCompatActivity {
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(getApplicationContext(), gso);
 
-        btSignInGoogle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-                startActivityForResult(signInIntent, RC_SIGN_IN);
-            }
+        btSignInGoogle.setOnClickListener(v -> {
+            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+            startActivityForResult(signInIntent, RC_SIGN_IN);
         });
 
     }
 
     /**
-     * Provides that cacth the results that come back from Google an Facebook sign in
+     * Executes the login operation within Recaptcha action
+     * @param uid Username or Email
+     * @param password Password
+     */
+    private void executeLoginTask(String uid, String password) {
+        assert recaptchaTasksClient != null;
+        recaptchaTasksClient
+            .executeTask(RecaptchaAction.LOGIN)
+            .addOnSuccessListener(this, token -> LoginTask.loginTask(this, uid, password, token))
+            .addOnFailureListener(this,
+                    e -> {
+                        Log.e("Recaptcha", "Token generation failure");
+                        showCaptchaFailureDialog();
+                    });
+    }
+
+    /**
+     * Shows a captcha failure dialog to inform user that request was not verified
+     */
+    private void showCaptchaFailureDialog() {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(LoginActivity.this, R.style.SegoAlertDialog);
+        builder1.setTitle("insightof.me");
+        builder1.setMessage(getString(R.string.error_captcha_validation));
+        builder1.setPositiveButton( getString(R.string.action_ok), (dialog, id) -> dialog.dismiss());
+        builder1.show();
+    }
+
+    /**
+     * Provides that cacti the results that come back from Google an Facebook sign in
      * @param data is a variable that comes back from the intent. It includes data that is needed.
      * @param requestCode is a variable that defines what intent come back.
      * @param resultCode  is a variable that defines intent result.
@@ -300,7 +291,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+        // Result returned from launching the Intent from GoogleSignInClient getSignInIntent
         if (requestCode == RC_SIGN_IN) {
             // The Task returned from this call is always completed, no need to attach
             // a listener.
@@ -329,12 +320,7 @@ public class LoginActivity extends AppCompatActivity {
             new AlertDialog.Builder(LoginActivity.this, R.style.SegoAlertDialog)
                 .setTitle("insightof.me")
                 .setMessage(R.string.error_google_signin)
-                .setPositiveButton(getString(R.string.action_ok), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
+                .setPositiveButton(getString(R.string.action_ok), (dialog, which) -> dialog.dismiss())
                 .show();
         }
     }
@@ -367,7 +353,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onRegisterButtonClicked(View view) {
-        Intent intent=new Intent(getApplicationContext(), RegisterActivity.class);
+        Intent intent=new Intent(view.getContext(), RegisterActivity.class);
         startActivity(intent);
         finish();
     }

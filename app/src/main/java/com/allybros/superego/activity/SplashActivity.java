@@ -29,8 +29,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.recaptcha.Recaptcha;
+import com.google.android.recaptcha.RecaptchaAction;
+import com.google.android.recaptcha.RecaptchaTasksClient;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,14 +40,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import static com.allybros.superego.unit.ConstantValues.IS_SHOWN;
-import static com.allybros.superego.unit.ConstantValues.USER_INFORMATION_PREF;
 
 
 public class SplashActivity extends AppCompatActivity {
 
     private BroadcastReceiver loadProfileRegister;
     private BroadcastReceiver loginReceiver;
-
+    private RecaptchaTasksClient recaptchaTasksClient;
     boolean loadTaskLock = false;
     boolean getTraitsLock = false;
 
@@ -53,25 +54,25 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        initializeRecaptchaClient();
 
-        if(!isShown()){
+        if(!isGuideShown()){
             showGuide();
         } else {
             // Check internet connection
             ConnectivityManager cm = (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
             boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-            if(isConnected){
+            if (isConnected) {
                 getAllTraits(getApplicationContext());
                 setupReceivers();
-
                 SessionManager.getInstance().readInfo(getApplicationContext());
-                if(!SessionManager.getInstance().getSessionToken().isEmpty()){
+                if (!SessionManager.getInstance().getSessionToken().isEmpty()) {
                     // User signed in before
                     LoadProfileTask.loadProfileTask(getApplicationContext(),
                             SessionManager.getInstance().getSessionToken(), ConstantValues.ACTION_LOAD_PROFILE);
 
-                }else{
+                } else {
                     returnLoginActivity();
                 }
             }
@@ -91,18 +92,47 @@ public class SplashActivity extends AppCompatActivity {
         }
     }
 
-    private void showGuide(){
+    /**
+     * Initializes recaptcha client for securing the login call
+     */
+    private void initializeRecaptchaClient() {
+        final String recaptchaClientKey = this.getString(R.string.recaptcha_client_key);
+        Recaptcha.getTasksClient(this.getApplication(), recaptchaClientKey, 5000)
+            .addOnSuccessListener(this, client -> {
+                Log.i("Recaptcha", "Created recaptcha client with client key " + recaptchaClientKey);
+                this.recaptchaTasksClient = client;
+            })
+            .addOnFailureListener(this, e ->
+                    Log.e("Recaptcha", "Error occurred on recaptcha client " + e.getMessage())
+            );
+    }
+
+    /**
+     * Executes the login action with recaptcha
+     */
+    private void executeLoginTask(String uid, String password) {
+        assert recaptchaTasksClient != null;
+        recaptchaTasksClient
+            .executeTask(RecaptchaAction.LOGIN)
+            .addOnSuccessListener(this, token -> LoginTask.loginTask(this, uid, password, token))
+            .addOnFailureListener(this,
+                    e -> {
+                        Log.e("Recaptcha", "Token generation failure");
+                    });
+    }
+
+    private void showGuide() {
         Intent intent = new Intent(getApplicationContext(), GuideActivity.class);
         startActivity(intent);
         finish();
     }
 
-    private boolean isShown(){
+    private boolean isGuideShown() {
         SharedPreferences pref = getSharedPreferences(IS_SHOWN, MODE_PRIVATE);
         return pref.getBoolean("isShown", false);
     }
 
-    private void setupReceivers(){
+    private void setupReceivers() {
         loadProfileRegister = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -122,22 +152,13 @@ public class SplashActivity extends AppCompatActivity {
                         if (uid.isEmpty() || password.isEmpty()) {
                             returnLoginActivity();
                         } else {
-                            LoginTask.loginTask(SplashActivity.this, uid, password);
+                            // Execute login task
+                            SplashActivity.this.executeLoginTask(uid, password);
                         }
                         break;
 
-                    case ErrorCodes.SYSFAIL:
-                        new AlertDialog.Builder(SplashActivity.this, R.style.SegoAlertDialog)
-                                .setTitle("insightof.me")
-                                .setMessage(R.string.error_login_failed)
-                                .setPositiveButton(getString(R.string.action_ok), new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        SessionManager.getInstance().clearSession(getApplicationContext());
-                                        returnLoginActivity();
-                                    }
-                                })
-                                .show();
+                    default:
+                        Log.w("Splash", "Can not load profile, routing to login page");
                 }
             }
         };

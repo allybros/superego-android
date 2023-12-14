@@ -93,7 +93,7 @@ public class RegisterActivity extends AppCompatActivity {
                 switch (status) {
                     case ErrorCodes.SUCCESS:
                         //Auto Login User
-                        LoginTask.loginTask(getApplicationContext(), activity.usernameInput, activity.passwordInput);
+                        LoginTask.loginTask(getApplicationContext(), activity.usernameInput, activity.passwordInput, "");
                         setProgress(true);
                         break;
                     case ErrorCodes.SYSFAIL:

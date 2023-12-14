@@ -22,6 +22,7 @@
     <string name="error_email_not_legal">Email is not valid.</string>
     <string name="error_password_not_legal">Password is not valid.</string>
     <string name="error_desc_session_suspended">This account is suspended for 3 minutes.</string>
+    <string name="error_captcha_validation">We could not verify your request, please try again.</string>
     <string name="error_invalid_file_type">Please select a valid file.</string>
     <string name="error_invalid_file_size">File size is too big.</string>
     <string name="error_session_expired">Your session expired. Please login again.</string>
