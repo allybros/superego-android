@@ -30,13 +30,6 @@ import com.allybros.superego.api.SocialMediaSignInTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.widget.SegoEditText;
-import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -63,9 +56,7 @@ public class RegisterActivity extends AppCompatActivity {
     private String emailInput;
     private String passwordInput;
 
-    static LoginButton btHiddenFacebook;
     GoogleSignInClient mGoogleSignInClient;
-    CallbackManager callbackManager;
     private static final int RC_SIGN_IN = 0;    // It require to come back from Google Sign in intent
 
     @Override
@@ -79,7 +70,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void initializeComponents(){
         btnRegister = findViewById(R.id.btSignUp);
-        btHiddenFacebook = findViewById(R.id.btHiddenFacebook);
         btSignInGoogle = findViewById(R.id.btSignInGoogle);
         btSignInFacebook = findViewById(R.id.btSignInFacebook);
         etRegisterPassword = findViewById(R.id.etRegisterPassword);
@@ -308,40 +298,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        //Set Facebook Sign In
-        btSignInFacebook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btHiddenFacebook.callOnClick();
-            }
-        });
-        callbackManager = CallbackManager.Factory.create();
-        btHiddenFacebook.setPermissions(Arrays.asList("email","public_profile"));
-
-        callbackManager = CallbackManager.Factory.create();
-
-        LoginManager.getInstance().registerCallback(callbackManager,
-                new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-                        // App code
-                        AccessToken accessToken = AccessToken.getCurrentAccessToken();
-                        Log.d("Facebook","B"+accessToken.getToken());
-                        SocialMediaSignInTask.loginTask(getApplicationContext(),accessToken.getToken(),"facebook");
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        // App code
-                    }
-
-                    @Override
-                    public void onError(FacebookException exception) {
-                        // App code
-                    }
-                });
-
-
     }
 
     /**
@@ -376,7 +332,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent=new Intent(getApplicationContext(), LoginActivity.class);
+        super.onBackPressed();
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
         startActivity(intent);
         finish();
     }
@@ -396,7 +353,6 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode,resultCode,data);
         // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             // The Task returned from this call is always completed, no need to attach

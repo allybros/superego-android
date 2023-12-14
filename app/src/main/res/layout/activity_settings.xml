@@ -176,13 +176,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/brand_grey" />
 
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/logoutFacebook"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints">
-    </com.facebook.login.widget.LoginButton>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

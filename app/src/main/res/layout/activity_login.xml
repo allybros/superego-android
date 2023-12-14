@@ -107,14 +107,6 @@
 
         </LinearLayout>
 
-        <com.facebook.login.widget.LoginButton
-            android:id="@+id/btHiddenFacebook"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintStart_toEndOf="@+id/btHiddenGoogle"
-            app:layout_constraintTop_toBottomOf="@+id/cardFormLogin" />
-
         <com.google.android.gms.common.SignInButton
             android:id="@+id/btHiddenGoogle"
             android:layout_width="wrap_content"
