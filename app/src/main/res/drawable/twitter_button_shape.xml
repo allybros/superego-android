@@ -15,7 +15,7 @@
 
     <!--If your shape requires only one solid color-->
     <solid
-        android:color="@color/facebook" />
+        android:color="@color/Black" />
 
     <!--Use android:dashWidth="2dp" and android:dashGap="2dp"
     to add dashes to your stroke-->

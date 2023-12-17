@@ -111,6 +111,7 @@
     <string name="info_not_rated"><b> You don\'t have enough rates to see the first result yet. </b> Once you have reached the enough number of rates, you will be able to see personality traits.</string>
     <string name="error_conditions_not_accepted">You need to accept terms and conditions.</string>
     <string name="error_google_signin">An error occurred while signing in with your Google account. Please try again.</string>
+    <string name="error_twitter_signin">An error occurred while signing in with your X account. Please try again.</string>
     <string name="info_reward_ad_not_loaded">There is not an available ad right now. You can try again later.</string>
     <string name="alert_no_test">You need to create a test to share your test.</string>
     <string name="alert_no_results">You need more rates to see and share your results.</string>
@@ -131,6 +132,7 @@
     <string name="action_btn_change_avatar">Change</string>
     <string name="action_login_via_google">Login with Google</string>
     <string name="action_login_via_facebook">Login with Facebook</string>
+    <string name="action_login_via_twitter">Login with X</string>
     <string name="action_create_new_account"><font color="#2A71AC">Create Account</font></string>
     <string name="desc_call_sign_in">Have an Account?</string>
     <string name="action_read_more">Read More</string>
