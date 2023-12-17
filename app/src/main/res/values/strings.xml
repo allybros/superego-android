@@ -24,6 +24,7 @@
     <string name="error_no_connection">insightof.me\' ye bağlanılamıyor, Lütfen ağ bağlantını kontrol edip tekrar dene.</string>
     <string name="error_login_again">Hesabına giriş yapılamadı. Lütfen tekrar giriş yap.</string>
     <string name="error_check_connection">Bağlantınızı kontrol ediniz.</string>
+    <string name="error_captcha_validation">Maalesef isteğini doğrulayamadık, lütfen daha sonra tekrar dene</string>
     <string name="error_email_empty">Email alanı boş olamaz</string>
     <string name="error_username_not_legal">Lütfen uygun bir kullanıcı adı seçiniz</string>
     <string name="error_username_taken">Bu kullanıcı adı alınmış</string>
@@ -36,6 +37,7 @@
     <string name="error_session_expired">Oturumun süresi dolmuştur. Tekrar giriş yapınız.</string>
     <string name="error_current_password_wrong">Geçerli parolan yanlış.</string>
     <string name="error_google_signin">Google hesabınla giriş yaparken bir sorun oluştu. Lütfen daha sonra tekrar dene.</string>
+    <string name="error_twitter_signin">X hesabınla giriş yaparken bir sorun oluştu. Lütfen daha sonra tekrar dene.</string>
     <string name="info_reward_ad_not_loaded">Şu an için sana gösterebileceğimiz uygun bir reklam bulunmuyor. Lütfen daha sonra tekrar dene.</string>
 
     <!--Input Errors:
@@ -94,6 +96,7 @@
     <string name="action_get_ego">Ego kazan</string>
     <string name="action_login_via_google">Google ile Giriş Yap</string>
     <string name="action_login_via_facebook">Facebook ile Giriş Yap</string>
+    <string name="action_login_via_twitter">X ile Giriş Yap</string>
     <string name="action_create_new_account" ><font color='#674D9F'>Hesap Oluştur</font></string>
     <string name="action_read_more" >Daha Fazla</string>
     <string name="action_btn_continue" >Devam</string>

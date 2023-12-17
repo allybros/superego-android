@@ -38,6 +38,7 @@ public class ConstantValues {
     public static final String ACTION_LOGIN = "login-status-share";
     public static final String ACTION_LOGOUT = "logout-status-share";
     public static final String ACTION_SOCIAL_MEDIA_LOGIN = "social-media-login-status-share";
+    public static final String ACTION_TWITTER_LOGIN = "social-media-login-twitter-api-response";
     public static final String ACTION_REFRESH_PROFILE = "profile-refresh-status-share";
     public static final String ACTION_LOAD_PROFILE = "load-profile-share";
     public static final String ACTION_REGISTER = "register-status-share";

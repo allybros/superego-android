@@ -94,7 +94,7 @@
 
             <!-- Login Button -->
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btLogin"
+                android:id="@+id/btSignUp"
                 style="@style/SegoBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -160,8 +160,7 @@
 
         </LinearLayout>
 
-
-
+        <!--Social SignIn Buttons-->
         <LinearLayout
             android:id="@+id/socialButtons"
             android:layout_width="match_parent"
@@ -175,7 +174,7 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="42dp">
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/btSignInGoogle"
                     android:layout_width="match_parent"
@@ -186,82 +185,85 @@
                     android:focusable="true">
 
                     <TextView
-                        android:id="@+id/tvEditProfile"
+                        android:id="@+id/tvGoogleSignIn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
+                        android:layout_marginStart="4dp"
                         android:layout_marginBottom="11dp"
                         android:fontFamily="@font/noto_sans_bold"
                         android:text="@string/action_login_via_google"
                         android:textColor="@color/White"
-                        android:textFontWeight="500"
+                        android:textFontWeight="700"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/ivGoogleSignIn"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
-                        android:id="@+id/imageView4"
+                        android:id="@+id/ivGoogleSignIn"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_marginTop="7dp"
-                        android:layout_marginBottom="8dp"
                         android:layout_marginEnd="4dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginStart="60dp"
                         android:src="@drawable/brand_google"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/tvEditProfile"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </FrameLayout>
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
+                android:layout_height="42dp"
+                android:layout_marginTop="10dp"
+                >
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/btSignInFacebook"
+                    android:id="@+id/btSignInTwitter"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingHorizontal="24dp"
-                    android:background="@drawable/selector_facebook_button"
+                    android:background="@drawable/selector_twitter_button"
                     android:clickable="true"
-                    android:focusable="true">
+                    android:focusable="true"
+                    >
 
                     <TextView
-                        android:id="@+id/textView2"
+                        android:id="@+id/tvTwitterSignIn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="11dp"
+                        android:layout_marginStart="4dp"
                         android:fontFamily="@font/noto_sans_bold"
-                        android:text="@string/action_login_via_facebook"
+                        android:text="@string/action_login_via_twitter"
                         android:textColor="@color/White"
-                        android:textFontWeight="500"
-                        android:layout_marginStart="17dp"
+                        android:textFontWeight="700"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintStart_toEndOf="@+id/ivTwitterSignIn"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="1.0" />
 
                     <ImageView
-                        android:id="@+id/imageView7"
+                        android:id="@+id/ivTwitterSignIn"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_marginTop="7dp"
-                        android:layout_marginBottom="8dp"
+                        android:layout_marginStart="60dp"
                         android:layout_marginEnd="4dp"
-                        android:src="@drawable/brand_facebook"
+                        android:layout_marginBottom="8dp"
+                        android:padding="3dp"
+                        android:src="@drawable/brand_twitter"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/textView2"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </FrameLayout>
 
-
         </LinearLayout>
-
 
         <!-- Register TV -->
 
