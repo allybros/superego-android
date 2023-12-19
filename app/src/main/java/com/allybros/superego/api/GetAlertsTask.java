@@ -1,13 +1,20 @@
 package com.allybros.superego.api;
 
+import android.app.appsearch.PackageIdentifier;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.util.Log;
 
+import androidx.core.os.ConfigurationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
@@ -17,6 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class GetAlertsTask {
@@ -27,8 +35,20 @@ public class GetAlertsTask {
     public static void getAlerts(Context context) {
         RequestQueue queue = Volley.newRequestQueue(context);
         Intent intent = new Intent(ConstantValues.ACTION_GET_ALERTS);
-        StringRequest request = new StringRequest(Request.Method.GET,
-                ConstantValues.ALERTS_URL + "?channel=android&version=2.0.0",
+        String packageName = context.getPackageName();
+        String versionName = null;
+        try {
+            PackageInfo packageInfo = context.getPackageManager().getPackageInfo(packageName, 0);
+            versionName = packageInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e("GetVersion", "Unable to get version name");
+        }
+
+        String requestUrl = ConstantValues.ALERTS_URL + "?channel=android";
+        if (versionName != null) {
+            requestUrl += "&version=" + versionName;
+        }
+        StringRequest request = new StringRequest(Request.Method.GET, requestUrl,
                 response -> {
                     Log.d("GetAlertsResponse", response);
                     try {
@@ -57,10 +77,25 @@ public class GetAlertsTask {
                 params.put("version", "2.0.0");
                 return params;
             }
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                headers.put("Accept-Language", getCurrentLocale());
+                return headers;
+            }
         };
 
         queue.add(request);
+    }
 
-
+    public static String getCurrentLocale() {
+        Locale locale = ConfigurationCompat.getLocales(Resources.getSystem().getConfiguration()).get(0);
+        if (locale != null) {
+            return locale.getLanguage();
+        } else {
+            return "en";
+        }
     }
 }

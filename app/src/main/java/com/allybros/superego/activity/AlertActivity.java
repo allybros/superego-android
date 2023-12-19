@@ -27,7 +27,6 @@ public class AlertActivity extends ComponentActivity {
     private TextView alertTitleTextView;
     private TextView alertDescriptionTextView;
     private LinearLayout alertButtonsLinearLayout;
-
     private Alert alert;
 
     @Override
