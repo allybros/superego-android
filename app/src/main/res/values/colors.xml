@@ -71,6 +71,7 @@
     <color name="segoBlue300">#3B5696</color>
     <color name="segoBlue200">#344A7E</color>
     <color name="segoBlue100">#25324D</color>
+    <color name="segoGray100">#ECECEC</color>
 
     <!--Colors for try-->
     <color name="blue">#2875FA</color>

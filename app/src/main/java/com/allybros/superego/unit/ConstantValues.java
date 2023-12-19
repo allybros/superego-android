@@ -28,11 +28,13 @@ public class ConstantValues {
     public static final String CREATE_TEST = WEB_URL + "new-test?embed=1";
     public static final String RATE_URL =  WEB_URL + "rate.php?embed=true&test=";
     public static final String LOGOUT_URL = API_ROOT + "logout.php";
+    public static final String ALERTS_URL = API_ROOT + "alerts.php";
 
     public static final String EMOJI_END_POINT = TWEMOJI_URL + "?name=";
 
     //Broadcast-Reciever actions
     public static final String ACTION_UPDATE_INFORMATION ="update-info-status-share";
+    public static final String ACTION_GET_ALERTS = "get-alerts-response";
     public static final String ACTION_UPDATE_IMAGE="update-image-status-share";
     public static final String ACTION_EARNED_REWARD="earned-reward-status-share";
     public static final String ACTION_LOGIN = "login-status-share";

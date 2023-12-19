@@ -12,13 +12,18 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.R;
+import com.allybros.superego.api.GetAlertsTask;
 import com.allybros.superego.api.LoadProfileTask;
 import com.allybros.superego.api.LoginTask;
+import com.allybros.superego.unit.Alert;
+import com.allybros.superego.unit.AlertResponse;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.unit.Trait;
@@ -26,14 +31,16 @@ import com.allybros.superego.util.SessionManager;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.recaptcha.Recaptcha;
 import com.google.android.recaptcha.RecaptchaAction;
 import com.google.android.recaptcha.RecaptchaTasksClient;
+import com.google.gson.Gson;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -46,52 +53,115 @@ public class SplashActivity extends AppCompatActivity {
 
     private BroadcastReceiver loadProfileRegister;
     private BroadcastReceiver loginReceiver;
+    private BroadcastReceiver alertsReceiver;
     private RecaptchaTasksClient recaptchaTasksClient;
     boolean loadTaskLock = false;
     boolean getTraitsLock = false;
+
+    private ActivityResultLauncher<Intent> alertActivityLauncher;
+
+    private int numAlerts = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         initializeRecaptchaClient();
+        registerAlertActivityLauncher();
+        setupReceivers();
 
-        if(!isGuideShown()){
+        if (!isGuideShown()) {
+            // Show introduction guide
             showGuide();
+        } else if (!checkNetworkConnection()) {
+            // No internet connection
+            showNetworkErrorDialog();
         } else {
-            // Check internet connection
-            ConnectivityManager cm = (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-            boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-            if (isConnected) {
-                getAllTraits(getApplicationContext());
-                setupReceivers();
-                SessionManager.getInstance().readInfo(getApplicationContext());
-                if (!SessionManager.getInstance().getSessionToken().isEmpty()) {
-                    // User signed in before
-                    LoadProfileTask.loadProfileTask(getApplicationContext(),
-                            SessionManager.getInstance().getSessionToken(), ConstantValues.ACTION_LOAD_PROFILE);
-
-                } else {
-                    returnLoginActivity();
-                }
-            }
-            else {
-                new AlertDialog.Builder(SplashActivity.this, R.style.SegoAlertDialog)
-                        .setTitle("insightof.me")
-                        .setMessage(R.string.error_no_connection)
-                        .setPositiveButton(getString(R.string.action_ok), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                SplashActivity.this.finish();
-                                System.exit(0);
-                            }
-                        })
-                        .show();
-            }
+            // Get alerts
+            executeGetAlertsTask();
         }
     }
 
+    /**
+     * Performs check on internet connection
+     * @return false if no network connectivity
+     */
+    private boolean checkNetworkConnection() {
+        ConnectivityManager cm = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+    }
+
+    /**
+     * Shows network error dialog
+     */
+    private void showNetworkErrorDialog() {
+        new AlertDialog.Builder(this, R.style.SegoAlertDialog)
+                .setTitle("insightof.me")
+                .setMessage(R.string.error_no_connection)
+                .setPositiveButton(getString(R.string.action_ok), (dialog, which) -> {
+                    SplashActivity.this.finish();
+                    System.exit(0);
+                })
+                .show();
+    }
+
+    /**
+     * Initializes alert activity launcher
+     */
+    private void registerAlertActivityLauncher() {
+        this.alertActivityLauncher = registerForActivityResult(new ActivityResultContract<Intent, String>() {
+            @Override
+            public String parseResult(int i, @Nullable Intent intent) {
+                Log.d("AlertActivityLauncher", "Alert dismissed");
+                decrementAlertSemaphore();
+                return "Alert dismissed";
+            }
+
+            @NotNull
+            @Override
+            public Intent createIntent(@NotNull Context context, Intent intent) {
+                // Increase the number of alerts
+                incrementAlertSemaphore();
+                return intent;
+            }
+        }, o -> {
+            if (numAlerts <= 0)
+                onReadyForStart();
+        });
+    }
+
+    /**
+     * Send requests and launch the applications
+     */
+    private void onReadyForStart() {
+        executeGetTraitsTask(getApplicationContext());
+        SessionManager.getInstance().readInfo(getApplicationContext());
+        if (!SessionManager.getInstance().getSessionToken().isEmpty()) {
+            // User signed in before
+            LoadProfileTask.loadProfileTask(getApplicationContext(),
+                    SessionManager.getInstance().getSessionToken(), ConstantValues.ACTION_LOAD_PROFILE);
+
+        } else {
+            returnLoginActivity();
+        }
+    }
+
+    /**
+     * Decrements the alert semaphore by 1.
+     * This method is thread-safe and ensures that only one thread can execute it at a time.
+     */
+    private synchronized void decrementAlertSemaphore() {
+        this.numAlerts -= 1;
+    }
+
+    /**
+     * Increments the alert semaphore by 1.
+     * This method is thread-safe and ensures that only one thread can execute it at a time.
+     */
+    private synchronized void incrementAlertSemaphore() {
+        this.numAlerts += 1;
+    }
     /**
      * Initializes recaptcha client for securing the login call
      */
@@ -197,6 +267,37 @@ public class SplashActivity extends AppCompatActivity {
             }
         };
 
+        // Receive from alerts
+        alertsReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                // Extract information, if we can deserialize, set alerts
+                int status = intent.getIntExtra("status", ErrorCodes.SYSFAIL);
+                if (status == ErrorCodes.SYSFAIL) {
+                    Log.e("AlertsReceiver", "Unable to get alerts, skipping");
+                    onReadyForStart();
+                    return;
+                }
+                String alertsJson = intent.getStringExtra("response");
+                Gson gson = new Gson();
+                AlertResponse alertResponse = gson.fromJson(alertsJson, AlertResponse.class);
+                if (alertResponse.getAlerts().isEmpty()) {
+                    // No alerts received, launch app
+                    Log.i("AlertsReceiver", "No alerts received");
+                    onReadyForStart();
+                    return;
+                }
+                // Start alert activity for each alert
+                for (Alert alert: alertResponse.getAlerts()) {
+                    Intent alertIntent = new Intent(SplashActivity.this, AlertActivity.class);
+                    String alertJson = gson.toJson(alert);
+                    alertIntent.putExtra("alert", alertJson);
+                    alertActivityLauncher.launch(alertIntent);
+                }
+            }
+        };
+
+        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(alertsReceiver, new IntentFilter(ConstantValues.ACTION_GET_ALERTS));
         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(loginReceiver, new IntentFilter(ConstantValues.ACTION_LOGIN));
         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(loadProfileRegister, new IntentFilter(ConstantValues.ACTION_LOAD_PROFILE));
     }
@@ -209,6 +310,7 @@ public class SplashActivity extends AppCompatActivity {
             // Both task are completed
             LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(loadProfileRegister);
             LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(loginReceiver);
+            LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(alertsReceiver);
 
             Intent i = new Intent(SplashActivity.this, UserPageActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -223,6 +325,7 @@ public class SplashActivity extends AppCompatActivity {
     private void returnLoginActivity(){
         LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(loadProfileRegister);
         LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(loginReceiver);
+        LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(alertsReceiver);
 
         Intent i = new Intent(SplashActivity.this, LoginActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -231,10 +334,17 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     /**
-     * Sets all trait list
-     * @param context    require for sending request
+     * Starts get alerts task
      */
-    public void getAllTraits(final Context context){
+    private void executeGetAlertsTask() {
+        GetAlertsTask.getAlerts(this);
+    }
+
+    /**
+     * Sets all trait list
+     * @param context require for sending request
+     */
+    public void executeGetTraitsTask(final Context context){
         RequestQueue queue = Volley.newRequestQueue(context);
         final ArrayList<Trait> traits=new ArrayList<>();
 
@@ -313,12 +423,9 @@ public class SplashActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                getTraitsLock = true;
-                notifyTaskComplete();
-            }
+        }, error -> {
+            getTraitsLock = true;
+            notifyTaskComplete();
         });
         queue.add(jsonRequest);
     }

@@ -79,6 +79,31 @@
         <item name="android:fontFamily">@font/noto_sans</item>
     </style>
 
+    <style name="SegoAlertBtnPrimary" parent="Widget.MaterialComponents.Button">
+        <item name="cornerRadius">10dp</item>
+        <item name="textAllCaps">false</item>
+        <item name="android:padding">10dp</item>
+        <item name="backgroundTint">@color/segoPurple100</item>
+        <item name="android:textColor">@color/White</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textFontWeight">600</item>
+        <item name="android:fontFamily">@font/noto_sans</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="SegoAlertBtn" parent="Widget.MaterialComponents.Button">
+        <item name="cornerRadius">10dp</item>
+        <item name="textAllCaps">false</item>
+        <item name="android:padding">10dp</item>
+        <item name="backgroundTint">@color/segoGray100</item>
+        <item name="android:elevation">0dp</item>
+        <item name="android:textColor">@color/segoPurple100</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textFontWeight">600</item>
+        <item name="android:fontFamily">@font/noto_sans</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
     <style name="SegoProgressView" parent="Widget.MaterialProgressBar.ProgressBar.Horizontal">
         <item name="progressBarPadding">0dp</item>
         <item name="android:layout_height">4dp</item>

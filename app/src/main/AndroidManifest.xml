@@ -39,6 +39,12 @@
             android:theme="@style/UserPage.theme"
             android:windowSoftInputMode="adjustResize"
             android:exported="false"/>
+        <activity android:name=".activity.AlertActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize"
+            android:exported="true"/>
         <activity
             android:name=".activity.UserPageActivity"
             android:label="@string/activity_label_profile"
