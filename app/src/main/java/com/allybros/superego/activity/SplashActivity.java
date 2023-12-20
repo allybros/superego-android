@@ -1,6 +1,8 @@
 package com.allybros.superego.activity;
 
 
+import static com.allybros.superego.unit.ConstantValues.IS_SHOWN;
+
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -13,7 +15,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -34,14 +36,10 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-
-import static com.allybros.superego.unit.ConstantValues.IS_SHOWN;
 
 
 @SuppressLint("CustomSplashScreen")
@@ -51,12 +49,8 @@ public class SplashActivity extends AppCompatActivity {
     private BroadcastReceiver alertsReceiver;
     boolean loadTaskLock = false;
     boolean getTraitsLock = false;
-
     private ActivityResultLauncher<Intent> alertActivityLauncher;
-
-    private int numAlerts = 0;
-
-    private static boolean alertsShown = false;
+    private static boolean alertsShown = false; // Do not show alerts multiple times to user
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,25 +101,10 @@ public class SplashActivity extends AppCompatActivity {
      * Initializes alert activity launcher
      */
     private void registerAlertActivityLauncher() {
-        this.alertActivityLauncher = registerForActivityResult(new ActivityResultContract<Intent, String>() {
-            @Override
-            public String parseResult(int i, @Nullable Intent intent) {
-                Log.d("AlertActivityLauncher", "Alert dismissed");
-                decrementAlertSemaphore();
-                return "Alert dismissed";
-            }
-
-            @NotNull
-            @Override
-            public Intent createIntent(@NotNull Context context, Intent intent) {
-                // Increase the number of alerts
-                incrementAlertSemaphore();
-                return intent;
-            }
-        }, o -> {
-            if (numAlerts <= 0)
-                onReadyForStart();
-        });
+        this.alertActivityLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                o -> onReadyForStart()
+        );
     }
 
     /**
@@ -146,22 +125,6 @@ public class SplashActivity extends AppCompatActivity {
             Log.i("ReadyForStart", "No session data found, redirecting to login");
             startLoginActivity();
         }
-    }
-
-    /**
-     * Decrements the alert semaphore by 1.
-     * This method is thread-safe and ensures that only one thread can execute it at a time.
-     */
-    private synchronized void decrementAlertSemaphore() {
-        this.numAlerts -= 1;
-    }
-
-    /**
-     * Increments the alert semaphore by 1.
-     * This method is thread-safe and ensures that only one thread can execute it at a time.
-     */
-    private synchronized void incrementAlertSemaphore() {
-        this.numAlerts += 1;
     }
 
     private void showGuide() {
@@ -352,5 +315,6 @@ public class SplashActivity extends AppCompatActivity {
         });
         queue.add(jsonRequest);
     }
+
 }
 
