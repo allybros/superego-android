@@ -55,15 +55,14 @@
                     android:id="@+id/tvOptionsTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/noto_sans_bold"
                     android:gravity="center"
-                    android:fontFamily="@font/noto_sans"
                     android:onClick="onBackPressed"
+                    android:paddingBottom="6dp"
                     android:text="@string/activity_label_edit_profile"
                     android:textColor="@color/White"
-                    android:textFontWeight="700"
                     android:textSize="24sp"
                     android:textStyle="bold"
-                    android:paddingBottom="4dp"
                     app:layout_constraintStart_toEndOf="@+id/ivBack"
                     app:layout_constraintTop_toTopOf="parent" />
             </LinearLayout>

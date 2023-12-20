@@ -10,6 +10,7 @@ import android.util.Log;
 import androidx.core.os.ConfigurationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.allybros.superego.R;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.android.volley.Request;
@@ -79,7 +80,7 @@ public class GetAlertsTask {
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
                 headers.put("Content-Type", "application/json");
-                headers.put("Accept-Language", getCurrentLocale());
+                headers.put("Accept-Language", getCurrentLocale(context));
                 return headers;
             }
         };
@@ -87,12 +88,7 @@ public class GetAlertsTask {
         queue.add(request);
     }
 
-    public static String getCurrentLocale() {
-        Locale locale = ConfigurationCompat.getLocales(Resources.getSystem().getConfiguration()).get(0);
-        if (locale != null) {
-            return locale.getLanguage();
-        } else {
-            return "en";
-        }
+    public static String getCurrentLocale(Context c) {
+        return c.getString(R.string.locale);
     }
 }

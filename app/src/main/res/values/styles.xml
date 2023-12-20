@@ -35,7 +35,7 @@
     <style name="UserPage.theme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+        <item name="android:statusBarColor">@color/statusbarPurple</item>
         <item name="android:textColorPrimary">@color/White</item>
         <item name="android:actionBarSize">52dp</item>
         <item name="colorControlActivated">@color/segoPurple600</item>
@@ -76,7 +76,7 @@
         <item name="backgroundTint">@color/segoPurple600</item>
         <item name="android:textColor">@color/White</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:fontFamily">@font/noto_sans</item>
+        <item name="android:fontFamily">@font/noto_sans_medium</item>
     </style>
 
     <style name="SegoAlertBtnPrimary" parent="Widget.MaterialComponents.Button">
@@ -87,7 +87,7 @@
         <item name="android:textColor">@color/White</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textFontWeight">600</item>
-        <item name="android:fontFamily">@font/noto_sans</item>
+        <item name="android:fontFamily">@font/noto_sans_medium</item>
         <item name="android:letterSpacing">0</item>
     </style>
 

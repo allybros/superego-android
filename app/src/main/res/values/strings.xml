@@ -4,6 +4,7 @@
     <string name="web_root" translatable="false">insightof.me</string>
     <string name="conditions_link" translatable="false">https://insightof.me/conditions</string>
 
+    <string name="locale">tr</string>
     <!--Labels-->
     <string name="activity_label_profile">Profil</string>
     <string name="activity_label_results">Sonuçlar</string>

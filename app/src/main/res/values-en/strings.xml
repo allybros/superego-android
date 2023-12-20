@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="locale">en</string>
     <string name="activity_label_profile">Profile</string>
     <string name="activity_label_results">Results</string>
     <string name="activity_label_search">Find Friends</string>

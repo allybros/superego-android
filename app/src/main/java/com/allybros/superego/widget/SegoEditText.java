@@ -145,6 +145,18 @@ public class SegoEditText extends ConstraintLayout {
 
     public void setText(String text) { et.setText(text); }
 
+    @Override
+    public void setEnabled(boolean enabled) {
+        // Indicate disabled component visually
+        super.setEnabled(enabled);
+        et.setEnabled(enabled);
+        if (enabled) {
+            this.setAlpha(1f);
+        } else {
+            this.setAlpha(0.7f);
+        }
+    }
+
     public void setPasswordView(boolean isPasswordArea) {
         if(isPasswordArea){
             ivEnd.setVisibility(View.VISIBLE);
