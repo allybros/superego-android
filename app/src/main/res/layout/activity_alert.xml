@@ -46,9 +46,10 @@
             android:layout_marginTop="18dp"
             android:text="Alert Title"
             android:textColor="@color/segoPurple100"
-            android:fontFamily="@font/noto_sans"
+            android:fontFamily="@font/noto_sans_medium"
             android:textFontWeight="500"
-            android:textSize="30sp">
+            android:textSize="28sp"
+            android:textAlignment="center">
         </TextView>
 
         <TextView

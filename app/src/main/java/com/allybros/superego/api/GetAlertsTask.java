@@ -1,11 +1,9 @@
 package com.allybros.superego.api;
 
-import android.app.appsearch.PackageIdentifier;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.util.Log;
 
@@ -14,7 +12,6 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
