@@ -4,10 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.util.Log;
 
-import androidx.core.os.ConfigurationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.R;
@@ -22,11 +20,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 public class GetAlertsTask {
 
+    private static final String STATUS_EXTRA = "status";
+    private static final String RESPONSE_EXTRA = "response";
     private GetAlertsTask() {
     }
 
@@ -41,8 +41,9 @@ public class GetAlertsTask {
         } catch (PackageManager.NameNotFoundException e) {
             Log.e("GetVersion", "Unable to get version name");
         }
-
-        String requestUrl = ConstantValues.ALERTS_URL + "?channel=android";
+        // Build request url
+        String requestUrl = ConstantValues.ALERTS_URL;
+        requestUrl += "?channel=android";
         if (versionName != null) {
             requestUrl += "&version=" + versionName;
         }
@@ -55,29 +56,22 @@ public class GetAlertsTask {
                             Log.e("GetAlertsResponse", "No alerts field detected on the response, returning error response");
                             throw new JSONException("No alerts field");
                         }
-                        intent.putExtra("response", response);
-                        intent.putExtra("status", ErrorCodes.SUCCESS);
+                        intent.putExtra(RESPONSE_EXTRA, response);
+                        intent.putExtra(STATUS_EXTRA, ErrorCodes.SUCCESS);
                     } catch (JSONException e) {
-                        intent.putExtra("status", ErrorCodes.SYSFAIL);
+                        intent.putExtra(STATUS_EXTRA, ErrorCodes.SYSFAIL);
                     }
                     LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                 }, error -> {
                     if (error != null) {
-                        Log.e("GetAlertsError", error.getMessage());
+                        Log.e("GetAlertsError", Objects.requireNonNull(error.getMessage()));
                     }
-                    intent.putExtra("status", ErrorCodes.CONNECTION_ERROR);
+                    intent.putExtra(STATUS_EXTRA, ErrorCodes.CONNECTION_ERROR);
                     LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                 }) {
             @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("channel", "android");
-                params.put("version", "2.0.0");
-                return params;
-            }
-
-            @Override
             public Map<String, String> getHeaders() {
+                // Set request headers
                 Map<String, String> headers = new HashMap<>();
                 headers.put("Content-Type", "application/json");
                 headers.put("Accept-Language", getCurrentLocale(context));

@@ -67,43 +67,22 @@ public class GuideActivity extends FragmentActivity {
                 btGoBack.setVisibility(View.GONE);
                 btGoForward.setVisibility(View.GONE);
                 btGoForwardCenter.setVisibility(View.VISIBLE);
-                btGoForwardCenter.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mPager.setCurrentItem(mPager.getCurrentItem() + 1);
-                    }
-                });
+                btGoForwardCenter.setOnClickListener(v -> mPager.setCurrentItem(mPager.getCurrentItem() + 1));
                 btGoForwardCenter.setText(R.string.action_btn_continue);
                 break;
             case 1:
                 btGoForwardCenter.setVisibility(View.GONE);
                 btGoForward.setVisibility(View.VISIBLE);
                 btGoBack.setVisibility(View.VISIBLE);
-                btGoForward.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mPager.setCurrentItem(mPager.getCurrentItem() + 1);
-                    }
-                });
-                btGoBack.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mPager.setCurrentItem(mPager.getCurrentItem() - 1);
-                    }
-                });
+                btGoForward.setOnClickListener(v -> mPager.setCurrentItem(mPager.getCurrentItem() + 1));
+                btGoBack.setOnClickListener(v -> mPager.setCurrentItem(mPager.getCurrentItem() - 1));
                 btGoForward.setText(R.string.action_btn_continue);
                 btGoBack.setText(R.string.action_btn_back);
-
                 break;
             case 2:
-                btGoForward.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        correctShown();
-                        Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
+                btGoForward.setOnClickListener(v -> {
+                    correctShown();
+                    finish();
                 });
                 btGoForward.setText(R.string.action_btn_start);
                 btGoBack.setText(R.string.action_btn_back);
@@ -133,12 +112,8 @@ public class GuideActivity extends FragmentActivity {
         btGoBack.setVisibility(View.GONE);
         btGoForward.setVisibility(View.GONE);
         btGoForwardCenter.setVisibility(View.VISIBLE);
-        btGoForwardCenter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPager.setCurrentItem(mPager.getCurrentItem() + 1);
-            }
-        });
+        btGoForwardCenter.setOnClickListener(v ->
+                mPager.setCurrentItem(mPager.getCurrentItem() + 1));
     }
 
     /**

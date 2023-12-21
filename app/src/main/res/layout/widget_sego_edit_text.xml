@@ -35,7 +35,7 @@
     <EditText
         android:id="@+id/et"
         android:layout_width="0dp"
-        android:layout_height="40dp"
+        android:layout_height="44dp"
         android:background="@drawable/et_background"
         android:fontFamily="@font/noto_sans"
         android:paddingStart="8dp"

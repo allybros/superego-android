@@ -32,10 +32,9 @@
             android:id="@+id/tvSearchUsername"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/noto_sans"
+            android:fontFamily="@font/noto_sans_medium"
             android:text="@string/hint_searchbar_username"
             android:textColor="@color/deepBlue100"
-            android:textFontWeight="600"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

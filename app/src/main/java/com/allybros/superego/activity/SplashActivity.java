@@ -49,27 +49,28 @@ public class SplashActivity extends AppCompatActivity {
     private BroadcastReceiver alertsReceiver;
     boolean loadTaskLock = false;
     boolean getTraitsLock = false;
-    private ActivityResultLauncher<Intent> alertActivityLauncher;
     private static boolean alertsShown = false; // Do not show alerts multiple times to user
+    private ActivityResultLauncher<Intent> alertActivityLauncher;
+    private ActivityResultLauncher<Intent> guideActivityLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
         registerAlertActivityLauncher();
+        registerGuideActivityLauncher();
         setupReceivers();
 
-        if (!isGuideShown()) {
-            // Show introduction guide
-            showGuide();
-        } else if (!checkNetworkConnection()) {
+        if (!checkNetworkConnection()) {
             // No internet connection
             showNetworkErrorDialog();
-        } else if (!alertsShown){
-            // Get alerts
-            executeGetAlertsTask();
+        } else if (!isGuideShown()) {
+            // Show guide activity
+            startGuideActivity();
         } else {
-            onReadyForStart();
+            // Ask for alerts
+            onReadyForAlerts();
         }
     }
 
@@ -101,16 +102,43 @@ public class SplashActivity extends AppCompatActivity {
      * Initializes alert activity launcher
      */
     private void registerAlertActivityLauncher() {
+        // Set ready for login as the callback
         this.alertActivityLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
-                o -> onReadyForStart()
+                o -> onReadyForLogin()
         );
+    }
+
+    /**
+     * Initializes guide activity launcher
+     */
+    private void registerGuideActivityLauncher() {
+        // Set ready for alerts as the callback
+        this.guideActivityLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                o -> onReadyForAlerts()
+        );
+    }
+
+
+    /**
+     * Send requests for alerts
+     */
+    private void onReadyForAlerts() {
+        if (alertsShown) {
+            Log.i("ReadyForAlerts", "Alerts already shown to the user");
+            onReadyForLogin();
+
+        } else {
+            Log.i("ReadyForAlerts", "Alerts not shown before");
+            executeGetAlertsTask();
+        }
     }
 
     /**
      * Send requests and launch the applications
      */
-    private void onReadyForStart() {
+    private void onReadyForLogin() {
         Log.i(getClass().getSimpleName(), "Ready for starting application");
         executeGetTraitsTask(getApplicationContext());
         // Read session data
@@ -127,10 +155,9 @@ public class SplashActivity extends AppCompatActivity {
         }
     }
 
-    private void showGuide() {
+    private void startGuideActivity() {
         Intent intent = new Intent(getApplicationContext(), GuideActivity.class);
-        startActivity(intent);
-        finish();
+        this.guideActivityLauncher.launch(intent);
     }
 
     private boolean isGuideShown() {
@@ -162,7 +189,7 @@ public class SplashActivity extends AppCompatActivity {
                 int status = intent.getIntExtra("status", ErrorCodes.SYSFAIL);
                 if (status == ErrorCodes.SYSFAIL) {
                     Log.e("AlertsReceiver", "Unable to get alerts, skipping");
-                    onReadyForStart();
+                    onReadyForLogin();
                     return;
                 }
                 String alertsJson = intent.getStringExtra("response");
@@ -171,7 +198,7 @@ public class SplashActivity extends AppCompatActivity {
                 if (alertResponse.getAlerts().isEmpty()) {
                     // No alerts received, launch app
                     Log.i("AlertsReceiver", "No alerts received, start app");
-                    onReadyForStart();
+                    onReadyForLogin();
                     return;
                 }
                 // Start alert activity for each alert
@@ -181,12 +208,14 @@ public class SplashActivity extends AppCompatActivity {
                     alertIntent.putExtra("alert", alertJson);
                     alertActivityLauncher.launch(alertIntent);
                 }
-                alertsShown = true;
+                SplashActivity.alertsShown = true;
             }
         };
 
-        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(alertsReceiver, new IntentFilter(ConstantValues.ACTION_GET_ALERTS));
-        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(loadProfileRegister, new IntentFilter(ConstantValues.ACTION_LOAD_PROFILE));
+        LocalBroadcastManager.getInstance(getApplicationContext())
+                .registerReceiver(alertsReceiver, new IntentFilter(ConstantValues.ACTION_GET_ALERTS));
+        LocalBroadcastManager.getInstance(getApplicationContext())
+                .registerReceiver(loadProfileRegister, new IntentFilter(ConstantValues.ACTION_LOAD_PROFILE));
     }
 
     /**
@@ -209,8 +238,10 @@ public class SplashActivity extends AppCompatActivity {
      * Starts login activity and finished this activity
      */
     private void startLoginActivity(){
-        LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(loadProfileRegister);
-        LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(alertsReceiver);
+        LocalBroadcastManager.getInstance(getApplicationContext())
+                .unregisterReceiver(loadProfileRegister);
+        LocalBroadcastManager.getInstance(getApplicationContext())
+                .unregisterReceiver(alertsReceiver);
 
         Intent i = new Intent(SplashActivity.this, LoginActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

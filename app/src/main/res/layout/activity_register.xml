@@ -153,7 +153,7 @@
                 android:id="@+id/tvConnectCall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="22dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/noto_sans"
                 android:gravity="center"
@@ -179,7 +179,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="35dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="36dp"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -187,7 +187,7 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="42dp">
+                android:layout_height="44dp">
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/btSignInGoogle"
                     android:layout_width="match_parent"
@@ -230,7 +230,7 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="42dp"
+                android:layout_height="44dp"
                 android:layout_marginTop="10dp"
                 >
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -310,8 +310,7 @@
             android:onClick="onSignInButtonClicked"
             android:text="@string/desc_call_sign_in"
             android:textColor="#2d2846"
-            android:textFontWeight="400"
-            android:textSize="12sp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@+id/tvSignIn" />
 
         <TextView
@@ -320,12 +319,11 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:gravity="center"
-            android:fontFamily="@font/noto_sans"
+            android:fontFamily="@font/noto_sans_medium"
             android:onClick="onSignInButtonClicked"
-            android:textSize="12sp"
-            android:textFontWeight="500"
+            android:textSize="14sp"
             android:text="@string/action_login"
-            android:textColor="#553C8B"
+            android:textColor="@color/segoPurple100"
             app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

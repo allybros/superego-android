@@ -140,7 +140,7 @@
                 android:id="@+id/tvConnectCall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="36dp"
                 android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="@string/call_or_connect_via"
@@ -174,11 +174,11 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="42dp">
+                android:layout_height="wrap_content">
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/btSignInGoogle"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="44dp"
                     android:paddingHorizontal="24dp"
                     android:background="@drawable/selector_google_button"
                     android:clickable="true"
@@ -217,13 +217,13 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="42dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 >
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/btSignInTwitter"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="44dp"
                     android:paddingHorizontal="24dp"
                     android:background="@drawable/selector_twitter_button"
                     android:clickable="true"
@@ -272,10 +272,9 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="@color/darkBlue"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:onClick="onRegisterButtonClicked"
             android:fontFamily="@font/noto_sans"
-            android:textFontWeight="400"
             android:text="@string/desc_call_register"
             app:layout_constraintBottom_toTopOf="@+id/tvRegister" />
 
@@ -285,12 +284,11 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:gravity="center"
-            android:textFontWeight="500"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:onClick="onRegisterButtonClicked"
-            android:fontFamily="@font/noto_sans"
+            android:fontFamily="@font/noto_sans_medium"
             android:text="@string/action_create_new_account"
-            android:textColor="#674d9f"
+            android:textColor="@color/segoPurple100"
             app:layout_constraintBottom_toBottomOf="parent" />
 
 
