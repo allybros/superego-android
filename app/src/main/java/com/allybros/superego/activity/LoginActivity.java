@@ -27,8 +27,8 @@ public class LoginActivity extends BaseSignOnActivity {
     private MaterialButton btLogin;
     private SegoEditText etPassword;
     private SegoEditText etUid;
-    private ConstraintLayout btSignInGoogle;
     private ConstraintLayout btSignInTwitter;
+    private ConstraintLayout btSignInGoogle;
     private MaterialProgressBar progressView;
     private BroadcastReceiver loginReceiver;
 
@@ -45,11 +45,11 @@ public class LoginActivity extends BaseSignOnActivity {
      */
     private void initializeComponents(){
         btLogin = findViewById(R.id.btSignUp);
-        btSignInGoogle = findViewById(R.id.btSignInGoogle);
         btSignInTwitter = findViewById(R.id.btSignInTwitter);
         etUid = findViewById(R.id.etLoginUid);
         etPassword = findViewById(R.id.etPassword);
         progressView = findViewById(R.id.progressViewLogin);
+        btSignInGoogle = findViewById(R.id.btSignInGoogle);
     }
 
     @Override

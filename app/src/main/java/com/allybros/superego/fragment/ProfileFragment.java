@@ -115,10 +115,7 @@ public class ProfileFragment extends Fragment {
                 NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
                 boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
                 if(isConnected){
-                    Intent addTestIntent = new Intent(getContext(), WebViewActivity.class);
-                    addTestIntent.putExtra("url", ConstantValues.CREATE_TEST);
-                    addTestIntent.putExtra("title", getString(R.string.activity_label_new_test));
-                    startActivity(addTestIntent);
+                    launchCreateTest();
                 }
                 else {
                     Snackbar.make(profileSwipeLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
@@ -415,14 +412,19 @@ public class ProfileFragment extends Fragment {
     /**
      * Navigates to create test page
      */
-    private void navigateToCreateTest(){
+    private void navigateToCreateTest() {
         if (!sessionManager.getUser().hasTest() && !isTestCreated) {
             btnShareTest.setAlpha(0.6f);
-            Intent intent = new Intent(getContext(), WebViewActivity.class);
-            intent.putExtra("url", ConstantValues.CREATE_TEST);
-            intent.putExtra("title", getString(R.string.activity_label_new_test));
-            startActivity(intent);
+            launchCreateTest();
         }
+    }
+
+    private void launchCreateTest() {
+        Intent intent = new Intent(getContext(), WebViewActivity.class);
+        intent.putExtra("url", ConstantValues.CREATE_TEST);
+        intent.putExtra("title", getString(R.string.activity_label_new_test));
+        intent.putExtra("action", "new-test");
+        startActivity(intent);
     }
 
     @Override

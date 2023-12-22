@@ -10,25 +10,34 @@ import android.util.Log;
 
 import androidx.activity.ComponentActivity;
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.R;
+import com.allybros.superego.api.SocialMediaSignInTask;
 import com.allybros.superego.oauth.TwitterCallbackTask;
 import com.allybros.superego.oauth.TwitterOAuthHelper;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 import com.google.android.recaptcha.Recaptcha;
 import com.google.android.recaptcha.RecaptchaTasksClient;
 
-public class BaseSignOnActivity extends ComponentActivity {
+abstract class BaseSignOnActivity extends ComponentActivity {
 
     protected RecaptchaTasksClient recaptchaTasksClient = null;
 
     protected BroadcastReceiver oauthLoginReceiver;
     private ActivityResultLauncher<Intent> webViewActivityResultLauncher;
-
     private TwitterOAuthHelper twitterOAuthHelper;
+    private GoogleSignInClient mGoogleSignInClient;
+    private ActivityResultLauncher<Intent> googleSignInLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +45,45 @@ public class BaseSignOnActivity extends ComponentActivity {
         initializeRecaptchaClient();
         setUpReceivers();
         registerWebViewActivityResultLauncher();
+        initializeGoogleSignIn();
+        registerGoogleSignInLauncher();
 
         // Initialize twitter oauth helper
         this.twitterOAuthHelper = new TwitterOAuthHelper(getString(R.string.twitter_client_id));
+    }
+
+    private void initializeGoogleSignIn() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.GOOGLE_CLIENT_ID))
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+    }
+
+    protected void onGoogleSignInClicked() {
+        setProgress(true);
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        this.googleSignInLauncher.launch(signInIntent);
+    }
+    private void registerGoogleSignInLauncher() {
+        this.googleSignInLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                o -> {
+                    Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(o.getData());
+                    handleSignInResult(task);
+                }
+        );
+    }
+
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            SocialMediaSignInTask.loginTask(getApplicationContext(),account.getIdToken(),"google");
+        } catch (ApiException e) {
+            Log.w(this.getClass().getName(), "signInResult:failed code=" + e.getStatusCode());
+            setProgress(false);
+            showErrorDialog(getString(R.string.error_google_signin));
+        }
     }
 
     /**
@@ -116,10 +161,6 @@ public class BaseSignOnActivity extends ComponentActivity {
         startWebViewActivity(this.getString(R.string.action_login_via_twitter), loginUrl);
     }
 
-    protected void onGoogleSignInClicked() {
-        showErrorDialog("To be implemented");
-    }
-
     /**
      * Starts a web view activity with given title and url
      * @param title Title of the string
@@ -180,9 +221,5 @@ public class BaseSignOnActivity extends ComponentActivity {
         builder.show();
     }
 
-    protected void setProgress(boolean isProgress) {
-        // Can be implemented on child class
-    }
-
-
+    abstract void setProgress(boolean isProgress);
 }
