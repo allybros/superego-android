@@ -54,7 +54,7 @@ abstract class BaseSignOnActivity extends ComponentActivity {
 
     private void initializeGoogleSignIn() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.GOOGLE_CLIENT_ID))
+                .requestIdToken(getString(R.string.google_client_id))
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);

@@ -76,7 +76,7 @@
     <string name="rated">\ Rates</string>
     <string name="error_code">Code:</string>
     <string name="remaining_credits">Remaining Rates: %1$s</string>
-    <string name="default_bio_profile">Short information about you.</string>
+    <string name="default_bio_profile">Short information about you</string>
     <string name="alert_title_end_session">Sign Out</string>
     <string name="alert_context_end_session">Are you sure that you really want to end your current session.</string>
     <string name="alert_sign_up">Create New Account</string>

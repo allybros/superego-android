@@ -124,6 +124,9 @@ public class RegisterActivity extends BaseSignOnActivity {
                     case ErrorCodes.PASSWORD_NOT_LEGAL:
                         etRegisterPassword.setError(getString(R.string.error_password_not_legal));
                         break;
+                    case ErrorCodes.INVALID_CAPTCHA:
+                        showErrorDialog(getString(R.string.error_captcha_validation));
+                        break;
                     default:
                         // An error occurred
                         showErrorDialog(getString(R.string.error_no_connection));

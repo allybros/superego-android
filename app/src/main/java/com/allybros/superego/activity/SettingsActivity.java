@@ -163,7 +163,7 @@ public class SettingsActivity extends AppCompatActivity {
                             if (SessionManager.getInstance().getUser().getUserType() == 1){ //Google Sign out
                                 GoogleSignInClient mGoogleSignInClient;
                                 GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                                        .requestIdToken(getString(R.string.GOOGLE_CLIENT_ID))
+                                        .requestIdToken(getString(R.string.google_client_id))
                                         .requestEmail()
                                         .build();
                                 mGoogleSignInClient = GoogleSignIn.getClient(getApplicationContext(), gso);

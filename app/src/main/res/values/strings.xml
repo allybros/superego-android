@@ -179,7 +179,7 @@
     <string name="credit" translatable="false">Ego</string>
     <string name="error_code">Kod: </string>
     <string name="remaining_credits">Kalan Değerlendirmeler: %1$s</string>
-    <string name="default_bio_profile">Kendini tanıtan .kısa bir yazı yazabilirsin.</string>
+    <string name="default_bio_profile">Kendini tanıtan kısa bir yazı yazabilirsin</string>
 
     <!--Alert Dialogs-->
     <string name="alert_title_end_session">Oturumu Sonlandır</string>
