@@ -25,6 +25,7 @@ import com.allybros.superego.R;
 import com.allybros.superego.adapter.LicensesAdapter;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
+import com.allybros.superego.util.ClientContextUtil;
 import com.allybros.superego.util.SessionManager;
 import com.allybros.superego.widget.SegoMenuButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -210,14 +211,14 @@ public class SettingsActivity extends AppCompatActivity {
         LayoutInflater inflater = this.getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_about, null);
         TextView tvWebSite = dialogView.findViewById(R.id.tvWebSite);
-        tvWebSite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String url = "http://" + getString(R.string.web_root);
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(url));
-                startActivity(i);
-            }
+        TextView tvVersionInfo = dialogView.findViewById(R.id.tvVersionInfo);
+        tvVersionInfo.setText(String.format("v%s %s", ClientContextUtil.getVersionName(this),
+                getString(R.string.with_version_from)));
+        tvWebSite.setOnClickListener(view -> {
+            String url = "http://" + getString(R.string.web_root);
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            startActivity(i);
         });
         //Show dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this, R.style.SegoAlertDialog);

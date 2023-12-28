@@ -1,11 +1,15 @@
 package com.allybros.superego.unit;
 
 public class Score {
-    private int traitNo;
-    private float value;
+    private final int traitNo;
+    private final String name;
+    private final String icon;
+    private final float value;
 
-    public Score(int traitNo, float value) {
+    public Score(int traitNo, String name, String icon, float value) {
         this.traitNo = traitNo;
+        this.name = name;
+        this.icon = icon;
         this.value = value;
     }
 
@@ -21,14 +25,8 @@ public class Score {
      * Get Emoji name by trait number
      * @return String Associated Emoji name
      */
-    public String getEmojiName(){
-        Trait t = Trait.getTraitById(this.getTraitNo());
-        if (t == null)
-            return null;
-        else if (this.getValue()>=0)
-            return t.getPositiveEmojiName();
-        else
-            return t.getNegativeEmojiName();
+    public String getIcon(){
+        return this.icon;
 
     }
 
@@ -36,14 +34,8 @@ public class Score {
      * Get Trait name by trait number
      * @return String Associated Trait name
      */
-    public String getTraitName(){
-        Trait t = Trait.getTraitById(this.getTraitNo());
-        if (t == null)
-            return null;
-        else if (this.getValue()>=0)
-            return t.getPositiveName();
-        else
-            return t.getNegativeName();
+    public String getName(){
+        return this.name;
 
     }
 }

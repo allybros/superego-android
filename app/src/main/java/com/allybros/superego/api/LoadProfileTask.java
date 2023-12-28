@@ -3,13 +3,10 @@ package com.allybros.superego.api;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.R;
-import com.allybros.superego.activity.SplashActivity;
-import com.allybros.superego.activity.UserPageActivity;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.unit.Ocean;
@@ -17,7 +14,6 @@ import com.allybros.superego.unit.Personality;
 import com.allybros.superego.unit.Score;
 import com.allybros.superego.unit.User;
 import com.allybros.superego.util.SessionManager;
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -32,7 +28,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 /**
  * Class includes the function of getting information from API
  * @author 0rcun
@@ -80,7 +75,9 @@ public class LoadProfileTask{
                                 JSONObject scoresObject = (JSONObject) result.getJSONArray("scores").get(i);
                                 int traitNo = scoresObject.getInt("traitNo");
                                 float value = scoresObject.getInt("value");
-                                scoresList.add(new Score(traitNo, value));
+                                String name = scoresObject.getString("name");
+                                String  icon = scoresObject.getString("icon");
+                                scoresList.add(new Score(traitNo, name, icon, value));
                             }
                         }
 
@@ -148,6 +145,16 @@ public class LoadProfileTask{
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("session-token", session_token);
                 return params;
+            }
+
+            // Add headers
+
+            @Override
+            public Map<String, String> getHeaders() {
+                // Set request headers
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Accept-Language", context.getString(R.string.locale));
+                return headers;
             }
         };
 

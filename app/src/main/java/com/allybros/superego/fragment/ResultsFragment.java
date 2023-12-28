@@ -13,7 +13,6 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -64,7 +63,6 @@ import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -364,9 +362,9 @@ public class ResultsFragment extends Fragment {
 
             if (score != null) {
                 //Set name
-                traitNameView.setText(score.getTraitName());
+                traitNameView.setText(score.getName());
                 //Load emoji
-                Uri myUrl = Uri.parse(EMOJI_END_POINT + score.getEmojiName());
+                Uri myUrl = Uri.parse(EMOJI_END_POINT + score.getIcon());
                 GlideToVectorYou.justLoadImage((Activity) getContext(), myUrl, traitImage);
             }
 

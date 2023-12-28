@@ -27,19 +27,8 @@ import com.allybros.superego.unit.Alert;
 import com.allybros.superego.unit.AlertResponse;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
-import com.allybros.superego.unit.Trait;
 import com.allybros.superego.util.SessionManager;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 
 @SuppressLint("CustomSplashScreen")
@@ -47,8 +36,6 @@ public class SplashActivity extends AppCompatActivity {
 
     private BroadcastReceiver loadProfileRegister;
     private BroadcastReceiver alertsReceiver;
-    boolean loadTaskLock = false;
-    boolean getTraitsLock = false;
     private static boolean alertsShown = false; // Do not show alerts multiple times to user
     private ActivityResultLauncher<Intent> alertActivityLauncher;
     private ActivityResultLauncher<Intent> guideActivityLauncher;
@@ -140,7 +127,6 @@ public class SplashActivity extends AppCompatActivity {
      */
     private void onReadyForLogin() {
         Log.i(getClass().getSimpleName(), "Ready for starting application");
-        executeGetTraitsTask(getApplicationContext());
         // Read session data
         SessionManager.getInstance().readInfo(getApplicationContext());
         if (!SessionManager.getInstance().getSessionToken().isEmpty()) {
@@ -172,8 +158,7 @@ public class SplashActivity extends AppCompatActivity {
                 int status = intent.getIntExtra("status", ErrorCodes.SYSFAIL);
                 if (status == ErrorCodes.SUCCESS) {
                     // Profile loaded successfully, current user must be set on SessionManager
-                    loadTaskLock = true;
-                    notifyTaskComplete();
+                    startUserPageActivity();
                 } else {
                     Log.w("Splash", "Can not load profile, routing to login page");
                     startLoginActivity();
@@ -221,17 +206,16 @@ public class SplashActivity extends AppCompatActivity {
     /**
      * Checks if both task are completed. If both of them completed, starts UserPageActivity
      */
-    private synchronized void notifyTaskComplete(){
-        if (loadTaskLock && getTraitsLock) {
-            // Both task are completed
-            LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(loadProfileRegister);
-            LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(alertsReceiver);
+    private synchronized void startUserPageActivity(){
+        // Both task are completed
+        LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(loadProfileRegister);
+        LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(alertsReceiver);
 
-            Intent i = new Intent(SplashActivity.this, UserPageActivity.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(i);
-            finish();
-        }
+        Intent i = new Intent(SplashActivity.this, UserPageActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(i);
+        finish();
+
     }
 
     /**
@@ -255,96 +239,6 @@ public class SplashActivity extends AppCompatActivity {
     private void executeGetAlertsTask() {
         Log.i("SplashScreen", "Starting get alerts task");
         GetAlertsTask.getAlerts(this);
-    }
-
-    /**
-     * Sets all trait list
-     * @param context require for sending request
-     */
-    public void executeGetTraitsTask(final Context context){
-        RequestQueue queue = Volley.newRequestQueue(context);
-        final ArrayList<Trait> traits=new ArrayList<>();
-
-        final StringRequest jsonRequest = new StringRequest(Request.Method.GET, ConstantValues.ALL_TRAITS, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-//                Log.d("getAllTraits",response.toString());
-                try {
-                    JSONObject jsonObject=new JSONObject(response);
-
-                    for(int i = 0; i < jsonObject.getJSONArray("o").length(); i++) {
-                        JSONObject iter= (JSONObject) jsonObject.getJSONArray("o").get(i);
-                        int traitNo;
-                        String positiveName,negativeName,positiveIcon,negativeIcon;
-
-                        traitNo=iter.getInt("traitNo");
-                        positiveName=iter.getString("positive");
-                        negativeName=iter.getString("negative");
-                        positiveIcon=iter.getString("positive_icon");
-                        negativeIcon=iter.getString("negative_icon");
-                        traits.add(new Trait(traitNo,positiveName,negativeName,positiveIcon,negativeIcon));
-                    }
-                    for(int i = 0; i < jsonObject.getJSONArray("c").length(); i++) {
-                        JSONObject iter= (JSONObject) jsonObject.getJSONArray("c").get(i);
-                        int traitNo;
-                        String positiveName,negativeName,positiveIcon,negativeIcon;
-
-                        traitNo=iter.getInt("traitNo");
-                        positiveName=iter.getString("positive");
-                        negativeName=iter.getString("negative");
-                        positiveIcon=iter.getString("positive_icon");
-                        negativeIcon=iter.getString("negative_icon");
-                        traits.add(new Trait(traitNo,positiveName,negativeName,positiveIcon,negativeIcon));
-                    }
-                    for(int i = 0; i < jsonObject.getJSONArray("e").length(); i++) {
-                        JSONObject iter= (JSONObject) jsonObject.getJSONArray("e").get(i);
-                        int traitNo;
-                        String positiveName,negativeName,positiveIcon,negativeIcon;
-
-                        traitNo=iter.getInt("traitNo");
-                        positiveName=iter.getString("positive");
-                        negativeName=iter.getString("negative");
-                        positiveIcon=iter.getString("positive_icon");
-                        negativeIcon=iter.getString("negative_icon");
-                        traits.add(new Trait(traitNo,positiveName,negativeName,positiveIcon,negativeIcon));
-                    }
-                    for(int i = 0; i < jsonObject.getJSONArray("a").length(); i++) {
-                        JSONObject iter= (JSONObject) jsonObject.getJSONArray("a").get(i);
-                        int traitNo;
-                        String positiveName,negativeName,positiveIcon,negativeIcon;
-
-                        traitNo=iter.getInt("traitNo");
-                        positiveName=iter.getString("positive");
-                        negativeName=iter.getString("negative");
-                        positiveIcon=iter.getString("positive_icon");
-                        negativeIcon=iter.getString("negative_icon");
-                        traits.add(new Trait(traitNo,positiveName,negativeName,positiveIcon,negativeIcon));
-                    }
-                    for(int i = 0; i < jsonObject.getJSONArray("n").length(); i++) {
-                        JSONObject iter= (JSONObject) jsonObject.getJSONArray("n").get(i);
-                        int traitNo;
-                        String positiveName,negativeName,positiveIcon,negativeIcon;
-
-                        traitNo=iter.getInt("traitNo");
-                        positiveName=iter.getString("positive");
-                        negativeName=iter.getString("negative");
-                        positiveIcon=iter.getString("positive_icon");
-                        negativeIcon=iter.getString("negative_icon");
-                        traits.add(new Trait(traitNo,positiveName,negativeName,positiveIcon,negativeIcon));
-                    }
-                    getTraitsLock = true;
-                    notifyTaskComplete();
-                    Trait.setAllTraits(traits);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, error -> {
-            getTraitsLock = true;
-            notifyTaskComplete();
-        });
-        queue.add(jsonRequest);
     }
 
 }

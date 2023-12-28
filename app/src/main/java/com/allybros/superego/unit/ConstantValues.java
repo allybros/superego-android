@@ -6,11 +6,11 @@ public class ConstantValues {
     public static final String USER_INFORMATION_PREF="USER_INFORMATION_PREF";  //Shared preferences Tag
     public static final String IS_SHOWN="IS_SHOWN";
 
-    public static final int MAX_FILE_SIZE = 33177600;
+    public static final int MAX_FILE_SIZE = 209715200;
 
     //Links
-    public static final String API_ROOT = "https://api.insightof.me/";
-    public static final String WEB_URL = "https://insightof.me/";
+    public static final String API_ROOT = "https://dev.allybros.com/superego-api/";
+    public static final String WEB_URL = "https://dev.allybros.com/superego-web/";
     public static final String TWEMOJI_URL = "https://dev.allybros.com/twemoji";
 
     //API LINKS
