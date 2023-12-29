@@ -9,7 +9,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -34,7 +33,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.allybros.superego.R;
@@ -42,10 +40,11 @@ import com.allybros.superego.activity.UserPageActivity;
 import com.allybros.superego.activity.WebViewActivity;
 import com.allybros.superego.api.EarnRewardTask;
 import com.allybros.superego.api.LoadProfileTask;
+import com.allybros.superego.api.mapper.UserMapper;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.unit.Ocean;
-import com.allybros.superego.unit.Score;
+import com.allybros.superego.unit.TraitScore;
 import com.allybros.superego.unit.User;
 import com.allybros.superego.util.SessionManager;
 import com.allybros.superego.widget.SegoProgressBar;
@@ -64,7 +63,7 @@ import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 
@@ -73,7 +72,6 @@ public class ResultsFragment extends Fragment {
     private ListView listViewTraits;
     private SwipeRefreshLayout swipeLayout;
     private User currentUser;
-    private BroadcastReceiver resultsRefreshReceiver;
     private AdView adResultBanner;
     private Button btnShowAd, btnShareTestResult, btnCreateTest;
     private RewardedAd rewardedAd;
@@ -82,13 +80,15 @@ public class ResultsFragment extends Fragment {
 
     private LinearLayout llScoresContainer;
     private SessionManager sessionManager = SessionManager.getInstance();
+    private Activity parentActivity;
 
     //3 states of Result screen represented in an Enum
     private enum State {
         NONE, NONE_TEST, PARTIAL, COMPLETE
     }
 
-    public ResultsFragment() {
+    public ResultsFragment(Activity parentActivity) {
+        this.parentActivity = parentActivity;
         this.currentUser = SessionManager.getInstance().getUser();
     }
 
@@ -116,7 +116,6 @@ public class ResultsFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setupReceiver();
         setupView();
     }
 
@@ -182,25 +181,19 @@ public class ResultsFragment extends Fragment {
         //Setup refresher
         swipeLayout = getView().findViewById(R.id.swipeLayout);
         if (swipeLayout != null)
-            swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                @Override
-                public void onRefresh() {
-                    // Check internet connection
-                    ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-                    NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-                    boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-                    if (isConnected) {
-                        //Start load task
-                        LoadProfileTask.loadProfileTask(getContext(),
-                                SessionManager.getInstance().getSessionToken(),
-                                ConstantValues.ACTION_REFRESH_RESULTS);
-                    } else {
-                        Snackbar.make(swipeLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
-                        Log.d("CONNECTION", String.valueOf(isConnected));
-                        swipeLayout.setRefreshing(false);
-                    }
-
+            swipeLayout.setOnRefreshListener(() -> {
+                // Check internet connection
+                ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+                boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+                if (isConnected) {
+                    reloadProfile();
+                } else {
+                    Snackbar.make(swipeLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
+                    Log.d("CONNECTION", String.valueOf(isConnected));
+                    swipeLayout.setRefreshing(false);
                 }
+
             });
 
         //Populate views depending on current state
@@ -348,10 +341,10 @@ public class ResultsFragment extends Fragment {
      * It fills scores container
      *
      * @param llScoresContainer
-     * @param scores
+     * @param traitScores
      */
-    private void fillScores(LinearLayout llScoresContainer, ArrayList<Score> scores) {
-        for (Score score : scores) {
+    private void fillScores(LinearLayout llScoresContainer, List<TraitScore> traitScores) {
+        for (TraitScore traitScore : traitScores) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             View score_row = inflater.inflate(R.layout.scores_list_row, null);
 
@@ -360,11 +353,11 @@ public class ResultsFragment extends Fragment {
             FrameLayout traitEmojiContainer = score_row.findViewById(R.id.imageViewContainer);
             ConstraintLayout clTraitRow = score_row.findViewById(R.id.clTraitRow);
 
-            if (score != null) {
+            if (traitScore != null) {
                 //Set name
-                traitNameView.setText(score.getName());
+                traitNameView.setText(traitScore.getName());
                 //Load emoji
-                Uri myUrl = Uri.parse(EMOJI_END_POINT + score.getIcon());
+                Uri myUrl = Uri.parse(EMOJI_END_POINT + traitScore.getIcon());
                 GlideToVectorYou.justLoadImage((Activity) getContext(), myUrl, traitImage);
             }
 
@@ -382,37 +375,30 @@ public class ResultsFragment extends Fragment {
         }
     }
 
-
-    //Set up refresh receiver
-    private void setupReceiver() {
-        resultsRefreshReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                int status = intent.getIntExtra("status", 0);
-                swipeLayout.setRefreshing(false);
-
-                //Update fragments
+    /**
+     * Reloads profile content with API.
+     */
+    private void reloadProfile(){
+        // Call API task
+        String sessionToken = SessionManager.getInstance().getSessionToken();
+        LoadProfileTask loadProfileTask = new LoadProfileTask(sessionToken);
+        loadProfileTask.setOnResponseListener(response -> {
+            swipeLayout.setRefreshing(false);
+            if (response.getStatus() == ErrorCodes.SUCCESS) {
+                // Successfully response
+                User sessionUser = UserMapper.fromProfileResponse(response);
+                SessionManager.getInstance().setUser(sessionUser);
                 UserPageActivity pageActivity = (UserPageActivity) getActivity();
                 if (pageActivity != null) pageActivity.refreshFragments(1);
-
-                if (status == ErrorCodes.SUCCESS) {
-                    Log.d("Profile refresh", "Success");
-                    swipeLayout.setRefreshing(false);
-                } else {
-                    swipeLayout.setRefreshing(false); //Last
-                    Toast.makeText(getContext(), getContext().getString(R.string.error_no_connection), Toast.LENGTH_SHORT).show();
-                }
+            } else {
+                // An error occurred
+                Toast.makeText(getContext(), getString(R.string.error_check_connection), Toast.LENGTH_SHORT)
+                        .show();
             }
-        };
-        //TODO: Replace when new API package is developed
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(resultsRefreshReceiver, new IntentFilter(ConstantValues.ACTION_REFRESH_RESULTS));
+        });
+        loadProfileTask.execute(getContext());
     }
 
-    @Override
-    public void onDestroy() {
-        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(resultsRefreshReceiver);
-        super.onDestroy();
-    }
 
     /**
      * Initializes and loads rewarded video ad.

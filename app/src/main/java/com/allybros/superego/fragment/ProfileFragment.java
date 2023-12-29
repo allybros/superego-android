@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -37,8 +38,10 @@ import com.allybros.superego.activity.SettingsActivity;
 import com.allybros.superego.activity.UserPageActivity;
 import com.allybros.superego.activity.WebViewActivity;
 import com.allybros.superego.api.LoadProfileTask;
+import com.allybros.superego.api.mapper.UserMapper;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
+import com.allybros.superego.unit.User;
 import com.allybros.superego.util.SessionManager;
 import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou;
 import com.google.android.gms.ads.AdListener;
@@ -64,13 +67,16 @@ public class ProfileFragment extends Fragment {
     private SwipeRefreshLayout profileSwipeLayout;
     private AdView adProfileBanner;
     //API Receivers
-    private BroadcastReceiver refreshReceiver;
     private BroadcastReceiver rewardReceiver;
     boolean isTestCreated = false;
     //Current session
     private SessionManager sessionManager = SessionManager.getInstance();
 
-    public ProfileFragment() {}
+    private Activity parentActivity;
+
+    public ProfileFragment(Activity parentActivity) {
+        this.parentActivity = parentActivity;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -161,40 +167,28 @@ public class ProfileFragment extends Fragment {
     public void reloadProfile(){
         // Call API task
         isTestCreated = true;
-        LoadProfileTask.loadProfileTask(getActivity().getApplicationContext(), sessionManager.getSessionToken(), ConstantValues.ACTION_REFRESH_PROFILE);
-
+        String sessionToken = SessionManager.getInstance().getSessionToken();
+        LoadProfileTask loadProfileTask = new LoadProfileTask(sessionToken);
+        loadProfileTask.setOnResponseListener(response -> {
+            if (response.getStatus() == ErrorCodes.SUCCESS) {
+                // Successfully response
+                User sessionUser = UserMapper.fromProfileResponse(response);
+                SessionManager.getInstance().setUser(sessionUser);
+                UserPageActivity pageActivity = (UserPageActivity) parentActivity;
+                if (pageActivity != null) pageActivity.refreshFragments(0);
+            } else {
+                // An error occurred
+                Toast.makeText(getContext(), getString(R.string.error_check_connection), Toast.LENGTH_SHORT)
+                        .show();
+            }
+        });
+        loadProfileTask.execute(getContext());
     }
 
     /**
      * Does configure receivers
      */
     private void setupReceivers(){
-        // Set Up receivers
-        refreshReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                int status = intent.getIntExtra("status",0);
-                Log.d("receiver", "Got message: " + status);
-
-                switch (status){
-                    case ErrorCodes.SYSFAIL:
-                        Snackbar.make(profileSwipeLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
-                        break;
-
-                    case ErrorCodes.SUCCESS:
-                        Log.d("Profile refresh","Success");
-                        UserPageActivity userPageActivity = (UserPageActivity) getActivity();
-                        userPageActivity.refreshFragments(0);
-                        break;
-                }
-
-                // Disable progress view
-                UserPageActivity upa = (UserPageActivity) getActivity();
-                if (upa != null) upa.setProgressVisibility(false);
-                profileSwipeLayout.setRefreshing(false);
-            }
-        };
-
         rewardReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -240,8 +234,8 @@ public class ProfileFragment extends Fragment {
         };
 
         //Registers Receivers
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(refreshReceiver, new IntentFilter(ConstantValues.ACTION_REFRESH_PROFILE));
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(rewardReceiver, new IntentFilter(ConstantValues.ACTION_EARNED_REWARD));
+        LocalBroadcastManager.getInstance(parentActivity)
+                .registerReceiver(rewardReceiver, new IntentFilter(ConstantValues.ACTION_EARNED_REWARD));
     }
 
     @SuppressLint("DefaultLocale")
@@ -341,21 +335,18 @@ public class ProfileFragment extends Fragment {
     private void initSwipeLayout(){
         //Setup refresh layout
         profileSwipeLayout = getView().findViewById(R.id.profileSwipeLayout);
-        profileSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                // Check internet connection
-                ConnectivityManager cm = (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-                NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-                boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-                if(isConnected) {
-                    LoadProfileTask.loadProfileTask(getContext(), sessionManager.getSessionToken(), ConstantValues.ACTION_REFRESH_PROFILE);
-                }
-                else {
-                    Log.d("CONNECTION", String.valueOf(isConnected));
-                    Snackbar.make(profileSwipeLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
-                    profileSwipeLayout.setRefreshing(false);
-                }
+        profileSwipeLayout.setOnRefreshListener(() -> {
+            // Check internet connection
+            ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+            boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+            if(isConnected) {
+                reloadProfile();
+            }
+            else {
+                Log.d("CONNECTION", String.valueOf(isConnected));
+                Snackbar.make(profileSwipeLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
+                profileSwipeLayout.setRefreshing(false);
             }
         });
     }
@@ -429,7 +420,6 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public void onDestroy() {
-        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(refreshReceiver);
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(rewardReceiver);
         super.onDestroy();
     }

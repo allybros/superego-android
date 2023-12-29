@@ -1,4 +1,6 @@
-package com.allybros.superego.unit;
+package com.allybros.superego.api.response;
+
+import com.allybros.superego.unit.Alert;
 
 import java.util.List;
 

@@ -1,12 +1,12 @@
 package com.allybros.superego.unit;
 
-public class Score {
+public class TraitScore {
     private final int traitNo;
     private final String name;
     private final String icon;
     private final float value;
 
-    public Score(int traitNo, String name, String icon, float value) {
+    public TraitScore(int traitNo, String name, String icon, float value) {
         this.traitNo = traitNo;
         this.name = name;
         this.icon = icon;

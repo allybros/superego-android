@@ -3,20 +3,22 @@ package com.allybros.superego.unit;
 
 import android.graphics.Bitmap;
 
-import androidx.annotation.NonNull;
-
 import java.util.ArrayList;
+import java.util.List;
 
 public class User {
 
     private int userType, rated, credit;
     private String image,testId, testResultId,username,userBio,email, avatarName;
-    private ArrayList<Score> scores;
+    private List<TraitScore> scores;
     private Ocean ocean;
     private Personality personality;
     private Bitmap avatar;      //Görsel öğeler için kullanılıyor.
 
-    public User(int userType, int rated, int credit, String image, String testId, String testResultId, String username, String userBio, String email, ArrayList<Score> scores, Ocean ocean, Personality personality) {
+    public User() {
+    }
+
+    public User(int userType, int rated, int credit, String image, String testId, String testResultId, String username, String userBio, String email, ArrayList<TraitScore> scores, Ocean ocean, Personality personality) {
         this.userType = userType;
         this.rated = rated;
         this.credit = credit;
@@ -79,7 +81,7 @@ public class User {
         return email;
     }
 
-    public ArrayList<Score> getScores() {
+    public List<TraitScore> getScores() {
         return scores;
     }
 
@@ -127,8 +129,8 @@ public class User {
         this.email = email;
     }
 
-    public void setScores(ArrayList<Score> scores) {
-        this.scores = scores;
+    public void setScores(List<TraitScore> traitScores) {
+        this.scores = traitScores;
     }
 
     public void setAvatar(Bitmap avatar) {

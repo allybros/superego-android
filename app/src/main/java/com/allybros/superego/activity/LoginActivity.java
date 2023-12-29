@@ -1,9 +1,6 @@
 package com.allybros.superego.activity;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -11,11 +8,9 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.R;
-import com.allybros.superego.api.LoginApiTask;
-import com.allybros.superego.unit.ConstantValues;
+import com.allybros.superego.api.LoginTask;
 import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.util.SessionManager;
 import com.allybros.superego.widget.SegoEditText;
@@ -141,10 +136,10 @@ public class LoginActivity extends BaseSignOnActivity {
     }
 
     private void executeLoginTask(String uid, String password, String recaptchaResponse) {
-        LoginApiTask loginApiTask = new LoginApiTask(uid, password, recaptchaResponse,
+        LoginTask loginTask = new LoginTask(uid, password, recaptchaResponse,
                 this.getString(R.string.recaptcha_client_key));
         // Make API operation
-        loginApiTask.setOnResponseListener(response -> {
+        loginTask.setOnResponseListener(response -> {
             int status = response.getStatus();
             setProgress(false);
             switch (status){
@@ -179,7 +174,7 @@ public class LoginActivity extends BaseSignOnActivity {
             }
         });
         // Execute api task
-        loginApiTask.execute(this);
+        loginTask.execute(this);
     }
 
     /**

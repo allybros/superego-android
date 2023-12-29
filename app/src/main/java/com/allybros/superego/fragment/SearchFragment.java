@@ -12,6 +12,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.JsonReader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,13 +31,16 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.R;
 import com.allybros.superego.activity.WebViewActivity;
+import com.allybros.superego.api.ApiTask;
 import com.allybros.superego.api.SearchTask;
 import com.allybros.superego.adapter.SearchAdapter;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.User;
 import com.allybros.superego.util.SessionManager;
+import com.android.volley.Request;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.google.android.gms.common.api.Api;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -58,11 +62,9 @@ public class SearchFragment extends Fragment {
     private ImageView ivIconSearchInfo;
     private TextView tvSearchInfo, tvSearchHeader;
     private ConstraintLayout constraintSearchFragment;
-    private SessionManager sessionManager = SessionManager.getInstance();
-
     private BroadcastReceiver searchResponseReceiver;
 
-    public SearchFragment() {
+    public SearchFragment(Activity parentActivity) {
         // Required empty public constructor
         searchResponseReceiver = new BroadcastReceiver() {
             @Override
@@ -98,7 +100,7 @@ public class SearchFragment extends Fragment {
         };
 
         //TODO: Replace when the API is updated
-        LocalBroadcastManager.getInstance(getContext())
+        LocalBroadcastManager.getInstance(parentActivity)
                 .registerReceiver(searchResponseReceiver, new IntentFilter(ConstantValues.ACTION_SEARCH));
 
     }
