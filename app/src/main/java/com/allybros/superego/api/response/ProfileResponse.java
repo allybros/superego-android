@@ -5,6 +5,7 @@ import com.allybros.superego.unit.Personality;
 import com.allybros.superego.unit.TraitScore;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +26,7 @@ public class ProfileResponse {
     private int rated;
     private Ocean ocean;
     private Personality personality;
-    private List<TraitScore> scores;
+    private List<TraitScore> scores = new ArrayList<>();
 
     public int getStatus() {
         return status;

@@ -142,7 +142,7 @@ public class User {
     }
 
     public boolean hasResults(){
-        return this.getScores().size() > 0;
+        return !this.getScores().isEmpty();
     }
     public void setAvatarName(String avatarName) {
         this.avatarName = avatarName;
