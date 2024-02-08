@@ -3,7 +3,7 @@ package com.allybros.superego.api;
 import android.content.Context;
 import android.util.Log;
 
-import com.allybros.superego.api.response.ApiErrorResponse;
+import com.allybros.superego.api.response.ApiStatusResponse;
 import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.util.ClientContextUtil;
 import com.android.volley.RequestQueue;
@@ -18,12 +18,12 @@ import java.util.Map;
 
 public class ApiTask<T> {
     private final int requestMethod;
-    private final Map<String,String> params;
-    private final Map<String,String> headers;
+    private final Map<String, String> params;
+    private final Map<String, String> headers;
     private final Class<T> responseClass;
     private String url;
     private ApiCallback<T> onResponseListener;
-    private ApiCallback<ApiErrorResponse> onErrorListener;
+    private ApiCallback<ApiStatusResponse> onErrorListener;
     private static final String API_TASK = "ApiTask";
 
     /**
@@ -37,6 +37,7 @@ public class ApiTask<T> {
         this(requestMethod, responseClass);
         this.url = url;
     }
+
     /**
      * Constructs an instance of ApiTask with the specified request method and response class.
      *
@@ -49,12 +50,15 @@ public class ApiTask<T> {
         this.headers = new HashMap<>();
         this.params = new HashMap<>();
         // Default listeners won't do anything
-        onErrorListener = response -> {};
-        onResponseListener = response -> {};
+        onErrorListener = response -> {
+        };
+        onResponseListener = response -> {
+        };
     }
 
     /**
      * Maps response string to desired response type
+     *
      * @param responseString Api response as plain string
      * @return object in type of T
      */
@@ -74,9 +78,9 @@ public class ApiTask<T> {
      * @param failure The VolleyError object representing the API request failure.
      * @return The ApiErrorResponse object.
      */
-    protected ApiErrorResponse mapApiError(VolleyError failure) {
+    protected ApiStatusResponse mapApiError(VolleyError failure) {
         // Create a fake api response
-        ApiErrorResponse errorResponse = new ApiErrorResponse();
+        ApiStatusResponse errorResponse = new ApiStatusResponse();
         errorResponse.setStatus(ErrorCodes.CONNECTION_ERROR);
         errorResponse.setMessage("Api response is not received");
         return errorResponse;
@@ -96,7 +100,7 @@ public class ApiTask<T> {
      *
      * @param onErrorListener The listener for the API request failure.
      */
-    public void setOnErrorListener(ApiCallback<ApiErrorResponse> onErrorListener) {
+    public void setOnErrorListener(ApiCallback<ApiStatusResponse> onErrorListener) {
         this.onErrorListener = onErrorListener;
     }
 
@@ -174,7 +178,7 @@ public class ApiTask<T> {
                 error -> {
                     String errorMessage = error.getMessage();
                     Log.e(API_TASK, "Error on request: " + errorMessage);
-                    ApiErrorResponse errorResponse = mapApiError(error);
+                    ApiStatusResponse errorResponse = mapApiError(error);
                     onErrorListener.onApiResponse(errorResponse);
                 }
         ) {
@@ -182,6 +186,7 @@ public class ApiTask<T> {
             protected Map<String, String> getParams() {
                 return ApiTask.this.params;
             }
+
             @Override
             public Map<String, String> getHeaders() {
                 return ApiTask.this.headers;

@@ -3,17 +3,20 @@ package com.allybros.superego.unit;
 
 import android.graphics.Bitmap;
 
+import com.allybros.superego.util.SessionManager;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class User {
 
     private int userType, rated, credit;
-    private String image,testId, testResultId,username,userBio,email, avatarName;
+    private String image, testId, testResultId, username, userBio, email, avatarName;
     private List<TraitScore> scores;
     private Ocean ocean;
     private Personality personality;
     private Bitmap avatar;      //Görsel öğeler için kullanılıyor.
+    private int remainingRates;
 
     public User() {
     }
@@ -137,13 +140,14 @@ public class User {
         this.avatar = avatar;
     }
 
-    public boolean hasTest(){
+    public boolean hasTest() {
         return this.getTestId() != null;
     }
 
-    public boolean hasResults(){
+    public boolean hasResults() {
         return !this.getScores().isEmpty();
     }
+
     public void setAvatarName(String avatarName) {
         this.avatarName = avatarName;
     }
@@ -162,5 +166,11 @@ public class User {
 
     public void setPersonality(Personality personality) {
         this.personality = personality;
+    }
+
+    public int getRemainingRates() {
+        if (!SessionManager.getInstance().getUser().getScores().isEmpty())
+            return 10 - (rated + credit);
+        else return 5 - SessionManager.getInstance().getUser().getRated();
     }
 }

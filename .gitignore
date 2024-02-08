@@ -17,3 +17,4 @@ gradle/wrapper/gradle-wrapper.properties
 ./app/.gitignore
 ./app/.idea/assetWizardSettings.xml
 ./app/.gitignore
+*.apk

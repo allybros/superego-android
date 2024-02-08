@@ -1,6 +1,6 @@
 package com.allybros.superego.api.response;
 
-public class ApiErrorResponse {
+public class ApiStatusResponse {
     private Integer status;
     private String message;
 

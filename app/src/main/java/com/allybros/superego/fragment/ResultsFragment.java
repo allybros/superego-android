@@ -5,7 +5,6 @@ import static com.allybros.superego.unit.ConstantValues.WEB_URL;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,7 +23,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,11 +34,14 @@ import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.allybros.superego.R;
+import com.allybros.superego.activity.LoginActivity;
 import com.allybros.superego.activity.UserPageActivity;
 import com.allybros.superego.activity.WebViewActivity;
+import com.allybros.superego.api.ApiTask;
 import com.allybros.superego.api.EarnRewardTask;
 import com.allybros.superego.api.LoadProfileTask;
 import com.allybros.superego.api.mapper.UserMapper;
+import com.allybros.superego.api.response.ApiStatusResponse;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.unit.Ocean;
@@ -66,20 +67,13 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.List;
 import java.util.Random;
 
-
 public class ResultsFragment extends Fragment {
     private TextView tvRemainingRates;
-    private ListView listViewTraits;
     private SwipeRefreshLayout swipeLayout;
-    private User currentUser;
     private AdView adResultBanner;
     private Button btnShowAd, btnShareTestResult, btnCreateTest;
     private RewardedAd rewardedAd;
-
-    private ImageView ivShareResults;
-
     private LinearLayout llScoresContainer;
-    private SessionManager sessionManager = SessionManager.getInstance();
     private Activity parentActivity;
 
     //3 states of Result screen represented in an Enum
@@ -89,7 +83,6 @@ public class ResultsFragment extends Fragment {
 
     public ResultsFragment(Activity parentActivity) {
         this.parentActivity = parentActivity;
-        this.currentUser = SessionManager.getInstance().getUser();
     }
 
     @Override
@@ -120,11 +113,11 @@ public class ResultsFragment extends Fragment {
     }
 
     private State getState() {
-        if (currentUser.getScores().size() >= 6)
+        if (SessionManager.getInstance().getUser().getScores().size() >= 6)
             return State.COMPLETE;
-        else if (currentUser.getScores().size() >= 1)
+        else if (!SessionManager.getInstance().getUser().getScores().isEmpty())
             return State.PARTIAL;
-        else if (sessionManager.getUser().getTestId() != null && !sessionManager.getUser().getTestId().isEmpty()) {
+        else if (SessionManager.getInstance().getUser().getTestId() != null && !SessionManager.getInstance().getUser().getTestId().isEmpty()) {
             return State.NONE;
         } else {
             return State.NONE_TEST;
@@ -134,12 +127,7 @@ public class ResultsFragment extends Fragment {
 
     private void prepareBannerAd() {
         // Initialize mobile ads
-        MobileAds.initialize(getActivity(), new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-                Log.d("MobileAds", "Initialized.");
-            }
-        });
+        MobileAds.initialize(parentActivity, initializationStatus -> Log.d("MobileAds", "Initialized."));
         adResultBanner = getView().findViewById(R.id.resultBannerAdd);
         final String adTag = "ad_result_banner";
         // Load ad
@@ -206,40 +194,36 @@ public class ResultsFragment extends Fragment {
                 tvRemainingRates = getView().findViewById(R.id.tvRatedResultPage);
 
                 //Populate views
-                int remainingRates = 10 - (currentUser.getRated() + currentUser.getCredit());
-                tvRemainingRates.setText(getString(R.string.remaining_credits, remainingRates));
+                tvRemainingRates.setText(getString(R.string.remaining_credits, SessionManager.getInstance().getUser().getRemainingRates()));
 
-                fillScores(llScoresContainer, currentUser.getScores());
+                fillScores(llScoresContainer, SessionManager.getInstance().getUser().getScores());
                 prepareRewardedAd();
                 prepareBannerAd();
-                btnShowAd.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (rewardedAd != null) {
-                            // Check internet connection
-                            ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-                            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-                            boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-                            if (isConnected) {
-                                showRewardedAd();
-                            } else {
-                                Snackbar.make(swipeLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
-                                Log.d("CONNECTION", String.valueOf(isConnected));
-                            }
+                btnShowAd.setOnClickListener(v -> {
+                    if (rewardedAd != null) {
+                        // Check internet connection
+                        ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+                        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+                        if (isConnected) {
+                            showRewardedAd();
                         } else {
-                            // Show error dialog
-                            new AlertDialog.Builder(getActivity(), R.style.SegoAlertDialog)
-                                    .setTitle("insightof.me")
-                                    .setMessage(R.string.info_reward_ad_not_loaded)
-                                    .setPositiveButton(getString(R.string.action_ok), new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.dismiss();
-                                        }
-                                    })
-                                    .show();
-                            Log.d("EgoRewardAd", "The rewarded ad wasn't loaded yet.");
+                            Snackbar.make(swipeLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
+                            Log.d("CONNECTION", String.valueOf(isConnected));
                         }
+                    } else {
+                        // Show error dialog
+                        new AlertDialog.Builder(parentActivity, R.style.SegoAlertDialog)
+                                .setTitle("insightof.me")
+                                .setMessage(R.string.info_reward_ad_not_loaded)
+                                .setPositiveButton(getString(R.string.action_ok), new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .show();
+                        Log.d("EgoRewardAd", "The rewarded ad wasn't loaded yet.");
                     }
                 });
                 break;
@@ -253,24 +237,19 @@ public class ResultsFragment extends Fragment {
                 ImageView ivPersonality = getView().findViewById(R.id.ivPersonality);
                 ImageView ivShareResults = getView().findViewById(R.id.ivShareResults);
 
-                tvPersonalityTitle.setText(currentUser.getPersonality().getTitle());
-                tvPersonalityTitle.setTextColor(Color.parseColor(currentUser.getPersonality().getPrimary_color()));
+                tvPersonalityTitle.setText(SessionManager.getInstance().getUser().getPersonality().getTitle());
+                tvPersonalityTitle.setTextColor(Color.parseColor(SessionManager.getInstance().getUser().getPersonality().getPrimary_color()));
 
-                tvPersonalityType.setText(currentUser.getPersonality().getType());
-                tvPersonalityType.setTextColor(Color.parseColor(currentUser.getPersonality().getSecondary_color()));
+                tvPersonalityType.setText(SessionManager.getInstance().getUser().getPersonality().getType());
+                tvPersonalityType.setTextColor(Color.parseColor(SessionManager.getInstance().getUser().getPersonality().getSecondary_color()));
 
-                tvPersonalityDescription.setText(currentUser.getPersonality().getDescription());
+                tvPersonalityDescription.setText(SessionManager.getInstance().getUser().getPersonality().getDescription());
 
-                GlideToVectorYou.justLoadImage((Activity) getContext(), Uri.parse(currentUser.getPersonality().getImg_url()), ivPersonality);
+                GlideToVectorYou.justLoadImage((Activity) getContext(), Uri.parse(SessionManager.getInstance().getUser().getPersonality().getImg_url()), ivPersonality);
 
-                fillScores(llScoresContainer, currentUser.getScores());
-                fillOcean(currentUser.getOcean());
-                ivShareResults.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        shareResults();
-                    }
-                });
+                fillScores(llScoresContainer, SessionManager.getInstance().getUser().getScores());
+                fillOcean(SessionManager.getInstance().getUser().getOcean());
+                ivShareResults.setOnClickListener(v -> shareResults());
 
                 break;
 
@@ -281,12 +260,7 @@ public class ResultsFragment extends Fragment {
                 btnCreateTest = getView().findViewById(R.id.btnCreateTest);
 
                 prepareBannerAd();
-                btnCreateTest.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        createTest();
-                    }
-                });
+                btnCreateTest.setOnClickListener(v -> createTest());
                 break;
             case NONE:
                 //The test is exist
@@ -295,19 +269,16 @@ public class ResultsFragment extends Fragment {
                 btnShareTestResult = getView().findViewById(R.id.btnShareTestResult);
 
                 //Populate views
-                remainingRates = 5 - currentUser.getRated();
-                tvRemainingRates.setText(getString(R.string.remaining_credits, remainingRates));
+
+                tvRemainingRates.setText(getString(R.string.remaining_credits, SessionManager.getInstance().getUser().getRemainingRates()));
                 prepareBannerAd();
-                btnShareTestResult.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (sessionManager.getUser().hasTest()) {
-                            shareTest();
-                        } else {
-                            Snackbar.make(swipeLayout, R.string.alert_no_test, BaseTransientBottomBar.LENGTH_LONG)
-                                    .setActionTextColor(getResources().getColor(R.color.materialLightPurple))
-                                    .show();
-                        }
+                btnShareTestResult.setOnClickListener(v -> {
+                    if (SessionManager.getInstance().getUser().hasTest()) {
+                        shareTest();
+                    } else {
+                        Snackbar.make(swipeLayout, R.string.alert_no_test, BaseTransientBottomBar.LENGTH_LONG)
+                                .setActionTextColor(getResources().getColor(R.color.materialLightPurple))
+                                .show();
                     }
                 });
                 break;
@@ -378,7 +349,7 @@ public class ResultsFragment extends Fragment {
     /**
      * Reloads profile content with API.
      */
-    private void reloadProfile(){
+    private void reloadProfile() {
         // Call API task
         String sessionToken = SessionManager.getInstance().getSessionToken();
         LoadProfileTask loadProfileTask = new LoadProfileTask(sessionToken);
@@ -388,7 +359,7 @@ public class ResultsFragment extends Fragment {
                 // Successfully response
                 User sessionUser = UserMapper.fromProfileResponse(response);
                 SessionManager.getInstance().setUser(sessionUser);
-                UserPageActivity pageActivity = (UserPageActivity) getActivity();
+                UserPageActivity pageActivity = (UserPageActivity) parentActivity;
                 if (pageActivity != null) pageActivity.refreshFragments(1);
             } else {
                 // An error occurred
@@ -404,27 +375,27 @@ public class ResultsFragment extends Fragment {
      * Initializes and loads rewarded video ad.
      */
     private void prepareRewardedAd() {
-        final Context fragmentContext = getActivity();
+        final Context fragmentContext = parentActivity;
         if (fragmentContext == null) return;
         RewardedAd.load(
-            fragmentContext,
-            getResources().getString(R.string.admob_ad_interface),
-            new AdRequest.Builder().build(),
-            new RewardedAdLoadCallback() {
-                @Override
-                public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-                    super.onAdFailedToLoad(loadAdError);
-                    Log.d("Reward Ad", "Ad failed to load. Try again");
-                    rewardedAd = null;
-                }
+                fragmentContext,
+                getResources().getString(R.string.admob_ad_interface),
+                new AdRequest.Builder().build(),
+                new RewardedAdLoadCallback() {
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        super.onAdFailedToLoad(loadAdError);
+                        Log.d("Reward Ad", "Ad failed to load. Try again");
+                        rewardedAd = null;
+                    }
 
-                @Override
-                public void onAdLoaded(@NonNull RewardedAd ad) {
-                    super.onAdLoaded(rewardedAd);
-                    Log.d("Reward Ad", "Ad successfully loaded.");
-                    rewardedAd = ad;
+                    @Override
+                    public void onAdLoaded(@NonNull RewardedAd ad) {
+                        super.onAdLoaded(rewardedAd);
+                        Log.d("Reward Ad", "Ad successfully loaded.");
+                        rewardedAd = ad;
+                    }
                 }
-            }
         );
     }
 
@@ -433,16 +404,60 @@ public class ResultsFragment extends Fragment {
      */
     private void showRewardedAd() {
         final String rewardCallbackTag = "RewardedAdCallback";
-        final Activity fragmentContext = getActivity();
+        final Activity fragmentContext = parentActivity;
         if (fragmentContext == null) return;
         //Prepare rewarded ad callback
-        rewardedAd.show(fragmentContext, new OnUserEarnedRewardListener() {
-            @Override
-            public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
-                Log.d(rewardCallbackTag, "User earned reward.");
-                EarnRewardTask.EarnRewardTask(getContext(), sessionManager.getSessionToken());
-            }
+        rewardedAd.show(fragmentContext, rewardItem -> {
+            Log.d(rewardCallbackTag, "User earned reward.");
+            acceptReward();
         });
+    }
+
+    /**
+     * Sends a request for accepting reward
+     */
+    private void acceptReward() {
+        EarnRewardTask earnRewardTask = new EarnRewardTask(SessionManager.getInstance().getSessionToken());
+        earnRewardTask.setOnResponseListener(this::handleEarnRewardResponse);
+        earnRewardTask.execute(getContext());
+    }
+
+    /**
+     * Handles reward response
+     *
+     * @param response
+     */
+    private void handleEarnRewardResponse(ApiStatusResponse response) {
+        switch (response.getStatus()) {
+            case ErrorCodes.SYSFAIL:
+                AlertDialog.Builder builder = new AlertDialog.Builder(parentActivity, R.style.SegoAlertDialog);
+                builder.setTitle(getString(R.string.app_name));
+                builder.setMessage(R.string.error_no_connection);
+                builder.setPositiveButton(getString(R.string.action_ok), (dialog, id) -> {
+                    Intent intent = new Intent(getContext(), LoginActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                });
+                builder.show();
+                break;
+
+            case ErrorCodes.SUCCESS:
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(parentActivity, R.style.SegoAlertDialog);
+                builder1.setTitle(getString(R.string.app_name));
+                builder1.setMessage(R.string.message_earn_reward_succeed);
+                builder1.setPositiveButton(getString(R.string.action_ok), (dialog, id) -> reloadProfile());
+                builder1.show();
+                break;
+
+            case ErrorCodes.SESSION_EXPIRED:
+                AlertDialog.Builder builder2 = new AlertDialog.Builder(parentActivity, R.style.SegoAlertDialog);
+                builder2.setTitle(getString(R.string.app_name));
+                builder2.setMessage(R.string.error_session_expired);
+                builder2.setPositiveButton(getString(R.string.action_ok), (dialog, id) -> {
+                });
+                builder2.show();
+                break;
+        }
     }
 
 
@@ -452,7 +467,7 @@ public class ResultsFragment extends Fragment {
     private void shareTest() {
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
-        String testUrl = String.format(WEB_URL + "%s", sessionManager.getUser().getTestId());
+        String testUrl = String.format(WEB_URL + "%s", SessionManager.getInstance().getUser().getTestId());
         String shareBody = getString(R.string.body_share_test, testUrl);
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, R.string.action_btn_share_test);
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
@@ -467,7 +482,7 @@ public class ResultsFragment extends Fragment {
         sharingIntent.setType("text/plain");
 
         String testResultId = SessionManager.getInstance().getUser().getTestResultId();
-        String testUrl = String.format(WEB_URL + "%s", sessionManager.getUser().getTestId());
+        String testUrl = String.format(WEB_URL + "%s", SessionManager.getInstance().getUser().getTestId());
 
         String shareBody = getString(R.string.body_share_results, WEB_URL + "result/" + testResultId + "\n", testUrl);
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, R.string.action_btn_share_results);
