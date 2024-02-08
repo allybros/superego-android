@@ -28,6 +28,7 @@ import com.allybros.superego.api.PasswordChangeTask;
 import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.util.SessionManager;
+import com.allybros.superego.widget.SegoEditText;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -38,7 +39,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
     private ConstraintLayout rootView;
     private MaterialProgressBar progressChangePassword;
     private Button btChangePassword;
-    private EditText etOldPassword, etNewPassword, etNewPasswordAgain;
+    private SegoEditText etOldPassword, etNewPassword, etNewPasswordAgain;
     private ConstraintLayout cardFormChangePassword;
     private ImageView ivBack, ivOldPassToggle, ivNewPassToggle, ivNewPassAgainToggle;
 
@@ -66,12 +67,12 @@ public class ChangePasswordActivity extends AppCompatActivity {
                         break;
 
                     case  ErrorCodes.PASSWORD_NOT_LEGAL:
-                        setError(etNewPassword, getString(R.string.error_password_not_legal));
-                        clearError(etNewPasswordAgain);
+                        etNewPassword.setError(getString(R.string.error_password_not_legal));
+                        etNewPasswordAgain.clearError();
                         break;
 
                     case  ErrorCodes.UNAUTHORIZED:
-                        setError(etOldPassword, getString(R.string.error_current_password_wrong));
+                        etOldPassword.setError(getString(R.string.error_current_password_wrong));
                         break;
 
                     default:
@@ -114,9 +115,9 @@ public class ChangePasswordActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if(s.toString().isEmpty()){
-                    setError(etOldPassword, getString(R.string.error_password_empty));
+                    etOldPassword.setError(getString(R.string.error_password_empty));
                 } else {
-                    clearError(etOldPassword);
+                    etOldPassword.clearError();
                 }
 
             }
@@ -137,9 +138,9 @@ public class ChangePasswordActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if(s.toString().isEmpty()){
-                    setError(etNewPassword, getString(R.string.input_error_enter_new_pass));
+                    etNewPassword.setError(getString(R.string.input_error_enter_new_pass));
                 } else {
-                    clearError(etNewPassword);
+                    etNewPassword.clearError();
                 }
             }
         });
@@ -159,9 +160,9 @@ public class ChangePasswordActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if(s.toString().isEmpty()){
-                    setError(etNewPasswordAgain, getString(R.string.input_error_password_mismatch));
+                    etNewPasswordAgain.setError(getString(R.string.input_error_password_mismatch));
                 } else {
-                    clearError(etNewPasswordAgain);
+                    etNewPasswordAgain.clearError();
                 }
 
             }
@@ -173,40 +174,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 attemptChangePassword();
             }
         });
-
-        ivOldPassToggle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changePasswordVisibility(ivOldPassToggle, etOldPassword);
-            }
-        });
-
-        ivNewPassToggle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changePasswordVisibility(ivNewPassToggle, etNewPassword);
-            }
-        });
-
-        ivNewPassAgainToggle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changePasswordVisibility(ivNewPassAgainToggle, etNewPasswordAgain);
-            }
-        });
     }
-
-    private void changePasswordVisibility(ImageView imageView, EditText editText) {
-        if(editText.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())){
-            imageView.setImageResource(R.drawable.ic_visibility_off);
-            editText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-        } else{
-            imageView.setImageResource(R.drawable.ic_visibility);
-            editText.setTransformationMethod(PasswordTransformationMethod.getInstance());
-        }
-    }
-
-
     private void initializeComponents(){
         btChangePassword = findViewById(R.id.btChangePassword);
         progressChangePassword = findViewById(R.id.progressChangePassword);
@@ -215,34 +183,32 @@ public class ChangePasswordActivity extends AppCompatActivity {
         etNewPasswordAgain = findViewById(R.id.etNewPasswordAgain);
         cardFormChangePassword = findViewById(R.id.cardFormChangePassword);
         ivBack = findViewById(R.id.ivBack);
-        ivOldPassToggle = findViewById(R.id.ivOldPassToggle);
-        ivNewPassToggle = findViewById(R.id.ivNewPassToggle);
-        ivNewPassAgainToggle = findViewById(R.id.ivNewPassAgainToggle);
     }
 
     private void attemptChangePassword(){
         // Show progress indicator.
-        clearError(etOldPassword);
-        clearError(etNewPassword);
-        clearError(etNewPasswordAgain);
+
+        etOldPassword.clearError();
+        etNewPassword.clearError();
+        etNewPasswordAgain.clearError();
 
         // Get user inputs.
-        String oldPass = etOldPassword.getText().toString();
-        String newPass = etNewPassword.getText().toString();
-        String newPassAgain = etNewPasswordAgain.getText().toString();
+        String oldPass = etOldPassword.getText();
+        String newPass = etNewPassword.getText();
+        String newPassAgain = etNewPasswordAgain.getText();
 
         // Check required fields.
         if (oldPass.isEmpty()){
-            setError(etOldPassword, getString(R.string.input_error_enter_current_password));
+            etOldPassword.setError(getString(R.string.input_error_enter_current_password));
         }
         if (newPass.isEmpty()){
-            setError(etNewPassword, getString(R.string.input_error_enter_new_pass));
+            etNewPassword.setError(getString(R.string.input_error_enter_new_pass));
         }
 
         // Old pass and new pass are given, check if new password fields are matching.
         else if (!oldPass.isEmpty() && !newPass.equals(newPassAgain)) {
-            setError(etNewPassword, getString(R.string.input_error_password_mismatch));
-            setError(etNewPasswordAgain, getString(R.string.input_error_password_mismatch));
+            etNewPassword.setError(getString(R.string.input_error_password_mismatch));
+            etNewPasswordAgain.setError(getString(R.string.input_error_password_mismatch));
         }
         // All requirements are satisfied, proceed for creating new password.
         else if (!oldPass.isEmpty()) {
