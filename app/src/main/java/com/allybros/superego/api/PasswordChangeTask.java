@@ -26,33 +26,34 @@ import java.util.Map;
 
 /**
  * Class includes the function of changing password
+ *
  * @author 0rcun
  */
 public class PasswordChangeTask extends Activity {
     /**
      * Password change request to API
+     *
      * @param context       required to build request and send Broadcast
      * @param session_token required to verify the user
      * @param old_password  required to verify the user
      * @param new_password  required to change old password
-     *
      */
-    public static void passwordChangeTask(final Context context, final String session_token, final String old_password, final String new_password){
+    public static void passwordChangeTask(final Context context, final String session_token, final String old_password, final String new_password) {
         final Intent intent = new Intent(ConstantValues.ACTION_PASSWORD_CHANGE);
         RequestQueue queue = Volley.newRequestQueue(context);
 
-        StringRequest jsonRequest=new StringRequest(Request.Method.POST, ConstantValues.PASSWORD_CHANGE, new Response.Listener<String>() {
+        StringRequest jsonRequest = new StringRequest(Request.Method.POST, ConstantValues.PASSWORD_CHANGE, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("sego-Response",response.toString());
+                Log.d("sego-Response", response.toString());
                 try {
-                    JSONObject jsonObj=new JSONObject(response);
+                    JSONObject jsonObj = new JSONObject(response);
                     int status = jsonObj.getInt("status");
 
-                    switch (status){
+                    switch (status) {
 
                         case ErrorCodes.SUCCESS:
-                            updateLocal(new_password, context);
+                            SessionManager.getInstance().updateCredentials(new_password, context);
                             intent.putExtra("status", status);
                             LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                             break;
@@ -75,27 +76,15 @@ public class PasswordChangeTask extends Activity {
         }) {
             //Add parameters in request
             @Override
-            protected Map<String,String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("session-token", session_token);
                 params.put("old-password", old_password);
                 params.put("new-password", new_password);
-                params.put("new-password-again", new_password );
+                params.put("new-password-again", new_password);
                 return params;
             }
         };
         queue.add(jsonRequest);
-    }
-
-    /**
-     * Change variables in local storage
-     *
-     * @param new_password      required to verify the user
-     * @param context           required to use Session Manager
-     */
-    private static void updateLocal(String new_password, Context context){
-        SessionManager.getInstance().writeInfoLocalStorage(SessionManager.getInstance().getUser().getUsername(),
-                                                            new_password,SessionManager.getInstance().getSessionToken(), context);
-        SessionManager.getInstance().readInfo(context);
     }
 }
