@@ -167,7 +167,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                         newPass,
                         newPassAgain
                 );
-                passwordChangeTask.setOnResponseListener(this::handlePasswordChangeResponse);
+                passwordChangeTask.setOnResponseListener(response -> handlePasswordChangeResponse(response, newPass));
                 passwordChangeTask.execute(this);
             } else {
                 Log.d("CONNECTION", String.valueOf(isConnected));
@@ -176,12 +176,13 @@ public class ChangePasswordActivity extends AppCompatActivity {
         }
     }
 
-    private void handlePasswordChangeResponse(ApiStatusResponse response) {
+    private void handlePasswordChangeResponse(ApiStatusResponse response, String newPass) {
         setProgressVisibility(false);
         //Check status
         switch (response.getStatus()) {
             case ErrorCodes.SUCCESS:
                 Snackbar.make(rootView, R.string.message_process_succeed, BaseTransientBottomBar.LENGTH_LONG).show();
+                SessionManager.getInstance().updateCredentials(newPass, this);
                 break;
 
             case ErrorCodes.PASSWORD_NOT_LEGAL:
