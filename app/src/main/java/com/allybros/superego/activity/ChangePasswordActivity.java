@@ -1,31 +1,23 @@
 package com.allybros.superego.activity;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.R;
 import com.allybros.superego.api.PasswordChangeTask;
-import com.allybros.superego.unit.ConstantValues;
+import com.allybros.superego.api.response.ApiStatusResponse;
 import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.util.SessionManager;
 import com.allybros.superego.widget.SegoEditText;
@@ -43,8 +35,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
     private SegoEditText etNewPassword;
     private SegoEditText etNewPasswordAgain;
 
-    private BroadcastReceiver changePasswordReceiver;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,36 +45,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
         rootView = findViewById(R.id.contentRootChangePassword);
         initializeComponents();
-
-        changePasswordReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                int status = intent.getIntExtra("status", 0);
-                setProgressVisibility(false);
-                //Check status
-                switch (status) {
-                    case ErrorCodes.SUCCESS:
-                        Snackbar.make(rootView, R.string.message_process_succeed, BaseTransientBottomBar.LENGTH_LONG).show();
-                        break;
-
-                    case ErrorCodes.PASSWORD_NOT_LEGAL:
-                        etNewPassword.setError(getString(R.string.error_password_not_legal));
-                        etNewPasswordAgain.clearError();
-                        break;
-
-                    case ErrorCodes.UNAUTHORIZED:
-                        etOldPassword.setError(getString(R.string.error_current_password_wrong));
-                        break;
-
-                    default:
-                        Snackbar.make(rootView, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG)
-                                .setAction(R.string.action_try_again, view -> attemptChangePassword()).show();
-                }
-            }
-        };
-        LocalBroadcastManager.getInstance(getApplicationContext())
-                .registerReceiver(changePasswordReceiver, new IntentFilter(ConstantValues.ACTION_PASSWORD_CHANGE));
-
         initListener();
     }
 
@@ -201,14 +161,41 @@ public class ChangePasswordActivity extends AppCompatActivity {
             boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
             if (isConnected) {
                 setProgressVisibility(true);
-                PasswordChangeTask.passwordChangeTask(getApplicationContext(),
+                PasswordChangeTask passwordChangeTask = new PasswordChangeTask(
                         SessionManager.getInstance().getSessionToken(),
                         oldPass,
-                        newPass);
+                        newPass,
+                        newPassAgain
+                );
+                passwordChangeTask.setOnResponseListener(this::handlePasswordChangeResponse);
+                passwordChangeTask.execute(this);
             } else {
                 Log.d("CONNECTION", String.valueOf(isConnected));
                 Snackbar.make(rootView, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
             }
+        }
+    }
+
+    private void handlePasswordChangeResponse(ApiStatusResponse response) {
+        setProgressVisibility(false);
+        //Check status
+        switch (response.getStatus()) {
+            case ErrorCodes.SUCCESS:
+                Snackbar.make(rootView, R.string.message_process_succeed, BaseTransientBottomBar.LENGTH_LONG).show();
+                break;
+
+            case ErrorCodes.PASSWORD_NOT_LEGAL:
+                etNewPassword.setError(getString(R.string.error_password_not_legal));
+                etNewPasswordAgain.clearError();
+                break;
+
+            case ErrorCodes.UNAUTHORIZED:
+                etOldPassword.setError(getString(R.string.error_current_password_wrong));
+                break;
+
+            default:
+                Snackbar.make(rootView, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG)
+                        .setAction(R.string.action_try_again, view -> attemptChangePassword()).show();
         }
     }
 
