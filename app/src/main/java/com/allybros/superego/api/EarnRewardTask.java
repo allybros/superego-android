@@ -7,7 +7,7 @@ import com.android.volley.Request;
 /**
  * Class includes the function of accepting awards
  *
- * @author 0rcun
+ * @author orcunkamiloglu
  */
 
 public class EarnRewardTask extends ApiTask<ApiStatusResponse> {

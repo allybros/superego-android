@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 /**
  * Class includes the function of Sign in
- * @author 0rcun
+ * @author orcunkamiloglu
  */
 public class SocialMediaSignInTask {
     /**

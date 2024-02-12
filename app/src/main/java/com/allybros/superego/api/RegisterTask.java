@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 /**
  * Class includes the function of registering user
- * @author 0rcun
+ * @author orcunkamiloglu
  */
 public class RegisterTask {
     private static final String REGISTER_TASK = "RegisterTask";

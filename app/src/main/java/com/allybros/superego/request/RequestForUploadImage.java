@@ -9,7 +9,7 @@ import com.android.volley.toolbox.Volley;
 /**
  * RequestForUploadImage class defines the request to upload image to url
  *
- * @author 0rcun
+ * @author orcunkamiloglu
  */
 
 public class RequestForUploadImage {

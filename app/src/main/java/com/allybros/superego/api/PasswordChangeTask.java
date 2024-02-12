@@ -27,7 +27,7 @@ import java.util.Map;
 /**
  * Class includes the function of changing password
  *
- * @author 0rcun
+ * @author orcunkamiloglu
  */
 public class PasswordChangeTask extends Activity {
     /**

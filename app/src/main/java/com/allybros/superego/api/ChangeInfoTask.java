@@ -7,7 +7,7 @@ import com.android.volley.Request;
 /**
  * Class includes the function of changing users profile information
  *
- * @author 0rcun
+ * @author orcunkamiloglu
  */
 public class ChangeInfoTask extends ApiTask<ApiStatusResponse> {
     /**

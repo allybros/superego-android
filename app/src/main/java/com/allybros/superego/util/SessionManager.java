@@ -11,7 +11,7 @@ import static com.allybros.superego.unit.ConstantValues.USER_INFORMATION_PREF;
  * SessionManager class keeps sessionToken, userId, password variables
  * and determines the ways to reach, use and change them.
  *
- * @author 0rcun
+ * @author orcunkamiloglu
  */
 
 public class SessionManager {

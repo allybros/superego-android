@@ -361,8 +361,8 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    public void onBackPressed(View view) {
-        onBackPressed();
+    public void onBackButtonPressed(View view) {
+        getOnBackPressedDispatcher().onBackPressed();
     }
 
     /**
