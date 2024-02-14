@@ -315,8 +315,10 @@ public class ProfileFragment extends Fragment {
     }
 
     private void launchCreateTest() {
+        ConstantValues constantValues = new ConstantValues();
+        String createTestUrl = constantValues.getWebUrl(ConstantValues.CREATE_TEST);
         Intent intent = new Intent(getContext(), WebViewActivity.class);
-        intent.putExtra("url", ConstantValues.CREATE_TEST);
+        intent.putExtra("url", createTestUrl);
         intent.putExtra("title", getString(R.string.activity_label_new_test));
         intent.putExtra("action", "new-test");
         startActivity(intent);

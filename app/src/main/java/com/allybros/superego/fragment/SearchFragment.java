@@ -53,6 +53,7 @@ import java.util.Arrays;
 
 /**
  * Search Fragment Class
+ *
  * @author umutalacam
  */
 public class SearchFragment extends Fragment {
@@ -128,7 +129,6 @@ public class SearchFragment extends Fragment {
         tvSearchHeader = getView().findViewById(R.id.tvSearchHeader);
 
 
-
         listViewSearchResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -136,8 +136,10 @@ public class SearchFragment extends Fragment {
                 // Set web activity title
                 String belirtmeHali = "" + turkceBelirtmeHalEkiBulucu(u.getUsername());
                 @SuppressLint("StringFormatMatches") final String webActivityTitle = getContext().getString(R.string.activity_label_rate_user, u.getUsername(), belirtmeHali);
+                ConstantValues constantValues = new ConstantValues();
+                String rateUrl = constantValues.getWebUrl(ConstantValues.RATE_URL);
 
-                String testUrl = ConstantValues.RATE_URL + u.getTestId();
+                String testUrl = rateUrl + u.getTestId();
                 Intent intent = new Intent(getContext(), WebViewActivity.class);
                 intent.putExtra("url", testUrl);
                 intent.putExtra("title", webActivityTitle);
@@ -149,25 +151,26 @@ public class SearchFragment extends Fragment {
 
         etSearchUser.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 // Check internet connection
-                ConnectivityManager cm = (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
                 boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-                if(isConnected) {
+                if (isConnected) {
                     performSearch(charSequence.toString());
-                }
-                else {
+                } else {
                     Log.d("CONNECTION", String.valueOf(isConnected));
                     Snackbar.make(constraintSearchFragment, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
                 }
             }
 
             @Override
-            public void afterTextChanged(Editable editable) { }
+            public void afterTextChanged(Editable editable) {
+            }
         });
 
         tvSearchHeader.setOnClickListener(new View.OnClickListener() {
@@ -176,23 +179,24 @@ public class SearchFragment extends Fragment {
                 YoYo.with(Techniques.Hinge).duration(2000).onEnd(new YoYo.AnimatorCallback() {
                     @Override
                     public void call(Animator animator) {
-                        Toast.makeText(getContext(),"Tebrikler :) ",Toast.LENGTH_LONG).show();
-                        }
+                        Toast.makeText(getContext(), "Tebrikler :) ", Toast.LENGTH_LONG).show();
+                    }
                 }).playOn(tvSearchHeader);
             }
         });
 
     }
 
-    private void performSearch(String query){
+    private void performSearch(String query) {
         SearchTask.searchTask(getContext(), query);
     }
 
     /**
      * Populate list view with search results.
+     *
      * @param users List of users that intended to be shown in ListView
      */
-    private void populateResults(ArrayList<User> users){
+    private void populateResults(ArrayList<User> users) {
         //Prevent from null pointers
         Activity parent = getActivity();
         if (parent == null) return;
@@ -230,11 +234,11 @@ public class SearchFragment extends Fragment {
      * İsmin belirtme haline uygun bir başlık oluşturur. (Orçun'u, Umut'u)
      * Türkçe de pek yakıştı değil mi?
      */
-    private String turkceBelirtmeHalEkiBulucu(String isim){
+    private String turkceBelirtmeHalEkiBulucu(String isim) {
         char[] unluler = "aeıioöuü".toCharArray();
         char sonEk = 'i';
 
-        for (int i = isim.length()-1; i >= 0; i--) {
+        for (int i = isim.length() - 1; i >= 0; i--) {
             char c = isim.charAt(i);
             switch (c) {
                 case 'a':
@@ -260,10 +264,10 @@ public class SearchFragment extends Fragment {
             }
         }
 
-        if (Arrays.binarySearch(unluler, isim.charAt(isim.length()-1)) >= 0) {
-            return "y"+sonEk;
+        if (Arrays.binarySearch(unluler, isim.charAt(isim.length() - 1)) >= 0) {
+            return "y" + sonEk;
         }
 
-        return ""+sonEk;
+        return "" + sonEk;
     }
 }

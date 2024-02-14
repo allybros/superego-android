@@ -499,8 +499,10 @@ public class ResultsFragment extends Fragment {
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
         if (isConnected) {
+            ConstantValues constantValues = new ConstantValues();
+            String createTestUrl = constantValues.getWebUrl(ConstantValues.CREATE_TEST);
             Intent addTestIntent = new Intent(getContext(), WebViewActivity.class);
-            addTestIntent.putExtra("url", ConstantValues.CREATE_TEST);
+            addTestIntent.putExtra("url", createTestUrl);
             addTestIntent.putExtra("title", getString(R.string.activity_label_new_test));
             startActivity(addTestIntent);
         } else {
