@@ -44,6 +44,7 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -184,7 +185,7 @@ public class ProfileFragment extends Fragment {
         badgeRated.setText(String.valueOf(sessionManager.getUser().getRated()));
 
 
-        Picasso.get().load(sessionManager.getUser().getImage()).error(R.drawable.default_avatar).into(imageViewAvatar);
+        Picasso.get().load(sessionManager.getUser().getImage()).error(R.drawable.default_avatar).memoryPolicy(MemoryPolicy.NO_CACHE).into(imageViewAvatar);
     }
 
     /**

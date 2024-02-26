@@ -25,6 +25,7 @@ public class ApiTask<T> {
     private ApiCallback<T> onResponseListener;
     private ApiCallback<ApiStatusResponse> onErrorListener;
     private static final String API_TASK = "ApiTask";
+    private RequestQueue requestQueue;
 
     /**
      * Constructs an instance of ApiTask with the specified request method, URL, and response class.
@@ -205,11 +206,25 @@ public class ApiTask<T> {
         this.setHeader("Http-Client-Version", ClientContextUtil.getVersionName(context));
 
         // Send request
-        RequestQueue queue = Volley.newRequestQueue(context);
+        RequestQueue queue = getRequestQueue(context);
         StringRequest request = createRequest();
         String requestUrl = request.getUrl();
         Log.d(API_TASK, "Send request: " + requestUrl);
         queue.add(request);
+    }
+
+    /**
+     * Returns a request queue instance.
+     *
+     * @param context The application context.
+     * @return the request queue instance
+     */
+    public RequestQueue getRequestQueue(Context context) {
+        if (requestQueue == null) {
+            requestQueue = Volley.newRequestQueue(context);
+        }
+
+        return requestQueue;
     }
 
     /**

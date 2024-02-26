@@ -54,7 +54,6 @@ public class EditProfileActivity extends AppCompatActivity {
     private CircleImageView ivSettings;
     private ConstraintLayout editProfileLayout;
     public static Uri newImagePath = null;
-    private BroadcastReceiver updateImageReceiver;
     private Button btnSaveProfile;
     private static final int IMG_REQUEST = 1; //Needs for image selection from local storage
 
@@ -66,7 +65,6 @@ public class EditProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_profile);
 
         initializeComponents();
-        setupReceivers();
         setupUi();
         setupTextWatchers();
         initInputMethodWatcher();
@@ -83,45 +81,6 @@ public class EditProfileActivity extends AppCompatActivity {
         etBio = findViewById(R.id.etInformation);
         ivSettings = findViewById(R.id.ivUserAvatarEditProfile);
         btnSaveProfile = findViewById(R.id.btnSaveProfile);
-    }
-
-    private void setupReceivers() {
-        /**
-         * Catches broadcasts of api/ImageChangeTask class
-         */
-        updateImageReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                int status = intent.getIntExtra("status", 0);
-                Log.d("receiver", "Got message: " + status);
-                setProgressVisibility(false);
-                ivSettings.setVisibility(View.VISIBLE);
-                //Check status
-                switch (status) {
-                    case ErrorCodes.SUCCESS:
-                        Snackbar.make(editProfileLayout, getApplicationContext().getString(R.string.message_process_succeed), Snackbar.LENGTH_LONG).show();
-                        break;
-
-                    case ErrorCodes.SYSFAIL:
-                    case ErrorCodes.FILE_WRITE_ERROR:
-                        Snackbar.make(editProfileLayout, getApplicationContext().getString(R.string.error_no_connection), Snackbar.LENGTH_LONG).show();
-                        break;
-
-                    case ErrorCodes.INVALID_FILE_EXTENSION:
-                    case ErrorCodes.INVALID_FILE_TYPE:
-                        Snackbar.make(editProfileLayout, getApplicationContext().getString(R.string.error_invalid_file_type), Snackbar.LENGTH_LONG).show();
-                        break;
-
-                    case ErrorCodes.INVALID_FILE_SIZE:
-                        Snackbar.make(editProfileLayout, getApplicationContext().getString(R.string.error_invalid_file_size), Snackbar.LENGTH_LONG).show();
-                        break;
-
-                    default:
-                        break;
-                }
-            }
-        };
-        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(updateImageReceiver, new IntentFilter(ConstantValues.ACTION_UPDATE_IMAGE));
     }
 
     private void setupUi() {
@@ -143,19 +102,16 @@ public class EditProfileActivity extends AppCompatActivity {
         if (!isConnected)
             Snackbar.make(editProfileLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
 
-        ivChangeAvatar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Check internet connection
-                ConnectivityManager cm = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-                NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-                boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-                if (isConnected) {
-                    selectImage();
-                } else {
-                    Log.d("CONNECTION", String.valueOf(isConnected));
-                    Snackbar.make(editProfileLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
-                }
+        ivChangeAvatar.setOnClickListener(v -> {
+            // Check internet connection
+            ConnectivityManager cm1 = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetwork1 = cm1.getActiveNetworkInfo();
+            boolean isConnected1 = activeNetwork1 != null && activeNetwork1.isConnectedOrConnecting();
+            if (isConnected1) {
+                selectImage();
+            } else {
+                Log.d("CONNECTION", String.valueOf(isConnected1));
+                Snackbar.make(editProfileLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
             }
         });
 
@@ -251,14 +207,44 @@ public class EditProfileActivity extends AppCompatActivity {
                     ivSettings.setImageBitmap(SessionManager.getInstance().getUser().getAvatar());
                     ivSettings.setVisibility(View.INVISIBLE);
                     setProgressVisibility(true);
-                    ImageChangeTask.imageChangeTask(imageToString(SessionManager.getInstance().getUser().getAvatar()), getApplicationContext());
+                    ImageChangeTask imageChangeTask = new ImageChangeTask(SessionManager.getInstance().getSessionToken(), imageToString(SessionManager.getInstance().getUser().getAvatar()));
+                    imageChangeTask.setOnResponseListener(this::handleImageChangeTaskResponse);
+                    imageChangeTask.execute(this);
                 } else {
-                    Snackbar.make(editProfileLayout, "Seçilen dosya boyutu çok büyük", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(editProfileLayout, getString(R.string.error_invalid_file_size), BaseTransientBottomBar.LENGTH_LONG).show();
                 }
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private void handleImageChangeTaskResponse(ApiStatusResponse response) {
+        setProgressVisibility(false);
+        ivSettings.setVisibility(View.VISIBLE);
+        //Check status
+        switch (response.getStatus()) {
+            case ErrorCodes.SUCCESS:
+                Snackbar.make(editProfileLayout, getApplicationContext().getString(R.string.message_process_succeed), BaseTransientBottomBar.LENGTH_LONG).show();
+                break;
+
+            case ErrorCodes.SYSFAIL:
+            case ErrorCodes.FILE_WRITE_ERROR:
+                Snackbar.make(editProfileLayout, getApplicationContext().getString(R.string.error_no_connection), BaseTransientBottomBar.LENGTH_LONG).show();
+                break;
+
+            case ErrorCodes.INVALID_FILE_EXTENSION:
+            case ErrorCodes.INVALID_FILE_TYPE:
+                Snackbar.make(editProfileLayout, getApplicationContext().getString(R.string.error_invalid_file_type), BaseTransientBottomBar.LENGTH_LONG).show();
+                break;
+
+            case ErrorCodes.INVALID_FILE_SIZE:
+                Snackbar.make(editProfileLayout, getApplicationContext().getString(R.string.error_invalid_file_size), BaseTransientBottomBar.LENGTH_LONG).show();
+                break;
+
+            default:
+                break;
         }
     }
 
@@ -304,15 +290,10 @@ public class EditProfileActivity extends AppCompatActivity {
                     etUsername.getText(),
                     etEmail.getText(),
                     etBio.getText().toString());
-            changeInfoTask.setOnResponseListener(new ApiTask.ApiCallback<ApiStatusResponse>() {
-                @Override
-                public void onApiResponse(ApiStatusResponse response) {
-                    handleChangeInfoTaskResponse(response,
-                            etUsername.getText(),
-                            etEmail.getText(),
-                            etBio.getText().toString());
-                }
-            });
+            changeInfoTask.setOnResponseListener(response -> handleChangeInfoTaskResponse(response,
+                    etUsername.getText(),
+                    etEmail.getText(),
+                    etBio.getText().toString()));
             changeInfoTask.execute(this);
         }
     }
@@ -352,13 +333,6 @@ public class EditProfileActivity extends AppCompatActivity {
         }
         Snackbar.make(editProfileLayout, text, BaseTransientBottomBar.LENGTH_LONG).show();
         SessionManager.getInstance().updateLocalVariables(uid, email, bio);
-    }
-
-    @Override
-    public void onDestroy() {
-        //Delete receivers
-        LocalBroadcastManager.getInstance(EditProfileActivity.this).unregisterReceiver(updateImageReceiver);
-        super.onDestroy();
     }
 
     public void onBackButtonPressed(View view) {
