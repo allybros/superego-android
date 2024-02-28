@@ -1,9 +1,6 @@
 package com.allybros.superego.activity;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -11,12 +8,11 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.R;
 import com.allybros.superego.api.LoginTask;
-import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
+import com.allybros.superego.util.SessionManager;
 import com.allybros.superego.widget.SegoEditText;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.recaptcha.RecaptchaAction;
@@ -30,7 +26,6 @@ public class LoginActivity extends BaseSignOnActivity {
     private ConstraintLayout btSignInTwitter;
     private ConstraintLayout btSignInGoogle;
     private MaterialProgressBar progressView;
-    private BroadcastReceiver loginReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,51 +47,6 @@ public class LoginActivity extends BaseSignOnActivity {
         btSignInGoogle = findViewById(R.id.btSignInGoogle);
     }
 
-    @Override
-    protected void setUpReceivers(){
-        super.setUpReceivers();
-        // Receiver for Login Task
-        loginReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                int status = intent.getIntExtra("status",0);
-                Log.d("Login receiver", "Status: " + status);
-                setProgress(false);
-
-                switch (status){
-                    case ErrorCodes.SUCCESS:
-                        //Login User
-                        Intent i =new Intent(getApplicationContext(), SplashActivity.class);
-                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(i);
-                        break;
-
-                    case ErrorCodes.SYSFAIL:
-                    case ErrorCodes.CAPTCHA_REQUIRED:
-                        etUid.setError(getString(R.string.error_login_failed));
-                        etPassword.setError(getString(R.string.error_login_failed));
-                        break;
-
-                    case ErrorCodes.INVALID_CAPTCHA:
-                        showCaptchaFailureDialog();
-                        break;
-
-                    case ErrorCodes.SUSPEND_SESSION:
-                        showErrorDialog(getString(R.string.error_desc_session_suspended));
-                        break;
-
-                    default:
-                        showErrorDialog(getString(R.string.error_check_connection));
-                        break;
-                }
-            }
-        };
-
-        //Registers Receivers
-        LocalBroadcastManager.getInstance(this)
-                .registerReceiver(loginReceiver, new IntentFilter(ConstantValues.ACTION_LOGIN));
-    }
-
     /**
      * Define UI Logic
      */
@@ -114,7 +64,7 @@ public class LoginActivity extends BaseSignOnActivity {
             }
             if (!etPassword.getText().isEmpty() && !etUid.getText().isEmpty()) {
                 setProgress(true);
-                this.executeLoginTask(etUid.getText(), etPassword.getText());
+                this.performLoginAction(etUid.getText(), etPassword.getText());
             }
 
         });
@@ -170,19 +120,61 @@ public class LoginActivity extends BaseSignOnActivity {
      * @param uid Username or Email
      * @param password Password
      */
-    private void executeLoginTask(String uid, String password) {
+    private void performLoginAction(String uid, String password) {
         if (!this.isRecaptchaReady()) {
             showCaptchaFailureDialog();
             setProgress(false);
             return;
         }
         this.getRecaptchaTaskClient().executeTask(RecaptchaAction.LOGIN)
-            .addOnSuccessListener(this, token -> LoginTask.loginTask(this, uid, password, token))
+            .addOnSuccessListener(this, token -> executeLoginTask(uid, password, token))
             .addOnFailureListener(this,
-                    e -> {
-                        Log.e("Recaptcha", "Token generation failure");
-                        showCaptchaFailureDialog();
-                    });
+                e -> {
+                    Log.e("Recaptcha", "Token generation failure");
+                    showCaptchaFailureDialog();
+                });
+    }
+
+    private void executeLoginTask(String uid, String password, String recaptchaResponse) {
+        LoginTask loginTask = new LoginTask(uid, password, recaptchaResponse,
+                this.getString(R.string.recaptcha_client_key));
+        // Make API operation
+        loginTask.setOnResponseListener(response -> {
+            int status = response.getStatus();
+            setProgress(false);
+            switch (status){
+                case ErrorCodes.SUCCESS:
+                    // Set session token
+                    String sessionToken = response.getSessionToken();
+                    SessionManager.getInstance().setSessionToken(sessionToken);
+                    SessionManager.getInstance().writeInfoLocalStorage(uid, password, sessionToken,this);
+                    // Go to splash screen
+                    Intent i = new Intent(getApplicationContext(), SplashActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(i);
+                    break;
+
+                case ErrorCodes.SYSFAIL:
+                case ErrorCodes.CAPTCHA_REQUIRED:
+                    etUid.setError(getString(R.string.error_login_failed));
+                    etPassword.setError(getString(R.string.error_login_failed));
+                    break;
+
+                case ErrorCodes.INVALID_CAPTCHA:
+                    showCaptchaFailureDialog();
+                    break;
+
+                case ErrorCodes.SUSPEND_SESSION:
+                    showErrorDialog(getString(R.string.error_desc_session_suspended));
+                    break;
+
+                default:
+                    showErrorDialog(getString(R.string.error_check_connection));
+                    break;
+            }
+        });
+        // Execute api task
+        loginTask.execute(this);
     }
 
     /**
@@ -203,13 +195,6 @@ public class LoginActivity extends BaseSignOnActivity {
             btLogin.setEnabled(true);
             progressView.setVisibility(View.GONE);
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        //Delete receivers
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(loginReceiver);
-        super.onDestroy();
     }
 
     public void onRegisterButtonClicked(View view) {

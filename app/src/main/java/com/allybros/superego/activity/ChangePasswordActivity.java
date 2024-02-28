@@ -1,31 +1,23 @@
 package com.allybros.superego.activity;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.R;
 import com.allybros.superego.api.PasswordChangeTask;
-import com.allybros.superego.unit.ConstantValues;
+import com.allybros.superego.api.response.ApiStatusResponse;
 import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.util.SessionManager;
 import com.allybros.superego.widget.SegoEditText;
@@ -39,11 +31,10 @@ public class ChangePasswordActivity extends AppCompatActivity {
     private ConstraintLayout rootView;
     private MaterialProgressBar progressChangePassword;
     private Button btChangePassword;
-    private SegoEditText etOldPassword, etNewPassword, etNewPasswordAgain;
-    private ConstraintLayout cardFormChangePassword;
-    private ImageView ivBack, ivOldPassToggle, ivNewPassToggle, ivNewPassAgainToggle;
+    private SegoEditText etOldPassword;
+    private SegoEditText etNewPassword;
+    private SegoEditText etNewPasswordAgain;
 
-    private BroadcastReceiver changePasswordReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,52 +45,10 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
         rootView = findViewById(R.id.contentRootChangePassword);
         initializeComponents();
-
-        changePasswordReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                int status = intent.getIntExtra("status",0);
-                setProgressVisibility(false);
-                //Check status
-                switch (status){
-                    case ErrorCodes.SUCCESS:
-                        Snackbar.make(rootView, R.string.message_process_succeed, BaseTransientBottomBar.LENGTH_LONG).show();
-                        break;
-
-                    case  ErrorCodes.PASSWORD_NOT_LEGAL:
-                        etNewPassword.setError(getString(R.string.error_password_not_legal));
-                        etNewPasswordAgain.clearError();
-                        break;
-
-                    case  ErrorCodes.UNAUTHORIZED:
-                        etOldPassword.setError(getString(R.string.error_current_password_wrong));
-                        break;
-
-                    default:
-                        Snackbar.make(rootView, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG)
-                                .setAction(R.string.action_try_again, new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        attemptChangePassword();
-                                    }
-                                }).show();
-                }
-            }
-        };
-        LocalBroadcastManager.getInstance(getApplicationContext())
-                .registerReceiver(changePasswordReceiver, new IntentFilter(ConstantValues.ACTION_PASSWORD_CHANGE));
-
         initListener();
     }
 
     private void initListener() {
-
-        ivBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
 
         etOldPassword.addTextChangedListener(new TextWatcher() {
             @Override
@@ -114,7 +63,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(s.toString().isEmpty()){
+                if (s.toString().isEmpty()) {
                     etOldPassword.setError(getString(R.string.error_password_empty));
                 } else {
                     etOldPassword.clearError();
@@ -137,7 +86,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(s.toString().isEmpty()){
+                if (s.toString().isEmpty()) {
                     etNewPassword.setError(getString(R.string.input_error_enter_new_pass));
                 } else {
                     etNewPassword.clearError();
@@ -159,7 +108,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(s.toString().isEmpty()){
+                if (s.toString().isEmpty()) {
                     etNewPasswordAgain.setError(getString(R.string.input_error_password_mismatch));
                 } else {
                     etNewPasswordAgain.clearError();
@@ -168,24 +117,18 @@ public class ChangePasswordActivity extends AppCompatActivity {
             }
         });
 
-        btChangePassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                attemptChangePassword();
-            }
-        });
+        btChangePassword.setOnClickListener(v -> attemptChangePassword());
     }
-    private void initializeComponents(){
+
+    private void initializeComponents() {
         btChangePassword = findViewById(R.id.btChangePassword);
         progressChangePassword = findViewById(R.id.progressChangePassword);
         etOldPassword = findViewById(R.id.etOldPassword);
         etNewPassword = findViewById(R.id.etNewPassword);
         etNewPasswordAgain = findViewById(R.id.etNewPasswordAgain);
-        cardFormChangePassword = findViewById(R.id.cardFormChangePassword);
-        ivBack = findViewById(R.id.ivBack);
     }
 
-    private void attemptChangePassword(){
+    private void attemptChangePassword() {
         // Show progress indicator.
 
         etOldPassword.clearError();
@@ -198,10 +141,10 @@ public class ChangePasswordActivity extends AppCompatActivity {
         String newPassAgain = etNewPasswordAgain.getText();
 
         // Check required fields.
-        if (oldPass.isEmpty()){
+        if (oldPass.isEmpty()) {
             etOldPassword.setError(getString(R.string.input_error_enter_current_password));
         }
-        if (newPass.isEmpty()){
+        if (newPass.isEmpty()) {
             etNewPassword.setError(getString(R.string.input_error_enter_new_pass));
         }
 
@@ -213,34 +156,53 @@ public class ChangePasswordActivity extends AppCompatActivity {
         // All requirements are satisfied, proceed for creating new password.
         else if (!oldPass.isEmpty()) {
             // Check internet connection
-            ConnectivityManager cm = (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            ConnectivityManager cm = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
             boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-            if(isConnected) {
+            if (isConnected) {
                 setProgressVisibility(true);
-                PasswordChangeTask.passwordChangeTask(getApplicationContext(),
+                PasswordChangeTask passwordChangeTask = new PasswordChangeTask(
                         SessionManager.getInstance().getSessionToken(),
                         oldPass,
-                        newPass);
-            }
-            else {
+                        newPass,
+                        newPassAgain
+                );
+                passwordChangeTask.setOnResponseListener(response -> handlePasswordChangeResponse(response, newPass));
+                passwordChangeTask.execute(this);
+            } else {
                 Log.d("CONNECTION", String.valueOf(isConnected));
                 Snackbar.make(rootView, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
             }
         }
     }
 
-    private void setError(EditText editText, String errorMessage) {
-        editText.setHint(errorMessage);
-        editText.setBackground(getDrawable(R.drawable.et_error_background));
-    }
+    private void handlePasswordChangeResponse(ApiStatusResponse response, String newPass) {
+        setProgressVisibility(false);
+        //Check status
+        switch (response.getStatus()) {
+            case ErrorCodes.SUCCESS:
+                Snackbar.make(rootView, R.string.message_process_succeed, BaseTransientBottomBar.LENGTH_LONG).show();
+                SessionManager.getInstance().updateCredentials(newPass, this);
+                break;
 
-    private void clearError(EditText editText) {
-        editText.setBackground(getDrawable(R.drawable.et_background));
+            case ErrorCodes.PASSWORD_NOT_LEGAL:
+                etNewPassword.setError(getString(R.string.error_password_not_legal));
+                etNewPasswordAgain.clearError();
+                break;
+
+            case ErrorCodes.UNAUTHORIZED:
+                etOldPassword.setError(getString(R.string.error_current_password_wrong));
+                break;
+
+            default:
+                Snackbar.make(rootView, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG)
+                        .setAction(R.string.action_try_again, view -> attemptChangePassword()).show();
+        }
     }
 
     /**
      * Sets progress view visibility.
+     *
      * @param visible Set true when progress indicator needs to be shown.
      */
     private void setProgressVisibility(boolean visible) {
@@ -268,7 +230,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onBackPressed(View view) {
-        onBackPressed();
+    public void onBackButtonPressed(View view) {
+        getOnBackPressedDispatcher().onBackPressed();
     }
 }

@@ -1,7 +1,7 @@
 package com.allybros.superego.unit;
 
 /**
- * Created by orcun on 11.08.2023
+ * Created by orcunkamiloglu on 11.08.2023
  */
 
 public class Personality {

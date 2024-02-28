@@ -12,7 +12,7 @@ import java.io.ByteArrayOutputStream;
 
 /**
  * HelperMethods contains some methods for projects
- * @author 0rcun
+ * @author orcunkamiloglu
  */
 
 public class HelperMethods {

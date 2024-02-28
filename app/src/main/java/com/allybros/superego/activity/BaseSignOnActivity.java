@@ -16,6 +16,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.R;
 import com.allybros.superego.api.SocialMediaSignInTask;
+import com.allybros.superego.api.response.ApiStatusResponse;
 import com.allybros.superego.oauth.TwitterCallbackTask;
 import com.allybros.superego.oauth.TwitterOAuthHelper;
 import com.allybros.superego.unit.ConstantValues;
@@ -65,6 +66,7 @@ abstract class BaseSignOnActivity extends ComponentActivity {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         this.googleSignInLauncher.launch(signInIntent);
     }
+
     private void registerGoogleSignInLauncher() {
         this.googleSignInLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -78,11 +80,39 @@ abstract class BaseSignOnActivity extends ComponentActivity {
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            SocialMediaSignInTask.loginTask(getApplicationContext(),account.getIdToken(),"google");
+            SocialMediaSignInTask socialMediaSignInTask = new SocialMediaSignInTask(account.getIdToken(), "google");
+            socialMediaSignInTask.setOnResponseListener(this::handleSocialMediaSignInResponse);
+            socialMediaSignInTask.execute(this);
         } catch (ApiException e) {
             Log.w(this.getClass().getName(), "signInResult:failed code=" + e.getStatusCode());
             setProgress(false);
             showErrorDialog(getString(R.string.error_google_signin));
+        }
+    }
+
+    private void handleSocialMediaSignInResponse(ApiStatusResponse response) {
+        Log.d("OAuthReceiver", "Status: " + response.getStatus());
+        setProgress(false);
+        switch (response.getStatus()) {
+            case ErrorCodes.EMAIL_EMPTY:
+                showErrorDialog(getString(R.string.error_email_empty));
+                break;
+            case ErrorCodes.EMAIL_NOT_LEGAL:
+                showErrorDialog(getString(R.string.error_email_not_legal));
+                break;
+            case ErrorCodes.USERNAME_NOT_LEGAL:
+                showErrorDialog(getString(R.string.error_username_not_legal));
+                break;
+            case ErrorCodes.SUCCESS:
+                // Start splash activity, so the profile page
+                Log.i("OAuthReceiver", "Successful response, redirect to splash");
+                Intent i = new Intent(getBaseContext(), SplashActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(i);
+                break;
+            default:
+                showErrorDialog("Failed social media sign in");
+                break;
         }
     }
 
@@ -92,13 +122,13 @@ abstract class BaseSignOnActivity extends ComponentActivity {
     protected void initializeRecaptchaClient() {
         final String recaptchaClientKey = this.getString(R.string.recaptcha_client_key);
         Recaptcha.getTasksClient(this.getApplication(), recaptchaClientKey, 5000)
-            .addOnSuccessListener(this, client -> {
-                Log.i("BaseSignOn", "Created recaptcha client with client key " + recaptchaClientKey);
-                this.recaptchaTasksClient = client;
-            })
-            .addOnFailureListener(this, e ->
-                    Log.e("BaseSignOn", "Error occurred on recaptcha client " + e.getMessage())
-            );
+                .addOnSuccessListener(this, client -> {
+                    Log.i("BaseSignOn", "Created recaptcha client with client key " + recaptchaClientKey);
+                    this.recaptchaTasksClient = client;
+                })
+                .addOnFailureListener(this, e ->
+                        Log.e("BaseSignOn", "Error occurred on recaptcha client " + e.getMessage())
+                );
     }
 
     /**
@@ -123,10 +153,10 @@ abstract class BaseSignOnActivity extends ComponentActivity {
         oauthLoginReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                int status = intent.getIntExtra("status",0);
+                int status = intent.getIntExtra("status", 0);
                 Log.d("OAuthReceiver", "Status: " + status);
                 setProgress(false);
-                switch (status){
+                switch (status) {
                     case ErrorCodes.EMAIL_EMPTY:
                         showErrorDialog(getString(R.string.error_email_empty));
                         break;
@@ -163,8 +193,9 @@ abstract class BaseSignOnActivity extends ComponentActivity {
 
     /**
      * Starts a web view activity with given title and url
+     *
      * @param title Title of the string
-     * @param url Url to be displayed
+     * @param url   Url to be displayed
      */
     protected void startWebViewActivity(String title, String url) {
         Intent intent = new Intent(this, WebViewActivity.class);
@@ -178,28 +209,28 @@ abstract class BaseSignOnActivity extends ComponentActivity {
      */
     private void registerWebViewActivityResultLauncher() {
         this.webViewActivityResultLauncher = registerForActivityResult(new WebViewActivity.WebViewActivityContract(),
-            resultUrl -> {
-                final String WEB_VIEW_ACTIVITY_RESULT = "WebViewActivityResult";
-                Log.i(WEB_VIEW_ACTIVITY_RESULT, "WebView activity resulted with " + resultUrl);
-                if (resultUrl == null) {
-                    Log.i(WEB_VIEW_ACTIVITY_RESULT, "User cancelled the operation");
-                    return;
-                }
-                Uri resultUri = Uri.parse(resultUrl);
-                String error = resultUri.getQueryParameter("error");
-                if (error != null && error.equals("access_denied")) {
-                    Log.i(WEB_VIEW_ACTIVITY_RESULT, "User denied the operation");
-                    return;
-                }
-                String code = resultUri.getQueryParameter("code");
-                String challenge = this.twitterOAuthHelper.getChallenge();
-                if (code == null || challenge == null) {
-                    Log.e(WEB_VIEW_ACTIVITY_RESULT, "Can't parse callback url");
-                    showErrorDialog(getString(R.string.error_twitter_signin));
-                }
-                setProgress(true);
-                TwitterCallbackTask.handleTwitterCallback(this, code, challenge);
-        });
+                resultUrl -> {
+                    final String WEB_VIEW_ACTIVITY_RESULT = "WebViewActivityResult";
+                    Log.i(WEB_VIEW_ACTIVITY_RESULT, "WebView activity resulted with " + resultUrl);
+                    if (resultUrl == null) {
+                        Log.i(WEB_VIEW_ACTIVITY_RESULT, "User cancelled the operation");
+                        return;
+                    }
+                    Uri resultUri = Uri.parse(resultUrl);
+                    String error = resultUri.getQueryParameter("error");
+                    if (error != null && error.equals("access_denied")) {
+                        Log.i(WEB_VIEW_ACTIVITY_RESULT, "User denied the operation");
+                        return;
+                    }
+                    String code = resultUri.getQueryParameter("code");
+                    String challenge = this.twitterOAuthHelper.getChallenge();
+                    if (code == null || challenge == null) {
+                        Log.e(WEB_VIEW_ACTIVITY_RESULT, "Can't parse callback url");
+                        showErrorDialog(getString(R.string.error_twitter_signin));
+                    }
+                    setProgress(true);
+                    TwitterCallbackTask.handleTwitterCallback(this, code, challenge);
+                });
     }
 
     /**
@@ -211,13 +242,14 @@ abstract class BaseSignOnActivity extends ComponentActivity {
 
     /**
      * Shows a basic alert dialog
+     *
      * @param message Message text to be shown
      */
     protected void showErrorDialog(String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.SegoAlertDialog);
         builder.setTitle(getString(R.string.app_name));
         builder.setMessage(message);
-        builder.setPositiveButton( getString(R.string.action_ok), (dialog, id) -> dialog.dismiss());
+        builder.setPositiveButton(getString(R.string.action_ok), (dialog, id) -> dialog.dismiss());
         builder.show();
     }
 

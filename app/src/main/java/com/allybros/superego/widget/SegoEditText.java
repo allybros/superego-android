@@ -27,7 +27,7 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 
 /**
- * Created by orcunk on 13.12.2021 22:10
+ * Created by orcunkamiloglu on 13.12.2021 22:10
  */
 public class SegoEditText extends ConstraintLayout {
 

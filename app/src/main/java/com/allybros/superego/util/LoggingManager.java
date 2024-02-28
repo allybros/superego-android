@@ -3,7 +3,7 @@ package com.allybros.superego.util;
 import android.util.Log;
 
 /**
- * Created by orcun on 9.08.2023
+ * Created by orcunkamiloglu on 9.08.2023
  */
 
 public class LoggingManager {

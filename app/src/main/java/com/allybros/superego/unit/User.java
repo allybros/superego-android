@@ -3,20 +3,25 @@ package com.allybros.superego.unit;
 
 import android.graphics.Bitmap;
 
-import androidx.annotation.NonNull;
+import com.allybros.superego.util.SessionManager;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class User {
 
     private int userType, rated, credit;
-    private String image,testId, testResultId,username,userBio,email, avatarName;
-    private ArrayList<Score> scores;
+    private String image, testId, testResultId, username, userBio, email, avatarName;
+    private List<TraitScore> scores;
     private Ocean ocean;
     private Personality personality;
     private Bitmap avatar;      //Görsel öğeler için kullanılıyor.
+    private int remainingRates;
 
-    public User(int userType, int rated, int credit, String image, String testId, String testResultId, String username, String userBio, String email, ArrayList<Score> scores, Ocean ocean, Personality personality) {
+    public User() {
+    }
+
+    public User(int userType, int rated, int credit, String image, String testId, String testResultId, String username, String userBio, String email, ArrayList<TraitScore> scores, Ocean ocean, Personality personality) {
         this.userType = userType;
         this.rated = rated;
         this.credit = credit;
@@ -79,7 +84,7 @@ public class User {
         return email;
     }
 
-    public ArrayList<Score> getScores() {
+    public List<TraitScore> getScores() {
         return scores;
     }
 
@@ -127,21 +132,22 @@ public class User {
         this.email = email;
     }
 
-    public void setScores(ArrayList<Score> scores) {
-        this.scores = scores;
+    public void setScores(List<TraitScore> traitScores) {
+        this.scores = traitScores;
     }
 
     public void setAvatar(Bitmap avatar) {
         this.avatar = avatar;
     }
 
-    public boolean hasTest(){
+    public boolean hasTest() {
         return this.getTestId() != null;
     }
 
-    public boolean hasResults(){
-        return this.getScores().size() > 0;
+    public boolean hasResults() {
+        return !this.getScores().isEmpty();
     }
+
     public void setAvatarName(String avatarName) {
         this.avatarName = avatarName;
     }
@@ -160,5 +166,11 @@ public class User {
 
     public void setPersonality(Personality personality) {
         this.personality = personality;
+    }
+
+    public int getRemainingRates() {
+        if (!SessionManager.getInstance().getUser().getScores().isEmpty())
+            return 10 - (rated + credit);
+        else return 5 - SessionManager.getInstance().getUser().getRated();
     }
 }

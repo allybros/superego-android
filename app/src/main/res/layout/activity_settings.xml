@@ -43,7 +43,7 @@
                     android:id="@+id/ivBack"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:onClick="onBackPressed"
+                    android:onClick="onBackButtonPressed"
                     android:src="@drawable/ic_arrow_back_white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -54,7 +54,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:fontFamily="@font/noto_sans_bold"
-                    android:onClick="onBackPressed"
+                    android:onClick="onBackButtonPressed"
                     android:text="@string/activity_label_options"
                     android:textColor="@color/White"
                     android:textSize="24sp"

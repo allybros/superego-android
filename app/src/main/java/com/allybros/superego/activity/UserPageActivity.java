@@ -49,9 +49,9 @@ public class UserPageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_page);
 
         //Add navigation items
-        navigationItems.add((BottomNavigationItemView) findViewById(R.id.navigation_profile));
-        navigationItems.add((BottomNavigationItemView) findViewById(R.id.navigation_results));
-        navigationItems.add((BottomNavigationItemView) findViewById(R.id.navigation_search));
+        navigationItems.add(findViewById(R.id.navigation_profile));
+        navigationItems.add(findViewById(R.id.navigation_results));
+        navigationItems.add(findViewById(R.id.navigation_search));
 
         userPageProgressBar = findViewById(R.id.progressUserPage);
 
@@ -121,9 +121,9 @@ public class UserPageActivity extends AppCompatActivity {
      */
     private void setViewPagerAdapter() {
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager());
-        profileFragment = new ProfileFragment();
-        resultsFragment = new ResultsFragment();
-        searchFragment = new SearchFragment();
+        profileFragment = new ProfileFragment(this);
+        resultsFragment = new ResultsFragment(this);
+        searchFragment = new SearchFragment(this);
         adapter.addFrag(profileFragment, getResources().getString(R.string.activity_label_profile));
         adapter.addFrag(resultsFragment, getResources().getString(R.string.activity_label_results));
         adapter.addFrag(searchFragment, getResources().getString(R.string.activity_label_search));
