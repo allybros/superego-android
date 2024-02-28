@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/guideBackground">
+
+    <!-- Dismiss Button -->
+    <ImageView
+        android:id="@+id/ivAlertDismissIcon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_close"
+        android:paddingEnd="8dp"
+        android:paddingTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/segoPurple100">
+
+    </ImageView>
+
+    <!-- Alert Body -->
+    <LinearLayout
+        android:id="@+id/llAlertBody"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivAlertImage"
+            android:layout_width="300dp"
+            android:layout_height="300dp">
+        </androidx.appcompat.widget.AppCompatImageView>
+
+        <TextView
+            android:id="@+id/tvAlertTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="Alert Title"
+            android:textColor="@color/segoPurple100"
+            android:fontFamily="@font/noto_sans_medium"
+            android:textFontWeight="500"
+            android:textSize="28sp"
+            android:textAlignment="center">
+        </TextView>
+
+        <TextView
+            android:id="@+id/tvAlertDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_marginTop="18dp"
+            android:text="Alert Description"
+            android:textColor="@color/segoBlue200"
+            android:fontFamily="@font/noto_sans"
+            android:textSize="18sp">
+        </TextView>
+
+        <LinearLayout
+            android:id="@+id/llAlertButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="18dp"
+            android:clipChildren="false">
+        </LinearLayout>
+
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

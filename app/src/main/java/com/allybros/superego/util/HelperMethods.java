@@ -1,24 +1,26 @@
 package com.allybros.superego.util;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Base64;
-import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 
-import com.allybros.superego.R;
-import com.allybros.superego.request.RequestForGetImageNoCache;
-import com.allybros.superego.request.RequestForGetImageWithCache;
-import com.allybros.superego.ui.CircledNetworkImageView;
-import com.android.volley.toolbox.ImageLoader;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 
 import java.io.ByteArrayOutputStream;
 
 /**
  * HelperMethods contains some methods for projects
- * @author 0rcun
+ * @author orcunkamiloglu
  */
 
 public class HelperMethods {
+
+    /**
+     * Class creating blocked
+     */
+    private HelperMethods(){}
 
     /**
      * Converts from bitmap to string
@@ -31,31 +33,70 @@ public class HelperMethods {
         byte[] imgByte = byteArrayOutputStream.toByteArray();
         return Base64.encodeToString(imgByte,Base64.DEFAULT);
     }
+
     /**
-     * Load image from url without cache
-     * @param context       require to use requst method
-     * @param imageView     to be filled imageView
-     * @param URL           which contains the image
+     * Sets views margin
+     * @param v
+     * @param l
+     * @param t
+     * @param r
+     * @param b
      */
-    public static void imageLoadFromUrlNoCache(Context context, String URL, CircledNetworkImageView imageView){
-        Log.d("imageLoadFromUrl","Image Loading from: "+URL);
-        ImageLoader mImageLoader;
-        mImageLoader = RequestForGetImageNoCache.getInstance(context).getImageLoader();
-        mImageLoader.get(URL, ImageLoader.getImageListener(imageView, R.drawable.default_avatar, android.R.drawable.ic_dialog_alert));
-        imageView.setImageUrl(URL, mImageLoader);
+    public static void setMargins (View v, int l, int t, int r, int b) {
+        if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+            p.setMargins(l, t, r, b);
+            v.requestLayout();
+        }
     }
 
     /**
-     * Load image from url with cache
-     * @param context
-     * @param URL
-     * @param imageView
+     * Change view horizontal constraint to new parameters
+     * @param container
+     * @param view
+     * @param view1
+     * @param connectSide
+     * @param connectSide1
      */
-    public static void imageLoadFromUrlCache(Context context, String URL, CircledNetworkImageView imageView){
-        Log.d("imageLoadFromUrl","Image Loading from: "+URL);
-        ImageLoader mImageLoader;
-        mImageLoader = RequestForGetImageWithCache.getInstance(context).getImageLoader();
-        mImageLoader.get(URL, ImageLoader.getImageListener(imageView, R.drawable.default_avatar, android.R.drawable.ic_dialog_alert));
-        imageView.setImageUrl(URL, mImageLoader);
+    public static void setConstraintConnectionHorizontal(ConstraintLayout container,
+                                                         View view,
+                                                         View view1,
+                                                         int connectSide,
+                                                         int connectSide1){
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(container);
+        constraintSet.removeFromHorizontalChain(view.getId());
+        constraintSet.connect(
+                view.getId(),
+                connectSide,
+                view1.getId(),
+                connectSide1
+        );
+        constraintSet.applyTo(container);
+    }
+
+    /**
+     * Change view vertical constraint to new parameters
+     * @param container
+     * @param view
+     * @param view1
+     * @param connectSide
+     * @param connectSide1
+     */
+    public static void setConstraintConnectionVertical(ConstraintLayout container,
+                                                         View view,
+                                                         View view1,
+                                                         int connectSide,
+                                                         int connectSide1){
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(container);
+        constraintSet.removeFromVerticalChain(view.getId());
+        constraintSet.connect(
+                view.getId(),
+                connectSide,
+                view1.getId(),
+                connectSide1
+        );
+        constraintSet.applyTo(container);
     }
 }

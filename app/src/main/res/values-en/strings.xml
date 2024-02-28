@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="locale">en</string>
     <string name="activity_label_profile">Profile</string>
     <string name="activity_label_results">Results</string>
     <string name="activity_label_search">Find Friends</string>
@@ -22,6 +23,7 @@
     <string name="error_email_not_legal">Email is not valid.</string>
     <string name="error_password_not_legal">Password is not valid.</string>
     <string name="error_desc_session_suspended">This account is suspended for 3 minutes.</string>
+    <string name="error_captcha_validation">We could not verify your request, please try again.</string>
     <string name="error_invalid_file_type">Please select a valid file.</string>
     <string name="error_invalid_file_size">File size is too big.</string>
     <string name="error_session_expired">Your session expired. Please login again.</string>
@@ -57,7 +59,7 @@
     <string name="action_btn_share_results">Share Results</string>
     <string name="action_login">Log In</string>
     <string name="action_register">Sign Up</string>
-    <string name="action_agreement_link">I\'ve read and agree the <font color="#2A71AC"><a href="https://insightof.me/conditions">terms of use</a></font></string>
+    <string name="action_agreement_link"><font color="#ffffff" fontWeight="300">I\'ve read and agree the</font> <font color="#2d2846" fontWeight="500"><a href="https://insightof.me/conditions">terms of use</a></font></string>
     <string name="action_sign_out">Sign Out</string>
     <string name="action_save">Save</string>
     <string name="option_edit_profile">Edit Profile</string>
@@ -69,22 +71,38 @@
     <string name="option_licenses">Licenses</string>
     <string name="option_licenses_desc">Open source licenses that insightof.me includes</string>
     <string name="option_sign_out_desc">End current session.</string>
-    <string name="call_or_connect_via">or connect;</string>
-    <string name="desc_call_register">Don\'t have an account? | <font color="#2A71AC">Create Account</font></string>
+    <string name="call_or_connect_via">or connect</string>
+    <string name="desc_call_register">Don\'t have an account?</string>
     <string name="rated">\ Rates</string>
     <string name="error_code">Code:</string>
     <string name="remaining_credits">Remaining Rates: %1$s</string>
-    <string name="default_bio_profile">Short information about you.</string>
+    <string name="default_bio_profile">Short information about you</string>
     <string name="alert_title_end_session">Sign Out</string>
     <string name="alert_context_end_session">Are you sure that you really want to end your current session.</string>
     <string name="alert_sign_up">Create New Account</string>
-    <string name="header_register">Insight of You\n From Your Friends</string>
-    <string name="login_text_header">Learn Your Traits</string>
+    <string name="header_register">Insight of You From Your Friends</string>
+    <string name="login_text_header">Find Out Your Traits</string>
     <string name="login_text_sub">Reveal your true personality by\nasking your friends</string>
     <string name="default_bio_search">insightof.me user.</string>
+    <string name="label_openness">Openness</string>
+    <string name="label_openness_left">Innovative</string>
+    <string name="label_openness_right">Conservative</string>
+    <string name="label_conscientiousness">Conscientiousness</string>
+    <string name="label_conscientiousness_left">High</string>
+    <string name="label_conscientiousness_right">Low</string>
+    <string name="label_extraversion">Extraversion</string>
+    <string name="label_extraversion_left">Extrovert</string>
+    <string name="label_extraversion_right">Introvert</string>
+    <string name="label_agreeableness">Agreeableness</string>
+    <string name="label_agreeableness_left">Easy Going</string>
+    <string name="label_agreeableness_right">Strict</string>
+    <string name="label_neuroticism">Neuroticism</string>
+    <string name="label_neuroticism_left">Dysregulation</string>
+    <string name="label_neuroticism_right">Equanimity</string>
+    <string name="info_create_test_title">Create New Test</string>
     <string name="info_search">Search your friends by username.</string>
     <string name="info_title_waiting_rates">Waiting Your Rates...</string>
-    <string name="info_partial_rates">You don\'t have enough rates to reveal all of your traits.</string>
+    <string name="info_partial_rates">We need at least five friends to evaluate her/him in order to identify her/him most prominent feature.</string>
     <string name="body_share_test">How do you see me? Rate my personality by hiding your identity. %1$s</string>
     <string name="body_share_results">My traits, according to my friends; %1$sYou can rate me now; %2$s</string>
     <string name="info_ads_desc">You can get Ego points by watching ads. The number of rates you need to reveal your traits will decrease when you earn Ego points.</string>
@@ -94,6 +112,7 @@
     <string name="info_not_rated"><b> You don\'t have enough rates to see the first result yet. </b> Once you have reached the enough number of rates, you will be able to see personality traits.</string>
     <string name="error_conditions_not_accepted">You need to accept terms and conditions.</string>
     <string name="error_google_signin">An error occurred while signing in with your Google account. Please try again.</string>
+    <string name="error_twitter_signin">An error occurred while signing in with your X account. Please try again.</string>
     <string name="info_reward_ad_not_loaded">There is not an available ad right now. You can try again later.</string>
     <string name="alert_no_test">You need to create a test to share your test.</string>
     <string name="alert_no_results">You need more rates to see and share your results.</string>
@@ -104,4 +123,32 @@
     <string name="info_waiting_card_title">See All Results Now</string>
     <string name="info_waiting_card_bottom">If you don\'t want to wait for your friends\' reviews, you can earn Ego points by watching ads and view all results without waiting.</string>
     <string name="action_get_ego_points">Get Ego Points Now</string>
+    <string name="tvAboutConstant">About me:</string>
+    <string name="tvSupporter">Ad:</string>
+    <string name="header_result_page_title">Your traits</string>
+    <string name="info_profile_card">Share the personality test with your more friends so you can see your personal traits.</string>
+    <string name="info_result_ad_text">See all the results without waiting any longer!</string>
+    <string name="action_get_ego">Get Ego</string>
+    <string name="info_change_password">Set a secure password that you will use to log into your insightof.me account.</string>
+    <string name="action_btn_change_avatar">Change</string>
+    <string name="action_login_via_google">Login with Google</string>
+    <string name="action_login_via_facebook">Login with Facebook</string>
+    <string name="action_login_via_twitter">Login with X</string>
+    <string name="action_create_new_account"><font color="#2A71AC">Create Account</font></string>
+    <string name="desc_call_sign_in">Have an Account?</string>
+    <string name="action_read_more">Read More</string>
+    <string name="header_result_page_personality_title">Your Personality</string>
+    <string name="info_no_test_result">Create your personality test and share it with your friends to learn personality traits.</string>
+    <string name="info_title_no_test_result">Create Test</string>
+    <string name="info_create_test_description">Do you want to create a test? Click now!</string>
+    <string name="info_personality_type_title">Your personality</string>
+    <string name="action_btn_continue">Continue</string>
+    <string name="action_btn_back">Back</string>
+    <string name="action_btn_start">Start</string>
+    <string name="guide_content_1">"Create a special personality test for your friends to rate you."</string>
+    <string name="guide_content_2">Share the quiz you created with your friends, and your friends will evaluate your personality anonymously.</string>
+    <string name="guide_content_3">Get an idea of your most prominent character traits and your friends\' overall opinion about you.</string>
+    <string name="guide_header_3">Discover Real Personality Traits</string>
+    <string name="guide_header_2">Let Your Friends Evaluate You</string>
+    <string name="guide_header_1">Create a Test</string>
 </resources>

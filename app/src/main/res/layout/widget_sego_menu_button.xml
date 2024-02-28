@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/vSegoMenuButtonLayout">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/vSegoMenuButtonContainerLayout"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:gravity="left"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:id="@+id/ivButton"
+            android:layout_marginStart="12dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@drawable/setting_buttons_bg"
+            android:padding="6dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_pencil_purple" />
+
+        <TextView
+            android:id="@+id/tvButton"
+            android:layout_marginStart="21dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:fontFamily="@font/noto_sans_bold"
+            android:paddingBottom="4dp"
+            android:text="@string/option_edit_profile"
+            android:textColor="@color/segoPurple600"
+            android:textFontWeight="600"
+            android:textSize="20sp" />
+
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/vBottomDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="20dp"
+        android:background="@drawable/divider"
+        android:visibility="gone"/>
+
+</LinearLayout>

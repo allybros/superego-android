@@ -2,7 +2,9 @@
     <!--Constants-->
     <string name="app_name" translatable="false">insightof.me</string>
     <string name="web_root" translatable="false">insightof.me</string>
+    <string name="conditions_link" translatable="false">https://insightof.me/conditions</string>
 
+    <string name="locale">tr</string>
     <!--Labels-->
     <string name="activity_label_profile">Profil</string>
     <string name="activity_label_results">Sonuçlar</string>
@@ -23,6 +25,7 @@
     <string name="error_no_connection">insightof.me\' ye bağlanılamıyor, Lütfen ağ bağlantını kontrol edip tekrar dene.</string>
     <string name="error_login_again">Hesabına giriş yapılamadı. Lütfen tekrar giriş yap.</string>
     <string name="error_check_connection">Bağlantınızı kontrol ediniz.</string>
+    <string name="error_captcha_validation">Maalesef isteğini doğrulayamadık, lütfen daha sonra tekrar dene</string>
     <string name="error_email_empty">Email alanı boş olamaz</string>
     <string name="error_username_not_legal">Lütfen uygun bir kullanıcı adı seçiniz</string>
     <string name="error_username_taken">Bu kullanıcı adı alınmış</string>
@@ -35,6 +38,7 @@
     <string name="error_session_expired">Oturumun süresi dolmuştur. Tekrar giriş yapınız.</string>
     <string name="error_current_password_wrong">Geçerli parolan yanlış.</string>
     <string name="error_google_signin">Google hesabınla giriş yaparken bir sorun oluştu. Lütfen daha sonra tekrar dene.</string>
+    <string name="error_twitter_signin">X hesabınla giriş yaparken bir sorun oluştu. Lütfen daha sonra tekrar dene.</string>
     <string name="info_reward_ad_not_loaded">Şu an için sana gösterebileceğimiz uygun bir reklam bulunmuyor. Lütfen daha sonra tekrar dene.</string>
 
     <!--Input Errors:
@@ -64,14 +68,14 @@
 
     <string name="hint_change_info_username">Kullanıcı Adı</string>
     <string name="hint_change_info_email">E-posta</string>
-    <string name="hint_change_info_personal_information">Kişisel Bilgiler</string>
+    <string name="hint_change_info_personal_information">Hakkında</string>
 
 
     <string name="hint_register_uid">Kullanıcı Adı</string>
     <string name="hint_register_email">E-Posta</string>
     <string name="hint_register_password">Parola</string>
 
-   <!--Actions:
+    <!--Actions:
     Actions shows on the buttons or forwarder-->
     <string name="action_yes">Evet</string>
     <string name="action_no">Hayır</string>
@@ -80,15 +84,26 @@
     <string name="action_cancel">İptal</string>
     <string name="action_try_again">Tekrar Dene</string>
     <string name="action_btn_new_test">Test Oluştur</string>
-    <string name="action_btn_share_test">Testi Gönder</string>
+    <string name="action_btn_share_test">Testini Paylaş</string>
     <string name="action_btn_share_results">Sonuç Paylaş</string>
+    <string name="action_btn_change_avatar">Değiştir</string>
     <string name="action_login">Giriş Yap</string>
     <string name="action_register">Kayıt Ol</string>
-    <string name="action_agreement_link"><font color="#2A71AC"><a  href="https://insightof.me/conditions">Kullanım koşulları</a></font>\'nı okudum ve kabul ediyorum.</string>
+    <string name="action_agreement_link"><font color="#2d2846" fontWeight="500"><a  href="https://insightof.me/conditions">Kullanım koşulları</a></font><font color="#ffffff" fontWeight="300">\'nı okudum ve kabul ediyorum.</font></string>
     <string name="action_sign_out">Oturumu Kapat</string>
     <string name="action_save">Kaydet</string>
-    <string name="action_create_test">Test oluştur</string>
+    <string name="action_create_test">Test Oluştur</string>
     <string name="action_get_ego_points">Şimdi Ego Puanlarını Al</string>
+    <string name="action_get_ego">Ego kazan</string>
+    <string name="action_login_via_google">Google ile Giriş Yap</string>
+    <string name="action_login_via_facebook">Facebook ile Giriş Yap</string>
+    <string name="action_login_via_twitter">X ile Giriş Yap</string>
+    <string name="action_create_new_account" ><font color='#674D9F'>Hesap Oluştur</font></string>
+    <string name="action_read_more" >Daha Fazla</string>
+    <string name="action_btn_continue" >Devam</string>
+    <string name="action_btn_back" >Geri</string>
+    <string name="action_btn_start" >Başla</string>
+
 
     <!--Contents:
     Contents fills text fills or something like that-->
@@ -102,18 +117,46 @@
     <string name="info_no_test_card_bottom">Arkadaşların tarafından değerlendirilebilmen için arkadaşlarına sormak istediğin kişilik özelliklerini belirlemelisin.</string>
     <string name="info_waiting_card_title">Tüm Sonuçlarını Hemen Gör</string>
     <string name="info_waiting_card_bottom">Arkadaşlarının değerlendirmelerini beklemek istemiyorsan, reklam izleyerek Ego puanı kazanabilir ve beklemeden tüm sonuçlarını görüntüleyebilirsin.</string>
-
-
-
     <string name="info_share_test">Arkadaşlarının seni değerlendirebilmeleri için testini arkadaşların ile paylaşmalısın. Değerlendirme sayın arttıkça daha detaylı sonuçlar görebileceksin.</string>
-    <string name="info_partial_rates">Tüm sonuçlarını görmek için yeterli değerlendirme sayısına sahip değilsin.</string>
-    <string name="info_title_waiting_rates">Değerlendirilmelerin Bekleniyor...</string>
+    <string name="info_partial_rates">En çok öne çıkan özelliğini tespit edebilmek için en az beş arkadaşının değerlendirmesine ihtiyacımız var.</string>
+    <string name="info_title_waiting_rates">Değerlendirilmelerin Bekleniyor…</string>
+    <string name="info_result_ad_text">Daha fazla beklemeden tüm sonuçları gör!</string>
+    <string name="info_change_password">insightof.me hesabına giriş yapmak için kullanacağın güvenli bir parola belirle.</string>
+    <string name="info_title_no_test_result">Test Oluştur</string>
+    <string name="info_no_test_result">Kişilik özelliklerini öğrenebilmek için kişilik testini oluşturman ve arkadaşlarınla paylaşman gerekiyor.</string>
     <string name="header_register">Arkadaşlarının gözünden\nkendini gör.</string>
+    <string name="header_result_page_title">Karakter Özelliklerin</string>
+    <string name="label_openness">Yeniliğe</string>
+    <string name="label_openness_left">Açık</string>
+    <string name="label_openness_right">Kapalı</string>
+    <string name="label_conscientiousness">Görev Bilinci</string>
+    <string name="label_conscientiousness_left">Yüksek</string>
+    <string name="label_conscientiousness_right">Düşük</string>
+    <string name="label_extraversion">Tutumu</string>
+    <string name="label_extraversion_left">Dışa Dönük</string>
+    <string name="label_extraversion_right">İçe Dönük</string>
+    <string name="label_agreeableness">Çevreye</string>
+    <string name="label_agreeableness_left">Uyumlu</string>
+    <string name="label_agreeableness_right">Uyumsuz</string>
+    <string name="label_neuroticism">Duyguları</string>
+    <string name="label_neuroticism_left">Çalkantılı</string>
+    <string name="label_neuroticism_right">Dengeli</string>
+    <string name="info_create_test_title">Yeni Test Oluştur</string>
+    <string name="info_personality_type_title">Kişilik Tipi</string>
+    <string name="info_create_test_description">Test mi oluşturmak istiyorsun? Hemen tıkla!</string>
+
+    <string name="guide_content_1">"   Arkadaşlarının seni değerlendirmesi için kendine özel bir kişilik testi oluştur."</string>
+    <string name="guide_content_2">Oluşturduğun testini yakın arkadaşlarınla paylaş, arkadaşların anonim olarak kişiliğini değerlendirsinler.</string>
+    <string name="guide_content_3">En çok öne çıkan karakter özelliklerin ve arkadaşlarının senin hakkındaki genel görüşleri hakkında fikir sahibi ol.</string>
+    <string name="guide_header_1">Bir Test Oluştur</string>
+    <string name="guide_header_2">Arkadaşların Seni Değerlendirsin</string>
+    <string name="guide_header_3">Gerçek Kişilik\n Özelliklerini Keşfet</string>
+
 
     <string name="info_search">insightof.me\' de kayıtlı arkadaşlarını bulmak için kullanıcı adıyla arama yap.</string>
     <string name="default_bio_search">insightof.me kullanıcısı.</string>
 
-    <string name="login_text_header">Karakter Özelliklerini\nÖğren</string>
+    <string name="login_text_header">Karakter Özelliklerini Öğren</string>
     <string name="login_text_sub">Arkadaşlarına sorarak gerçek kişilik\nözelliklerini öğren</string>
 
     <string name="option_edit_profile">Profili Düzenle</string>
@@ -125,17 +168,18 @@
     <string name="option_licenses">Lisans Bilgileri</string>
     <string name="option_licenses_desc">Yararlandığımız yazılım lisanslarını incele.</string>
     <string name="option_sign_out_desc">Geçerli oturumunu sonlandır.</string>
-    <string name="with_version_from" translatable="false">v.0.7 From Ally Bros Corporation</string>
+    <string name="with_version_from" translatable="false">By Ally Bros</string>
 
-    <string name="call_or_connect_via">ya da bağlan;</string>
-    <string name="desc_call_register">Hesabın Yok Mu? | <font color='#2A71AC'>Yeni Hesap Oluştur</font></string>
+    <string name="call_or_connect_via">Ya Da</string>
+    <string name="desc_call_register">Bir Hesabın Yok Mu?</string>
+    <string name="desc_call_sign_in">Bir Hesabın Var Mı?</string>
 
     <!--TODO: Bunların kullanımı için kategori ismi oluşturulmalı-->
-    <string name="rated">\ Değerlendirme</string>
-    <string name="credit" translatable="false">\ Ego</string>
+    <string name="rated">Değerlendirme</string>
+    <string name="credit" translatable="false">Ego</string>
     <string name="error_code">Kod: </string>
-    <string name="remaining_credits">Kalan Değerlendirme: %1$s</string>
-    <string name="default_bio_profile">Kendini tanıtan kısa bir yazı yazabilirsin.</string>
+    <string name="remaining_credits">Kalan Değerlendirmeler: %1$s</string>
+    <string name="default_bio_profile">Kendini tanıtan kısa bir yazı yazabilirsin</string>
 
     <!--Alert Dialogs-->
     <string name="alert_title_end_session">Oturumu Sonlandır</string>
@@ -144,6 +188,9 @@
     <string name="alert_no_test">Testini paylaşabilmek için önce bir test oluşturman gerekiyor.</string>
     <string name="alert_no_results">Sonuçlarını görebilmek ve paylaşabilmek için daha fazla değerlendirilmeye ihtiyacın var.</string>
     <string name="alert_test_not_exist">Henüz test oluşturmadın</string>
-
+    <string name="tvAboutConstant">Hakkımda:</string>
+    <string name="tvSupporter">Sponsor:</string>
+    <string name="info_profile_card">Kişilik tipinin ne olduğunu öğrenebilmen için testini daha fazla arkadaşınla paylaşmalısın.</string>
+    <string name="header_result_page_personality_title">Kişilik Tipin</string>
 
 </resources>

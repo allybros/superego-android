@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="preloaded_fonts" translatable="false">
+        <item>@font/cantarell</item>
+        <item>@font/cantarell_bold</item>
+        <item>@font/noto_sans</item>
+        <item>@font/muli_semibold</item>
+        <item>@font/noto_sans_bold</item>
     </array>
 </resources>

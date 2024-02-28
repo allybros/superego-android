@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android" android:color="#EDE7F6">
+    <item>
+        <selector>
+            <item android:drawable="@drawable/twitter_button_shape"/>
+            <item android:drawable="@drawable/twitter_button_shape" android:state_pressed="true"/>
+        </selector>
+    </item>
+</ripple>

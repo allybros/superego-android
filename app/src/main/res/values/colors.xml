@@ -6,20 +6,29 @@
     <color name="colorAccent">#FFFFFF</color>
     <color name="Black">#000000</color>
     <color name="Gray">#808080</color>
+    <color name="Gray100">#99000000</color>
+    <color name="DarkGray">#42487426</color>
     <color name="White">#ffffff</color>
     <color name="transparent">#00000000</color>
+    <color name="red">#FF0202</color>
+    <color name="seperator">#26000000</color>
 
     <!--Component Colors-->
-    <color name="bgBottomNavigation">#25324D</color>
-    <color name="fragmentBackground">#f9f9f9</color>
+    <color name="bgBottomNavigation">#FAFAFA</color>
+    <color name="bgNavigationItemActive">#553C8B</color>
+    <color name="bgNavigationItemPassive">#BDBDBD</color>
+    <color name="statusbarPurple">#454278</color>
+
+    <color name="fragmentBackground">#ffffff</color>
+    <color name="guideBackground">#f6f6f6</color>
 
     <!--Brand Buttons Color-->
-    <color name="google">#FF0219</color>
-    <color name="facebook">#4167B2</color>
+    <color name="google">#c84361</color>
+    <color name="facebook">#556fb5</color>
 
     <!-- Material Palette -->
     <color name="materialPurple">#9C27B0</color>
-    <color name="materialLightPurple">#BA68C8</color>
+    <color name="materialLightPurple">#BA68C8</color>"
     <color name="materialPurpleOverlay">#C09C27B0</color>
     <color name="materialDeepPurple">#7557AC</color>
     <color name="materialLightBlue">#2A71AC</color>
@@ -34,15 +43,26 @@
     <color name="yosemiteOrange">#EA8D8D</color>
     <color name="yosemitePurple">#A890FE</color>
 
+    <!--Vintage Navy & White Colors-->
+    <color name="antiFlashWhite">#F3F3F6</color>
+
     <!-- Antarctica -->
     <color name="antarcticaPurple">#D8B5FF</color>
     <color name="antarcticaGreen">#1EAE98</color>
+    <color name="antarcticaPink">#A091D6</color>
+    <color name="antarcticaLightPink">#F2AEBB</color>
+    <color name="antarcticaDarkBlue">#696FC7</color>
 
     <!-- Peach Pallete -->
     <color name="peachLight">#DAB44E</color>
     <color name="peachDark">#E47B7B</color>
 
     <!-- Sego Palette -->
+    <color name="segoPurple900">#6c63ff</color>
+    <color name="segoPurple800">#553c8b</color>
+    <color name="segoPurple700">#711467</color>
+    <color name="segoPurple600">#553C8B</color>
+    <color name="segoPurple500">#800080</color>
     <color name="segoPurple400">#9933CC</color>
     <color name="segoPurple300">#843FC5</color>
     <color name="segoPurple200">#6E4BBD</color>
@@ -51,6 +71,7 @@
     <color name="segoBlue300">#3B5696</color>
     <color name="segoBlue200">#344A7E</color>
     <color name="segoBlue100">#25324D</color>
+    <color name="segoGray100">#ECECEC</color>
 
     <!--Colors for try-->
     <color name="blue">#2875FA</color>
@@ -58,17 +79,32 @@
     <color name="blue1">#A2C7FF</color>
     <color name="blue2">#639FFF</color>
     <color name="rippleColor">#14FFFFFF</color>
+    <color name="darkBlue">#2d2846</color>
+
 
     <color name="green">#00FF04</color>
     <color name="green1">#06CF09</color>
     <color name="green2">#A8E7A8</color>
     <color name="green3">#00B050</color>
+    <color name="green4">#6cbe84</color>
 
-    <color name="orange">#FF7700</color>
+    <color name="purpleGray">#99424874</color>
+
+    <color name="orange">#c86868</color>
 
     <color name="lightPurple">#FEFAFF</color>
 
+    <!--Deep Blue-->
+    <color name="deepBlue100">#424874</color>
+    <color name="deepBlue60">#42487499</color>
 
-
+    <!-- Progress colors -->
+    <color name="progressGreen">#70af85</color>
+    <color name="progressOrange">#f1ae89</color>
+    <color name="progressBlue">#94b3fd</color>
+    <color name="progressRed">#df7599</color>
+    <color name="progressPurple">#bfa2db</color>
+    <color name="progressPassive">#ececec</color>
+    <color name="progressSmallPercentTextColor">#99424874</color>
 
 </resources>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SegoEditText">
+        <attr name="sego_is_password_input" format="boolean"/>
+
+        <attr name="sego_header_text" format="string"/>
+        <attr name="sego_header_text_color" format="color"/>
+        <attr name="sego_header_text_size" format="dimension"/>
+
+        <attr name="sego_input_text_color" format="color"/>
+        <attr name="sego_input_text_size" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="SegoMenuButton">
+        <attr name="sego_start_icon" format="reference"/>
+        <attr name="sego_label_text" format="string"/>
+        <attr name="sego_button_background" format="reference"/>
+        <attr name="sego_label_color" format="color"/>
+        <attr name="sego_bottom_divider" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="SegoProgressBar">
+        <attr name="sego_progress_start_percent" format="integer"/>
+        <attr name="sego_progress_end_percent" format="integer"/>
+        <attr name="sego_progress_start_label" format="string"/>
+        <attr name="sego_progress_end_label" format="string"/>
+        <attr name="sego_progress_header_label" format="string"/>
+        <attr name="sego_progress_bar_container_background" format="reference"/>
+        <attr name="sego_progress_bar_color" format="color"/>
+        <attr name="sego_progress_color" format="color"/>
+    </declare-styleable>
+
+</resources>
