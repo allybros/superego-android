@@ -78,7 +78,7 @@ public class SearchFragment extends Fragment {
             String belirtmeHali = turkceBelirtmeHalEkiBulucu(u.getUsername());
             @SuppressLint("StringFormatMatches") final String webActivityTitle = getContext().getString(R.string.activity_label_rate_user, u.getUsername(), belirtmeHali);
             ConstantValues constantValues = new ConstantValues();
-            String rateUrl = constantValues.getWebUrl(ConstantValues.RATE_URL);
+            String rateUrl = constantValues.getWebUrlWithLocale(ConstantValues.RATE_URL);
 
             String testUrl = rateUrl + u.getTestId();
             Intent intent = new Intent(getContext(), WebViewActivity.class);

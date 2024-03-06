@@ -37,7 +37,6 @@ import com.allybros.superego.R;
 import com.allybros.superego.activity.LoginActivity;
 import com.allybros.superego.activity.UserPageActivity;
 import com.allybros.superego.activity.WebViewActivity;
-import com.allybros.superego.api.ApiTask;
 import com.allybros.superego.api.EarnRewardTask;
 import com.allybros.superego.api.LoadProfileTask;
 import com.allybros.superego.api.mapper.UserMapper;
@@ -55,10 +54,6 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.OnUserEarnedRewardListener;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
-import com.google.android.gms.ads.rewarded.RewardItem;
 import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
@@ -500,7 +495,7 @@ public class ResultsFragment extends Fragment {
         boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
         if (isConnected) {
             ConstantValues constantValues = new ConstantValues();
-            String createTestUrl = constantValues.getWebUrl(ConstantValues.CREATE_TEST);
+            String createTestUrl = constantValues.getWebUrlWithLocale(ConstantValues.CREATE_TEST);
             Intent addTestIntent = new Intent(getContext(), WebViewActivity.class);
             addTestIntent.putExtra("url", createTestUrl);
             addTestIntent.putExtra("title", getString(R.string.activity_label_new_test));

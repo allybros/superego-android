@@ -1,9 +1,6 @@
 package com.allybros.superego.activity;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,15 +9,14 @@ import androidx.activity.ComponentActivity;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.R;
 import com.allybros.superego.api.SocialMediaSignInTask;
+import com.allybros.superego.api.TwitterCallbackTask;
 import com.allybros.superego.api.response.ApiStatusResponse;
-import com.allybros.superego.oauth.TwitterCallbackTask;
 import com.allybros.superego.oauth.TwitterOAuthHelper;
-import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.unit.ErrorCodes;
+import com.allybros.superego.util.SessionManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -33,8 +29,6 @@ import com.google.android.recaptcha.RecaptchaTasksClient;
 abstract class BaseSignOnActivity extends ComponentActivity {
 
     protected RecaptchaTasksClient recaptchaTasksClient = null;
-
-    protected BroadcastReceiver oauthLoginReceiver;
     private ActivityResultLauncher<Intent> webViewActivityResultLauncher;
     private TwitterOAuthHelper twitterOAuthHelper;
     private GoogleSignInClient mGoogleSignInClient;
@@ -44,7 +38,6 @@ abstract class BaseSignOnActivity extends ComponentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initializeRecaptchaClient();
-        setUpReceivers();
         registerWebViewActivityResultLauncher();
         initializeGoogleSignIn();
         registerGoogleSignInLauncher();
@@ -72,12 +65,12 @@ abstract class BaseSignOnActivity extends ComponentActivity {
                 new ActivityResultContracts.StartActivityForResult(),
                 o -> {
                     Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(o.getData());
-                    handleSignInResult(task);
+                    handleGoogleSignInResult(task);
                 }
         );
     }
 
-    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+    private void handleGoogleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             SocialMediaSignInTask socialMediaSignInTask = new SocialMediaSignInTask(account.getIdToken(), "google");
@@ -145,45 +138,6 @@ abstract class BaseSignOnActivity extends ComponentActivity {
         return this.recaptchaTasksClient;
     }
 
-    /**
-     * SetUp API task receivers and register them
-     */
-    protected void setUpReceivers() {
-        // Receive responses from oauth Login
-        oauthLoginReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                int status = intent.getIntExtra("status", 0);
-                Log.d("OAuthReceiver", "Status: " + status);
-                setProgress(false);
-                switch (status) {
-                    case ErrorCodes.EMAIL_EMPTY:
-                        showErrorDialog(getString(R.string.error_email_empty));
-                        break;
-                    case ErrorCodes.EMAIL_NOT_LEGAL:
-                        showErrorDialog(getString(R.string.error_email_not_legal));
-                        break;
-                    case ErrorCodes.USERNAME_NOT_LEGAL:
-                        showErrorDialog(getString(R.string.error_username_not_legal));
-                        break;
-                    case ErrorCodes.SUCCESS:
-                        // Start splash activity, so the profile page
-                        Log.i("OAuthReceiver", "Successful response, redirect to splash");
-                        Intent i = new Intent(getBaseContext(), SplashActivity.class);
-                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(i);
-                        break;
-                    default:
-                        showErrorDialog("Failed social media sign in");
-                        break;
-                }
-            }
-        };
-
-        LocalBroadcastManager.getInstance(getApplicationContext())
-                .registerReceiver(oauthLoginReceiver, new IntentFilter(ConstantValues.ACTION_SOCIAL_MEDIA_LOGIN));
-    }
-
     protected void onTwitterSignInClicked() {
         // Get twitter login url
         String loginUrl = this.twitterOAuthHelper.getTwitterLoginUrl();
@@ -229,7 +183,22 @@ abstract class BaseSignOnActivity extends ComponentActivity {
                         showErrorDialog(getString(R.string.error_twitter_signin));
                     }
                     setProgress(true);
-                    TwitterCallbackTask.handleTwitterCallback(this, code, challenge);
+                    TwitterCallbackTask twitterCallbackTask = new TwitterCallbackTask(code, challenge);
+                    twitterCallbackTask.setOnResponseListener(response -> {
+                        // Set session token if success
+                        if (response.getStatus() == ErrorCodes.SUCCESS) {
+                            String sessionToken = response.getSessionToken();
+                            SessionManager sessionManager = SessionManager.getInstance();
+                            sessionManager.writeInfoLocalStorage(sessionManager.getUserId(),
+                                    sessionManager.getPassword(), sessionToken, this);
+                        }
+
+                        // Create a status response from twitter callback response
+                        ApiStatusResponse statusResponse = new ApiStatusResponse();
+                        statusResponse.setStatus(response.getStatus());
+                        handleSocialMediaSignInResponse(statusResponse);
+                    });
+                    twitterCallbackTask.execute(this);
                 });
     }
 

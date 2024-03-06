@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.CookieManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
@@ -17,6 +18,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.allybros.superego.R;
+import com.allybros.superego.unit.ConstantValues;
 import com.allybros.superego.util.SessionManager;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -26,8 +28,6 @@ import com.r0adkll.slidr.model.SlidrInterface;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Objects;
 
 public class WebViewActivity extends AppCompatActivity {
@@ -51,7 +51,10 @@ public class WebViewActivity extends AppCompatActivity {
         String url = intent.getStringExtra("url");
         String title = intent.getStringExtra("title");
         String action = intent.getStringExtra("action");
-        if (action == null && url != null) {
+        if (url == null) {
+            url = ConstantValues.WEB_URL;
+        }
+        if (action == null) {
             final int startIndex = url.indexOf("://");
             action = url.substring(startIndex+3).split("\\?")[0];
         }
@@ -88,18 +91,10 @@ public class WebViewActivity extends AppCompatActivity {
         // Load URL
         if (action.equals(WEB_ACTION_CREATE_TEST)) {
             Log.i("WebView", "Load for create test action");
-            // Post session-token
-            String postData = null;
-            try {
-                postData = "session-token=" + URLEncoder.encode(SessionManager.getInstance().getSessionToken(), "UTF-8");
-                Log.d("WebView", "Post Data: " + postData);
-            } catch (UnsupportedEncodingException e) {
-                Log.e("WebView", "Can't read the post data");
-                e.printStackTrace();
-            }
-
-            //Load content
-            webView.postUrl(url, postData.getBytes());
+            // Set cookies
+            String sessionToken = SessionManager.getInstance().getSessionToken();
+            this.setCookie(url, ConstantValues.COOKIE_SESSION_TOKEN, sessionToken, "/");
+            webView.loadUrl(url);
         } else {
             Log.i("WebView", "Load for default action");
             webView.loadUrl(url);
@@ -114,15 +109,23 @@ public class WebViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
+    /**
+     * Sets the cookie for the url being loaded
+     * @param url Url of the cookie to be valid
+     * @param cookieName Name for the cookie
+     * @param value Value
+     * @param path Path for the cookie
+     */
+    private void setCookie(String url, String cookieName, String value, String path) {
+        String cookieString = String.format("%s=%s; %s", cookieName, value, path);
+        CookieManager.getInstance().setCookie(url, cookieString);
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    @Deprecated
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
     private class WebViewActivityClient extends WebViewClient {
