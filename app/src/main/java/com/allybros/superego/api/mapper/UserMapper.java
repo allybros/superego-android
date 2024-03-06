@@ -27,7 +27,7 @@ public class UserMapper {
         user.setEmail(profileResponse.getEmail());
 
         // Specific properties
-        user.setImage(profileResponse.getAvatar());
+        user.setImage("" + profileResponse.getAvatar());
         user.setScores(profileResponse.getScores());
         user.setOcean(profileResponse.getOcean());
         user.setPersonality(profileResponse.getPersonality());

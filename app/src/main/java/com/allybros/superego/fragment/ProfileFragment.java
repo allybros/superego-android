@@ -185,7 +185,10 @@ public class ProfileFragment extends Fragment {
         badgeRated.setText(String.valueOf(sessionManager.getUser().getRated()));
 
 
-        Picasso.get().load(sessionManager.getUser().getImage()).error(R.drawable.default_avatar).memoryPolicy(MemoryPolicy.NO_CACHE).into(imageViewAvatar);
+        Picasso.get().load(sessionManager.getUser().getImage())
+                .error(R.drawable.default_avatar)
+                .memoryPolicy(MemoryPolicy.NO_CACHE)
+                .into(imageViewAvatar);
     }
 
     /**
