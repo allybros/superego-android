@@ -73,7 +73,7 @@ public class SearchFragment extends Fragment {
 
 
         listViewSearchResults.setOnItemClickListener((adapterView, view, i, l) -> {
-            User u = (User) adapterView.getItemAtPosition(i);
+            SearchResponse u = (SearchResponse) adapterView.getItemAtPosition(i);
             // Set web activity title
             String belirtmeHali = turkceBelirtmeHalEkiBulucu(u.getUsername());
             @SuppressLint("StringFormatMatches") final String webActivityTitle = getContext().getString(R.string.activity_label_rate_user, u.getUsername(), belirtmeHali);

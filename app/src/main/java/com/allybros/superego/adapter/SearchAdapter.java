@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 
 import com.allybros.superego.R;
 import com.allybros.superego.api.response.SearchResponse;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 
@@ -31,24 +32,26 @@ public class SearchAdapter extends ArrayAdapter<SearchResponse> {
             convertView = inflater.inflate(R.layout.search_user_row, parent, false);
         }
 
-        final SearchResponse u = getItem(position);
-        if (u == null) return convertView;
+        final SearchResponse searchResponse = getItem(position);
+        if (searchResponse == null) return convertView;
 
         CircleImageView ivSearchUserAvatar = convertView.findViewById(R.id.nivSearchUserAvatar);
         TextView tvSearchUsername = convertView.findViewById(R.id.tvSearchUsername);
         TextView tvSearchUserbio = convertView.findViewById(R.id.tvSearchUserBio);
 
-        String bioSum = u.getUserBio();
-        if (u.getUserBio() == null) {
+        String bioSum = searchResponse.getUserBio();
+        if (searchResponse.getUserBio() == null) {
             bioSum = convertView.getContext().getString(R.string.default_bio_search);
-        } else if (u.getUserBio().length() >= 30) {
-            bioSum = u.getUserBio().substring(0, 30);
+        } else if (searchResponse.getUserBio().length() >= 30) {
+            bioSum = searchResponse.getUserBio().substring(0, 30);
             bioSum += "...";
         }
 
-        tvSearchUsername.setText(u.getUsername());
+        tvSearchUsername.setText(searchResponse.getUsername());
         tvSearchUserbio.setText(bioSum);
-        Picasso.get().load(u.getAvatar())
+        // Concat an empty string to ensure that no null value is passed
+        Picasso.get().load("" + searchResponse.getAvatar())
+                .memoryPolicy(MemoryPolicy.NO_CACHE)
                 .error(R.drawable.default_avatar)
                 .into(ivSearchUserAvatar);
 

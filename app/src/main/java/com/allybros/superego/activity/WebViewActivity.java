@@ -131,9 +131,11 @@ public class WebViewActivity extends AppCompatActivity {
     private class WebViewActivityClient extends WebViewClient {
 
         private final String webViewAction;
+        private boolean initialLoadCompleted;
 
         public WebViewActivityClient(String webViewAction) {
             this.webViewAction = webViewAction;
+            this.initialLoadCompleted = false;
         }
 
         @Override
@@ -164,7 +166,11 @@ public class WebViewActivity extends AppCompatActivity {
         public void onPageFinished(WebView view, String url) {
             imageViewLogo.setVisibility(View.INVISIBLE);
             webView.setVisibility(View.VISIBLE);
-            YoYo.with(Techniques.FadeIn).duration(400).playOn(webView);
+            if (!this.initialLoadCompleted) {
+                // Only animate for the first loading
+                YoYo.with(Techniques.FadeIn).duration(400).playOn(webView);
+                this.initialLoadCompleted = true;
+            }
             super.onPageFinished(view, url);
         }
     }
