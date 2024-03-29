@@ -17,12 +17,11 @@ import static com.allybros.superego.unit.ConstantValues.USER_INFORMATION_PREF;
 public class SessionManager {
 
     private static SessionManager instance;
-    private User user;                      // User who logged in
-    private String sessionToken, password, userId;
+    private User user; // User who logged in
+    private String sessionToken;
     private boolean modified = false;
 
-    private SessionManager() {
-    }
+    private SessionManager() {}
 
     /**
      * Reads userId, password and sessionToken from local storage and update SessionManager
@@ -30,26 +29,20 @@ public class SessionManager {
      * @param context required to use SharedPreferences functions
      */
     public void readInfo(Context context) {
-        SharedPreferences pref = context.getSharedPreferences(USER_INFORMATION_PREF, context.MODE_PRIVATE);
-
+        SharedPreferences pref = context.getSharedPreferences(USER_INFORMATION_PREF, Context.MODE_PRIVATE);
         SessionManager.getInstance().setSessionToken(pref.getString("session_token", ""));
-        SessionManager.getInstance().setUserId(pref.getString("uid", ""));
-        SessionManager.getInstance().setPassword(pref.getString("password", ""));
     }
 
     /**
      * Writes userId, password and sessionToken to local storage
      *
-     * @param uid          required to verify the user
-     * @param password     required to verify the user
-     * @param sessionToken required to verify the user
      * @param context      required to use SharedPreferences functions
+     * @param sessionToken required to verify the user
      */
-    public void writeInfoLocalStorage(String uid, String password, String sessionToken, Context context) {
+    public void initiateSession(Context context, String sessionToken) {
+        this.setSessionToken(sessionToken);
         SharedPreferences pref = context.getSharedPreferences(USER_INFORMATION_PREF, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
-        editor.putString("uid", uid);
-        editor.putString("password", password);
         editor.putString("session_token", sessionToken);
         editor.commit();
     }
@@ -62,8 +55,6 @@ public class SessionManager {
     public void clearSession(Context context) {
         // Clear fields
         this.user = null;
-        this.userId = null;
-        this.password = null;
         this.sessionToken = null;
         // Clear data from device
         SharedPreferences pref = context.getSharedPreferences(USER_INFORMATION_PREF, Context.MODE_PRIVATE);
@@ -84,18 +75,6 @@ public class SessionManager {
         user.setEmail(newEmail);
     }
 
-    /**
-     * Change credentials in local storage
-     *
-     * @param newPassword required to verify the user
-     * @param context     required to use Session Manager
-     */
-    public void updateCredentials(String newPassword, Context context) {
-        writeInfoLocalStorage(SessionManager.getInstance().getUser().getUsername(), newPassword,
-                SessionManager.getInstance().getSessionToken(), context);
-        readInfo(context);
-    }
-
     public User getUser() {
         this.modified = false;
         return user;
@@ -109,24 +88,8 @@ public class SessionManager {
         return sessionToken;
     }
 
-    public void setSessionToken(String sessionToken) {
+    private void setSessionToken(String sessionToken) {
         this.sessionToken = sessionToken;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     public boolean isModified() {

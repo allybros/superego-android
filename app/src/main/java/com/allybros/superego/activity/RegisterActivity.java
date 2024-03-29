@@ -98,8 +98,7 @@ public class RegisterActivity extends BaseSignOnActivity {
         setProgress(false);
         switch (response.getStatus()) {
             case ErrorCodes.SUCCESS:
-                SessionManager.getInstance().setSessionToken(response.getSessionToken());
-                SessionManager.getInstance().writeInfoLocalStorage(username, password, response.getSessionToken(), this);
+                SessionManager.getInstance().initiateSession(this, response.getSessionToken());
                 // Session is started, go back to splash activity
                 Intent i = new Intent(getApplicationContext(), SplashActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

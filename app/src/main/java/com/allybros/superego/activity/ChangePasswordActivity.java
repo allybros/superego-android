@@ -182,7 +182,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
         switch (response.getStatus()) {
             case ErrorCodes.SUCCESS:
                 Snackbar.make(rootView, R.string.message_process_succeed, BaseTransientBottomBar.LENGTH_LONG).show();
-                SessionManager.getInstance().updateCredentials(newPass, this);
                 break;
 
             case ErrorCodes.PASSWORD_NOT_LEGAL:

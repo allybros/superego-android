@@ -2,7 +2,7 @@ package com.allybros.superego.api.response;
 
 import com.google.gson.annotations.SerializedName;
 
-public class TwitterCallbackResponse {
+public class OAuthResponse {
     private Integer status;
     private Boolean created;
     @SerializedName("session_token")

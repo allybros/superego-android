@@ -6,8 +6,8 @@ android {
         applicationId "com.allybros.superego"
         minSdkVersion 26
         targetSdkVersion 33
-        versionCode 21
-        versionName "2.0.1"
+        versionCode 24
+        versionName "2.1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -28,7 +28,7 @@ android {
         implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
         implementation 'androidx.appcompat:appcompat:1.7.0-alpha03'
 
-        implementation 'com.google.android.recaptcha:recaptcha:18.3.0'
+        implementation 'com.google.android.recaptcha:recaptcha:18.4.0'
         implementation 'com.google.android.gms:play-services-auth:20.7.0'
         implementation 'com.google.android.gms:play-services-ads:22.6.0'
 

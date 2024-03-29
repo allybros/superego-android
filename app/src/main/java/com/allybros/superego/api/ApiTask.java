@@ -172,13 +172,10 @@ public class ApiTask<T> {
         // Create request object
         return new StringRequest(this.requestMethod, this.url,
                 response -> {
-                    Log.d(API_TASK, "Received response: " + response);
                     T apiResponse = mapApiResponse(response);
                     onResponseListener.onApiResponse(apiResponse);
                 },
                 error -> {
-                    String errorMessage = error.getMessage();
-                    Log.e(API_TASK, "Error on request: " + errorMessage);
                     ApiStatusResponse errorResponse = mapApiError(error);
                     onErrorListener.onApiResponse(errorResponse);
                 }

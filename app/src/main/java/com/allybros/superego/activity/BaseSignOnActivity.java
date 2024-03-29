@@ -14,6 +14,7 @@ import com.allybros.superego.R;
 import com.allybros.superego.api.SocialMediaSignInTask;
 import com.allybros.superego.api.TwitterCallbackTask;
 import com.allybros.superego.api.response.ApiStatusResponse;
+import com.allybros.superego.api.response.OAuthResponse;
 import com.allybros.superego.oauth.TwitterOAuthHelper;
 import com.allybros.superego.unit.ErrorCodes;
 import com.allybros.superego.util.SessionManager;
@@ -83,7 +84,7 @@ abstract class BaseSignOnActivity extends ComponentActivity {
         }
     }
 
-    private void handleSocialMediaSignInResponse(ApiStatusResponse response) {
+    private void handleSocialMediaSignInResponse(OAuthResponse response) {
         Log.d("OAuthReceiver", "Status: " + response.getStatus());
         setProgress(false);
         switch (response.getStatus()) {
@@ -99,6 +100,7 @@ abstract class BaseSignOnActivity extends ComponentActivity {
             case ErrorCodes.SUCCESS:
                 // Start splash activity, so the profile page
                 Log.i("OAuthReceiver", "Successful response, redirect to splash");
+                SessionManager.getInstance().initiateSession(this, response.getSessionToken());
                 Intent i = new Intent(getBaseContext(), SplashActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
@@ -184,20 +186,7 @@ abstract class BaseSignOnActivity extends ComponentActivity {
                     }
                     setProgress(true);
                     TwitterCallbackTask twitterCallbackTask = new TwitterCallbackTask(code, challenge);
-                    twitterCallbackTask.setOnResponseListener(response -> {
-                        // Set session token if success
-                        if (response.getStatus() == ErrorCodes.SUCCESS) {
-                            String sessionToken = response.getSessionToken();
-                            SessionManager sessionManager = SessionManager.getInstance();
-                            sessionManager.writeInfoLocalStorage(sessionManager.getUserId(),
-                                    sessionManager.getPassword(), sessionToken, this);
-                        }
-
-                        // Create a status response from twitter callback response
-                        ApiStatusResponse statusResponse = new ApiStatusResponse();
-                        statusResponse.setStatus(response.getStatus());
-                        handleSocialMediaSignInResponse(statusResponse);
-                    });
+                    twitterCallbackTask.setOnResponseListener(this::handleSocialMediaSignInResponse);
                     twitterCallbackTask.execute(this);
                 });
     }

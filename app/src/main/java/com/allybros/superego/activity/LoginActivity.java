@@ -146,8 +146,7 @@ public class LoginActivity extends BaseSignOnActivity {
                 case ErrorCodes.SUCCESS:
                     // Set session token
                     String sessionToken = response.getSessionToken();
-                    SessionManager.getInstance().setSessionToken(sessionToken);
-                    SessionManager.getInstance().writeInfoLocalStorage(uid, password, sessionToken,this);
+                    SessionManager.getInstance().initiateSession(this, sessionToken);
                     // Go to splash screen
                     Intent i = new Intent(getApplicationContext(), SplashActivity.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
