@@ -3,11 +3,15 @@ package com.allybros.superego.util;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 import com.allybros.superego.R;
 
 public class ClientContextUtil {
+
+    private ClientContextUtil() {}
 
     /**
      * Retrieves the version name of the application.
@@ -38,6 +42,19 @@ public class ClientContextUtil {
      */
     public static String getApplicationLocale(Context context) {
         return context.getString(R.string.locale);
+    }
+
+
+    /**
+     * Checks if there is an active network connection
+     *
+     * @param context The application context
+     * @return Returns true if there is an active network connection, false otherwise
+     */
+    public static boolean isNetworkConnected(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo an = cm.getActiveNetworkInfo();
+        return an != null && an.isConnectedOrConnecting();
     }
 
 }

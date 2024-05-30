@@ -1,9 +1,7 @@
 package com.allybros.superego.activity;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -22,15 +20,13 @@ import android.widget.ImageView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.allybros.superego.R;
-import com.allybros.superego.api.ApiTask;
 import com.allybros.superego.api.ChangeInfoTask;
 import com.allybros.superego.api.ImageChangeTask;
 import com.allybros.superego.api.response.ApiStatusResponse;
 import com.allybros.superego.unit.ConstantValues;
-import com.allybros.superego.unit.ErrorCodes;
+import com.allybros.superego.util.ClientContextUtil;
 import com.allybros.superego.util.InputMethodWatcher;
 import com.allybros.superego.util.SessionManager;
 import com.allybros.superego.widget.SegoEditText;
@@ -50,10 +46,9 @@ public class EditProfileActivity extends AppCompatActivity {
     private SegoEditText etUsername;
     private SegoEditText etEmail;
     private EditText etBio;
-    private ImageView ivChangeAvatar;
-    private CircleImageView ivSettings;
+    private ImageView ivChangeAvatarIcon;
+    private CircleImageView ivAvatar;
     private ConstraintLayout editProfileLayout;
-    public static Uri newImagePath = null;
     private Button btnSaveProfile;
     private static final int IMG_REQUEST = 1; //Needs for image selection from local storage
 
@@ -74,12 +69,12 @@ public class EditProfileActivity extends AppCompatActivity {
         editProfileLayout = findViewById(R.id.editProfileLayout);
         progressEditProfile = findViewById(R.id.progressEditProfile);
         findViewById(R.id.cardFormEditProfile);
-        ivChangeAvatar = findViewById(R.id.ivChangeAvatar);
+        ivChangeAvatarIcon = findViewById(R.id.ivChangeAvatar);
         findViewById(R.id.ivBack);
         etUsername = findViewById(R.id.etUsername);
         etEmail = findViewById(R.id.etEmail);
         etBio = findViewById(R.id.etInformation);
-        ivSettings = findViewById(R.id.ivUserAvatarEditProfile);
+        ivAvatar = findViewById(R.id.ivUserAvatarEditProfile);
         btnSaveProfile = findViewById(R.id.btnSaveProfile);
     }
 
@@ -97,46 +92,38 @@ public class EditProfileActivity extends AppCompatActivity {
         boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
         //Load image
         String URL = SessionManager.getInstance().getUser().getImage();
-        Picasso.get().load(URL).error(R.drawable.default_avatar).into(ivSettings);
+        Picasso.get().load(URL).error(R.drawable.default_avatar).into(ivAvatar);
 
         if (!isConnected)
             Snackbar.make(editProfileLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
 
-        ivChangeAvatar.setOnClickListener(v -> {
-            // Check internet connection
-            ConnectivityManager cm1 = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo activeNetwork1 = cm1.getActiveNetworkInfo();
-            boolean isConnected1 = activeNetwork1 != null && activeNetwork1.isConnectedOrConnecting();
-            if (isConnected1) {
-                selectImage();
-            } else {
-                Log.d("CONNECTION", String.valueOf(isConnected1));
-                Snackbar.make(editProfileLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
+        ivChangeAvatarIcon.setOnClickListener(this::onChangeAvatarClick);
+        ivAvatar.setOnClickListener(this::onChangeAvatarClick);
+        btnSaveProfile.setOnClickListener(view -> {
+            if (inputMethodWatcher.isKeyboardShown()) {
+                Log.d("Page changed", "Hide soft keyboard");
+                inputMethodWatcher.hideSoftKeyboard();
             }
-        });
 
-        btnSaveProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (inputMethodWatcher.isKeyboardShown()) {
-                    Log.d("Page changed", "Hide soft keyboard");
-                    inputMethodWatcher.hideSoftKeyboard();
-                }
-
-                // Check internet connection
-                ConnectivityManager cm = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-                NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-                boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-                if (isConnected) {
-                    saveProfile();
-                } else {
-                    Log.d("CONNECTION", String.valueOf(isConnected));
-                    Snackbar.make(editProfileLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
-                }
+            // Check internet connection
+            if (ClientContextUtil.isNetworkConnected(getApplicationContext())) {
+                saveProfile();
+            } else {
+                Snackbar.make(editProfileLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
             }
         });
     }
 
+    public void onChangeAvatarClick(View view) {
+        if (ClientContextUtil.isNetworkConnected(this)) {
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(intent, IMG_REQUEST);
+        } else {
+            Snackbar.make(editProfileLayout, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG).show();
+        }
+    }
 
     private void setupTextWatchers() {
         etUsername.addTextChangedListener(new TextWatcher() {
@@ -183,29 +170,21 @@ public class EditProfileActivity extends AppCompatActivity {
 
     }
 
-    //Opens intent that provide selecting image from local storage
-    private void selectImage() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, IMG_REQUEST);
-    }
-
     //Provides that cacth the results that come back from selectImage() function
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == IMG_REQUEST && resultCode == RESULT_OK && data != null) {
-            newImagePath = data.getData();
+            Uri imagePath = data.getData();
             try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), newImagePath);
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imagePath);
                 int fileSize = bitmap.getByteCount();
                 Log.d("SIZE:  ", "" + bitmap.getByteCount());
                 if (fileSize < ConstantValues.MAX_FILE_SIZE) {
                     SessionManager.getInstance().getUser().setAvatar(bitmap);
-                    ivSettings.setImageBitmap(SessionManager.getInstance().getUser().getAvatar());
-                    ivSettings.setVisibility(View.INVISIBLE);
+                    ivAvatar.setImageBitmap(SessionManager.getInstance().getUser().getAvatar());
+                    ivAvatar.setVisibility(View.INVISIBLE);
                     setProgressVisibility(true);
                     ImageChangeTask imageChangeTask = new ImageChangeTask(SessionManager.getInstance().getSessionToken(), imageToString(SessionManager.getInstance().getUser().getAvatar()));
                     imageChangeTask.setOnResponseListener(this::handleImageChangeTaskResponse);
@@ -222,30 +201,8 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private void handleImageChangeTaskResponse(ApiStatusResponse response) {
         setProgressVisibility(false);
-        ivSettings.setVisibility(View.VISIBLE);
-        //Check status
-        switch (response.getStatus()) {
-            case ErrorCodes.SUCCESS:
-                Snackbar.make(editProfileLayout, getApplicationContext().getString(R.string.message_process_succeed), BaseTransientBottomBar.LENGTH_LONG).show();
-                break;
-
-            case ErrorCodes.SYSFAIL:
-            case ErrorCodes.FILE_WRITE_ERROR:
-                Snackbar.make(editProfileLayout, getApplicationContext().getString(R.string.error_no_connection), BaseTransientBottomBar.LENGTH_LONG).show();
-                break;
-
-            case ErrorCodes.INVALID_FILE_EXTENSION:
-            case ErrorCodes.INVALID_FILE_TYPE:
-                Snackbar.make(editProfileLayout, getApplicationContext().getString(R.string.error_invalid_file_type), BaseTransientBottomBar.LENGTH_LONG).show();
-                break;
-
-            case ErrorCodes.INVALID_FILE_SIZE:
-                Snackbar.make(editProfileLayout, getApplicationContext().getString(R.string.error_invalid_file_size), BaseTransientBottomBar.LENGTH_LONG).show();
-                break;
-
-            default:
-                break;
-        }
+        ivAvatar.setVisibility(View.VISIBLE);
+        Snackbar.make(editProfileLayout, response.getMessage(), BaseTransientBottomBar.LENGTH_LONG).show();
     }
 
     /**
@@ -301,36 +258,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private void handleChangeInfoTaskResponse(ApiStatusResponse response, String uid, String email, String bio) {
         setProgressVisibility(false);
         //Check status
-        String text;
-        switch (response.getStatus()) {
-            case ErrorCodes.SESSION_EXPIRED:
-                text = getString(R.string.error_session_expired);
-                break;
-
-            case ErrorCodes.USERNAME_NOT_LEGAL:
-                text = getString(R.string.error_username_not_legal);
-                break;
-
-            case ErrorCodes.USERNAME_ALREADY_EXIST:
-                text = getString(R.string.error_username_taken);
-                break;
-
-            case ErrorCodes.EMAIL_NOT_LEGAL:
-                text = getString(R.string.error_email_not_legal);
-                break;
-
-            case ErrorCodes.EMAIL_ALREADY_EXIST:
-                text = getString(R.string.error_email_already_exist);
-                break;
-
-            case ErrorCodes.SUCCESS:
-                text = getString(R.string.message_process_succeed);
-                break;
-
-            default:
-                text = getString(R.string.error_no_connection);
-                break;
-        }
+        String text = response.getMessage();
         Snackbar.make(editProfileLayout, text, BaseTransientBottomBar.LENGTH_LONG).show();
         SessionManager.getInstance().updateLocalVariables(uid, email, bio);
     }

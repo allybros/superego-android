@@ -194,7 +194,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 break;
 
             default:
-                Snackbar.make(rootView, R.string.error_no_connection, BaseTransientBottomBar.LENGTH_LONG)
+                Snackbar.make(rootView, response.getMessage(), BaseTransientBottomBar.LENGTH_LONG)
                         .setAction(R.string.action_try_again, view -> attemptChangePassword()).show();
         }
     }
