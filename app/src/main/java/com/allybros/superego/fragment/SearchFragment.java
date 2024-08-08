@@ -114,15 +114,6 @@ public class SearchFragment extends Fragment {
                 // It's not necessary
             }
         });
-
-        tvSearchHeader.setOnClickListener(v ->
-                YoYo.with(Techniques.Hinge).duration(2000).onEnd(animator ->
-                        Toast.makeText(
-                                getContext(),
-                                "Tebrikler :) ",
-                                Toast.LENGTH_LONG
-                        ).show()
-                ).playOn(tvSearchHeader));
     }
 
     private void performSearch(String query) {
