@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.webkit.CookieManager;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
@@ -29,6 +32,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
+
+import okhttp3.Cookie;
 
 public class WebViewActivity extends AppCompatActivity {
 
@@ -128,6 +133,12 @@ public class WebViewActivity extends AppCompatActivity {
         finish();
     }
 
+    @Override
+    protected void onDestroy() {
+        CookieManager.getInstance().flush();
+        super.onDestroy();
+    }
+
     private class WebViewActivityClient extends WebViewClient {
 
         private final String webViewAction;
@@ -160,6 +171,12 @@ public class WebViewActivity extends AppCompatActivity {
                 finish();
             }
             super.onPageStarted(view, url, favicon);
+        }
+
+        @Override
+        public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+            view.loadUrl("about:blank");
+            super.onReceivedError(view, request, error);
         }
 
         @Override
