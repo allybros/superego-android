@@ -175,7 +175,11 @@ public class WebViewActivity extends AppCompatActivity {
 
         @Override
         public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-            view.loadUrl("about:blank");
+            Uri requestUri = request.getUrl();
+            if (Objects.equals(requestUri.getScheme(), WEB_ACTION_INTENT)) {
+                Log.d("WebView Error", "Masking intent schema error");
+                view.loadUrl("about:blank");
+            }
             super.onReceivedError(view, request, error);
         }
 
